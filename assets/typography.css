@@ -1,17 +1,54 @@
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6, p {
-    color: black
+    font-family: Poppins;
+    margin-left: 20px;
 }
 
 h1 {
-  font-family: Roboto;
-  font-size: 60px;
+  font-family: Kalam;
+  font-size: 45px;
+}
+
+/* Subtitle */
+h3 {
+  color: #005b96;
+}
+
+h4 {
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #005b96;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+    color: black;
+}
+
+a:hover {
+    color: #005b96;
+}
+/* Custom class
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.sidebar {
+    background-color: #005b96;
+}
+
+.custom-tabs-parent {
+    width: 100%;
 }
 
 .custom-tabs {
+    margin-left: 20px;
+    margin-right: 20px;
     width: 100%;
-    border-top-left-radius: 3px;
-    background-color: #f9f9f9;
-    padding: 0;
+}
+
+.custom-tab:hover {
+    color: black;
+    background-color: white !important;
 }
 
 .custom-tab {
@@ -29,4 +66,9 @@ h1 {
     display: flex !important;
     align-items: center;
     justify-content: center;
+}
+
+.boxContainer {
+    display: inline-block;
+    vertical-align: top;
 }
