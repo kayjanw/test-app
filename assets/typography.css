@@ -30,6 +30,13 @@ a {
 a:hover {
     color: #005b96;
 }
+
+/* Dash leaflet style
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.leaflet-container {
+    cursor: crosshair !important;
+}
+
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .sidebar {
@@ -66,9 +73,4 @@ a:hover {
     display: flex !important;
     align-items: center;
     justify-content: center;
-}
-
-.boxContainer {
-    display: inline-block;
-    vertical-align: top;
 }

@@ -1,10 +1,9 @@
 import dash
-import dash_core_components as dcc
 import dash_html_components as html
-import dash_leaflet as dl
 
 from dash.dependencies import Input, Output, State
-from tab_layout import about_me_tab, keyboard_tab, trip_tab
+from components.helper import remove_last_point, add_new_point
+from tab_layout import main_layout, about_me_tab, keyboard_tab, trip_tab
 
 app = dash.Dash(__name__)
 app.title = 'wow'
@@ -12,69 +11,7 @@ app.config.suppress_callback_exceptions = True
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 server = app.server
-
-app.layout = html.Div([
-    # Left contents
-    html.Div([
-        html.Div(
-            html.H1([
-                'KJ Wong'
-            ],
-                style={
-                    'color': 'white'
-                }
-            ),
-            style={
-                'margin-top': '15vh',
-            }
-        ),
-        html.Div(
-            dcc.Tabs(
-                id='tabs-parent',
-                value=None,
-                vertical=True,
-                parent_className='custom-tabs-parent',
-                className='custom-tabs',
-                children=[
-                    dcc.Tab(label='About Me', value='tab-1', className='custom-tab'),
-                    dcc.Tab(label='Keyboard', value='tab-2', className='custom-tab'),
-                    dcc.Tab(label='Trip Planner', value='tab-3', className='custom-tab'),
-                ],
-                colors={
-                    'background': '#005b96'
-                },
-                persistence=True,
-                persistence_type='session'
-            ),
-        )
-    ],
-        style={
-            'position': 'fixed',
-            'display': 'inline-block',
-            'width': '22vw',
-            'height': '97vh',
-        },
-        className='sidebar'),
-
-    # Right contents
-    html.Div(
-        id='tab-content',
-        style={
-            'display': 'inline-block',
-            'width': '76vw',
-            'margin-left': '22vw',
-        }
-    ),
-
-    # Hidden contents
-    html.Div([
-        html.Div(id='placeholder')
-    ],
-        style={
-            'display': 'none'
-        }
-    )
-])
+app.layout = main_layout()
 
 
 @app.callback(Output('placeholder', 'children'),
@@ -88,21 +25,34 @@ def play(trigger):
         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
 
-@app.callback(Output('graph-map', 'children'),
-              [Input('graph-map', 'click_lat_lng')],
-              [State('input_trip_landmark', 'value'),
-               State('graph-map', 'children')])
-def click_coord(e, landmark, children):
-    if e is not None:
-        children.append(
-            # Marker icon (dict) can contain iconUrl ("/assets/images/mapbox-icon.png") and iconSize ([25, 25])
-            # Marker children (list) can contain dl.Tooltip() and dl.Popup()
-            dl.Marker(
-                position=[e[0], e[1]],
-                children=[
-                    dl.Tooltip(landmark),
-                ]))
-    return children
+@app.callback([Output('map-trip', 'children'),
+               Output('table-trip-landmark', 'data'),
+               Output('table-trip-landmark', 'style_table'),
+               Output('table-trip-data', 'data')],
+              [Input('map-trip', 'click_lat_lng'),
+               Input('button-trip-remove', 'n_clicks')],
+              [State('input-trip-landmark', 'value'),
+               State('map-trip', 'children'),
+               State('table-trip-landmark', 'data'),
+               State('table-trip-data', 'data')])
+def click_coord(e, trigger_remove, landmark, children, data_shown, data_hidden):
+    ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    if ctx == 'button-trip-remove':
+        children, data_shown, data_hidden = remove_last_point(children, data_shown, data_hidden)
+    else:
+        if e is not None:
+            lat, lon = e
+            children, data_shown, data_hidden = add_new_point(lat, lon, landmark, children, data_shown, data_hidden)
+    if len(data_shown):
+        style_table = {
+            'width': '80%',
+            'margin': '10px 0px 0px 10px',
+        }
+    else:
+        style_table = {
+            'display': 'none'
+        }
+    return children, data_shown, style_table, data_hidden
 
 
 @app.callback(Output('tab-content', 'children'),
