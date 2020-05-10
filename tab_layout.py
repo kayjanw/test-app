@@ -120,11 +120,10 @@ def trip_tab():
                'This is obviously still a work in progress. But here is a map.'),
         html.Br(),
         html.P('Step 1: Fill in the first landmark name, the place of first and last destination'),
-        html.P('Step 2: Using the map: scroll to zoom, drag to move'),
-        html.P('Step 3: Once ready, click the point on map corresponding to the landmark name'),
-        html.P('Step 4: Repeat steps 1 to 3 until all destinations have been entered'),
-        html.P('Step 5: Select mode preference (walking / driving)'),
-        html.P('Step 6: Click "OK" button to generate the shortest and fastest route!'),
+        html.P('Step 2: Click the point on map corresponding to the landmark name'),
+        html.P('Step 3: Repeat steps 1 and 2 until all destinations have been entered'),
+        html.P('Step 4: Select mode preference (walking / driving)'),
+        html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
         html.Div([
             html.Div([
                 html.P(
@@ -167,17 +166,19 @@ def trip_tab():
                     'vertical-align': 'top'
                 },
             ),
-            html.Div(
+            html.Div([
+                html.P('Scroll to zoom, drag to move'),
                 dl.Map(
                     id='map-trip',
                     style={
-                        'height': '400px'},
+                        'height': '400px',
+                    },
                     center=[1.3521, 103.8198],
                     zoom=11,
                     children=[
                         dl.TileLayer(),
                     ]
-                ),
+                )],
                 style={
                     'display': 'inline-block',
                     'width': '60%',

@@ -2,7 +2,11 @@ import dash_leaflet as dl
 import numpy as np
 import requests
 
-GOOGLE_API_KEY = 'AIzaSyDFVPbpKdZCbDkOFzey_EgCrDqTy6ZqHCs'
+try:
+    GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
+except NameError:
+    import os
+    GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
 
 
 def remove_last_point(children, data_shown, data_hidden):
