@@ -25,7 +25,7 @@ def get_street_name(lat, lon):
 
 def add_new_point(lat, lon, landmark, children, data_shown, data_hidden):
     # Initialize landmark name if not provided
-    if landmark is None:
+    if landmark is None or landmark == '':
         landmark = f'Landmark {len(data_shown) + 1}'
 
     if len(data_shown):
