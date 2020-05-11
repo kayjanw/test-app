@@ -169,7 +169,35 @@ def trip_tab():
                     style={
                         'margin': '10px 0px 0px 10px'
                     }
-                )
+                ),
+                html.Button(
+                    'Reset all landmarks',
+                    id='button-trip-reset',
+                    style={
+                        'margin': '10px 0px 0px 10px'
+                    }
+                ),
+                html.Br(),
+                html.Button(
+                    'OK',
+                    id='button-trip-ok',
+                    style={
+                        'margin': '10px 0px 0px 10px'
+                    }
+                ),
+                dcc.Loading(
+                    children=[
+                        html.P(
+                            id='trip-results',
+                            style={
+                                'margin-top': '30px',
+                                'margin-left': '10px',
+                                'margin-right': '10px',
+                            }
+                        ),
+                    ],
+                    type='circle',
+                ),
             ],
                 style={
                     'display': 'inline-block',

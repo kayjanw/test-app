@@ -2,7 +2,8 @@ import dash
 import dash_html_components as html
 
 from dash.dependencies import Input, Output, State
-from components.trip import remove_last_point_on_table, add_new_point_on_table, get_map_from_table
+from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
+    optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, keyboard_tab, trip_tab
 
 app = dash.Dash(__name__)
@@ -29,36 +30,43 @@ def play(trigger):
                Output('table-trip-landmark', 'style_table'),
                Output('input-trip-landmark', 'value')],
               [Input('map-trip', 'click_lat_lng'),
-               Input('button-trip-remove', 'n_clicks')],
+               Input('button-trip-remove', 'n_clicks'),
+               Input('button-trip-reset', 'n_clicks')],
               [State('input-trip-landmark', 'value'),
                State('table-trip-landmark', 'data')])
-def update_trip_table(e, trigger_remove, landmark, data):
+def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-remove':
         data = remove_last_point_on_table(data)
+    elif ctx == 'button-trip-reset':
+        data = []
     else:
         if e is not None:
             lat, lon = e
             data = add_new_point_on_table(lat, lon, landmark, data)
-    if len(data):
-        style_table = {
-            'width': '80%',
-            'margin': '10px 0px 0px 10px',
-        }
-    else:
-        style_table = {
-            'display': 'none'
-        }
+    style_table = get_style_table(data)
     return data, style_table, ''
-
 
 
 @app.callback(Output('map-trip', 'children'),
               [Input('table-trip-landmark', 'data')],
               [State('map-trip', 'children')])
-def update_tripmap(data, children):
+def update_trip_map(data, children):
     children = get_map_from_table(data, children)
     return children
+
+
+@app.callback(Output('trip-results', 'children'),
+              [Input('button-trip-ok', 'n_clicks'),
+               Input('button-trip-reset', 'n_clicks')],
+              [State('table-trip-landmark', 'data')])
+def update_trip_results(trigger_ok, trigger_reset, data):
+    ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    if ctx == 'button-trip-ok':
+        answer = optimiser_pipeline(data)
+        return answer
+    elif ctx == 'button-trip-reset':
+        return ''
 
 
 @app.callback(Output('tab-content', 'children'),
