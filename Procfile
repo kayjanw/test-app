@@ -1,1 +1,1 @@
-web: grbgetkey 6b9d86f8-936b-11ea-a56a-020d093b5256 && gunicorn app:server
+web: gunicorn app:server
