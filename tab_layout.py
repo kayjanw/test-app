@@ -123,7 +123,7 @@ def trip_tab():
         html.P('Step 1: Fill in the landmark name (optional)'),
         html.P('Step 2: Click the point on map corresponding to the landmark name'),
         html.P('Step 3: Repeat steps 1 and 2 until all destinations have been entered'),
-        html.P('Step 4: Name of landmark can be altered in the table'),
+        html.P('Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name'),
         html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
         html.Div([
             html.Div([
