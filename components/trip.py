@@ -6,7 +6,9 @@ try:
     GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
 except NameError:
     import os
+    import sys
     GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+    os.environ['GRB_LICENSE_FILE'] = sys.path[-1] + '/gurobi.lic'
 
 
 def remove_last_point_on_table(data):
@@ -90,7 +92,7 @@ def get_distance_and_duration_from_table(data):
     return distance_matrix, duration_matrix
 
 
-def get_best_route(distance_matrix, duration_matrix):
+def best_route_gurobi(distance_matrix):
     import pyomo.environ as pyEnv
     import pyutilib.subprocess.GlobalData
     pyutilib.subprocess.GlobalData.DEFINE_SIGNAL_HANDLERS_DEFAULT = False
@@ -150,19 +152,37 @@ def get_best_route(distance_matrix, duration_matrix):
         routes_sorted.append((elem, route_dict[elem]))
         elem = route_dict[elem]
 
-    total_distance = np.sum([distance_matrix[route] for route in routes])
-    total_time = np.sum([duration_matrix[route] for route in routes])
-    return routes_sorted, total_distance, total_time
+    return routes_sorted
+
+
+def best_route_nn(distance_matrix):
+    idx = 0
+    visited_landmarks = [0]
+    routes_sorted = []
+    while len(visited_landmarks) <= len(distance_matrix):
+        print(visited_landmarks)
+        distances = distance_matrix[idx]
+        for visited_landmark in visited_landmarks:
+            distances[visited_landmark] = np.inf
+        idx_next = distances.argmin()
+        routes_sorted.append((idx, idx_next))
+        visited_landmarks.append(idx_next)
+        idx = idx_next
+    return routes_sorted
 
 
 def optimiser_pipeline(data):
     try:
         landmarks = [x['Landmark'] for x in data]
         distance_matrix, duration_matrix = get_distance_and_duration_from_table(data)
-        routes_sorted, total_distance, total_time = get_best_route(distance_matrix, duration_matrix)
-        distance_km = np.round(total_distance / 1000, 2)
-        duration_hour = int(np.floor(total_time/3600))
-        duration_min = int(np.floor((total_time%3600)/60))
+        try:
+            routes_sorted = best_route_gurobi(distance_matrix)
+        except Exception:
+            routes_sorted = best_route_nn(distance_matrix)
+        distance_km = np.round(np.sum([distance_matrix[route] for route in routes_sorted]) / 1000, 2)
+        duration = np.sum([duration_matrix[route] for route in routes_sorted])
+        duration_hour = int(np.floor(duration / 3600))
+        duration_min = int(np.floor((duration % 3600) / 60))
         answer = f"Optimal route is {' → '.join([landmarks[i] for i, j in routes_sorted])} → {landmarks[0]} " \
                  f"which is {distance_km} km and will take {duration_hour} hour(s), {duration_min} mins"
     except Exception as e:
