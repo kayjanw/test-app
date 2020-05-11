@@ -122,7 +122,8 @@ def best_route_gurobi(distance_matrix):
     def rule_no_subtours(model, i, j):
         if i != j:
             return model.u[i] - model.u[j] + model.x[i, j] * n <= n - 1
-        else:
+        else\
+                :
             return model.u[i] - model.u[i] == 0
 
     model.objective = pyEnv.Objective(rule=min_cost, sense=pyEnv.minimize)
@@ -161,7 +162,7 @@ def best_route_nn(distance_matrix):
     routes_sorted = []
     while len(visited_landmarks) <= len(distance_matrix):
         print(visited_landmarks)
-        distances = distance_matrix[idx]
+        distances = distance_matrix[idx].copy()
         for visited_landmark in visited_landmarks:
             distances[visited_landmark] = np.inf
         idx_next = distances.argmin()
