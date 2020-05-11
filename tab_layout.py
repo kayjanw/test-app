@@ -118,8 +118,7 @@ def trip_tab():
         header('Trip Planner', 'Shortest distance everrrrr'),
         html.P('Users can fill in the destinations and optimal route will be calculated, '
                'starting and ending from the first destination specified. '
-               'This is also known as the Travelling Salesman Problem. '
-               '(This is obviously still a work in progress. But here is a map.)'),
+               'This is also known as the Travelling Salesman Problem.'),
         html.Br(),
         html.P('Step 1: Fill in the landmark name (optional)'),
         html.P('Step 2: Click the point on map corresponding to the landmark name'),
