@@ -31,6 +31,16 @@ a:hover {
     color: #005b96;
 }
 
+/* Button
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+button:disabled,
+button[disabled] {
+    background-color: #cccccc;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+
 /* Dash leaflet style
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .leaflet-container {
