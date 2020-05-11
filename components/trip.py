@@ -93,6 +93,9 @@ def get_distance_and_duration_from_table(data):
 
 
 def best_route_gurobi(distance_matrix):
+    """
+    Using gurobi optimiser
+    """
     import pyomo.environ as pyEnv
     import pyutilib.subprocess.GlobalData
     pyutilib.subprocess.GlobalData.DEFINE_SIGNAL_HANDLERS_DEFAULT = False
@@ -139,37 +142,92 @@ def best_route_gurobi(distance_matrix):
         raise Exception(f'Cannot connect to gurobi optimization solver, error message: {e}')
 
     # Optimal route
-    routes = []
+    routes_unsorted = []
     for edge in list(model.x.keys()):
         if model.x[edge]() != 0 and model.x[edge]() is not None:
             landmark_from, landmark_to = edge
-            routes.append((landmark_from-1, landmark_to-1))
+            routes_unsorted.append((landmark_from-1, landmark_to-1))
 
     # Sort the route in order
-    route_dict = dict(routes)
-    elem = routes[0][0]
-    routes_sorted = []
-    for _ in range(len(routes)):
-        routes_sorted.append((elem, route_dict[elem]))
+    route_dict = dict(routes_unsorted)
+    elem = routes_unsorted[0][0]
+    routes = []
+    for _ in range(len(routes_unsorted)):
+        routes.append((elem, route_dict[elem]))
         elem = route_dict[elem]
 
-    return routes_sorted
+    return routes
 
 
-def best_route_nn(distance_matrix):
+def best_route_nearest_neighbour(distance_matrix):
+    """
+    Nearest neighbour heuristic
+    """
     idx = 0
-    visited_landmarks = [0]
-    routes_sorted = []
+    visited_landmarks = [idx]
+    routes = []
     while len(visited_landmarks) <= len(distance_matrix):
-        print(visited_landmarks)
         distances = distance_matrix[idx].copy()
+        # Replace visited landmarks with distance infinity
         for visited_landmark in visited_landmarks:
             distances[visited_landmark] = np.inf
+
+        # Get next landmark
         idx_next = distances.argmin()
-        routes_sorted.append((idx, idx_next))
+
+        # Add next landmark and reset variables
+        routes.append((idx, idx_next))
         visited_landmarks.append(idx_next)
         idx = idx_next
-    return routes_sorted
+    return routes
+
+
+def get_permutation_of_routes(routes_list, landmark):
+    permutation = []
+    for idx in range(1, len(routes_list)+1):
+        routes_list_copy = routes_list.copy()
+        routes_list_copy.insert(idx, landmark)
+        permutation.append(routes_list_copy)
+    return permutation
+
+
+def get_routes_from_list(routes_list):
+    return [(routes_list[idx], routes_list[idx+1]) for idx, _ in enumerate(routes_list[:-1])]
+
+
+def get_distance_from_routes(routes, distance_matrix):
+    distance_km = np.round(np.sum([distance_matrix[route] for route in routes]) / 1000, 2)
+    return distance_km
+
+
+def best_route_nearest_insertion(distance_matrix):
+    """
+    Nearest insertion heuristic
+    """
+    idx = 0
+    idx_next = distance_matrix[0][1:].argmin() + 1
+    visited_landmarks = [idx, idx_next]
+    for idx_next in range(len(distance_matrix)):
+        best_distance = np.inf
+        if idx_next not in visited_landmarks:
+            # Get permutation of next insertion
+            test_routes = get_permutation_of_routes(visited_landmarks, idx_next)
+            for test_route in test_routes:
+                # Complete the loop and get shortest distance
+                test_route.append(idx)
+                test_distance = get_distance_from_routes(get_routes_from_list(test_route), distance_matrix)
+                if test_distance < best_distance:
+                    best_route = test_route
+                    best_distance = test_distance
+            visited_landmarks = best_route[:-1]
+    visited_landmarks.append(idx)
+
+    # Double check direction of travel
+    best_distance = get_distance_from_routes(get_routes_from_list(visited_landmarks), distance_matrix)
+    if best_distance > get_distance_from_routes(get_routes_from_list(visited_landmarks[::-1]), distance_matrix):
+        visited_landmarks = visited_landmarks[::-1]
+    routes = get_routes_from_list(visited_landmarks)
+    return routes
 
 
 def optimiser_pipeline(data):
@@ -177,14 +235,15 @@ def optimiser_pipeline(data):
         landmarks = [x['Landmark'] for x in data]
         distance_matrix, duration_matrix = get_distance_and_duration_from_table(data)
         try:
-            routes_sorted = best_route_gurobi(distance_matrix)
+            routes = best_route_gurobi(distance_matrix)
         except Exception:
-            routes_sorted = best_route_nn(distance_matrix)
-        distance_km = np.round(np.sum([distance_matrix[route] for route in routes_sorted]) / 1000, 2)
-        duration = np.sum([duration_matrix[route] for route in routes_sorted])
+            routes = best_route_nearest_insertion(distance_matrix)
+            # routes = best_route_nearest_neighbour(distance_matrix)
+        distance_km = get_distance_from_routes(routes, distance_matrix)
+        duration = np.sum([duration_matrix[route] for route in routes])
         duration_hour = int(np.floor(duration / 3600))
         duration_min = int(np.floor((duration % 3600) / 60))
-        answer = f"Optimal route is {' → '.join([landmarks[i] for i, j in routes_sorted])} → {landmarks[0]} " \
+        answer = f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]} " \
                  f"which is {distance_km} km and will take {duration_hour} hour(s), {duration_min} mins"
     except Exception as e:
         return str(e)
