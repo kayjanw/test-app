@@ -2,7 +2,7 @@ import dash
 import dash_html_components as html
 
 from dash.dependencies import Input, Output, State
-from components.helper import remove_last_point, add_new_point
+from components.trip import remove_last_point_on_table, add_new_point_on_table, get_map_from_table
 from tab_layout import main_layout, about_me_tab, keyboard_tab, trip_tab
 
 app = dash.Dash(__name__)
@@ -25,25 +25,22 @@ def play(trigger):
         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
 
-@app.callback([Output('map-trip', 'children'),
-               Output('table-trip-landmark', 'data'),
+@app.callback([Output('table-trip-landmark', 'data'),
                Output('table-trip-landmark', 'style_table'),
-               Output('table-trip-data', 'data')],
+               Output('input-trip-landmark', 'value')],
               [Input('map-trip', 'click_lat_lng'),
                Input('button-trip-remove', 'n_clicks')],
               [State('input-trip-landmark', 'value'),
-               State('map-trip', 'children'),
-               State('table-trip-landmark', 'data'),
-               State('table-trip-data', 'data')])
-def click_coord(e, trigger_remove, landmark, children, data_shown, data_hidden):
+               State('table-trip-landmark', 'data')])
+def update_trip_table(e, trigger_remove, landmark, data):
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-remove':
-        children, data_shown, data_hidden = remove_last_point(children, data_shown, data_hidden)
+        data = remove_last_point_on_table(data)
     else:
         if e is not None:
             lat, lon = e
-            children, data_shown, data_hidden = add_new_point(lat, lon, landmark, children, data_shown, data_hidden)
-    if len(data_shown):
+            data = add_new_point_on_table(lat, lon, landmark, data)
+    if len(data):
         style_table = {
             'width': '80%',
             'margin': '10px 0px 0px 10px',
@@ -52,7 +49,16 @@ def click_coord(e, trigger_remove, landmark, children, data_shown, data_hidden):
         style_table = {
             'display': 'none'
         }
-    return children, data_shown, style_table, data_hidden
+    return data, style_table, ''
+
+
+
+@app.callback(Output('map-trip', 'children'),
+              [Input('table-trip-landmark', 'data')],
+              [State('map-trip', 'children')])
+def update_tripmap(data, children):
+    children = get_map_from_table(data, children)
+    return children
 
 
 @app.callback(Output('tab-content', 'children'),

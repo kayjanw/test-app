@@ -9,12 +9,9 @@ except NameError:
     GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
 
 
-def remove_last_point(children, data_shown, data_hidden):
-    if len(children) > 1:
-        children = children[:-1]
-    data_shown = data_shown[:-1]
-    data_hidden = data_hidden[:-1]
-    return children, data_shown, data_hidden
+def remove_last_point_on_table(data):
+    data = data[:-1]
+    return data
 
 
 def get_street_name(lat, lon):
@@ -23,44 +20,41 @@ def get_street_name(lat, lon):
     return page['results'][0]['address_components'][1]['long_name']
 
 
-def add_new_point(lat, lon, landmark, children, data_shown, data_hidden):
+def add_new_point_on_table(lat, lon, landmark, data):
     # Initialize landmark name if not provided
     if landmark is None or landmark == '':
-        landmark = f'Landmark {len(data_shown) + 1}'
+        landmark = f'Landmark {len(data) + 1}'
 
-    if len(data_shown):
+    if len(data):
         # Subsequent landmarks
-        data_shown.append(
+        data.append(
             dict(Landmark=landmark,
-                 Street=get_street_name(lat, lon))
-        )
-        data_hidden.append(
-            dict(landmark=landmark,
+                 Street=get_street_name(lat, lon),
                  lat=lat,
                  lon=lon)
         )
     else:
         # If first landmark
-        data_shown = [
+        data = [
             dict(Landmark=landmark,
-                 Street=get_street_name(lat, lon))
-        ]
-        data_hidden = [
-            dict(landmark=landmark,
+                 Street=get_street_name(lat, lon),
                  lat=lat,
                  lon=lon)
         ]
+    return data
 
-    # Add custom marker to map
-    children.append(
+
+def get_map_from_table(data, children):
+    children = [children[0]] + [
         # Marker icon (dict) can contain iconUrl ("/assets/images/mapbox-icon.png") and iconSize ([25, 25])
         # Marker children (list) can contain dl.Tooltip() and dl.Popup()
         dl.Marker(
-            position=[lat, lon],
+            position=[landmark['lat'], landmark['lon']],
             children=[
-                dl.Tooltip(landmark),
-            ]))
-    return children, data_shown, data_hidden
+                dl.Tooltip(landmark['Landmark']),
+            ]) for landmark in data
+    ]
+    return children
 
 
 def get_distance(n):

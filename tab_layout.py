@@ -116,13 +116,15 @@ def keyboard_tab():
 def trip_tab():
     return html.Div([
         header('Trip Planner', 'Shortest distance everrrrr'),
-        html.P('Users can fill in the destinations and optimal route will be calculated. '
-               'This is obviously still a work in progress. But here is a map.'),
+        html.P('Users can fill in the destinations and optimal route will be calculated, '
+               'starting and ending from the first destination specified. '
+               'This is also known as the Travelling Salesman Problem. '
+               '(This is obviously still a work in progress. But here is a map.)'),
         html.Br(),
-        html.P('Step 1: Fill in the first landmark name, the place of first and last destination'),
+        html.P('Step 1: Fill in the landmark name (optional)'),
         html.P('Step 2: Click the point on map corresponding to the landmark name'),
         html.P('Step 3: Repeat steps 1 and 2 until all destinations have been entered'),
-        html.P('Step 4: Select mode preference (walking / driving)'),
+        html.P('Step 4: Name of landmark can be altered in the table'),
         html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
         html.Div([
             html.Div([
@@ -146,10 +148,20 @@ def trip_tab():
                 dash_table.DataTable(
                     id='table-trip-landmark',
                     columns=[
-                        dict(name='Landmark', id='Landmark'),
-                        dict(name='Street', id='Street')
+                        dict(name='Landmark', id='Landmark', editable=True),
+                        dict(name='Street', id='Street'),
+                        dict(name='lat', id='lat'),
+                        dict(name='lon', id='lon')
                     ],
                     data=[],
+                    style_cell_conditional=[
+                        {
+                            'if': {
+                                'column_id': c
+                            },
+                            'display': 'none'
+                        } for c in ['lat', 'lon']
+                    ]
                 ),
                 html.Button(
                     'Remove last landmark',
@@ -190,21 +202,4 @@ def trip_tab():
                 'text-align': 'center',
             },
         ),
-
-        # Hidden container
-        html.Div([
-            dash_table.DataTable(
-                id='table-trip-data',
-                columns=[
-                    dict(name='landmark', id='landmark'),
-                    dict(name='lat', id='lat'),
-                    dict(name='lon', id='lon')
-                ],
-                data=[],
-            ),
-        ],
-            style={
-                'display': 'none'
-            }
-        )
     ])
