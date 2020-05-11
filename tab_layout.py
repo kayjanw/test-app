@@ -191,8 +191,8 @@ def trip_tab():
                             id='trip-results',
                             style={
                                 'margin-top': '30px',
-                                'margin-left': '10px',
                                 'margin-right': '10px',
+                                'margin-left': '-10px'
                             }
                         ),
                     ],

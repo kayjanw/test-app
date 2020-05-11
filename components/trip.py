@@ -232,6 +232,8 @@ def best_route_nearest_insertion(distance_matrix):
 
 
 def optimiser_pipeline(data):
+    if len(data) < 2:
+        return html.P('Please input more landmarks')
     try:
         landmarks = [x['Landmark'] for x in data]
         distance_matrix, duration_matrix = get_distance_and_duration_from_table(data)
