@@ -1,3 +1,4 @@
+import dash_html_components as html
 import dash_leaflet as dl
 import numpy as np
 import requests
@@ -243,8 +244,11 @@ def optimiser_pipeline(data):
         duration = np.sum([duration_matrix[route] for route in routes])
         duration_hour = int(np.floor(duration / 3600))
         duration_min = int(np.floor((duration % 3600) / 60))
-        answer = f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]} " \
-                 f"which is {distance_km} km and will take {duration_hour} hour(s), {duration_min} mins"
+        answer = [
+            html.P(f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"),
+            html.P(f"Distance: {distance_km} km"),
+            html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins")
+        ]
     except Exception as e:
         return str(e)
     return answer
