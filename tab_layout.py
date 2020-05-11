@@ -187,7 +187,7 @@ def trip_tab():
                 ),
                 dcc.Loading(
                     children=[
-                        html.P(
+                        html.Div(
                             id='trip-results',
                             style={
                                 'margin-top': '30px',
