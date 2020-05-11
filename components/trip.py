@@ -166,5 +166,5 @@ def optimiser_pipeline(data):
         answer = f"Optimal route is {' → '.join([landmarks[i] for i, j in routes_sorted])} → {landmarks[0]} " \
                  f"which is {distance_km} km and will take {duration_hour} hour(s), {duration_min} mins"
     except Exception as e:
-        return e
+        return str(e)
     return answer
