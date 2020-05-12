@@ -249,7 +249,8 @@ def optimiser_pipeline(data):
         answer = [
             html.P(f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"),
             html.P(f"Distance: {distance_km} km"),
-            html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins")
+            html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins"),
+            html.P("This assumes travel mode by driving, and actual duration may depend on traffic conditions")
         ]
     except Exception as e:
         return str(e)
