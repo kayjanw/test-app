@@ -29,7 +29,7 @@ def main_layout():
                     className='custom-tabs',
                     children=[
                         dcc.Tab(label='About Me', value='tab-1', className='custom-tab'),
-                        dcc.Tab(label='Keyboard', value='tab-2', className='custom-tab'),
+                        dcc.Tab(label='Keyboard (WIP)', value='tab-2', className='custom-tab'),
                         dcc.Tab(label='Trip Planner', value='tab-3', className='custom-tab'),
                     ],
                     colors={
