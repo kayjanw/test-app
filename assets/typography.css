@@ -1,17 +1,25 @@
+/* Colour Palette
+Grey #57555A
+Deep blue #202029
+Dark pink #BE9B89
+Light pink #F0E3DF
+Light grey #F0E3DF
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 body {
-    background-color: black;
-    color: #BDBDBF;
+    background-color: white;
+    color: black;
 }
 
 /* Scrollbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 body::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
 }
 body::-webkit-scrollbar-thumb {
-    background-color: #BDBDBF;
+    background-color: #202029;
 }
 
 /* Typography
@@ -24,28 +32,28 @@ h1, h2, h3, h4, h5, h6, p, span {
 h1 {
   font-family: Playfair Display;
   font-size: 45px;
-  color: white;
+  color: #BE9B89;
 }
 
 /* Subtitle */
 h3 {
-  color: #FFC107;
+  color: #BE9B89;
 }
 
 h4 {
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: #FFC107;
+  -webkit-text-stroke-color: #BE9B89;
 }
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-    color: white;
+    color: black;
 }
 
 a:hover {
-    color: #FFC107;
+    color: #BE9B89;
 }
 
 /* Input
@@ -60,6 +68,7 @@ input {
 button {
     font-family: Source Sans Pro;
     background-color: white;
+    color: #202029;
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -80,10 +89,12 @@ button[disabled] {
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .sidebar {
-    background-color: #202029;
+    top: 0;
+    left: 0;
     position: fixed;
     display: inline-block;
     width: 15vw;
+    background-color: #202029;
 }
 
 .contents {
@@ -93,8 +104,9 @@ button[disabled] {
 }
 
 .custom-div {
-    background-color: #202029;
     border-radius: 10px;
+    background-color: #202029;
+    color: white;
 }
 
 /* Tabs
@@ -111,18 +123,18 @@ button[disabled] {
 
 .custom-tab:hover {
     background-color: #31313A !important;
-    color: white !important;
+    color: #AFAFB9 !important;
 }
 
 .custom-tab-selected {
-    background-color: black !important;
-    color: white !important;
+    background-color: #F0E3DF !important;
+    color: #202029 !important;
 }
 
 .custom-tab {
-    font-family: "Poppins";
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
+    color: #BE9B89;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     border-top: 3px solid transparent !important;

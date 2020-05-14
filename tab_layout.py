@@ -143,7 +143,8 @@ def trip_tab():
                     data=[],
                     style_as_list_view=True,
                     style_header={
-                        'fontWeight': 'bold'
+                        'fontWeight': 'bold',
+                        'textAlign': 'left'
                     },
                     style_cell_conditional=[
                         {
@@ -156,6 +157,8 @@ def trip_tab():
                     style_cell={
                         'background-color': 'transparent',
                         'color': 'white',
+                        'font-family': 'Source Sans Pro',
+                        'font-size': 13,
                         'textAlign': 'left'
                     },
                     css=[{
@@ -199,9 +202,9 @@ def trip_tab():
                 style={
                     'display': 'inline-block',
                     'width': '32%',
-                    'margin': '20px',
+                    'margin': '2%',
                     'margin-top': '40px',
-                    'padding': '20px',
+                    'padding': '2%',
                     'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
