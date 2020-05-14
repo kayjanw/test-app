@@ -16,13 +16,13 @@ body::-webkit-scrollbar-thumb {
 
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-h1, h2, h3, h4, h5, h6, p {
-    font-family: Poppins;
+h1, h2, h3, h4, h5, h6, p, span {
+    font-family: Source Sans Pro;
     margin-left: 20px;
 }
 
 h1 {
-  font-family: Kalam;
+  font-family: Playfair Display;
   font-size: 45px;
   color: white;
 }
