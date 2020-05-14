@@ -11,11 +11,7 @@ def main_layout():
             html.Div(
                 html.H1([
                     'KJ Wong'
-                ],
-                    style={
-                        'color': 'white'
-                    }
-                ),
+                ]),
                 style={
                     'margin-top': '15vh',
                 }
@@ -28,12 +24,12 @@ def main_layout():
                     parent_className='custom-tabs-parent',
                     className='custom-tabs',
                     children=[
-                        dcc.Tab(label='About Me', value='tab-1', className='custom-tab'),
-                        dcc.Tab(label='Keyboard (WIP)', value='tab-2', className='custom-tab'),
-                        dcc.Tab(label='Trip Planner', value='tab-3', className='custom-tab'),
+                        dcc.Tab(label='About Me', value='tab-1', className='custom-tab', selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Keyboard (WIP)', value='tab-2', className='custom-tab', selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Trip Planner', value='tab-3', className='custom-tab', selected_className='custom-tab-selected'),
                     ],
                     colors={
-                        'background': '#005b96'
+                        'background': '#202029'
                     },
                     persistence=True,
                     persistence_type='session'
@@ -41,21 +37,14 @@ def main_layout():
             )
         ],
             style={
-                'position': 'fixed',
-                'display': 'inline-block',
-                'width': '22vw',
-                'height': '97vh',
+                'height': '97vh'
             },
             className='sidebar'),
 
         # Right contents
         html.Div(
             id='tab-content',
-            style={
-                'display': 'inline-block',
-                'width': '76vw',
-                'margin-left': '22vw',
-            }
+            className='contents'
         ),
 
         # Hidden contents
@@ -131,8 +120,7 @@ def trip_tab():
                     'Name of landmark:',
                     style={
                         'display': 'inline-block',
-                        'margin-top': '50px',
-                        'margin-left': '10px'
+                        'margin': 0,
                     }
                 ),
                 dcc.Input(
@@ -153,6 +141,10 @@ def trip_tab():
                         dict(name='lon', id='lon')
                     ],
                     data=[],
+                    style_as_list_view=True,
+                    style_header={
+                        'fontWeight': 'bold'
+                    },
                     style_cell_conditional=[
                         {
                             'if': {
@@ -160,29 +152,34 @@ def trip_tab():
                             },
                             'display': 'none'
                         } for c in ['lat', 'lon']
-                    ]
+                    ],
+                    style_cell={
+                        'background-color': 'transparent',
+                        'color': 'white',
+                        'textAlign': 'left'
+                    },
+                    css=[{
+                        'selector': 'tr:hover',
+                        'rule': 'background-color: black; color: white'
+                    }, {
+                        'selector': 'td.cell--selected *, td.focused *',
+                        'rule': 'background-color: black !important;'
+                                'color: white !important;'
+                                'text-align: left;'
+                    }]
                 ),
                 html.Button(
                     'Remove last landmark',
                     id='button-trip-remove',
-                    style={
-                        'margin': '10px 0px 0px 10px'
-                    }
                 ),
                 html.Button(
                     'Reset all landmarks',
                     id='button-trip-reset',
-                    style={
-                        'margin': '10px 0px 0px 10px'
-                    }
                 ),
                 html.Br(),
                 html.Button(
                     'OK',
                     id='button-trip-ok',
-                    style={
-                        'margin': '10px 0px 0px 10px'
-                    }
                 ),
                 dcc.Loading(
                     children=[
@@ -200,10 +197,16 @@ def trip_tab():
             ],
                 style={
                     'display': 'inline-block',
-                    'width': '38%',
+                    'width': '32%',
+                    'margin': '20px',
+                    'margin-top': '40px',
+                    'padding': '20px',
+                    'padding-top': '20px',
+                    'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
                 },
+                className='custom-div'
             ),
             html.Div([
                 html.P('Scroll to zoom, drag to move'),
@@ -226,7 +229,9 @@ def trip_tab():
             ),
         ],
             style={
+                'margin-top': '20px',
+                'margin-bottom': '20px',
                 'text-align': 'center',
-            },
+            }
         ),
     ])
