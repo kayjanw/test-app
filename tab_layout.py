@@ -193,6 +193,7 @@ def trip_tab():
                         ),
                     ],
                     type='circle',
+                    color='#BDBDBF'
                 ),
             ],
                 style={
@@ -201,7 +202,6 @@ def trip_tab():
                     'margin': '20px',
                     'margin-top': '40px',
                     'padding': '20px',
-                    'padding-top': '20px',
                     'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
@@ -224,14 +224,14 @@ def trip_tab():
                 style={
                     'display': 'inline-block',
                     'width': '60%',
-                    'vertical-align': 'top',
+                    'vertical-align': 'top'
                 },
             ),
         ],
             style={
                 'margin-top': '20px',
                 'margin-bottom': '20px',
-                'text-align': 'center',
+                'text-align': 'center'
             }
         ),
     ])
