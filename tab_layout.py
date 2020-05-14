@@ -37,7 +37,7 @@ def main_layout():
             )
         ],
             style={
-                'height': '97vh'
+                'height': '100vh'
             },
             className='sidebar'),
 
