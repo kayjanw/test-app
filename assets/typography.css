@@ -52,11 +52,13 @@ a:hover {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 input {
     background-color: white !important;
+    font-family: Source Sans Pro !important;
 }
 
 /* Button
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button {
+    font-family: Source Sans Pro;
     background-color: white;
     margin-top: 10px;
     margin-right: 10px;
