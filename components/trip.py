@@ -66,6 +66,11 @@ def get_map_from_table(data, children):
         # Marker children (list) can contain dl.Tooltip() and dl.Popup()
         dl.Marker(
             position=[landmark['lat'], landmark['lon']],
+            icon={
+                'iconUrl': '/assets/map-icon.svg',
+                'iconSize': [38, 100],
+                'iconAnchor': [19, 70]
+            },
             children=[
                 dl.Tooltip(landmark['Landmark']),
             ]) for landmark in data
