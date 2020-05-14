@@ -196,7 +196,7 @@ def trip_tab():
                         ),
                     ],
                     type='circle',
-                    color='#BDBDBF'
+                    color='white'
                 ),
             ],
                 style={
