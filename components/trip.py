@@ -242,6 +242,10 @@ def optimiser_pipeline(data):
         except Exception:
             routes = best_route_nearest_insertion(distance_matrix)
             # routes = best_route_nearest_neighbour(distance_matrix)
+        print(data)
+        print(best_route_gurobi(distance_matrix))
+        print(best_route_nearest_insertion(distance_matrix))
+        print(best_route_nearest_neighbour(distance_matrix))
         distance_km = get_distance_from_routes(routes, distance_matrix)
         duration = np.sum([duration_matrix[route] for route in routes])
         duration_hour = int(np.floor(duration / 3600))

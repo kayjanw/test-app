@@ -1,3 +1,19 @@
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+body {
+    background-color: black;
+    color: #BDBDBF;
+}
+
+/* Scrollbar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+body::-webkit-scrollbar {
+    width: 5px;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #BDBDBF;
+}
+
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6, p {
@@ -8,38 +24,50 @@ h1, h2, h3, h4, h5, h6, p {
 h1 {
   font-family: Kalam;
   font-size: 45px;
+  color: white;
 }
 
 /* Subtitle */
 h3 {
-  color: #005b96;
+  color: #FFC107;
 }
 
 h4 {
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: #005b96;
+  -webkit-text-stroke-color: #FFC107;
 }
 
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-    color: black;
+    color: white;
 }
 
 a:hover {
-    color: #005b96;
+    color: #FFC107;
+}
+
+/* Input
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input {
+    background-color: white !important;
 }
 
 /* Button
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+button {
+    background-color: white;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 button:disabled,
 button[disabled] {
     background-color: #cccccc;
     opacity: 0.6;
     pointer-events: none;
 }
-
 
 /* Dash leaflet style
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -50,28 +78,48 @@ button[disabled] {
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .sidebar {
-    background-color: #005b96;
+    background-color: #202029;
+    position: fixed;
+    display: inline-block;
+    width: 15vw;
 }
 
+.contents {
+    display: inline-block;
+    width: 83vw;
+    margin-left: 15vw
+}
+
+.custom-div {
+    background-color: #202029;
+    border-radius: 10px;
+}
+
+/* Tabs
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 .custom-tabs-parent {
     width: 100%;
 }
 
 .custom-tabs {
     margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 10px;
     width: 100%;
 }
 
 .custom-tab:hover {
-    color: black;
-    background-color: white !important;
+    background-color: #31313A !important;
+    color: white !important;
+}
+
+.custom-tab-selected {
+    background-color: black !important;
+    color: white !important;
 }
 
 .custom-tab {
-    color: white;
     font-family: "Poppins";
-    font-size: 22px;
+    font-size: 15px;
     font-weight: bold;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -82,5 +130,5 @@ button[disabled] {
     padding: 12px !important;
     display: flex !important;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
