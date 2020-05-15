@@ -6,10 +6,13 @@ import requests
 try:
     GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
 except NameError:
-    import os
-    import sys
-    GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-    os.environ['GRB_LICENSE_FILE'] = sys.path[-1] + '/gurobi.lic'
+    try:
+        import os
+        import sys
+        GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+        os.environ['GRB_LICENSE_FILE'] = sys.path[-1] + '/gurobi.lic'
+    except KeyError:
+        pass
 
 
 def remove_last_point_on_table(data):

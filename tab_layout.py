@@ -1,3 +1,4 @@
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_leaflet as dl
@@ -24,9 +25,14 @@ def main_layout():
                     parent_className='custom-tabs-parent',
                     className='custom-tabs',
                     children=[
-                        dcc.Tab(label='About Me', value='tab-1', className='custom-tab', selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Keyboard (WIP)', value='tab-2', className='custom-tab', selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Trip Planner', value='tab-3', className='custom-tab', selected_className='custom-tab-selected'),
+                        dcc.Tab(label='About Me', value='tab-1', className='custom-tab',
+                                selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab',
+                                selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Change calculator', value='tab-3', className='custom-tab',
+                                selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Keyboard (WIP)', value='tab-4', className='custom-tab',
+                                selected_className='custom-tab-selected'),
                     ],
                     colors={
                         'background': '#202029'
@@ -224,6 +230,204 @@ def trip_tab():
                         dl.TileLayer(),
                     ]
                 )],
+                style={
+                    'display': 'inline-block',
+                    'width': '60%',
+                    'vertical-align': 'top'
+                },
+            ),
+        ],
+            style={
+                'margin-top': '20px',
+                'margin-bottom': '20px',
+                'text-align': 'center'
+            }
+        ),
+    ])
+
+
+def change_calculator_tab():
+    return html.Div([
+        header('Change Calculator', 'Change is the only constant'),
+        html.P('Users can view summary statistics and plot a scatterplot of past values (x axis) against present '
+               'values (y axis).'),
+        html.Br(),
+        html.P('Step 1: Upload a file (.xls, .xlsx, .csv supported)'),
+        html.P('Step 2: Specify the columns for past values (x axis) and present values (y axis)'),
+        html.P('Step 3: Specify the maximum possible value for each column to normalize the column values (optional)'),
+        html.P('Step 4: Click "OK" button to generate the results!'),
+        html.P('* Graph ignores values that are not in numerical format'),
+        html.P('* Points above the line represent positive change, and distance from the line represent magnitude of '
+               'change'),
+        html.P('* If median higher than mean: data is skewed to the left; there is a long tail of low scores pulling '
+               'the mean down'),
+        html.Div([
+            html.Div([
+                dcc.Upload(
+                    html.P(
+                        'Drag and drop files here, or click to upload',
+                        style={
+                            'margin': 0
+                        }
+                    ),
+                    id='upload-change',
+                    style={
+                        'borderWidth': '1px',
+                        'borderStyle': 'dashed',
+                        'borderRadius': '5px',
+                        'textAlign': 'center',
+                        'padding': '10px',
+                    },
+                    multiple=False
+                ),
+                html.P([
+                    'Select x-axis: ',
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown-change-x',
+                            placeholder='Select column',
+                            clearable=False,
+                            style={
+                                'width': '100%',
+                                'color': 'black'
+                            }
+                        ),
+                    ],
+                        style={
+                            'display': 'inline-block',
+                            'verticalAlign': 'middle',
+                            'width': '35%'
+                        }
+                    ),
+                    ' out of ',
+                    dcc.Input(
+                        id='input-change-x',
+                        type='number',
+                        min=1,
+                        style={'display': 'inline-block', 'width': '20%'}
+                    )
+                ],
+                    style={
+                        'margin': 0,
+                        'margin-top': '10px'
+                    }
+                ),
+                html.P([
+                    'Select y-axis: ',
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown-change-y',
+                            placeholder='Select column',
+                            clearable=False,
+                            style={
+                                'width': '100%',
+                                'color': 'black'
+                            }
+                        ),
+                    ],
+                        style={
+                            'display': 'inline-block',
+                            'verticalAlign': 'middle',
+                            'width': '35%'
+                        }
+                    ),
+                    ' out of ',
+                    dcc.Input(
+                        id='input-change-y',
+                        type='number',
+                        min=1,
+                        style={'display': 'inline-block', 'width': '20%'}
+                    )
+                ],
+                    style={
+                        'margin': 0,
+                        'margin-top': '10px'
+                    }
+                ),
+                html.Button(
+                    'OK',
+                    id='button-change-ok',
+                ),
+                html.Div(
+                    id='intermediate-change-result',
+                    style={
+                        'display': 'none'
+                    }
+                ),
+                html.Div(
+                    id='change-results',
+                    style={
+                        'margin-top': '30px'
+                    }
+                ),
+            ],
+                style={
+                    'display': 'inline-block',
+                    'width': '32%',
+                    'margin': '2%',
+                    'margin-top': '40px',
+                    'padding': '2%',
+                    'padding-bottom': '50px',
+                    'text-align': 'left',
+                    'vertical-align': 'top'
+                },
+                className='custom-div'
+            ),
+            html.Div([
+                html.P('Mouseover for information, highlight to zoom, double click to reset view'),
+                html.Div([
+                    dcc.Graph(
+                        id='graph-change-results'
+                    )
+                ])
+            ],
+                style={
+                    'display': 'inline-block',
+                    'width': '60%',
+                    'vertical-align': 'top'
+                }
+            ),
+        ],
+            style={
+                'margin-top': '20px',
+                'margin-bottom': '20px',
+                'text-align': 'center'
+            }
+        ),
+    ])
+
+
+def sample_tab():
+    return html.Div([
+        header('Header', 'Subheader'),
+        html.P('Description'),
+        html.Br(),
+        html.P('Step 1: '),
+        html.P('Step 2: '),
+        html.Div([
+            html.Div([
+                html.P(
+                    'Left component',
+                    style={
+                        'margin': 0,
+                    }
+                ),
+            ],
+                style={
+                    'display': 'inline-block',
+                    'width': '32%',
+                    'margin': '2%',
+                    'margin-top': '40px',
+                    'padding': '2%',
+                    'padding-bottom': '50px',
+                    'text-align': 'left',
+                    'vertical-align': 'top'
+                },
+                className='custom-div'
+            ),
+            html.Div([
+                html.P('Right component')
+            ],
                 style={
                     'display': 'inline-block',
                     'width': '60%',
