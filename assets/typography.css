@@ -63,6 +63,16 @@ input {
     font-family: Source Sans Pro !important;
 }
 
+/* Dropdown
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#dropdown-change-x #dropdown-change-y {
+    color: black;
+}
+
+#dropdown-change-x .VirtualizedSelectFocusedOption {
+    background-color: grey;
+}
+
 /* Button
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button {
