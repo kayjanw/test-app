@@ -7,8 +7,8 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 from flask import request, send_file
 
-from components.change_calculator import parse_data, compute_change, get_summary_statistics, get_scatter_plot, \
-    change_download_button
+from components.change_calculator import get_worksheet, parse_data, generate_datatable, compute_change, \
+    get_summary_statistics, get_scatter_plot, change_download_button
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, keyboard_tab
@@ -65,18 +65,61 @@ def update_trip_results(trigger_ok, trigger_reset, data):
         return ''
 
 
-@app.callback([Output('dropdown-change-x', 'options'),
+@app.callback([Output('dropdown-change-worksheet', 'options'),
+               Output('change-select-worksheet', 'style'),
+               Output('change-sample-data', 'children'),
+               Output('dropdown-change-x', 'options'),
                Output('dropdown-change-y', 'options'),
                Output('intermediate-change-result', 'children')],
-              [Input('upload-change', 'contents')],
-              [State('upload-change', 'filename')])
-def update_change_upload(contents, filename):
+              [Input('upload-change', 'contents'),
+               Input('dropdown-change-worksheet', 'value')],
+              [State('upload-change', 'filename'),
+               State('change-select-worksheet', 'style'),])
+def update_change_upload(contents, worksheet, filename, style):
+    worksheet_options = []
+    sample_table = []
     if dash.callback_context.triggered:
-        df = parse_data(contents, filename)
+        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+
+        # Get worksheet options, and display style
+        if 'xls' in filename:
+            worksheet_list = get_worksheet(contents)
+            if len(worksheet_list) > 1:
+                worksheet_options = [{'label': ws, 'value': ws} for ws in worksheet_list]
+                style['display'] = 'inline-block'
+
+        # Read uploaded contents
+        if ctx == 'dropdown-change-worksheet':
+            df = parse_data(contents, filename, worksheet)
+        else:
+            df = parse_data(contents, filename)
+
         if type(df) == pd.DataFrame:
+            sample_table = [
+                html.P('Sample of uploaded data:', style={'margin': 0}),
+                generate_datatable(df),
+                html.P(f'Number of rows: {len(df)}', style={'margin': 0})
+            ]
             col_options = [{'label': col, 'value': col} for col in df.columns]
-            return col_options, col_options, json.dumps(df.to_json(orient='split', date_format='iso'))
-    return [], [], []
+            df_ser = df.to_json(orient='split', date_format='iso')
+            return worksheet_options, style, sample_table, col_options, col_options, json.dumps(df_ser)
+    return worksheet_options, style, sample_table, [], [], []
+
+
+@app.callback([Output('dropdown-change-x', 'value'),
+               Output('dropdown-change-y', 'value')],
+              [Input('dropdown-change-x', 'options'),
+               Input('dropdown-change-y', 'options')],
+              [State('dropdown-change-x', 'value'),
+               State('dropdown-change-y', 'value'),])
+def update_change_upload(x_options, y_options, x_value, y_value):
+    x_options_list = [opt['label'] for opt in x_options]
+    y_options_list = [opt['label'] for opt in y_options]
+    if x_value not in x_options_list:
+        x_value = None
+    if y_value not in y_options_list:
+        y_value = None
+    return x_value, y_value
 
 
 @app.callback([Output('change-results', 'children'),
@@ -87,7 +130,7 @@ def update_change_upload(contents, filename):
                State('input-change-x', 'value'),
                State('dropdown-change-y', 'value'),
                State('input-change-y', 'value')])
-def update_change_upload(trigger, df_ser, x_col, x_max, y_col, y_max):
+def update_change_result(trigger, df_ser, x_col, x_max, y_col, y_max):
     if trigger:
         try:
             df = pd.read_json(json.loads(df_ser), orient='split')

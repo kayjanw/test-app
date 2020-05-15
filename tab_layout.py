@@ -248,11 +248,11 @@ def trip_tab():
 
 def change_calculator_tab():
     return html.Div([
-        header('Change Calculator', 'Change is the only constant'),
+        header('Change Calculator', 'Check my progress'),
         html.P('Users can view summary statistics and plot a scatterplot of past values (x axis) against present '
                'values (y axis).'),
         html.Br(),
-        html.P('Step 1: Upload a file (.xls, .xlsx, .csv supported)'),
+        html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multi-worksheet supported)'),
         html.P('Step 2: Specify the columns for past values (x axis) and present values (y axis)'),
         html.P('Step 3: Specify the maximum possible value for each column to normalize the column values (optional)'),
         html.P('Step 4: Click "OK" button to generate the results!'),
@@ -279,6 +279,46 @@ def change_calculator_tab():
                         'padding': '10px',
                     },
                     multiple=False
+                ),
+                html.P([
+                    html.P(
+                        'Select worksheet: ',
+                        style={
+                            'margin': 0,
+                            'display': 'inline-block',
+                        }
+                    ),
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown-change-worksheet',
+                            placeholder='Select worksheet',
+                            clearable=False,
+                            style={
+                                'width': '100%',
+                                'color': 'black'
+                            }
+                        ),
+                    ],
+                        style={
+                            'display': 'inline-block',
+                            'verticalAlign': 'middle',
+                            'width': '40%',
+                        }
+                    ),
+                ],
+                    id='change-select-worksheet',
+                    style={
+                        'display': 'none',
+                        'width': '100%',
+                        'margin': 0,
+                        'margin-top': '10px',
+                    }
+                ),
+                html.Div(
+                    id='change-sample-data',
+                    style={
+                        'margin-top': '10px',
+                    }
                 ),
                 html.P([
                     'Select x-axis: ',

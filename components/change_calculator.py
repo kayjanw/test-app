@@ -8,7 +8,14 @@ import pandas as pd
 import plotly.graph_objects as go
 
 
-def parse_data(contents, filename):
+def get_worksheet(contents):
+    content_type, content_string = contents.split(',')
+    decoded = base64.b64decode(content_string)
+    xls = pd.ExcelFile(io.BytesIO(decoded))
+    return xls.sheet_names
+
+
+def parse_data(contents, filename, worksheet=None):
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     try:
@@ -16,10 +23,45 @@ def parse_data(contents, filename):
             file = io.StringIO(decoded.decode('utf-8'))
             df = pd.read_csv(file)
         elif 'xls' in filename:
-            df = pd.read_excel(io.BytesIO(decoded))
+            if worksheet is not None:
+                xls = pd.ExcelFile(io.BytesIO(decoded))
+                df = pd.read_excel(xls, worksheet)
+            else:
+                df = pd.read_excel(io.BytesIO(decoded))
     except Exception as e:
         print(e)
     return df
+
+
+def generate_datatable(df, max_rows=3):
+    return dash_table.DataTable(
+        columns=[{"name": col, "id": col} for col in df.columns],
+        data=df.to_dict('records')[:max_rows],
+        style_as_list_view=True,
+        style_header={
+            'fontWeight': 'bold',
+            'textAlign': 'left'
+        },
+        style_cell={
+            'background-color': 'transparent',
+            'color': 'white',
+            'font-family': 'Source Sans Pro',
+            'font-size': 13,
+            'textAlign': 'center'
+        },
+        style_table={
+            'overflowX': 'auto'
+        },
+        css=[{
+            'selector': 'tr:hover',
+            'rule': 'background-color: black; color: white'
+        }, {
+            'selector': 'td.cell--selected *, td.focused *',
+            'rule': 'background-color: black !important;'
+                    'color: white !important;'
+                    'text-align: left;'
+        }]
+    )
 
 
 def compute_change(df, x_col, x_max, y_col, y_max):

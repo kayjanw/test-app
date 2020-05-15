@@ -18,6 +18,7 @@ body {
 body::-webkit-scrollbar {
     width: 6px;
 }
+
 body::-webkit-scrollbar-thumb {
     background-color: #202029;
 }
