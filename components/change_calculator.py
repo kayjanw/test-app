@@ -26,7 +26,7 @@ def compute_change(df, x_col, x_max, y_col, y_max):
     # Handle string values
     df[x_col].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
     df[y_col].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
-    df.dropna(inplace=True)
+    df.dropna(subset=[x_col, y_col], inplace=True)
 
     # Convert to float, normalize if necessary
     if x_max is None:
@@ -100,6 +100,7 @@ def get_scatter_plot(df, x_col, y_col):
         title='Scatterplot of results',
         xaxis={'title': x_col},
         yaxis={'title': y_col},
+        hovermode='closest',
         showlegend=False
     )
     return dict(data=[trace, line], layout=layout)
