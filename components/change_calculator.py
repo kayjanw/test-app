@@ -124,13 +124,13 @@ def get_summary_statistics(df, x_col, y_col):
 
 
 def get_scatter_plot(df, x_col, y_col):
-    trace = go.Scatter(
+    trace = go.Scattergl(
         x=df[x_col],
         y=df[y_col],
         mode='markers',
         marker={'color': '#202029'},
         text=['<br>'.join([f'{df.columns[idx]}: {x[idx]}' for idx in range(len(df.columns))]) for x in df.values],
-        hoverinfo='text'
+        hoverinfo='text',
     )
     line = go.Scatter(
         x=[min(df[x_col].min(), df[y_col].min()), max(df[x_col].max(), df[y_col].max())],
@@ -138,14 +138,36 @@ def get_scatter_plot(df, x_col, y_col):
         mode='lines',
         hoverinfo='skip'
     )
-    layout = dict(
-        title='Scatterplot of results',
-        xaxis={'title': x_col},
-        yaxis={'title': y_col},
-        hovermode='closest',
-        showlegend=False
+    hist_x = go.Histogram(
+        x=df[x_col],
+        name=x_col+' distribution',
+        nbinsx=10,
+        yaxis='y2',
+        marker={'color': '#202029'},
+        hovertemplate='Range: %{x}<br>Total: %{y}<extra></extra>'
     )
-    return dict(data=[trace, line], layout=layout)
+    hist_y = go.Histogram(
+        y=df[y_col],
+        name=y_col+' distribution',
+        nbinsy=10,
+        xaxis='x2',
+        marker={'color': '#202029'},
+        hovertemplate='Range: %{y}<br>Total: %{x}<extra></extra>',
+        orientation='h'
+    )
+    layout = dict(
+        title='Scatterplot + Histogram of results',
+        xaxis=dict(title=x_col, domain=[0, 0.85]),
+        yaxis=dict(title=y_col, domain=[0, 0.85]),
+        xaxis2=dict(domain=[0.85, 1]),
+        yaxis2=dict(domain=[0.85, 1]),
+        hovermode='closest',
+        showlegend=False,
+        font=dict(
+            family="Source Sans Pro",
+        )
+    )
+    return dict(data=[trace, line, hist_x, hist_y], layout=layout)
 
 
 def change_download_button(df):

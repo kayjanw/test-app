@@ -111,7 +111,7 @@ def keyboard_tab():
 def trip_tab():
     return html.Div([
         header('Trip Planner', 'Shortest distance everrrrr'),
-        html.P('Users can fill in the destinations and optimal route will be calculated, '
+        html.P('Users can fill in multiple destinations and an optimal route will be calculated, '
                'starting and ending from the first destination specified. '
                'This is also known as the Travelling Salesman Problem.'),
         html.Br(),
@@ -121,6 +121,7 @@ def trip_tab():
         html.P('Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name'),
         html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
         html.Div([
+            # Left item
             html.Div([
                 html.P(
                     'Name of landmark:',
@@ -217,6 +218,7 @@ def trip_tab():
                 },
                 className='custom-div'
             ),
+            # Right item
             html.Div([
                 html.P('Scroll to zoom, drag to move'),
                 dl.Map(
@@ -249,19 +251,16 @@ def trip_tab():
 def change_calculator_tab():
     return html.Div([
         header('Change Calculator', 'Check my progress'),
-        html.P('Users can view summary statistics and plot a scatterplot of past values (x axis) against present '
-               'values (y axis).'),
+        html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
+               '(x axis) against present values (y axis). Users also have the option to download the processed results '
+               'with change value into an excel file.'),
         html.Br(),
-        html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multi-worksheet supported)'),
+        html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
         html.P('Step 2: Specify the columns for past values (x axis) and present values (y axis)'),
         html.P('Step 3: Specify the maximum possible value for each column to normalize the column values (optional)'),
         html.P('Step 4: Click "OK" button to generate the results!'),
-        html.P('* Graph ignores values that are not in numerical format'),
-        html.P('* Points above the line represent positive change, and distance from the line represent magnitude of '
-               'change'),
-        html.P('* If median higher than mean: data is skewed to the left; there is a long tail of low scores pulling '
-               'the mean down'),
         html.Div([
+            # Left item
             html.Div([
                 dcc.Upload(
                     html.P(
@@ -276,7 +275,7 @@ def change_calculator_tab():
                         'borderStyle': 'dashed',
                         'borderRadius': '5px',
                         'textAlign': 'center',
-                        'padding': '10px',
+                        'padding': '10px'
                     },
                     multiple=False
                 ),
@@ -284,8 +283,9 @@ def change_calculator_tab():
                     html.P(
                         'Select worksheet: ',
                         style={
-                            'margin': 0,
                             'display': 'inline-block',
+                            'margin': 0,
+                            'margin-right': '3px'
                         }
                     ),
                     html.Div([
@@ -301,8 +301,8 @@ def change_calculator_tab():
                     ],
                         style={
                             'display': 'inline-block',
-                            'verticalAlign': 'middle',
                             'width': '40%',
+                            'verticalAlign': 'middle'
                         }
                     ),
                 ],
@@ -413,13 +413,33 @@ def change_calculator_tab():
                 },
                 className='custom-div'
             ),
+            # Right item
             html.Div([
                 html.P('Mouseover for information, highlight to zoom, double click to reset view'),
                 html.Div([
                     dcc.Graph(
                         id='graph-change-results'
                     )
-                ])
+                ]),
+                html.Div([
+                    html.P('Footnote:'),
+                    html.P('1. Computations ignores values that are not in numerical format'),
+                    html.P('2. Points may overlap if two rows are identical, it is recommended to download the results '
+                           'file to view overlaps (if any)'),
+                    html.P('3. Interpreting the scatterplot above:'),
+                    html.P('** Points above the line represent positive change'),
+                    html.P('** Distance from the line represent magnitude of change'),
+                    html.P('4. Interpreting the histogram above:'),
+                    html.P('** Histogram shows the distribution of values for x and y axis respectively'),
+                    html.P('5. Interpreting the summary statistics on the left:'),
+                    html.P(
+                        '** If median is higher than mean: data is skewed to the left; there is a long tail of low '
+                        'scores pulling the mean down'),
+                ],
+                    style={
+                        'text-align': 'left'
+                    }
+                ),
             ],
                 style={
                     'display': 'inline-block',
