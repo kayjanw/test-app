@@ -138,6 +138,8 @@ def update_change_result(trigger, df_ser, x_col, x_max, y_col, y_max):
             return ['Please upload a file'], {}
         if x_col is None or y_col is None:
             return ['Please specify columns as axis'], {}
+        if x_col == y_col:
+            return ['Please select different columns for comparison'], {}
         df = compute_change(df, x_col, x_max, y_col, y_max)
         result_table = get_summary_statistics(df, x_col, y_col)
         fig = get_scatter_plot(df, x_col, y_col)
