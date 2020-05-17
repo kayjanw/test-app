@@ -84,7 +84,10 @@ def about_me_tab():
     return html.Div([
         header('About me'),
         html.P(
-            'Just someone trying to apply what I learn, and believes coding should be fun (sometimes frustrating)'
+            'Just someone trying to apply what I learn, and believes coding should make our lives easier'
+        ),
+        html.P(
+            'Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!'
         ),
         html.P([
             'Check out my ',
