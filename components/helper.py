@@ -25,12 +25,14 @@ def violin_plot():
         xaxis={
             'showgrid': False,
             'zeroline': False,
-            'visible': False
+            'visible': False,
+            'fixedrange': True,
         },
         yaxis={
             'showgrid': False,
             'zeroline': False,
-            'visible': False
+            'visible': False,
+            'fixedrange': True,
         },
         showlegend=False,
         margin=dict(l=0, r=0, t=80, b=0)
