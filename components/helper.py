@@ -8,9 +8,10 @@ def violin_plot():
     np.random.seed(1)
     points = (np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200) +
               (np.arange(12) + 2 * np.random.random(12))[:, None])
+    points2 = np.array([np.concatenate((point, [points.min(), points.max()])) for point in points])
     colors = n_colors('rgb(32, 32, 41)', 'rgb(190, 155, 137)', 12, colortype='rgb')
     data = []
-    for data_line, color in zip(points, colors):
+    for data_line, color in zip(points2, colors):
         trace = go.Violin(
             x=data_line,
             line_color=color,
@@ -21,7 +22,7 @@ def violin_plot():
         )
         data.append(trace)
     layout = dict(
-        title='k j - u t i l s',
+        title='u t i l s . p y',
         xaxis={
             'showgrid': False,
             'zeroline': False,
