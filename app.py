@@ -1,4 +1,5 @@
 import dash
+import dash_core_components as dcc
 import dash_html_components as html
 import io
 import json
@@ -9,6 +10,7 @@ from flask import request, send_file
 
 from components.change_calculator import get_worksheet, parse_data, generate_datatable, compute_change, \
     get_summary_statistics, get_scatter_plot, change_download_button
+from components.helper import violin_plot
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, keyboard_tab
@@ -112,7 +114,7 @@ def update_change_upload(contents, worksheet, filename, style):
                Input('dropdown-change-y', 'options')],
               [State('dropdown-change-x', 'value'),
                State('dropdown-change-y', 'value'),])
-def update_change_upload(x_options, y_options, x_value, y_value):
+def update_change_dropdown(x_options, y_options, x_value, y_value):
     x_options_list = [opt['label'] for opt in x_options]
     y_options_list = [opt['label'] for opt in y_options]
     if x_value not in x_options_list:
@@ -178,6 +180,26 @@ def download_change_result():
         )
 
 
+@app.server.route('/nicxchia/')
+def hidden_endpoint():
+    df = request.form.get('result')
+    df = pd.read_json(df, orient='split')
+    if len(df)>0:
+        buf = io.BytesIO()
+        excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
+        df.to_excel(excel_writer, sheet_name="Sheet1")
+        excel_writer.save()
+        excel_data = buf.getvalue()
+        buf.seek(0)
+        return send_file(
+            buf,
+            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            attachment_filename="result.xlsx",
+            as_attachment=True,
+            cache_timeout=0
+        )
+
+
 @app.callback(Output('tab-content', 'children'),
               [Input('tabs-parent', 'value')])
 def update_output(tab):
@@ -187,8 +209,22 @@ def update_output(tab):
         return trip_tab()
     elif tab == 'tab-3':
         return change_calculator_tab()
-    elif tab == 'tab-3':
+    elif tab == 'tab-4':
         return keyboard_tab()
+    else:
+        return dcc.Graph(
+            figure=violin_plot(),
+            config={
+                'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
+                                           'autoScale2d', 'resetScale2d', 'toggleSpikelines', 'hoverClosestCartesian',
+                                           'hoverCompareCartesian'],
+                # 'displayModeBar': False
+            },
+            style={
+                'margin-top': '15vh',
+                'height': '60vh'
+            }
+        )
 
 
 if __name__ == '__main__':

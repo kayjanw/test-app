@@ -1,4 +1,3 @@
-import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_leaflet as dl
@@ -423,9 +422,9 @@ def change_calculator_tab():
                 ]),
                 html.Div([
                     html.P('Footnote:'),
-                    html.P('1. Computations ignores values that are not in numerical format'),
-                    html.P('2. Points may overlap if two rows are identical, it is recommended to download the results '
-                           'file to view overlaps (if any)'),
+                    html.P('1. Computation ignores rows where either x or y value is not in numerical format'),
+                    html.P('2. Points will be very close to each other (but not overlapping) if two rows have '
+                           'identical x and y values, it is recommended to zoom or download the results file'),
                     html.P('3. Interpreting the scatterplot above:'),
                     html.P('** Points above the line represent positive change'),
                     html.P('** Distance from the line represent magnitude of change'),
