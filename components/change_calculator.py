@@ -124,13 +124,15 @@ def get_summary_statistics(df, x_col, y_col):
 
 
 def get_scatter_plot(df, x_col, y_col):
-    trace = go.Scattergl(
+    trace = go.Violin(
         x=df[x_col],
         y=df[y_col],
-        mode='markers',
         marker={'color': '#202029'},
         text=['<br>'.join([f'{df.columns[idx]}: {x[idx]}' for idx in range(len(df.columns))]) for x in df.values],
         hoverinfo='text',
+        jitter=1,
+        points='all',
+        line_color='#FFFFFF',
     )
     line = go.Scatter(
         x=[min(df[x_col].min(), df[y_col].min()), max(df[x_col].max(), df[y_col].max())],
