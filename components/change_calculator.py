@@ -1,67 +1,6 @@
-import base64
-import dash_core_components as dcc
-import dash_html_components as html
 import dash_table
-import io
 import numpy as np
-import pandas as pd
 import plotly.graph_objects as go
-
-
-def get_worksheet(contents):
-    content_type, content_string = contents.split(',')
-    decoded = base64.b64decode(content_string)
-    xls = pd.ExcelFile(io.BytesIO(decoded))
-    return xls.sheet_names
-
-
-def parse_data(contents, filename, worksheet=None):
-    content_type, content_string = contents.split(',')
-    decoded = base64.b64decode(content_string)
-    try:
-        if 'csv' in filename:
-            file = io.StringIO(decoded.decode('utf-8'))
-            df = pd.read_csv(file)
-        elif 'xls' in filename:
-            if worksheet is not None:
-                xls = pd.ExcelFile(io.BytesIO(decoded))
-                df = pd.read_excel(xls, worksheet)
-            else:
-                df = pd.read_excel(io.BytesIO(decoded))
-    except Exception as e:
-        print(e)
-    return df
-
-
-def generate_datatable(df, max_rows=3):
-    return dash_table.DataTable(
-        columns=[{"name": col, "id": col} for col in df.columns],
-        data=df.to_dict('records')[:max_rows],
-        style_as_list_view=True,
-        style_header={
-            'fontWeight': 'bold',
-            'textAlign': 'left'
-        },
-        style_cell={
-            'background-color': 'transparent',
-            'color': 'white',
-            'font-family': 'Source Sans Pro',
-            'font-size': 13,
-            'textAlign': 'center'
-        },
-        style_table={
-            'overflowX': 'auto'
-        },
-        css=[{
-            'selector': 'tr:hover',
-            'rule': 'background-color: black; color: white'
-        }, {
-            'selector': 'td.cell--selected *, td.focused *',
-            'rule': 'background-color: black !important;'
-                    'color: white !important;'
-                    'text-align: left;'
-        }]
-    )
 
 
 def compute_change(df, x_col, x_max, y_col, y_max):
@@ -90,13 +29,13 @@ def get_summary_statistics(df, x_col, y_col):
     return dash_table.DataTable(
         columns=[
             {'name': 'Parameter', 'id': 'Parameter'},
-            {'name': 'X-axis', 'id': "X-axis"},
-            {'name': 'Y-axis', 'id': "Y-axis"}
+            {'name': x_col, 'id': x_col},
+            {'name': y_col, 'id': y_col}
         ],
         data=[{
             'Parameter': param_name[idx],
-            'X-axis': np.round(df[x_col].describe()[idx], 2),
-            'Y-axis': np.round(df[y_col].describe()[idx], 2)
+            x_col: np.round(df[x_col].describe()[idx], 2),
+            y_col: np.round(df[y_col].describe()[idx], 2)
         } for idx in range(len(param_name))
         ],
         style_as_list_view=True,
@@ -124,6 +63,10 @@ def get_summary_statistics(df, x_col, y_col):
 
 
 def get_scatter_plot(df, x_col, y_col):
+    x_min, x_max = df[x_col].min(), df[x_col].max()
+    y_min, y_max = df[y_col].min(), df[y_col].max()
+    x_min_limit, x_max_limit = min(0, x_min - 5), max(100, x_max + 5)
+    y_min_limit, y_max_limit = min(0, y_min - 5), max(100, y_max + 5)
     trace = go.Violin(
         x=df[x_col],
         y=df[y_col],
@@ -135,8 +78,8 @@ def get_scatter_plot(df, x_col, y_col):
         line_color='#FFFFFF',
     )
     line = go.Scatter(
-        x=[min(df[x_col].min(), df[y_col].min()), max(df[x_col].max(), df[y_col].max())],
-        y=[min(df[x_col].min(), df[y_col].min()), max(df[x_col].max(), df[y_col].max())],
+        x=[min(x_min, y_min), max(x_max, y_max)],
+        y=[min(x_min, y_min), max(x_max, y_max)],
         mode='lines',
         hoverinfo='skip'
     )
@@ -159,8 +102,9 @@ def get_scatter_plot(df, x_col, y_col):
     )
     layout = dict(
         title='Scatterplot + Histogram of results',
-        xaxis=dict(title=x_col, domain=[0, 0.85]),
-        yaxis=dict(title=y_col, domain=[0, 0.85]),
+        autosize=False,
+        xaxis=dict(title=x_col, domain=[0, 0.85], range=[x_min_limit, x_max_limit]),
+        yaxis=dict(title=y_col, domain=[0, 0.85], range=[y_min_limit, y_max_limit]),
         xaxis2=dict(domain=[0.85, 1]),
         yaxis2=dict(domain=[0.85, 1]),
         hovermode='closest',
@@ -170,21 +114,3 @@ def get_scatter_plot(df, x_col, y_col):
         )
     )
     return dict(data=[trace, line, hist_x, hist_y], layout=layout)
-
-
-def change_download_button(df):
-    df = df.to_json(orient='split', date_format='iso')
-    return html.Form([
-        dcc.Input(
-            value=df,
-            name='result',
-            type='text',
-            style={'display': 'none'}),
-        html.Button(
-            'Download results',
-            type='submit'
-        )
-    ],
-        method='POST',
-        action='/download_change_df/'
-    )
