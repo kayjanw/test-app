@@ -8,9 +8,8 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 from flask import request, send_file
 
-from components.change_calculator import get_worksheet, parse_data, generate_datatable, compute_change, \
-    get_summary_statistics, get_scatter_plot, change_download_button
-from components.helper import violin_plot
+from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot
+from components.helper import violin_plot, get_worksheet, parse_data, generate_datatable, change_download_button
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, keyboard_tab
@@ -61,8 +60,7 @@ def update_trip_map(data, children):
 def update_trip_results(trigger_ok, trigger_reset, data):
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-ok':
-        answer = optimiser_pipeline(data)
-        return answer
+        return optimiser_pipeline(data)
     elif ctx == 'button-trip-reset':
         return ''
 
@@ -218,7 +216,6 @@ def update_output(tab):
                 'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
                                            'autoScale2d', 'resetScale2d', 'toggleSpikelines', 'hoverClosestCartesian',
                                            'hoverCompareCartesian'],
-                # 'displayModeBar': False
             },
             style={
                 'margin-top': '15vh',
