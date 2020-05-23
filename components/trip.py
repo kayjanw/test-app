@@ -102,8 +102,13 @@ def get_distance_and_duration_from_table(data):
 
 
 def best_route_gurobi(distance_matrix):
-    """
-    Using gurobi optimiser
+    """Using gurobi optimiser
+
+    Args:
+        distance_matrix (numpy array): inter-distance between locations
+
+    Returns:
+        (list): contains tuple of routes
     """
     import pyomo.environ as pyEnv
     import pyutilib.subprocess.GlobalData
@@ -169,8 +174,13 @@ def best_route_gurobi(distance_matrix):
 
 
 def best_route_nearest_neighbour(distance_matrix):
-    """
-    Nearest neighbour heuristic
+    """Nearest neighbour heuristic
+
+    Args:
+        distance_matrix (numpy array): inter-distance between locations
+
+    Returns:
+        (list): Contains tuple of routes
     """
     idx = 0
     visited_landmarks = [idx]
@@ -210,8 +220,13 @@ def get_distance_from_routes(routes, distance_matrix):
 
 
 def best_route_nearest_insertion(distance_matrix):
-    """
-    Nearest insertion heuristic
+    """Nearest insertion heuristic
+
+    Args:
+        distance_matrix (numpy array): inter-distance between locations
+
+    Returns:
+        (list): Contains tuple of routes
     """
     idx = 0
     idx_next = distance_matrix[0][1:].argmin() + 1
@@ -247,13 +262,12 @@ def optimiser_pipeline(data):
         distance_matrix, duration_matrix = get_distance_and_duration_from_table(data)
         try:
             routes = best_route_gurobi(distance_matrix)
+            print(data)
+            print(f'Using optimiser: {routes}')
+            print(f'Using insertion: {best_route_nearest_insertion(distance_matrix)}')
+            print(f'Using neighbour: {best_route_nearest_neighbour(distance_matrix)}')
         except Exception:
             routes = best_route_nearest_insertion(distance_matrix)
-            # routes = best_route_nearest_neighbour(distance_matrix)
-        # print(data)
-        # print(best_route_gurobi(distance_matrix))
-        # print(best_route_nearest_insertion(distance_matrix))
-        # print(best_route_nearest_neighbour(distance_matrix))
         distance_km = get_distance_from_routes(routes, distance_matrix)
         duration = np.sum([duration_matrix[route] for route in routes])
         duration_hour = int(np.floor(duration / 3600))
