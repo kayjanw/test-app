@@ -1,7 +1,9 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_leaflet as dl
-import dash_table
+
+from components.trip import get_trip_table
+from components.change_calculator import get_changes_table
 
 
 def main_layout():
@@ -30,7 +32,9 @@ def main_layout():
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='Change calculator', value='tab-3', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Keyboard (WIP)', value='tab-4', className='custom-tab',
+                        # dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
+                        #         selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Keyboard (WIP)', value='tab-5', className='custom-tab',
                                 selected_className='custom-tab-selected'),
                     ],
                     colors={
@@ -101,15 +105,6 @@ def about_me_tab():
     ])
 
 
-def keyboard_tab():
-    return html.Div([
-        header('Keyboard', 'Play music on the flyyyyy'),
-        html.P('Ideally, users can play the keyboard here. '
-               'Im still figuring out how to make it work.'),
-        # html.Button('C note', id='button_music')
-    ])
-
-
 def trip_tab():
     return html.Div([
         header('Trip Planner', 'Shortest distance everrrrr'),
@@ -141,45 +136,7 @@ def trip_tab():
                         'margin-left': '10px'
                     }
                 ),
-                dash_table.DataTable(
-                    id='table-trip-landmark',
-                    columns=[
-                        dict(name='Landmark', id='Landmark', editable=True),
-                        dict(name='Street', id='Street'),
-                        dict(name='lat', id='lat'),
-                        dict(name='lon', id='lon')
-                    ],
-                    data=[],
-                    style_as_list_view=True,
-                    style_header={
-                        'fontWeight': 'bold',
-                        'textAlign': 'left'
-                    },
-                    style_cell_conditional=[
-                        {
-                            'if': {
-                                'column_id': c
-                            },
-                            'display': 'none'
-                        } for c in ['lat', 'lon']
-                    ],
-                    style_cell={
-                        'background-color': 'transparent',
-                        'color': 'white',
-                        'font-family': 'Source Sans Pro',
-                        'font-size': 13,
-                        'textAlign': 'left'
-                    },
-                    css=[{
-                        'selector': 'tr:hover',
-                        'rule': 'background-color: black; color: white'
-                    }, {
-                        'selector': 'td.cell--selected *, td.focused *',
-                        'rule': 'background-color: black !important;'
-                                'color: white !important;'
-                                'text-align: left;'
-                    }]
-                ),
+                get_trip_table(),
                 html.Button(
                     'Remove last landmark',
                     id='button-trip-remove',
@@ -200,7 +157,7 @@ def trip_tab():
                             style={
                                 'margin-top': '30px',
                                 'margin-right': '10px',
-                                'margin-left': '-10px'
+                                'margin-left': '-20px'
                             }
                         ),
                     ],
@@ -252,7 +209,7 @@ def trip_tab():
 
 def change_calculator_tab():
     return html.Div([
-        header('Change Calculator', 'Check my progress'),
+        header('Change Calculator', 'Compare changes over two periods'),
         html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
                '(x axis) against present values (y axis). Users also have the option to download the processed results '
                'with change value into an excel file.'),
@@ -390,14 +347,12 @@ def change_calculator_tab():
                     'OK',
                     id='button-change-ok',
                 ),
-                html.Div(
+                dcc.Store(
                     id='intermediate-change-result',
-                    style={
-                        'display': 'none'
-                    }
+                    storage_type='memory'
                 ),
                 html.Div(
-                    id='change-results',
+                    id='change-result',
                     style={
                         'margin-top': '30px'
                     }
@@ -420,7 +375,7 @@ def change_calculator_tab():
                 html.P('Mouseover for information, highlight to zoom, double click to reset view'),
                 html.Div([
                     dcc.Graph(
-                        id='graph-change-results'
+                        id='graph-change-result'
                     )
                 ]),
                 html.Div([
@@ -459,6 +414,146 @@ def change_calculator_tab():
     ])
 
 
+def change_over_time_tab():
+    return html.Div([
+        header('Change Calculator 2', 'Compare changes over multiple periods'),
+        html.P('Users can view changes over time on a parallel coordinate plot. Just minor changes from the other '
+               'change tab (haha)'),
+        html.Br(),
+        html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
+        html.P('Step 2: Specify the columns to compare'),
+        html.P('Step 3: Specify the maximum possible value for each column to normalize the column values (optional)'),
+        html.P('Step 4: Click "OK" button to generate the results!'),
+        html.Div([
+            # Left item
+            html.Div([
+                dcc.Upload(
+                    html.P(
+                        'Drag and drop files here, or click to upload',
+                        style={
+                            'margin': 0
+                        }
+                    ),
+                    id='upload-changes',
+                    style={
+                        'borderWidth': '1px',
+                        'borderStyle': 'dashed',
+                        'borderRadius': '5px',
+                        'textAlign': 'center',
+                        'padding': '10px'
+                    },
+                    multiple=False
+                ),
+                html.P([
+                    html.P(
+                        'Select worksheet: ',
+                        style={
+                            'display': 'inline-block',
+                            'margin': 0,
+                            'margin-right': '3px'
+                        }
+                    ),
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown-changes-worksheet',
+                            placeholder='Select worksheet',
+                            clearable=False,
+                            style={
+                                'width': '100%',
+                                'color': 'black'
+                            }
+                        ),
+                    ],
+                        style={
+                            'display': 'inline-block',
+                            'width': '40%',
+                            'verticalAlign': 'middle'
+                        }
+                    ),
+                ],
+                    id='changes-select-worksheet',
+                    style={
+                        'display': 'none',
+                        'width': '100%',
+                        'margin': 0,
+                        'margin-top': '10px',
+                    }
+                ),
+                html.Div(
+                    id='changes-sample-data',
+                    style={
+                        'margin-top': '10px',
+                    }
+                ),
+                html.Div(
+                    id='intermediate-changes-result',
+                    style={
+                        'display': 'none'
+                    }
+                ),
+            ],
+                style={
+                    'display': 'inline-block',
+                    'width': '32%',
+                    'margin': '2%',
+                    'margin-top': '40px',
+                    'padding': '2%',
+                    'padding-bottom': '2%',
+                    'text-align': 'left',
+                    'vertical-align': 'top'
+                },
+                className='custom-div'
+            ),
+            # Right item
+            html.Div([
+                get_changes_table(),
+                html.Button(
+                    'Add rows',
+                    id='button-changes-add',
+                ),
+                html.Button(
+                    'OK',
+                    id='button-changes-ok',
+                )
+            ],
+                style={
+                    'display': 'inline-block',
+                    'width': '56%',
+                    'margin-top': '40px',
+                    'padding': '2%',
+                    'text-align': 'left',
+                    'vertical-align': 'top'
+                },
+                className='custom-div'
+            ),
+        ],
+            style={
+                'margin-top': '20px',
+                'margin-bottom': '20px',
+                'text-align': 'center'
+            }
+        ),
+        # Bottom item
+        html.Div([
+            html.P(
+                id='changes-result'
+            ),
+            dcc.Graph(
+                id='graph-changes-result'
+            )
+        ])
+    ])
+
+
+def keyboard_tab():
+    return html.Div([
+        header('Keyboard', 'Play music on the flyyyyy'),
+        html.P('Ideally, users can play the keyboard here. '
+               'Im still figuring out how to make it work.'),
+        # html.Button('C note', id='button_music')
+    ])
+
+
 def sample_tab():
     return html.Div([
         header('Header', 'Subheader'),
@@ -467,13 +562,9 @@ def sample_tab():
         html.P('Step 1: '),
         html.P('Step 2: '),
         html.Div([
+            # Left item
             html.Div([
-                html.P(
-                    'Left component',
-                    style={
-                        'margin': 0,
-                    }
-                ),
+                # html.P('Left component',),
             ],
                 style={
                     'display': 'inline-block',
@@ -487,8 +578,9 @@ def sample_tab():
                 },
                 className='custom-div'
             ),
+            # Right item
             html.Div([
-                html.P('Right component')
+                # html.P('Right component')
             ],
                 style={
                     'display': 'inline-block',
