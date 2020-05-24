@@ -2,17 +2,17 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import io
-import json
 import pandas as pd
 
 from dash.dependencies import Input, Output, State
 from flask import request, send_file
 
-from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot
-from components.helper import violin_plot, get_worksheet, parse_data, generate_datatable, change_download_button
+from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot, compute_changes, \
+    get_parallel_coord
+from components.helper import violin_plot, print_callback, update_when_upload, change_download_button
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
-from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, keyboard_tab
+from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
 
 app = dash.Dash(__name__)
 app.title = 'wow'
@@ -21,6 +21,9 @@ app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 server = app.server
 app.layout = main_layout()
+
+# Variable
+print_function = False
 
 
 @app.callback([Output('table-trip-landmark', 'data'),
@@ -31,6 +34,7 @@ app.layout = main_layout()
                Input('button-trip-reset', 'n_clicks')],
               [State('input-trip-landmark', 'value'),
                State('table-trip-landmark', 'data')])
+@print_callback(print_function)
 def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-remove':
@@ -48,6 +52,7 @@ def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
 @app.callback(Output('map-trip', 'children'),
               [Input('table-trip-landmark', 'data')],
               [State('map-trip', 'children')])
+@print_callback(print_function)
 def update_trip_map(data, children):
     children = get_map_from_table(data, children)
     return children
@@ -57,6 +62,7 @@ def update_trip_map(data, children):
               [Input('button-trip-ok', 'n_clicks'),
                Input('button-trip-reset', 'n_clicks')],
               [State('table-trip-landmark', 'data')])
+@print_callback(print_function)
 def update_trip_results(trigger_ok, trigger_reset, data):
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-ok':
@@ -68,42 +74,27 @@ def update_trip_results(trigger_ok, trigger_reset, data):
 @app.callback([Output('dropdown-change-worksheet', 'options'),
                Output('change-select-worksheet', 'style'),
                Output('change-sample-data', 'children'),
-               Output('dropdown-change-x', 'options'),
-               Output('dropdown-change-y', 'options'),
-               Output('intermediate-change-result', 'children')],
+               Output('intermediate-change-result', 'data')],
               [Input('upload-change', 'contents'),
                Input('dropdown-change-worksheet', 'value')],
               [State('upload-change', 'filename'),
-               State('change-select-worksheet', 'style'),])
+               State('change-select-worksheet', 'style')])
+@print_callback(print_function)
 def update_change_upload(contents, worksheet, filename, style):
-    worksheet_options = []
-    sample_table = []
-    if dash.callback_context.triggered:
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    return update_when_upload(contents, worksheet, filename, style, ctx)
 
-        # Get worksheet options, and display style
-        if 'xls' in filename:
-            worksheet_list = get_worksheet(contents)
-            if len(worksheet_list) > 1:
-                worksheet_options = [{'label': ws, 'value': ws} for ws in worksheet_list]
-                style['display'] = 'inline-block'
 
-        # Read uploaded contents
-        if ctx == 'dropdown-change-worksheet':
-            df = parse_data(contents, filename, worksheet)
-        else:
-            df = parse_data(contents, filename)
-
-        if type(df) == pd.DataFrame:
-            sample_table = [
-                html.P('Sample of uploaded data:', style={'margin': 0}),
-                generate_datatable(df),
-                html.P(f'Number of rows: {len(df)}', style={'margin': 0})
-            ]
-            col_options = [{'label': col, 'value': col} for col in df.columns]
-            df_ser = df.to_json(orient='split', date_format='iso')
-            return worksheet_options, style, sample_table, col_options, col_options, json.dumps(df_ser)
-    return worksheet_options, style, sample_table, [], [], []
+@app.callback([Output('dropdown-change-x', 'options'),
+               Output('dropdown-change-y', 'options')],
+              [Input('intermediate-change-result', 'data')])
+@print_callback(print_function)
+def update_change_dropdown_options(records):
+    if 'df' in records:
+        df = pd.read_json(records['df'], orient='split')
+        col_options = [{'label': col, 'value': col} for col in df.columns]
+        return col_options, col_options
+    return [], []
 
 
 @app.callback([Output('dropdown-change-x', 'value'),
@@ -111,8 +102,9 @@ def update_change_upload(contents, worksheet, filename, style):
               [Input('dropdown-change-x', 'options'),
                Input('dropdown-change-y', 'options')],
               [State('dropdown-change-x', 'value'),
-               State('dropdown-change-y', 'value'),])
-def update_change_dropdown(x_options, y_options, x_value, y_value):
+               State('dropdown-change-y', 'value')])
+@print_callback(print_function)
+def update_change_dropdown_value(x_options, y_options, x_value, y_value):
     x_options_list = [opt['label'] for opt in x_options]
     y_options_list = [opt['label'] for opt in y_options]
     if x_value not in x_options_list:
@@ -122,19 +114,20 @@ def update_change_dropdown(x_options, y_options, x_value, y_value):
     return x_value, y_value
 
 
-@app.callback([Output('change-results', 'children'),
-               Output('graph-change-results', 'figure')],
+@app.callback([Output('change-result', 'children'),
+               Output('graph-change-result', 'figure')],
               [Input('button-change-ok', 'n_clicks')],
-              [State('intermediate-change-result', 'children'),
+              [State('intermediate-change-result', 'data'),
                State('dropdown-change-x', 'value'),
                State('input-change-x', 'value'),
                State('dropdown-change-y', 'value'),
                State('input-change-y', 'value')])
-def update_change_result(trigger, df_ser, x_col, x_max, y_col, y_max):
+@print_callback(print_function)
+def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
     if trigger:
-        try:
-            df = pd.read_json(json.loads(df_ser), orient='split')
-        except TypeError:
+        if 'df' in records:
+            df = pd.read_json(records['df'], orient='split')
+        else:
             return ['Please upload a file'], {}
         if x_col is None or y_col is None:
             return ['Please specify columns as axis'], {}
@@ -147,8 +140,74 @@ def update_change_result(trigger, df_ser, x_col, x_max, y_col, y_max):
     return [], {}
 
 
+@app.callback([Output('dropdown-changes-worksheet', 'options'),
+               Output('changes-select-worksheet', 'style'),
+               Output('changes-sample-data', 'children'),
+               Output('intermediate-changes-result', 'data')],
+              [Input('upload-changes', 'contents'),
+               Input('dropdown-changes-worksheet', 'value')],
+              [State('upload-changes', 'filename'),
+               State('changes-select-worksheet', 'style')])
+@print_callback(print_function)
+def update_changes_upload(contents, worksheet, filename, style):
+    ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    return update_when_upload(contents, worksheet, filename, style, ctx)
+
+
+@app.callback(Output('table-changes', 'dropdown'),
+              [Input('intermediate-changes-result', 'data')])
+@print_callback(print_function)
+def update_changes_dropdown_options(records):
+    if 'df' in records:
+        df = pd.read_json(records['df'], orient='split')
+        col_options = [{'label': col, 'value': col} for col in df.columns]
+        return dict(column=dict(options=col_options))
+    return {}
+
+
+@app.callback(Output('table-changes', 'data'),
+              [Input('button-changes-add', 'n_clicks')],
+              [State('table-changes', 'data')])
+@print_callback(print_function)
+def update_changes_dropdown_options(trigger, data):
+    if trigger:
+        data.append(dict(column='', max=''))
+    return data
+
+
+@app.callback([Output('changes-result', 'children'),
+               Output('graph-changes-result', 'figure')],
+              [Input('button-changes-ok', 'n_clicks')],
+              [State('intermediate-changes-result', 'data'),
+               State('table-changes', 'data')])
+@print_callback(print_function)
+def update_changes_result(trigger, records, data):
+    if 'df' not in records:
+        data = [{'column': 'Term 1', 'max': 90}, {'column': 'Term 2', 'max': 80}, {'column': 'Term 3', 'max': None},
+                {'column': 'Term 1.1', 'max': ''}]
+        records = dict(df=pd.read_csv('Scores.csv').to_json(orient='split', date_format='iso'))
+    if trigger:
+        list_of_tuples = [(row['column'], row['max']) for row in data
+                          if row['column'] is not ''
+                          if row['column'] is not None]
+        if 'df' in records:
+            df = pd.read_json(records['df'], orient='split')
+        else:
+            return ['Please upload a file'], {}
+        if not len(list_of_tuples):
+            return ['Please specify columns to compare'], {}
+        df = compute_changes(df, list_of_tuples)
+        if not len(df):
+            return ['Processed dataframe is empty. Please select numeric columns'], {}
+        else:
+            instructions, fig = get_parallel_coord(df, list_of_tuples)
+        return instructions, fig
+    return [], {}
+
+
 @app.callback(Output('placeholder', 'children'),
               [Input('button_music', 'n_clicks')])
+@print_callback(print_function)
 def update_keyboard(trigger):
     if trigger:
         import base64
@@ -158,48 +217,9 @@ def update_keyboard(trigger):
         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
 
-@app.server.route('/download_change_df/', methods=['POST'])
-def download_change_result():
-    df = request.form.get('result')
-    df = pd.read_json(df, orient='split')
-    if len(df)>0:
-        buf = io.BytesIO()
-        excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
-        df.to_excel(excel_writer, sheet_name="Sheet1")
-        excel_writer.save()
-        excel_data = buf.getvalue()
-        buf.seek(0)
-        return send_file(
-            buf,
-            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            attachment_filename="result.xlsx",
-            as_attachment=True,
-            cache_timeout=0
-        )
-
-
-@app.server.route('/nicxchia/')
-def hidden_endpoint():
-    df = request.form.get('result')
-    df = pd.read_json(df, orient='split')
-    if len(df)>0:
-        buf = io.BytesIO()
-        excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
-        df.to_excel(excel_writer, sheet_name="Sheet1")
-        excel_writer.save()
-        excel_data = buf.getvalue()
-        buf.seek(0)
-        return send_file(
-            buf,
-            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            attachment_filename="result.xlsx",
-            as_attachment=True,
-            cache_timeout=0
-        )
-
-
 @app.callback(Output('tab-content', 'children'),
               [Input('tabs-parent', 'value')])
+@print_callback(print_function)
 def update_output(tab):
     if tab == 'tab-1':
         return about_me_tab()
@@ -208,6 +228,8 @@ def update_output(tab):
     elif tab == 'tab-3':
         return change_calculator_tab()
     elif tab == 'tab-4':
+        return change_over_time_tab()
+    elif tab == 'tab-5':
         return keyboard_tab()
     else:
         return dcc.Graph(
@@ -221,6 +243,26 @@ def update_output(tab):
                 'margin-top': '15vh',
                 'height': '60vh'
             }
+        )
+
+
+@app.server.route('/download_df/', methods=['POST'])
+def download_result():
+    df = request.form.get('result')
+    df = pd.read_json(df, orient='split')
+    if len(df)>0:
+        buf = io.BytesIO()
+        excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
+        df.to_excel(excel_writer, sheet_name="Sheet1")
+        excel_writer.save()
+        excel_data = buf.getvalue()
+        buf.seek(0)
+        return send_file(
+            buf,
+            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            attachment_filename="result.xlsx",
+            as_attachment=True,
+            cache_timeout=0
         )
 
 
