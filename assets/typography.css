@@ -1,10 +1,24 @@
-/* Colour Palette
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+- Base Styles
+- Scrollbar
+- Typography
+- Links
+- Input
+- Button
+- Dash leaflet style
+- Custom id
+- Custom class
+- Tabs
+
+Colour Palette
 Grey #57555A
 Deep blue #202029
 Dark pink #BE9B89
 Light pink #F0E3DF
-Light grey #F0E3DF
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+Pinkish grey #D6CAC7
+*/
+
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -64,16 +78,6 @@ input {
     font-family: Source Sans Pro !important;
 }
 
-/* Dropdown
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-#dropdown-change-x #dropdown-change-y {
-    color: black;
-}
-
-#dropdown-change-x .VirtualizedSelectFocusedOption {
-    background-color: grey;
-}
-
 /* Button
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button {
@@ -95,6 +99,33 @@ button[disabled] {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .leaflet-container {
     cursor: crosshair !important;
+}
+
+/* Custom id
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#dropdown-change-x .VirtualizedSelectFocusedOption {
+    background-color: #F0E3DF;
+}
+
+#dropdown-change-y .VirtualizedSelectFocusedOption {
+    background-color: #F0E3DF;
+}
+
+#table-changes .Select-value-label {
+    color: white !important;
+}
+
+#table-changes .Select-clear, .Select-arrow {
+    --accent: white !important;
+}
+
+#table-changes .Select-menu-outer, .is-focused {
+    --accent: white !important;
+    background-color: black !important;
+}
+
+#table-changes .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+    background-color: black;
 }
 
 /* Custom class
