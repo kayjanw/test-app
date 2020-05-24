@@ -1,6 +1,7 @@
 import base64
 import io
 
+import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
@@ -48,6 +49,46 @@ def violin_plot():
     return dict(data=data, layout=layout)
 
 
+def print_callback(print_function):
+    def decorator(func):
+        def wrapper(*args, **kw):
+            if print_function:
+                print(f'==== Function called: {func.__name__}')
+            result = func(*args, **kw)
+            return result
+        return wrapper
+    return decorator
+
+
+def table_css():
+    style_header = {
+        'fontWeight': 'bold',
+        'textAlign': 'left'
+    }
+    style_cell = {
+        'background-color': 'transparent',
+        'color': 'white',
+        'font-family': 'Source Sans Pro',
+        'font-size': 13,
+        'textAlign': 'left'
+    }
+    style_table = {
+        'overflowX': 'auto'
+    }
+    css = [
+        {
+            'selector': 'tr:hover',
+            'rule': 'background-color: black; color: white'
+        }, {
+            'selector': 'td.cell--selected *, td.focused *',
+            'rule': 'background-color: black !important;'
+                    'color: white !important;'
+                    'text-align: left;'
+        }
+    ]
+    return style_header, style_cell, style_table, css
+
+
 def get_worksheet(contents):
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
@@ -74,34 +115,49 @@ def parse_data(contents, filename, worksheet=None):
 
 
 def generate_datatable(df, max_rows=3):
+    style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
         columns=[{"name": col, "id": col} for col in df.columns],
         data=df.to_dict('records')[:max_rows],
         style_as_list_view=True,
-        style_header={
-            'fontWeight': 'bold',
-            'textAlign': 'left'
-        },
-        style_cell={
-            'background-color': 'transparent',
-            'color': 'white',
-            'font-family': 'Source Sans Pro',
-            'font-size': 13,
-            'textAlign': 'center'
-        },
-        style_table={
-            'overflowX': 'auto'
-        },
-        css=[{
-            'selector': 'tr:hover',
-            'rule': 'background-color: black; color: white'
-        }, {
-            'selector': 'td.cell--selected *, td.focused *',
-            'rule': 'background-color: black !important;'
-                    'color: white !important;'
-                    'text-align: left;'
-        }]
+        style_header=style_header,
+        style_cell=style_cell,
+        style_table=style_table,
+        css=css
     )
+
+
+def update_when_upload(contents, worksheet, filename, style, ctx):
+    worksheet_options = []
+    sample_table = []
+    if dash.callback_context.triggered:
+        # Get worksheet options
+        if 'xls' in filename:
+            worksheet_list = get_worksheet(contents)
+            if len(worksheet_list) > 1:
+                worksheet_options = [{'label': ws, 'value': ws} for ws in worksheet_list]
+
+        # Update worksheet options display style
+        if len(worksheet_options):
+            style['display'] = 'inline-block'
+        else:
+            style['display'] = 'none'
+
+        # Read uploaded contents
+        if dash.callback_context.triggered[0]['prop_id'].split('.')[0] == ctx:
+            df = parse_data(contents, filename, worksheet)
+        else:
+            df = parse_data(contents, filename)
+
+        if type(df) == pd.DataFrame:
+            sample_table = [
+                html.P('Sample of uploaded data:', style={'margin': 0}),
+                generate_datatable(df),
+                html.P(f'Number of rows: {len(df)}', style={'margin': 0})
+            ]
+            df_ser = df.to_json(orient='split', date_format='iso')
+            return worksheet_options, style, sample_table, dict(df=df_ser)
+    return worksheet_options, style, sample_table, {}
 
 
 def change_download_button(df):
@@ -118,5 +174,5 @@ def change_download_button(df):
         )
     ],
         method='POST',
-        action='/download_change_df/'
+        action='/download_df/'
     )
