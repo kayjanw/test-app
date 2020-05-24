@@ -1,7 +1,10 @@
 import dash_html_components as html
 import dash_leaflet as dl
+import dash_table
 import numpy as np
 import requests
+
+from components.helper import table_css
 
 try:
     GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
@@ -15,6 +18,32 @@ except NameError:
         pass
 
 
+def get_trip_table():
+    style_header, style_cell, style_table, css = table_css()
+    return dash_table.DataTable(
+        id='table-trip-landmark',
+        columns=[
+            dict(name='Landmark', id='Landmark', editable=True),
+            dict(name='Street', id='Street'),
+            dict(name='lat', id='lat'),
+            dict(name='lon', id='lon')
+        ],
+        data=[],
+        style_as_list_view=True,
+        style_header=style_header,
+        style_cell_conditional=[
+            {
+                'if': {
+                    'column_id': c
+                },
+                'display': 'none'
+            } for c in ['lat', 'lon']
+        ],
+        style_cell=style_cell,
+        css=css
+    )
+
+
 def remove_last_point_on_table(data):
     data = data[:-1]
     return data
@@ -23,7 +52,10 @@ def remove_last_point_on_table(data):
 def get_street_name(lat, lon):
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={GOOGLE_API_KEY}'
     page = requests.get(url).json()
-    return page['results'][0]['address_components'][1]['long_name']
+    if page['status'] == 'OK':
+        return page['results'][0]['address_components'][1]['long_name']
+    else:
+        return 'Location not found, please select another location.'
 
 
 def add_new_point_on_table(lat, lon, landmark, data):
@@ -92,12 +124,16 @@ def get_distance_and_duration_from_table(data):
                       f"{data[i]['lon']}&destinations={data[j]['lat']},{data[j]['lon']}&key={GOOGLE_API_KEY}"
                 try:
                     page = requests.get(url).json()
+                except Exception as e:
+                    raise Exception(f'Error: Cannot get distance data from Google API, error message: {e}. '
+                                    f'Please try again later')
+                if page['rows'][0]['elements'][0]['status'] == 'OK':
                     distance = page['rows'][0]['elements'][0]['distance']['value']  # in m
                     duration = page['rows'][0]['elements'][0]['duration']['value']  # in sec
                     distance_matrix[i][j] = distance
                     duration_matrix[i][j] = duration
-                except Exception as e:
-                    raise Exception(f'Cannot get distance data from Google API, error message: {e}')
+                else:
+                    raise Exception('Error: Cannot get distance due to invalid location entered')
     return distance_matrix, duration_matrix
 
 
