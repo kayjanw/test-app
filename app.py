@@ -250,6 +250,7 @@ def update_output(tab):
     else:
         return dcc.Graph(
             figure=violin_plot(),
+            id='violin-plot',
             config={
                 'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
                                            'autoScale2d', 'resetScale2d', 'toggleSpikelines', 'hoverClosestCartesian',
@@ -275,7 +276,7 @@ def download_result():
         buf.seek(0)
         return send_file(
             buf,
-            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             attachment_filename="result.xlsx",
             as_attachment=True,
             cache_timeout=0
