@@ -542,7 +542,11 @@ def change_over_time_tab():
                 html.P([
                     'Footnote:',
                     html.Br(),
-                    '1. Computation ignores rows where any column values are not in numerical format'
+                    '1. Computation ignores rows where any column comparison values are not in numerical format',
+                    html.Br(),
+                    '2. Computation ignores rows where column identifier values are empty',
+                    html.Br(),
+                    '3. Ensure all column identifier values are unique, if not it will be replaced with running numbers'
                 ],
                     style={
                         'margin': 0,
