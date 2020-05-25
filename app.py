@@ -9,7 +9,7 @@ from flask import request, send_file
 
 from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot, compute_changes, \
     transpose_dataframe, get_line_plot
-from components.helper import violin_plot, print_callback, update_when_upload, change_download_button
+from components.helper import violin_plot, print_callback, decode_df, update_when_upload, change_download_button
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
@@ -91,7 +91,7 @@ def update_change_upload(contents, worksheet, filename, style):
 @print_callback(print_function)
 def update_change_dropdown_options(records):
     if 'df' in records:
-        df = pd.read_json(records['df'], orient='split')
+        df = decode_df(records['df'])
         col_options = [{'label': col, 'value': col} for col in df.columns]
         return col_options, col_options
     return [], []
@@ -124,20 +124,22 @@ def update_change_dropdown_value(x_options, y_options, x_value, y_value):
                State('input-change-y', 'value')])
 @print_callback(print_function)
 def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
+    result = []
+    fig = {}
     if trigger:
-        if 'df' in records:
-            df = pd.read_json(records['df'], orient='split')
-        else:
-            return ['Please upload a file'], {}
-        if x_col is None or y_col is None:
-            return ['Please specify columns as axis'], {}
-        if x_col == y_col:
-            return ['Please select different columns for comparison'], {}
-        df = compute_change(df, x_col, x_max, y_col, y_max)
-        result_table = get_summary_statistics(df, x_col, y_col)
-        fig = get_scatter_plot(df, x_col, y_col)
-        return [result_table, change_download_button(df)], fig
-    return [], {}
+        if 'df' in records and x_col is not None and y_col is not None and x_col != y_col:
+            df = decode_df(records['df'])
+            df = compute_change(df, x_col, x_max, y_col, y_max)
+            result_table = get_summary_statistics(df, x_col, y_col)
+            result = [result_table, change_download_button(df)]
+            fig = get_scatter_plot(df, x_col, y_col)
+        elif 'df' not in records:
+            result = ['Please upload a file']
+        elif x_col is None or y_col is None:
+            result = ['Please specify columns as axis']
+        elif x_col == y_col:
+            result = ['Please select different columns for comparison']
+    return result, fig
 
 
 @app.callback([Output('dropdown-changes-worksheet', 'options'),
@@ -160,7 +162,7 @@ def update_changes_upload(contents, worksheet, filename, style):
 @print_callback(print_function)
 def update_changes_dropdown_options(records):
     if 'df' in records:
-        df = pd.read_json(records['df'], orient='split')
+        df = decode_df(records['df'])
         col_options = [{'label': col, 'value': col} for col in df.columns]
         return dict(column=dict(options=col_options)), col_options
     return {}, []
@@ -191,8 +193,8 @@ def update_changes_result(trigger, records, col_identifier, data):
                           if row['column'] is not ''
                           if row['column'] is not None]
         if 'df' in records and len(list_of_tuples):
-            df = pd.read_json(records['df'], orient='split')
-            df = compute_changes(df, list_of_tuples)
+            df = decode_df(records['df'])
+            df = compute_changes(df, col_identifier, list_of_tuples)
             if len(df):
                 df2 = transpose_dataframe(df, col_identifier, list_of_tuples)
                 instructions, fig = get_line_plot(df2)
@@ -265,9 +267,9 @@ def update_output(tab):
 
 @app.server.route('/download_df/', methods=['POST'])
 def download_result():
-    df = request.form.get('result')
-    df = pd.read_json(df, orient='split')
-    if len(df)>0:
+    df_ser = request.form.get('result')
+    df = decode_df(df_ser)
+    if len(df) > 0:
         buf = io.BytesIO()
         excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
         df.to_excel(excel_writer, sheet_name="Sheet1")
