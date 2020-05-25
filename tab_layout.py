@@ -32,8 +32,8 @@ def main_layout():
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='Change calculator', value='tab-3', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        # dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
-                        #         selected_className='custom-tab-selected'),
+                        dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
+                                selected_className='custom-tab-selected'),
                         dcc.Tab(label='Keyboard (WIP)', value='tab-5', className='custom-tab',
                                 selected_className='custom-tab-selected'),
                     ],
@@ -417,11 +417,10 @@ def change_calculator_tab():
 def change_over_time_tab():
     return html.Div([
         header('Change Calculator 2', 'Compare changes over multiple periods'),
-        html.P('Users can view changes over time on a parallel coordinate plot. Just minor changes from the other '
-               'change tab (haha)'),
+        html.P('Users can view changes over time on a line plot. Just minor changes from the other change tab (haha)'),
         html.Br(),
         html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
-        html.P('Step 2: Specify the columns to compare'),
+        html.P('Step 2: Specify column identifier in dropdown option, and columns to compare in the table'),
         html.P('Step 3: Specify the maximum possible value for each column to normalize the column values (optional)'),
         html.P('Step 4: Click "OK" button to generate the results!'),
         html.Div([
@@ -506,6 +505,31 @@ def change_over_time_tab():
             ),
             # Right item
             html.Div([
+                html.P([
+                    'Column identifier (i.e. Name): ',
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown-changes-identifier',
+                            placeholder='Select column',
+                            clearable=False,
+                            style={
+                                'width': '100%',
+                                'color': 'black'
+                            }
+                        ),
+                    ],
+                        style={
+                            'display': 'inline-block',
+                            'verticalAlign': 'middle',
+                            'width': '35%'
+                        }
+                    )
+                ],
+                    style={
+                        'margin': 0,
+                        'margin-bottom': '10px'
+                    }
+                ),
                 get_changes_table(),
                 html.Button(
                     'Add rows',
@@ -514,6 +538,16 @@ def change_over_time_tab():
                 html.Button(
                     'OK',
                     id='button-changes-ok',
+                ),
+                html.P([
+                    'Footnote:',
+                    html.Br(),
+                    '1. Computation ignores rows where any column values are not in numerical format'
+                ],
+                    style={
+                        'margin': 0,
+                        'margin-top': '10px'
+                    }
                 )
             ],
                 style={
@@ -535,11 +569,13 @@ def change_over_time_tab():
         ),
         # Bottom item
         html.Div([
-            html.P(
-                id='changes-result'
+            dcc.Loading(
+                html.P(
+                    id='changes-result'
+                )
             ),
-            dcc.Graph(
-                id='graph-changes-result'
+            html.Div(
+                id='div-changes-result'
             )
         ])
     ])

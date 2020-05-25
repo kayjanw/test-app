@@ -153,12 +153,53 @@ def compute_changes(df, list_of_tuples):
     return df
 
 
-def get_parallel_coord(df, list_of_tuples):
+def transpose_dataframe(df, col_identifier, list_of_tuples):
+    cols = [row[0] for row in list_of_tuples]
+    df2 = df[cols].transpose()
+    if col_identifier is not '' and col_identifier is not None:
+        df2.columns = df[col_identifier]
+    return df2
+
+
+def get_line_plot(df2):
+    trace = []
+    for col in df2.columns:
+        trace.append(
+            go.Scatter(
+                x=list(df2.index),
+                y=df2[col],
+                name=col,
+                mode='lines',
+                line=dict(color='#202029'),
+                text=[f'{col}<br><br>'+'<br>'.join([f'{df2.index[idx]}: {x}' for idx, x in
+                                   enumerate(df2[col].values)])] * len(df2.index),
+                hoverinfo='text',
+            )
+        )
+    layout = dict(
+        title='Line plot of results',
+        hovermode='closest',
+        hoverdistance=-1,
+        font=dict(
+            family="Source Sans Pro",
+            size=16,
+        )
+    )
+    instructions = [
+        'Hover over line to see more information',
+        html.Br(),
+        'Single click on legend to hide entry',
+        html.Br(),
+        'Double click on legend to highlight entry'
+    ]
+    return instructions, dict(data=trace, layout=layout)
+
+
+def get_parallel_coord(df, col_identifier, list_of_tuples):
     cols = [row[0] for row in list_of_tuples]
     trace = go.Parcoords(
         line_color='#202029',
-        customdata=df['Name'],
-        name='Name',
+        customdata=df[col_identifier],  # cannot seem to support hover information
         dimensions=[
             dict(
                 label=col,
@@ -167,10 +208,19 @@ def get_parallel_coord(df, list_of_tuples):
                 tickvals=np.arange(np.round(df[col].min()-5, -1), np.round(df[col].max()+5, -1)+1, 10)
             )
             for col in cols
+        ] + [
+            dict(
+                label=col_identifier,
+                values=list(range(len(df))),
+                range=[0, len(df)],
+                tickvals=list(range(len(df))),
+                ticktext=df[col_identifier]
+            )
         ],
     )
     layout = dict(
-        title='Results plot',
+        title='Parallel Coordinate plot of results',
+        showlegend=True,
         font=dict(
             family="Source Sans Pro",
             size=16,
