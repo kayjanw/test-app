@@ -163,6 +163,17 @@ def transpose_dataframe(df, col_identifier, list_of_tuples):
 
 def get_line_plot(df2):
     trace = []
+    instructions = [
+        'Hover over line to see more information',
+        html.Br(),
+        'Single click on legend to hide entry',
+        html.Br(),
+        'Double click on legend to highlight entry'
+    ]
+    if df2.columns.nunique() < len(df2.columns):
+        df2.columns = range(len(df2.columns))
+        instructions.append(html.Br())
+        instructions.append('Note: Column identifier do not have unique entries, replaced legend with running numbers')
     for col in df2.columns:
         trace.append(
             go.Scatter(
@@ -185,13 +196,6 @@ def get_line_plot(df2):
             size=16,
         )
     )
-    instructions = [
-        'Hover over line to see more information',
-        html.Br(),
-        'Single click on legend to hide entry',
-        html.Br(),
-        'Double click on legend to highlight entry'
-    ]
     return instructions, dict(data=trace, layout=layout)
 
 
