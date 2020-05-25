@@ -127,10 +127,21 @@ def generate_datatable(df, max_rows=3):
     )
 
 
+def encode_df(df):
+    df_ser = df.to_json(orient='split', date_format='iso')
+    return df_ser
+
+
+def decode_df(df_ser):
+    df = pd.read_json(df_ser, orient='split')
+    df.columns = df.columns.astype(str)
+    return df
+
+
 def update_when_upload(contents, worksheet, filename, style, ctx):
     worksheet_options = []
     sample_table = []
-    if dash.callback_context.triggered:
+    if dash.callback_context.triggered and contents is not None:
         # Get worksheet options
         if 'xls' in filename:
             worksheet_list = get_worksheet(contents)
@@ -144,27 +155,28 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
             style['display'] = 'none'
 
         # Read uploaded contents
-        if dash.callback_context.triggered[0]['prop_id'].split('.')[0] == ctx:
+        if ctx == 'dropdown-changes-worksheet':
             df = parse_data(contents, filename, worksheet)
         else:
             df = parse_data(contents, filename)
 
         if type(df) == pd.DataFrame:
+            df.columns = df.columns.astype(str)
             sample_table = [
                 html.P('Sample of uploaded data:', style={'margin': 0}),
                 generate_datatable(df),
                 html.P(f'Number of rows: {len(df)}', style={'margin': 0})
             ]
-            df_ser = df.to_json(orient='split', date_format='iso')
-            return worksheet_options, style, sample_table, dict(df=df_ser)
+            records = dict(df=encode_df(df))
+            return worksheet_options, style, sample_table, records
     return worksheet_options, style, sample_table, {}
 
 
 def change_download_button(df):
-    df = df.to_json(orient='split', date_format='iso')
+    df_ser = encode_df(df)
     return html.Form([
         dcc.Input(
-            value=df,
+            value=df_ser,
             name='result',
             type='text',
             style={'display': 'none'}),
