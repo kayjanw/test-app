@@ -103,11 +103,13 @@ button[disabled] {
 
 /* Custom id
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-#dropdown-change-x .VirtualizedSelectFocusedOption {
-    background-color: #F0E3DF;
+#violin-plot .js-plotly-plot .plotly .cursor-pointer {
+    cursor: auto;
 }
 
-#dropdown-change-y .VirtualizedSelectFocusedOption {
+#dropdown-change-x .VirtualizedSelectFocusedOption,
+#dropdown-change-y .VirtualizedSelectFocusedOption,
+#dropdown-changes-identifier .VirtualizedSelectFocusedOption {
     background-color: #F0E3DF;
 }
 
