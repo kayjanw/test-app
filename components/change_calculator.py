@@ -10,10 +10,17 @@ def remove_string_values(df, col):
     # Handle string values
     if isinstance(col, str):
         df[col].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
-        df.dropna(subset=[col], inplace=True)
     elif isinstance(col, list):
         for c in col:
             df[c].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
+    return df
+
+
+def remove_null(df, col):
+    # Handle string values
+    if isinstance(col, str):
+        df.dropna(subset=[col], inplace=True)
+    elif isinstance(col, list):
         df.dropna(subset=col, inplace=True)
     return df
 
@@ -31,6 +38,7 @@ def convert_to_float(df, col, col_max):
 def compute_change(df, x_col, x_max, y_col, y_max):
     df = df.copy()
     df = remove_string_values(df, [x_col, y_col])
+    df = remove_null(df, [x_col, y_col])
     df = convert_to_float(df, x_col, x_max)
     df = convert_to_float(df, y_col, y_max)
     df['Change'] = df[y_col] - df[x_col]
@@ -122,7 +130,7 @@ def get_scatter_plot(df, x_col, y_col):
         hovermode='closest',
         showlegend=False,
         font=dict(
-            family="Source Sans Pro",
+            family='Source Sans Pro',
         )
     )
     return dict(data=[trace, line, hist_x, hist_y], layout=layout)
@@ -145,11 +153,13 @@ def get_changes_table():
     )
 
 
-def compute_changes(df, list_of_tuples):
+def compute_changes(df, col_identifier, list_of_tuples):
     df = df.copy()
     for col, col_max in list_of_tuples:
         df = remove_string_values(df, col)
+        df = remove_null(df, col)
         df = convert_to_float(df, col, col_max)
+    df = remove_null(df, col_identifier)
     return df
 
 
@@ -191,9 +201,12 @@ def get_line_plot(df2):
         title='Line plot of results',
         hovermode='closest',
         hoverdistance=-1,
+        xaxis=dict(
+            type='category'
+        ),
         font=dict(
-            family="Source Sans Pro",
-            size=16,
+            family='Source Sans Pro',
+            size=16
         )
     )
     return instructions, dict(data=trace, layout=layout)
@@ -226,7 +239,7 @@ def get_parallel_coord(df, col_identifier, list_of_tuples):
         title='Parallel Coordinate plot of results',
         showlegend=True,
         font=dict(
-            family="Source Sans Pro",
+            family='Source Sans Pro',
             size=16,
         )
     )
