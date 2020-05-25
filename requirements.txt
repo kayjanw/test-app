@@ -54,6 +54,6 @@ wrapt==1.11.2
 xlrd==1.2.0
 XlsxWriter==1.2.8
 
-# For git conda
-menuinst==1.4.16
-pywin32==227
+#For git conda
+#menuinst==1.4.16
+#pywin32==227
