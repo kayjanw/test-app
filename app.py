@@ -36,6 +36,20 @@ print_function = False
                State('table-trip-landmark', 'data')])
 @print_callback(print_function)
 def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
+    """Update trip table
+
+    Args:
+        e (tuple): trigger on map click
+        trigger_remove: trigger on button click
+        trigger_reset: trigger on button click
+        landmark (str): name of landmark to be added
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (list): updated data of table that displays landmarks information
+        (dict): style of table that displays landmarks information
+        (str): reset name of next landmark to be added
+    """
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-remove':
         data = remove_last_point_on_table(data)
@@ -54,6 +68,15 @@ def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
               [State('map-trip', 'children')])
 @print_callback(print_function)
 def update_trip_map(data, children):
+    """Update trip map to include landmark location pin
+
+    Args:
+        data (list): data of table that displays landmarks information, triggers callback
+        children (list): current map children
+
+    Returns:
+        (list): updated map children
+    """
     children = get_map_from_table(data, children)
     return children
 
@@ -64,6 +87,16 @@ def update_trip_map(data, children):
               [State('table-trip-landmark', 'data')])
 @print_callback(print_function)
 def update_trip_results(trigger_ok, trigger_reset, data):
+    """Update and display trip results
+
+    Args:
+        trigger_ok: trigger on button click
+        trigger_reset: trigger on button click
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (str/list)
+    """
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     if ctx == 'button-trip-ok':
         return optimiser_pipeline(data)
@@ -81,6 +114,20 @@ def update_trip_results(trigger_ok, trigger_reset, data):
                State('change-select-worksheet', 'style')])
 @print_callback(print_function)
 def update_change_upload(contents, worksheet, filename, style):
+    """Update change calculator interface when file is uploaded
+
+    Args:
+        contents (str): contents of data uploaded, triggers callback
+        worksheet (str): worksheet of excel file, if applicable, triggers callback
+        filename (str): filename of data uploaded
+        style (dict): current style of worksheet selector dropdown
+
+    Returns:
+        (list): list of worksheets options
+        (dict): updated style of worksheet selector dropdown
+        (dash_table.DataTable/list): sample of uploaded data
+        (dict): intermediate data stored in dcc.Store
+    """
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     return update_when_upload(contents, worksheet, filename, style, ctx)
 
@@ -90,6 +137,15 @@ def update_change_upload(contents, worksheet, filename, style):
               [Input('intermediate-change-result', 'data')])
 @print_callback(print_function)
 def update_change_dropdown_options(records):
+    """Update change calculator column selector dropdown options
+
+    Args:
+        records (dict): intermediate data stored in dcc.Store
+
+    Returns:
+        (list): column selector dropdown options for x-axis
+        (list): column selector dropdown options for y-axis
+    """
     if 'df' in records:
         df = decode_df(records['df'])
         col_options = [{'label': col, 'value': col} for col in df.columns]
@@ -105,6 +161,18 @@ def update_change_dropdown_options(records):
                State('dropdown-change-y', 'value')])
 @print_callback(print_function)
 def update_change_dropdown_value(x_options, y_options, x_value, y_value):
+    """Update change calculator column selector dropdown value
+
+    Args:
+        x_options (list): column selector dropdown options for x-axis, triggers callback
+        y_options (list): column selector dropdown options for y-axis, triggers callback
+        x_value (str): current column selector dropdown value for x-axis
+        y_value (str): current column selector dropdown value for y-axis
+
+    Returns:
+        (str): updated column selector dropdown value for x-axis
+        (str): updated column selector dropdown value for y-axis
+    """
     x_options_list = [opt['label'] for opt in x_options]
     y_options_list = [opt['label'] for opt in y_options]
     if x_value not in x_options_list:
@@ -124,6 +192,20 @@ def update_change_dropdown_value(x_options, y_options, x_value, y_value):
                State('input-change-y', 'value')])
 @print_callback(print_function)
 def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
+    """Update and display change calculator results
+
+    Args:
+        trigger: trigger on button click
+        records (dict): intermediate data stored in dcc.Store
+        x_col (str): column for x-axis
+        x_max (int): maximum value for x-axis, could be None or empty string
+        y_col (str): column for x-axis
+        y_max (int): maximum value for y-axis, could be None or empty string
+
+    Returns:
+        (list): div result of change calculator
+        (dict): graphical result of change calculator
+    """
     result = []
     fig = {}
     if trigger:
@@ -152,6 +234,20 @@ def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
                State('changes-select-worksheet', 'style')])
 @print_callback(print_function)
 def update_changes_upload(contents, worksheet, filename, style):
+    """Update change calculator 2 interface when file is uploaded
+
+    Args:
+        contents (str): contents of data uploaded, triggers callback
+        worksheet (str): worksheet of excel file, if applicable, triggers callback
+        filename (str): filename of data uploaded
+        style (dict): current style of worksheet selector dropdown
+
+    Returns:
+        (list): list of worksheets options
+        (dict): updated style of worksheet selector dropdown
+        (dash_table.DataTable/list): sample of uploaded data
+        (dict): intermediate data stored in dcc.Store
+    """
     ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
     return update_when_upload(contents, worksheet, filename, style, ctx)
 
@@ -161,6 +257,15 @@ def update_changes_upload(contents, worksheet, filename, style):
               [Input('intermediate-changes-result', 'data')])
 @print_callback(print_function)
 def update_changes_dropdown_options(records):
+    """Update change calculator 2 column selector dropdown options
+
+    Args:
+        records (dict): intermediate data stored in dcc.Store
+
+    Returns:
+        (list): column selector dropdown options for table
+        (list): column selector dropdown options for column indicators
+    """
     if 'df' in records:
         df = decode_df(records['df'])
         col_options = [{'label': col, 'value': col} for col in df.columns]
@@ -173,6 +278,15 @@ def update_changes_dropdown_options(records):
               [State('table-changes', 'data')])
 @print_callback(print_function)
 def update_changes_add_row(trigger, data):
+    """Update and adds additional row to change calculator 2 table
+
+    Args:
+        trigger: trigger on button click
+        data (list): data of table that stores comparison column information
+
+    Returns:
+        (list): updated data of table that stores comparison column information
+    """
     if trigger:
         data.append(dict(column='', max=''))
     return data
@@ -186,6 +300,18 @@ def update_changes_add_row(trigger, data):
                State('table-changes', 'data')])
 @print_callback(print_function)
 def update_changes_result(trigger, records, col_identifier, data):
+    """Update and display change calculator 2 results
+
+    Args:
+        trigger: trigger on button click
+        records (dict): intermediate data stored in dcc.Store
+        col_identifier (str): column for index
+        data (list): data of table that stores comparison column information
+
+    Returns:
+        (list): div result of change calculator 2
+        (dict): graphical result of change calculator 2
+    """
     instructions = []
     graph = []
     if trigger:
@@ -213,6 +339,15 @@ def update_changes_result(trigger, records, col_identifier, data):
               [Input('graph-changes-result', 'hoverData')],
               [State('graph-changes-result', 'figure')])
 def update_changes_hover(hover_data, figure):
+    """Update layout of plotly graph on hover
+
+    Args:
+        hover_data: trigger on hover
+        figure (dict): figure for plot
+
+    Returns:
+        (dict): updated figure for plot
+    """
     for trace in figure['data']:
         trace["line"]["width"] = 1
         trace["opacity"] = 0.7
@@ -239,6 +374,14 @@ def update_keyboard(trigger):
               [Input('tabs-parent', 'value')])
 @print_callback(print_function)
 def update_output(tab):
+    """Update content when tab changes
+
+    Args:
+        tab: trigger on tab change
+
+    Returns:
+        (html.Div)
+    """
     if tab == 'tab-1':
         return about_me_tab()
     elif tab == 'tab-2':

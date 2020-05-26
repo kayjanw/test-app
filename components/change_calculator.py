@@ -7,6 +7,15 @@ from components.helper import table_css
 
 
 def remove_string_values(df, col):
+    """Remove non-integer values from column(s) in DataFrame
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col (str/list): column(s) to remove non-integer values from
+
+    Returns:
+        (pandas DataFrame)
+    """
     # Handle string values
     if isinstance(col, str):
         df[col].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
@@ -17,6 +26,15 @@ def remove_string_values(df, col):
 
 
 def remove_null(df, col):
+    """Remove null values from column(s) in DataFrame
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col (str/list): column(s) to remove null values from
+
+    Returns:
+        (pandas DataFrame)
+    """
     # Handle string values
     if isinstance(col, str):
         df.dropna(subset=[col], inplace=True)
@@ -26,6 +44,16 @@ def remove_null(df, col):
 
 
 def convert_to_float(df, col, col_max):
+    """Convert values to float for column(s) in DataFrame, normalize column if necessary
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col (str): column to convert values to float
+        col_max (int): maximum value for column, could be None or empty string
+
+    Returns:
+        (pandas DataFrame)
+    """
     # Convert to float, normalize if necessary
     if col_max is not None and col_max is not '':
         df[col] = df[col].astype(float) / col_max * 100
@@ -36,6 +64,21 @@ def convert_to_float(df, col, col_max):
 
 
 def compute_change(df, x_col, x_max, y_col, y_max):
+    """Compute change between two periods
+
+    Performs removing non-integer values, removing null rows and conversion of values to float, then adds in 'Change'
+    column as difference between y_col and x_col
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        x_col (str): column for x-axis
+        x_max (int): maximum value for x-axis, could be None or empty string
+        y_col (str): column for x-axis
+        y_max (int): maximum value for y-axis, could be None or empty string
+
+    Returns:
+        (pandas DataFrame)
+    """
     df = df.copy()
     df = remove_string_values(df, [x_col, y_col])
     df = remove_null(df, [x_col, y_col])
@@ -46,6 +89,16 @@ def compute_change(df, x_col, x_max, y_col, y_max):
 
 
 def get_summary_statistics(df, x_col, y_col):
+    """Get summary statistics for DataFrame for two periods
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        x_col (str): column for x-axis
+        y_col (str): column for x-axis
+
+    Returns:
+        (dash_table.DataTable)
+    """
     param_name = ['Number of values', 'Mean', 'Std. Dev', 'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
     return dash_table.DataTable(
         columns=[
@@ -84,6 +137,18 @@ def get_summary_statistics(df, x_col, y_col):
 
 
 def get_scatter_plot(df, x_col, y_col):
+    """Get figure for plot
+
+    Adds plotly.graph_objects charts for violin plot, line plot and marginal histograms
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        x_col (str): column for x-axis
+        y_col (str): column for x-axis
+
+    Returns:
+        (dict)
+    """
     x_min, x_max = df[x_col].min(), df[x_col].max()
     y_min, y_max = df[y_col].min(), df[y_col].max()
     x_min_limit, x_max_limit = min(0, x_min - 5), max(100, x_max + 5)
@@ -137,6 +202,11 @@ def get_scatter_plot(df, x_col, y_col):
 
 
 def get_changes_table():
+    """Return the table used to compare changes across multiple periods
+
+    Returns:
+        (dash_table.DataTable)
+    """
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
         id='table-changes',
@@ -154,6 +224,18 @@ def get_changes_table():
 
 
 def compute_changes(df, col_identifier, list_of_tuples):
+    """Compute change between multiple periods
+
+    Performs removing non-integer values, removing null rows and conversion of values to float
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col_identifier (str): column for index
+        list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+
+    Returns:
+        (pandas DataFrame)
+    """
     df = df.copy()
     for col, col_max in list_of_tuples:
         df = remove_string_values(df, col)
@@ -164,6 +246,16 @@ def compute_changes(df, col_identifier, list_of_tuples):
 
 
 def transpose_dataframe(df, col_identifier, list_of_tuples):
+    """Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col_identifier (str): column for index, which will be the new DataFrame column names
+        list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+
+    Returns:
+        (pandas DataFrame)
+    """
     cols = [row[0] for row in list_of_tuples]
     df2 = df[cols].transpose()
     if col_identifier is not '' and col_identifier is not None:
@@ -172,6 +264,16 @@ def transpose_dataframe(df, col_identifier, list_of_tuples):
 
 
 def get_line_plot(df2):
+    """Get figure for plot
+
+    Adds plotly.graph_objects charts for line plot
+
+    Args:
+        df2 (pandas DataFrame): input DataFrame
+
+    Returns:
+        (dict)
+    """
     trace = []
     instructions = [
         'Hover over line to see more information',
@@ -213,6 +315,15 @@ def get_line_plot(df2):
 
 
 def get_parallel_coord(df, col_identifier, list_of_tuples):
+    """Get figure for plot
+
+    Adds plotly.graph_objects charts for parallel coordinate plot
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        col_identifier (str): column for index
+        list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+    """
     cols = [row[0] for row in list_of_tuples]
     trace = go.Parcoords(
         line_color='#202029',
