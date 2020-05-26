@@ -166,7 +166,7 @@ def get_map_from_table(data, children):
 
 
 def get_distance_and_duration_from_table(data):
-    """Get distance and duration matrix from data of table that displays landmarks information
+    """Get distance and duration matrix from data of table that displays landmarks information, calls Google API
 
     Args:
         data (list): data of table that displays landmarks information
