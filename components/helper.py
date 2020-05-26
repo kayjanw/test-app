@@ -13,6 +13,13 @@ from plotly.colors import n_colors
 
 
 def violin_plot():
+    """Get data for plot
+
+    Adds plotly.graph_objects charts for violin plot at initial loading page
+
+    Returns:
+        (dict)
+    """
     np.random.seed(1)
     points = (np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200) +
               (np.arange(12) + 2 * np.random.random(12))[:, None])
@@ -50,6 +57,14 @@ def violin_plot():
 
 
 def print_callback(print_function):
+    """Decorator function to print callback on backend for debugging purposes
+
+    Args:
+        print_function (bool): indicator to print callback
+
+    Returns:
+        (function)
+    """
     def decorator(func):
         def wrapper(*args, **kw):
             if print_function:
@@ -61,6 +76,14 @@ def print_callback(print_function):
 
 
 def table_css():
+    """Gets default dash_table CSS components
+
+    Returns:
+        (dict): Style for table header
+        (dict): Style for table cell
+        (dict): Style for table
+        (list): CSS component
+    """
     style_header = {
         'fontWeight': 'bold',
         'textAlign': 'left'
@@ -90,6 +113,14 @@ def table_css():
 
 
 def get_worksheet(contents):
+    """Get worksheet names from an excel file
+
+    Args:
+        contents (str): contents of data uploaded
+
+    Returns:
+        (list): list of worksheet names
+    """
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     xls = pd.ExcelFile(io.BytesIO(decoded))
@@ -97,6 +128,16 @@ def get_worksheet(contents):
 
 
 def parse_data(contents, filename, worksheet=None):
+    """Reads uploaded data into DataFrame
+
+    Args:
+        contents (str): contents of data uploaded
+        filename (str): filename of data uploaded
+        worksheet (str): worksheet of excel file, if applicable, defaults to None
+
+    Returns:
+        (pandas DataFrame)
+    """
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     try:
@@ -115,6 +156,15 @@ def parse_data(contents, filename, worksheet=None):
 
 
 def generate_datatable(df, max_rows=3):
+    """Generate table from pandas DataFrame
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        max_rows (int): maximum number of rows to show
+
+    Returns:
+        (dash_table.DataTable)
+    """
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
         columns=[{"name": col, "id": col} for col in df.columns],
@@ -128,17 +178,48 @@ def generate_datatable(df, max_rows=3):
 
 
 def encode_df(df):
+    """Serializes pandas DataFrame to JSON format
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+
+    Returns:
+        (str)
+    """
     df_ser = df.to_json(orient='split', date_format='iso')
     return df_ser
 
 
 def decode_df(df_ser):
+    """De-serializes JSON format string to pandas DataFrame
+
+    Args:
+        df_ser (str): input serialized DataFrame
+
+    Returns:
+        (pandas DataFrame)
+    """
     df = pd.read_json(df_ser, orient='split')
     df.columns = df.columns.astype(str)
     return df
 
 
 def update_when_upload(contents, worksheet, filename, style, ctx):
+    """Reads uploaded data into DataFrame and return dash application objects
+
+    Args:
+        contents (str): contents of data uploaded
+        worksheet (str): worksheet of excel file, if applicable, defaults to None
+        filename (str): filename of data uploaded
+        style (dict): current style of worksheet selector dropdown
+        ctx (str): dash callback trigger item name
+
+    Returns:
+        (list): list of worksheets options
+        (dict): updated style of worksheet selector dropdown
+        (dash_table.DataTable/list): sample of uploaded data
+        (dict): intermediate data stored in dcc.Store
+    """
     worksheet_options = []
     sample_table = []
     if dash.callback_context.triggered and contents is not None:
@@ -173,6 +254,14 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
 
 
 def change_download_button(df):
+    """Download button for processed data or results
+
+    Args:
+        df (pandas DataFrame): input DataFrame, to be downloaded by user
+
+    Returns:
+        (html.Form)
+    """
     df_ser = encode_df(df)
     return html.Form([
         dcc.Input(

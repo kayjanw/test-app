@@ -19,6 +19,11 @@ except NameError:
 
 
 def get_trip_table():
+    """Return the table that displays landmarks information
+
+    Returns:
+        (dash_table.DataTable)
+    """
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
         id='table-trip-landmark',
@@ -45,11 +50,30 @@ def get_trip_table():
 
 
 def remove_last_point_on_table(data):
+    """Removes last entry from data of table that displays landmarks information
+
+    Args:
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (list)
+    """
     data = data[:-1]
     return data
 
 
 def get_street_name(lat, lon):
+    """Get street name from latitude and longitude information, calls Google API
+
+    Return default string if street name is not found
+
+    Args:
+        lat (float): latitude information
+        lon (float): longitude information
+
+    Returns:
+        (str)
+    """
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={GOOGLE_API_KEY}'
     page = requests.get(url).json()
     if page['status'] == 'OK':
@@ -59,6 +83,17 @@ def get_street_name(lat, lon):
 
 
 def add_new_point_on_table(lat, lon, landmark, data):
+    """Adds new entry into data of table that displays landmarks information
+
+    Args:
+        lat (float): latitude information
+        lon (float): longitude information
+        landmark (str): name of landmark, could be None or empty string
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (list)
+    """
     # Initialize landmark name if not provided
     if landmark is None or landmark == '':
         landmark = f'Landmark {len(data) + 1}'
@@ -83,6 +118,14 @@ def add_new_point_on_table(lat, lon, landmark, data):
 
 
 def get_style_table(data):
+    """Return style of table that displays landmarks information
+
+    Args:
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (dict)
+    """
     if len(data):
         style_table = {
             'width': '80%',
@@ -96,6 +139,15 @@ def get_style_table(data):
 
 
 def get_map_from_table(data, children):
+    """Adds landmark location pin on map from data of table that displays landmarks information
+
+    Args:
+        data (list): data of table that displays landmarks information
+        children (list): current map children
+
+    Returns:
+        (list): updated map children
+    """
     children = [children[0]] + [
         # Marker icon (dict) can contain iconUrl ("/assets/images/mapbox-icon.png") and iconSize ([25, 25])
         # Marker children (list) can contain dl.Tooltip() and dl.Popup()
@@ -114,6 +166,15 @@ def get_map_from_table(data, children):
 
 
 def get_distance_and_duration_from_table(data):
+    """Get distance and duration matrix from data of table that displays landmarks information
+
+    Args:
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (numpy.ndarray): distance matrix
+        (numpy.ndarray): duration matrix
+    """
     n = len(data)
     distance_matrix = np.zeros((n, n))
     duration_matrix = np.zeros((n, n))
@@ -138,10 +199,10 @@ def get_distance_and_duration_from_table(data):
 
 
 def best_route_gurobi(distance_matrix):
-    """Using gurobi optimiser
+    """Calculates best route using gurobi optimiser
 
     Args:
-        distance_matrix (numpy array): inter-distance between locations
+        distance_matrix (numpy.ndarray): inter-distance between locations
 
     Returns:
         (list): contains tuple of routes
@@ -210,13 +271,13 @@ def best_route_gurobi(distance_matrix):
 
 
 def best_route_nearest_neighbour(distance_matrix):
-    """Nearest neighbour heuristic
+    """Calculates best route using nearest neighbour heuristic
 
     Args:
-        distance_matrix (numpy array): inter-distance between locations
+        distance_matrix (numpy.ndarray): inter-distance between locations
 
     Returns:
-        (list): Contains tuple of routes
+        (list): contains tuple of routes
     """
     idx = 0
     visited_landmarks = [idx]
@@ -238,6 +299,15 @@ def best_route_nearest_neighbour(distance_matrix):
 
 
 def get_permutation_of_routes(routes_list, landmark):
+    """Get permutation of routes with existing routes list and new landmark
+
+    Args:
+        routes_list (list): existing routes
+        landmark (int): new landmark to visit
+
+    Returns:
+        (list of list)
+    """
     permutation = []
     for idx in range(1, len(routes_list)+1):
         routes_list_copy = routes_list.copy()
@@ -247,22 +317,39 @@ def get_permutation_of_routes(routes_list, landmark):
 
 
 def get_routes_from_list(routes_list):
+    """Get tuple of routes from existing routes list
+
+    Args:
+        routes_list (list): existing routes
+
+    Returns:
+        (list of tuple)
+    """
     return [(routes_list[idx], routes_list[idx+1]) for idx, _ in enumerate(routes_list[:-1])]
 
 
 def get_distance_from_routes(routes, distance_matrix):
+    """Calculates distance from existing routes tuple list
+
+    Args:
+        routes (list): list of tuple of existing routes
+        distance_matrix (numpy.ndarray): inter-distance between locations
+
+    Returns:
+        (float)
+    """
     distance_km = np.round(np.sum([distance_matrix[route] for route in routes]) / 1000, 2)
     return distance_km
 
 
 def best_route_nearest_insertion(distance_matrix):
-    """Nearest insertion heuristic
+    """Calculates best route using nearest insertion heuristic
 
     Args:
-        distance_matrix (numpy array): inter-distance between locations
+        distance_matrix (numpy.ndarray): inter-distance between locations
 
     Returns:
-        (list): Contains tuple of routes
+        (list): contains tuple of routes
     """
     idx = 0
     idx_next = distance_matrix[0][1:].argmin() + 1
@@ -291,6 +378,14 @@ def best_route_nearest_insertion(distance_matrix):
 
 
 def optimiser_pipeline(data):
+    """Pipeline to run optimization algorithm
+
+    Args:
+        data (list): data of table that displays landmarks information
+
+    Returns:
+        (str/list)
+    """
     if len(data) < 2:
         return html.P('Please input more landmarks')
     try:
