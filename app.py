@@ -9,7 +9,7 @@ from flask import Flask, request, send_file
 
 from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot, compute_changes, \
     transpose_dataframe, get_line_plot
-from components.helper import violin_plot, print_callback, decode_df, update_when_upload, change_download_button
+from components.helper import violin_plot, print_callback, decode_df, update_when_upload, result_download_button
 from components.trip import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
@@ -216,7 +216,7 @@ def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
             df = decode_df(records['df'])
             df = compute_change(df, x_col, x_max, y_col, y_max)
             result_table = get_summary_statistics(df, x_col, y_col)
-            result = [result_table, change_download_button(df)]
+            result = [result_table, result_download_button(df)]
             fig = get_scatter_plot(df, x_col, y_col)
         elif 'df' not in records:
             result = ['Please upload a file']

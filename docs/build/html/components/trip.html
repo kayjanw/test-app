@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <title>Trip Planner &#8212; utils.py Project 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-components.trip">
+<span id="trip-planner"></span><h1>Trip Planner<a class="headerlink" href="#module-components.trip" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="components.trip.add_new_point_on_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">add_new_point_on_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lat</span></em>, <em class="sig-param"><span class="n">lon</span></em>, <em class="sig-param"><span class="n">landmark</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.add_new_point_on_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds new entry into data of table that displays landmarks information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lat</strong> (<em>float</em>) -- latitude information</p></li>
+<li><p><strong>lon</strong> (<em>float</em>) -- longitude information</p></li>
+<li><p><strong>landmark</strong> (<em>str</em>) -- name of landmark, could be None or empty string</p></li>
+<li><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.best_route_gurobi">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">best_route_gurobi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">distance_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.best_route_gurobi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates best route using gurobi optimiser</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>distance_matrix</strong> (<em>numpy.ndarray</em>) -- inter-distance between locations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>contains tuple of routes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.best_route_nearest_insertion">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">best_route_nearest_insertion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">distance_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.best_route_nearest_insertion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates best route using nearest insertion heuristic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>distance_matrix</strong> (<em>numpy.ndarray</em>) -- inter-distance between locations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>contains tuple of routes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.best_route_nearest_neighbour">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">best_route_nearest_neighbour</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">distance_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.best_route_nearest_neighbour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates best route using nearest neighbour heuristic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>distance_matrix</strong> (<em>numpy.ndarray</em>) -- inter-distance between locations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>contains tuple of routes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_distance_and_duration_from_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_distance_and_duration_from_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_distance_and_duration_from_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get distance and duration matrix from data of table that displays landmarks information, calls Google API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>distance matrix
+(numpy.ndarray): duration matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(numpy.ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_distance_from_routes">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_distance_from_routes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">routes</span></em>, <em class="sig-param"><span class="n">distance_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_distance_from_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates distance from existing routes tuple list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>routes</strong> (<em>list</em>) -- list of tuple of existing routes</p></li>
+<li><p><strong>distance_matrix</strong> (<em>numpy.ndarray</em>) -- inter-distance between locations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_map_from_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_map_from_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">children</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_map_from_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds landmark location pin on map from data of table that displays landmarks information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p></li>
+<li><p><strong>children</strong> (<em>list</em>) -- current map children</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>updated map children</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_permutation_of_routes">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_permutation_of_routes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">routes_list</span></em>, <em class="sig-param"><span class="n">landmark</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_permutation_of_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get permutation of routes with existing routes list and new landmark</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>routes_list</strong> (<em>list</em>) -- existing routes</p></li>
+<li><p><strong>landmark</strong> (<em>int</em>) -- new landmark to visit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(list of list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_routes_from_list">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_routes_from_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">routes_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_routes_from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get tuple of routes from existing routes list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>routes_list</strong> (<em>list</em>) -- existing routes</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(list of tuple)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_street_name">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_street_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lat</span></em>, <em class="sig-param"><span class="n">lon</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_street_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get street name from latitude and longitude information, calls Google API</p>
+<p>Return default string if street name is not found</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lat</strong> (<em>float</em>) -- latitude information</p></li>
+<li><p><strong>lon</strong> (<em>float</em>) -- longitude information</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_style_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_style_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_style_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return style of table that displays landmarks information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.get_trip_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">get_trip_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.get_trip_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the table that displays landmarks information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(dash_table.DataTable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.optimiser_pipeline">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">optimiser_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.optimiser_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pipeline to run optimization algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(str/list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.trip.remove_last_point_on_table">
+<code class="sig-prename descclassname">components.trip.</code><code class="sig-name descname">remove_last_point_on_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.trip.remove_last_point_on_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes last entry from data of table that displays landmarks information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/components/trip.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Kay Jan WONG.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+    </div>
+  </body>
+</html>

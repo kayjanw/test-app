@@ -253,7 +253,7 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
     return worksheet_options, style, sample_table, {}
 
 
-def change_download_button(df):
+def result_download_button(df):
     """Download button for processed data or results
 
     Args:
