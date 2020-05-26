@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change calculator &#8212; utils.py Project 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-components.change_calculator">
+<span id="change-calculator"></span><h1>Change calculator<a class="headerlink" href="#module-components.change_calculator" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="components.change_calculator.compute_change">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">compute_change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">x_max</span></em>, <em class="sig-param"><span class="n">y_col</span></em>, <em class="sig-param"><span class="n">y_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.compute_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute change between two periods</p>
+<p>Performs removing non-integer values, removing null rows and conversion of values to float, then adds in 'Change'
+column as difference between y_col and x_col</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>x_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+<li><p><strong>x_max</strong> (<em>int</em>) -- maximum value for x-axis, could be None or empty string</p></li>
+<li><p><strong>y_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+<li><p><strong>y_max</strong> (<em>int</em>) -- maximum value for y-axis, could be None or empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.compute_changes">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">compute_changes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.compute_changes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute change between multiple periods</p>
+<p>Performs removing non-integer values, removing null rows and conversion of values to float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col_identifier</strong> (<em>str</em>) -- column for index</p></li>
+<li><p><strong>list_of_tuples</strong> (<em>list</em>) -- data from table that contains tuple of column(s) and their maximum value(s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.convert_to_float">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">convert_to_float</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">col_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.convert_to_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert values to float for column(s) in DataFrame, normalize column if necessary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col</strong> (<em>str</em>) -- column to convert values to float</p></li>
+<li><p><strong>col_max</strong> (<em>int</em>) -- maximum value for column, could be None or empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.get_changes_table">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_changes_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_changes_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the table used to compare changes across multiple periods</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(dash_table.DataTable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.get_line_plot">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_line_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_line_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get figure for plot</p>
+<p>Adds plotly.graph_objects charts for line plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df2</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.get_parallel_coord">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_parallel_coord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_parallel_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get figure for plot</p>
+<p>Adds plotly.graph_objects charts for parallel coordinate plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col_identifier</strong> (<em>str</em>) -- column for index</p></li>
+<li><p><strong>list_of_tuples</strong> (<em>list</em>) -- data from table that contains tuple of column(s) and their maximum value(s)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.get_scatter_plot">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_scatter_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">y_col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get figure for plot</p>
+<p>Adds plotly.graph_objects charts for violin plot, line plot and marginal histograms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>x_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+<li><p><strong>y_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.get_summary_statistics">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_summary_statistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">y_col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_summary_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get summary statistics for DataFrame for two periods</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>x_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+<li><p><strong>y_col</strong> (<em>str</em>) -- column for x-axis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dash_table.DataTable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.remove_null">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">remove_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.remove_null" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove null values from column(s) in DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col</strong> (<em>str/list</em>) -- column(s) to remove null values from</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.remove_string_values">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">remove_string_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.remove_string_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove non-integer values from column(s) in DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col</strong> (<em>str/list</em>) -- column(s) to remove non-integer values from</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.change_calculator.transpose_dataframe">
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">transpose_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.transpose_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>col_identifier</strong> (<em>str</em>) -- column for index, which will be the new DataFrame column names</p></li>
+<li><p><strong>list_of_tuples</strong> (<em>list</em>) -- data from table that contains tuple of column(s) and their maximum value(s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/components/change_calculator.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Kay Jan WONG.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+    </div>
+  </body>
+</html>

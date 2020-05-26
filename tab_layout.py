@@ -101,7 +101,11 @@ def about_me_tab():
         ]),
         html.Br(),
         html.Br(),
-        html.P('This website is made with Dash, deployed using Gunicorn and hosted on Heroku')
+        html.P('This website is made with Dash, deployed using Gunicorn and hosted on Heroku'),
+        html.P([
+            'View code documentation ',
+            html.A('here', href='/index.html', target='_blank')
+        ])
     ])
 
 
