@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+
+<html lang="Python">
+  <head>
+    <meta charset="utf-8" />
+    <title>Helper &#8212; utils.py Project 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-components.helper">
+<span id="helper"></span><h1>Helper<a class="headerlink" href="#module-components.helper" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="components.helper.change_download_button">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">change_download_button</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.change_download_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download button for processed data or results</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame, to be downloaded by user</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(html.Form)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.decode_df">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">decode_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_ser</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.decode_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>De-serializes JSON format string to pandas DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df_ser</strong> (<em>str</em>) -- input serialized DataFrame</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.encode_df">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">encode_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.encode_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes pandas DataFrame to JSON format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.generate_datatable">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">generate_datatable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">max_rows</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.generate_datatable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate table from pandas DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
+<li><p><strong>max_rows</strong> (<em>int</em>) -- maximum number of rows to show</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(dash_table.DataTable)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.get_worksheet">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">get_worksheet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">contents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.get_worksheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get worksheet names from an excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>contents</strong> (<em>str</em>) -- contents of data uploaded</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of worksheet names</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.parse_data">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">parse_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">contents</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">worksheet</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.parse_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads uploaded data into DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contents</strong> (<em>str</em>) -- contents of data uploaded</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) -- filename of data uploaded</p></li>
+<li><p><strong>worksheet</strong> (<em>str</em>) -- worksheet of excel file, if applicable, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(pandas DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.print_callback">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">print_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">print_function</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.print_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator function to print callback on backend for debugging purposes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>print_function</strong> (<em>bool</em>) -- indicator to print callback</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(function)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.table_css">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">table_css</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.table_css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets default dash_table CSS components</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Style for table header
+(dict): Style for table cell
+(dict): Style for table
+(list): CSS component</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.update_when_upload">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">update_when_upload</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">contents</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">style</span></em>, <em class="sig-param"><span class="n">ctx</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.update_when_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads uploaded data into DataFrame and return dash application objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contents</strong> (<em>str</em>) -- contents of data uploaded</p></li>
+<li><p><strong>worksheet</strong> (<em>str</em>) -- worksheet of excel file, if applicable, defaults to None</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) -- filename of data uploaded</p></li>
+<li><p><strong>style</strong> (<em>dict</em>) -- current style of worksheet selector dropdown</p></li>
+<li><p><strong>ctx</strong> (<em>str</em>) -- dash callback trigger item name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of worksheets options
+(dict): updated style of worksheet selector dropdown
+(dash_table.DataTable/list): sample of uploaded data
+(dict): intermediate data stored in dcc.Store</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="components.helper.violin_plot">
+<code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">violin_plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.violin_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get data for plot</p>
+<p>Adds plotly.graph_objects charts for violin plot at initial loading page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/components/helper.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">utils.py Project 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Kay Jan WONG.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+    </div>
+  </body>
+</html>
