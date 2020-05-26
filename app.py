@@ -5,7 +5,7 @@ import io
 import pandas as pd
 
 from dash.dependencies import Input, Output, State
-from flask import request, send_file
+from flask import Flask, request, send_file
 
 from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot, compute_changes, \
     transpose_dataframe, get_line_plot
@@ -14,7 +14,10 @@ from components.trip import remove_last_point_on_table, add_new_point_on_table, 
     optimiser_pipeline
 from tab_layout import main_layout, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
 
-app = dash.Dash(__name__)
+
+server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
+app = dash.Dash(__name__, server=server)
+# app = dash.Dash(__name__)
 app.title = 'wow'
 app.config.suppress_callback_exceptions = True
 app.css.config.serve_locally = True
@@ -426,6 +429,11 @@ def download_result():
             as_attachment=True,
             cache_timeout=0
         )
+
+
+@app.server.route('/<path:path>')
+def serve_sphinx_docs(path='index.html'):
+    return app.server.send_static_file(path)
 
 
 if __name__ == '__main__':
