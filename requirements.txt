@@ -58,6 +58,7 @@ XlsxWriter==1.2.8
 alabaster==0.7.12
 Babel==2.8.0
 cffi==1.14.0
+colorama==0.4.3
 cryptography==2.9.2
 docutils==0.16
 imagesize==1.2.0
@@ -70,6 +71,7 @@ pyparsing==2.4.7
 PySocks==1.7.1
 snowballstemmer==2.0.0
 Sphinx==3.0.3
+sphinx-rtd-theme==0.4.3
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
 sphinxcontrib-htmlhelp==1.0.3
