@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to utils.py Project&#39;s documentation! &mdash; utils.py Project 1.0 documentation</title>
+  <title>utils.py Project &mdash; utils.py Project 1.0 documentation</title>
   
 
   
@@ -33,8 +33,10 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Creating Dash Application" href="dash.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,12 +80,21 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to utils.py Project's documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+              <p class="caption"><span class="caption-text">Deployment Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dash.html">Creating Dash Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dash.html#installing-dash">Installing Dash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dash.html#make-your-first-dash-app">Make your first Dash app</a></li>
 </ul>
-</div>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="components/change-calculator.html">Change Calculator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/helper.html">Helper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/trip-planner.html">Trip Planner</a></li>
+</ul>
+
             
           
         </div>
@@ -127,7 +138,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to utils.py Project's documentation!</li>
+      <li>utils.py Project</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -146,39 +157,63 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-utils-py-project-s-documentation">
-<h1>Welcome to utils.py Project's documentation!<a class="headerlink" href="#welcome-to-utils-py-project-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><a class="reference internal" href="components/app.html"><span class="doc">Dash Callbacks</span></a></dt><dd><p>List of functions for Dash Callback</p>
+  <div class="section" id="utils-py-project">
+<h1>utils.py Project<a class="headerlink" href="#utils-py-project" title="Permalink to this headline">¶</a></h1>
+<p>This <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> project aims to be a helper tool to automate repetitive data analysis tasks,
+or perform optimizations that are computationally expensive etc.
+This documentation will also include some code snippets on how to create a Dash application.</p>
+<div class="section" id="file-structure">
+<h2>File Structure<a class="headerlink" href="#file-structure" title="Permalink to this headline">¶</a></h2>
+<p>This project aims to follow software engineering best practices and has the following file structure.
+There are many other ways to structure your codes, but I find this implementation easiest for me.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+├── assets
+│   └── default_css.css
+├── components
+│   ├── change_calculator.py
+│   ├── helper.py
+│   └── trip.py
+├── docs
+│   ├── build
+│   └── source
+├── app.py
+├── callbacks.py
+├── layouts.py
+├── requirements.txt
+└── routes.py
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-dash-application">
+<h1>Creating Dash Application<a class="headerlink" href="#creating-dash-application" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="simple">
+<dt><a class="reference internal" href="dash.html"><span class="doc">Creating Dash Application</span></a></dt><dd><p>Code snippets on how to create a Dash application</p>
 </dd>
 </dl>
-</li>
-<li><dl class="simple">
-<dt><a class="reference internal" href="components/change_calculator.html"><span class="doc">Change calculator</span></a></dt><dd><p>List of functions for Change Calculator tab</p>
+</div>
+<div class="section" id="code-documentation-for-utils-py-project">
+<h1>Code documentation for utils.py Project<a class="headerlink" href="#code-documentation-for-utils-py-project" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="simple">
+<dt><a class="reference internal" href="components/change-calculator.html"><span class="doc">Change Calculator</span></a></dt><dd><p>List of functions for Change Calculator tab</p>
 </dd>
-</dl>
-</li>
-<li><dl class="simple">
 <dt><a class="reference internal" href="components/helper.html"><span class="doc">Helper</span></a></dt><dd><p>List of helper functions</p>
 </dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><a class="reference internal" href="components/trip.html"><span class="doc">Trip Planner</span></a></dt><dd><p>List of functions for Trip Planner tab</p>
+<dt><a class="reference internal" href="components/trip-planner.html"><span class="doc">Trip Planner</span></a></dt><dd><p>List of functions for Trip Planner tab</p>
 </dd>
 </dl>
-</li>
-</ul>
-</div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</div>
 </div>
 
 
@@ -186,6 +221,13 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dash.html" class="btn btn-neutral float-right" title="Creating Dash Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>
