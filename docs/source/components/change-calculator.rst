@@ -1,4 +1,5 @@
-Change calculator
-==================
+Change Calculator
+------------------------
+
 .. automodule:: components.change_calculator
    :members:
