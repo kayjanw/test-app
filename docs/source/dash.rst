@@ -37,7 +37,7 @@ This implementation makes it easier to use Flask endpoints.
  app = dash.Dash(__name__, server=server)
 
 There are some other app configurations that are recommended to have.
-Layout can be rendered with html and dcc components.
+Layout can be rendered with ``dash_core_components`` and ``dash_html_components`` components.
 
 .. code:: python
 
@@ -75,6 +75,7 @@ Users may set debug to False in production environment.
  if __name__ == '__main__':
      app.run_server(debug=True)
 
-More web widgets such as dropdowns, checklists, sliders etc. can be found on dash_core_component_ website
+The full list of web widgets such as dropdowns, checklists, sliders etc. and more usage examples can be found on
+dash_ documentation website
 
-.. _dash_core_component: https://dash.plotly.com/dash-core-components
+.. _dash: https://dash.plotly.com/
