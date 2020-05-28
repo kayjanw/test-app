@@ -1,14 +1,14 @@
 import base64
-import io
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
+import io
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
+from functools import reduce
 from plotly.colors import n_colors
 
 
@@ -171,6 +171,36 @@ def generate_datatable(df, max_rows=3):
     return dash_table.DataTable(
         columns=[{"name": col, "id": col} for col in df.columns],
         data=df.to_dict('records')[:max_rows],
+        style_as_list_view=True,
+        style_header=style_header,
+        style_cell=style_cell,
+        style_table=style_table,
+        css=css
+    )
+
+
+def get_summary_statistics(df, cols):
+    """Generate table of summary statistics for DataFrame for list of columns
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        cols (list): column(s) to get summary statistic for
+
+    Returns:
+        (dash_table.DataTable)
+    """
+    param_name = ['Number of values', 'Mean', 'Std. Dev', 'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
+    style_header, style_cell, style_table, css = table_css()
+    return dash_table.DataTable(
+        columns=[
+            {'name': 'Parameter', 'id': 'Parameter'}
+                ] + [
+            {'name': col, 'id': col} for col in cols
+        ],
+        data=[reduce(lambda a, b: dict(a, **b), [{
+            'Parameter': param_name[idx],
+            col: np.round(df[col].describe()[idx], 2)
+        } for col in cols]) for idx in range(len(param_name))],
         style_as_list_view=True,
         style_header=style_header,
         style_cell=style_cell,

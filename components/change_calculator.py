@@ -1,9 +1,6 @@
 import dash_html_components as html
-import dash_table
 import numpy as np
 import plotly.graph_objects as go
-
-from components.helper import table_css
 
 
 def remove_string_values(df, col):
@@ -88,54 +85,6 @@ def compute_change(df, x_col, x_max, y_col, y_max):
     return df
 
 
-def get_summary_statistics(df, x_col, y_col):
-    """Get summary statistics for DataFrame for two periods
-
-    Args:
-        df (pandas DataFrame): input DataFrame
-        x_col (str): column for x-axis
-        y_col (str): column for x-axis
-
-    Returns:
-        (dash_table.DataTable)
-    """
-    param_name = ['Number of values', 'Mean', 'Std. Dev', 'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
-    return dash_table.DataTable(
-        columns=[
-            {'name': 'Parameter', 'id': 'Parameter'},
-            {'name': x_col, 'id': x_col},
-            {'name': y_col, 'id': y_col}
-        ],
-        data=[{
-            'Parameter': param_name[idx],
-            x_col: np.round(df[x_col].describe()[idx], 2),
-            y_col: np.round(df[y_col].describe()[idx], 2)
-        } for idx in range(len(param_name))
-        ],
-        style_as_list_view=True,
-        style_header={
-            'fontWeight': 'bold',
-            'textAlign': 'left'
-        },
-        style_cell={
-            'background-color': 'transparent',
-            'color': 'white',
-            'font-family': 'Source Sans Pro',
-            'font-size': 13,
-            'textAlign': 'left'
-        },
-        css=[{
-            'selector': 'tr:hover',
-            'rule': 'background-color: black; color: white'
-        }, {
-            'selector': 'td.cell--selected *, td.focused *',
-            'rule': 'background-color: black !important;'
-                    'color: white !important;'
-                    'text-align: left;'
-        }]
-    )
-
-
 def get_scatter_plot(df, x_col, y_col):
     """Get figure for plot
 
@@ -201,28 +150,6 @@ def get_scatter_plot(df, x_col, y_col):
     return dict(data=[trace, line, hist_x, hist_y], layout=layout)
 
 
-def get_changes_table():
-    """Return the table used to compare changes across multiple periods
-
-    Returns:
-        (dash_table.DataTable)
-    """
-    style_header, style_cell, style_table, css = table_css()
-    return dash_table.DataTable(
-        id='table-changes',
-        columns=[
-            dict(name='Columns to compare', id='column', presentation='dropdown'),
-            dict(name='Maximum possible value (integer value, optional)', id='max', type='numeric', on_change={'failure': 'default'}),
-        ],
-        data=[dict(column='', max='') for i in range(4)],
-        editable=True,
-        style_as_list_view=True,
-        style_header=style_header,
-        style_cell=style_cell,
-        css=css
-    )
-
-
 def compute_changes(df, col_identifier, list_of_tuples):
     """Compute change between multiple periods
 
@@ -245,7 +172,7 @@ def compute_changes(df, col_identifier, list_of_tuples):
     return df
 
 
-def transpose_dataframe(df, col_identifier, list_of_tuples):
+def transpose_dataframe(df, col_identifier, cols):
     """Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare
 
     Args:
@@ -256,7 +183,6 @@ def transpose_dataframe(df, col_identifier, list_of_tuples):
     Returns:
         (pandas DataFrame)
     """
-    cols = [row[0] for row in list_of_tuples]
     df2 = df[cols].transpose()
     if col_identifier is not '' and col_identifier is not None:
         df2.columns = df[col_identifier]

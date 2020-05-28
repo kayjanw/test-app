@@ -1,9 +1,9 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_leaflet as dl
+import dash_table
 
-from components.change_calculator import get_changes_table
-from components.trip_planner import get_trip_table
+from components.helper import table_css
 
 
 def main_layout():
@@ -116,6 +116,37 @@ def about_me_tab():
     ])
 
 
+def get_trip_table():
+    """Return the table that displays landmarks information
+
+    Returns:
+        (dash_table.DataTable)
+    """
+    style_header, style_cell, style_table, css = table_css()
+    return dash_table.DataTable(
+        id='table-trip-landmark',
+        columns=[
+            dict(name='Landmark', id='Landmark', editable=True),
+            dict(name='Street', id='Street'),
+            dict(name='lat', id='lat'),
+            dict(name='lon', id='lon')
+        ],
+        data=[],
+        style_as_list_view=True,
+        style_header=style_header,
+        style_cell_conditional=[
+            {
+                'if': {
+                    'column_id': c
+                },
+                'display': 'none'
+            } for c in ['lat', 'lon']
+        ],
+        style_cell=style_cell,
+        css=css
+    )
+
+
 def trip_tab():
     return html.Div([
         header('Trip Planner', 'Shortest distance everrrrr'),
@@ -181,7 +212,6 @@ def trip_tab():
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
-                    'padding': '2%',
                     'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
@@ -374,7 +404,6 @@ def change_calculator_tab():
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
-                    'padding': '2%',
                     'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
@@ -425,10 +454,34 @@ def change_calculator_tab():
     ])
 
 
+def get_changes_table():
+    """Return the table used to compare changes across multiple periods
+
+    Returns:
+        (dash_table.DataTable)
+    """
+    style_header, style_cell, style_table, css = table_css()
+    return dash_table.DataTable(
+        id='table-changes',
+        columns=[
+            dict(name='Columns to compare', id='column', presentation='dropdown'),
+            dict(name='Maximum possible value (integer value, optional)', id='max', type='numeric',
+                 on_change={'failure': 'default'}),
+        ],
+        data=[dict(column='', max='') for i in range(4)],
+        editable=True,
+        style_as_list_view=True,
+        style_header=style_header,
+        style_cell=style_cell,
+        css=css
+    )
+
+
 def change_over_time_tab():
     return html.Div([
         header('Change Calculator 2', 'Compare changes over multiple periods'),
-        html.P('Users can view changes over time on a line plot. Just minor changes from the other change tab (haha)'),
+        html.P('Users can view summary statistics and changes over time on a line plot. '
+               'Just minor changes from the other change tab (haha)'),
         html.Br(),
         html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
         html.P('Step 2: Specify column identifier in dropdown option, and columns to compare in the table'),
@@ -507,8 +560,6 @@ def change_over_time_tab():
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
-                    'padding': '2%',
-                    'padding-bottom': '2%',
                     'text-align': 'left',
                     'vertical-align': 'top'
                 },
@@ -569,7 +620,6 @@ def change_over_time_tab():
                     'display': 'inline-block',
                     'width': '56%',
                     'margin-top': '40px',
-                    'padding': '2%',
                     'text-align': 'left',
                     'vertical-align': 'top'
                 },
@@ -586,11 +636,18 @@ def change_over_time_tab():
         html.Div([
             dcc.Loading(
                 html.P(
-                    id='changes-result'
+                    id='changes-result',
+                    style={
+                        'display': 'none',
+                    },
+                    className='custom-div'
                 )
             ),
-            html.Div(
-                id='div-changes-result'
+            html.P(
+                id='div-changes-result',
+                style={
+                    'margin-top': '20px'
+                }
             )
         ])
     ])
@@ -622,7 +679,6 @@ def sample_tab():
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
-                    'padding': '2%',
                     'padding-bottom': '50px',
                     'text-align': 'left',
                     'vertical-align': 'top'
