@@ -1,10 +1,7 @@
 import dash_html_components as html
 import dash_leaflet as dl
-import dash_table
 import numpy as np
 import requests
-
-from components.helper import table_css
 
 try:
     GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
@@ -16,37 +13,6 @@ except NameError:
         os.environ['GRB_LICENSE_FILE'] = sys.path[-1] + '/gurobi.lic'
     except KeyError:
         pass
-
-
-def get_trip_table():
-    """Return the table that displays landmarks information
-
-    Returns:
-        (dash_table.DataTable)
-    """
-    style_header, style_cell, style_table, css = table_css()
-    return dash_table.DataTable(
-        id='table-trip-landmark',
-        columns=[
-            dict(name='Landmark', id='Landmark', editable=True),
-            dict(name='Street', id='Street'),
-            dict(name='lat', id='lat'),
-            dict(name='lon', id='lon')
-        ],
-        data=[],
-        style_as_list_view=True,
-        style_header=style_header,
-        style_cell_conditional=[
-            {
-                'if': {
-                    'column_id': c
-                },
-                'display': 'none'
-            } for c in ['lat', 'lon']
-        ],
-        style_cell=style_cell,
-        css=css
-    )
 
 
 def remove_last_point_on_table(data):
@@ -130,6 +96,7 @@ def get_style_table(data):
         style_table = {
             'width': '80%',
             'margin': '10px 0px 0px 10px',
+            'overflowX': 'auto'
         }
     else:
         style_table = {

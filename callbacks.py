@@ -3,9 +3,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
-from components.change_calculator import compute_change, get_summary_statistics, get_scatter_plot, compute_changes, \
-    transpose_dataframe, get_line_plot
-from components.helper import violin_plot, print_callback, decode_df, update_when_upload, result_download_button
+from components.change_calculator import compute_change, get_scatter_plot, compute_changes, transpose_dataframe, \
+    get_line_plot
+from components.helper import violin_plot, print_callback, get_summary_statistics, decode_df, update_when_upload, \
+    result_download_button
 from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
 from layouts import app_1, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
@@ -220,7 +221,7 @@ def register_callbacks(app, print_function):
             if 'df' in records and x_col is not None and y_col is not None and x_col != y_col:
                 df = decode_df(records['df'])
                 df = compute_change(df, x_col, x_max, y_col, y_max)
-                result_table = get_summary_statistics(df, x_col, y_col)
+                result_table = get_summary_statistics(df, [x_col, y_col])
                 result = [result_table, result_download_button(df)]
                 fig = get_scatter_plot(df, x_col, y_col)
             elif 'df' not in records:
@@ -301,6 +302,7 @@ def register_callbacks(app, print_function):
         return data
 
     @app.callback([Output('changes-result', 'children'),
+                   Output('changes-result', 'style'),
                    Output('div-changes-result', 'children')],
                   [Input('button-changes-ok', 'n_clicks')],
                   [State('intermediate-changes-result', 'data'),
@@ -317,32 +319,37 @@ def register_callbacks(app, print_function):
             data (list): data of table that stores comparison column information
 
         Returns:
-            2-element tuple
+            3-element tuple
 
             - (list): div result of change calculator 2
+            - (dict): style of div result of change calculator 2
             - (dict): graphical result of change calculator 2
         """
-        instructions = []
+        summary = []
+        style = {'display': 'none'}
         graph = []
         if trigger:
             list_of_tuples = [(row['column'], row['max']) for row in data
                               if row['column'] is not ''
                               if row['column'] is not None]
+            cols = [row[0] for row in list_of_tuples]
             if 'df' in records and len(list_of_tuples):
                 df = decode_df(records['df'])
                 df = compute_changes(df, col_identifier, list_of_tuples)
                 if len(df):
-                    df2 = transpose_dataframe(df, col_identifier, list_of_tuples)
+                    df2 = transpose_dataframe(df, col_identifier, cols)
+                    result_table = get_summary_statistics(df, cols)
                     instructions, fig = get_line_plot(df2)
-                    graph = [html.P(f'Number of processed rows: {len(df)}'),
-                             dcc.Graph(figure=fig, id='graph-changes-result')]
+                    summary = ['Summary statistics:', result_table]
+                    style = {'display': 'block'}
+                    graph = instructions + [dcc.Graph(figure=fig, id='graph-changes-result')]
                 elif not len(df):
-                    instructions = ['Processed dataframe is empty. Please select numeric columns']
+                    summary = ['Processed dataframe is empty. Please select numeric columns']
             elif 'df' not in records:
-                instructions = ['Please upload a file']
+                summary = ['Please upload a file']
             elif not len(list_of_tuples):
-                instructions = ['Please specify columns to compare']
-        return instructions, graph
+                summary = ['Please specify columns to compare']
+        return summary, style, graph
 
     @app.callback(Output('graph-changes-result', 'figure'),
                   [Input('graph-changes-result', 'hoverData')],
