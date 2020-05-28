@@ -272,7 +272,10 @@ def get_line_plot(df2):
         df2 (pandas DataFrame): input DataFrame
 
     Returns:
-        (dict)
+        2-element tuple
+
+        - (list): instructions for interacting with figure
+        - (dict): graphical result of change calculator 2
     """
     trace = []
     instructions = [
@@ -323,6 +326,12 @@ def get_parallel_coord(df, col_identifier, list_of_tuples):
         df (pandas DataFrame): input DataFrame
         col_identifier (str): column for index
         list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+
+    Returns:
+        2-element tuple
+
+        - (list): instructions for interacting with figure
+        - (dict): graphical result of change calculator 2
     """
     cols = [row[0] for row in list_of_tuples]
     trace = go.Parcoords(

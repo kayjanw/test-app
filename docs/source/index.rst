@@ -6,20 +6,24 @@
 .. include:: ../../README.rst
 
 ***************************************
-Creating Dash Application
+Deployment Documentation
 ***************************************
 .. toctree::
    :maxdepth: 2
    :caption: Deployment Documentation
    :hidden:
 
-   dash
+   deploy/venv
+   deploy/dash
 
-:doc:`dash`
+:doc:`deploy/venv`
+    Instructions on how to create a virtual environment
+
+:doc:`deploy/dash`
     Code snippets on how to create a Dash application
 
 ***************************************
-Code documentation for utils.py Project
+Code Documentation
 ***************************************
 .. toctree::
    :maxdepth: 2
