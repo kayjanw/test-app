@@ -13,3 +13,7 @@
 a, a:visited {
     color: black;
 }
+
+a:hover {
+    color: #2980B9;
+}
