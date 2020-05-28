@@ -82,9 +82,15 @@
             
               <p class="caption"><span class="caption-text">Deployment Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../dash.html">Creating Dash Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../dash.html#installing-dash">Installing Dash</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../dash.html#make-your-first-dash-app">Make your first Dash app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/venv.html">Creating Virtual Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-anaconda">Creating VE using Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-shell-command">Creating VE using Shell Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-python-code">Creating VE using Python Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/dash.html">Creating Dash Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/dash.html#installing-dash">Installing Dash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/dash.html#make-your-first-dash-app">Make your first Dash app</a></li>
 </ul>
 </li>
 </ul>
@@ -238,11 +244,12 @@
 <dd class="field-odd"><p><strong>data</strong> (<em>list</em>) -- data of table that displays landmarks information</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>distance matrix
-(numpy.ndarray): duration matrix</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(numpy.ndarray)</p>
+<dd class="field-even"><p><p>2-element tuple</p>
+<ul class="simple">
+<li><p>(numpy.ndarray): distance matrix</p></li>
+<li><p>(numpy.ndarray): duration matrix</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

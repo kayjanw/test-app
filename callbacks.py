@@ -50,9 +50,11 @@ def register_callbacks(app, print_function):
             data (list): data of table that displays landmarks information
 
         Returns:
-            (list): updated data of table that displays landmarks information
-            (dict): style of table that displays landmarks information
-            (str): reset name of next landmark to be added
+            3-element tuple
+
+            - (list): updated data of table that displays landmarks information
+            - (dict): style of table that displays landmarks information
+            - (str): reset name of next landmark to be added
         """
         ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
         if ctx == 'button-trip-remove':
@@ -124,10 +126,12 @@ def register_callbacks(app, print_function):
             style (dict): current style of worksheet selector dropdown
 
         Returns:
-            (list): list of worksheets options
-            (dict): updated style of worksheet selector dropdown
-            (dash_table.DataTable/list): sample of uploaded data
-            (dict): intermediate data stored in dcc.Store
+            4-element tuple
+
+            - (list): list of worksheets options
+            - (dict): updated style of worksheet selector dropdown
+            - (dash_table.DataTable/list): sample of uploaded data
+            - (dict): intermediate data stored in dcc.Store
         """
         ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
@@ -143,8 +147,10 @@ def register_callbacks(app, print_function):
             records (dict): intermediate data stored in dcc.Store
 
         Returns:
-            (list): column selector dropdown options for x-axis
-            (list): column selector dropdown options for y-axis
+            2-element tuple
+
+            - (list): column selector dropdown options for x-axis
+            - (list): column selector dropdown options for y-axis
         """
         if 'df' in records:
             df = decode_df(records['df'])
@@ -169,8 +175,10 @@ def register_callbacks(app, print_function):
             y_value (str): current column selector dropdown value for y-axis
 
         Returns:
-            (str): updated column selector dropdown value for x-axis
-            (str): updated column selector dropdown value for y-axis
+            2-element tuple
+
+            - (str): updated column selector dropdown value for x-axis
+            - (str): updated column selector dropdown value for y-axis
         """
         x_options_list = [opt['label'] for opt in x_options]
         y_options_list = [opt['label'] for opt in y_options]
@@ -201,8 +209,10 @@ def register_callbacks(app, print_function):
             y_max (int): maximum value for y-axis, could be None or empty string
 
         Returns:
-            (list): div result of change calculator
-            (dict): graphical result of change calculator
+            2-element tuple
+
+            - (list): div result of change calculator
+            - (dict): graphical result of change calculator
         """
         result = []
         fig = {}
@@ -240,10 +250,12 @@ def register_callbacks(app, print_function):
             style (dict): current style of worksheet selector dropdown
 
         Returns:
-            (list): list of worksheets options
-            (dict): updated style of worksheet selector dropdown
-            (dash_table.DataTable/list): sample of uploaded data
-            (dict): intermediate data stored in dcc.Store
+            4-element tuple
+
+            - (list): list of worksheets options
+            - (dict): updated style of worksheet selector dropdown
+            - (dash_table.DataTable/list): sample of uploaded data
+            - (dict): intermediate data stored in dcc.Store
         """
         ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
@@ -259,8 +271,10 @@ def register_callbacks(app, print_function):
             records (dict): intermediate data stored in dcc.Store
 
         Returns:
-            (list): column selector dropdown options for table
-            (list): column selector dropdown options for column indicators
+            2-element tuple
+
+            - (list): column selector dropdown options for table
+            - (list): column selector dropdown options for column indicators
         """
         if 'df' in records:
             df = decode_df(records['df'])
@@ -303,8 +317,10 @@ def register_callbacks(app, print_function):
             data (list): data of table that stores comparison column information
 
         Returns:
-            (list): div result of change calculator 2
-            (dict): graphical result of change calculator 2
+            2-element tuple
+
+            - (list): div result of change calculator 2
+            - (dict): graphical result of change calculator 2
         """
         instructions = []
         graph = []
@@ -398,6 +414,3 @@ def register_callbacks(app, print_function):
                     'height': '60vh'
                 }
             )
-
-    register_callbacks.display_page = display_page
-    register_callbacks.update_output = update_output

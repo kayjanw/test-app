@@ -172,8 +172,10 @@ def get_distance_and_duration_from_table(data):
         data (list): data of table that displays landmarks information
 
     Returns:
-        (numpy.ndarray): distance matrix
-        (numpy.ndarray): duration matrix
+        2-element tuple
+
+        - (numpy.ndarray): distance matrix
+        - (numpy.ndarray): duration matrix
     """
     n = len(data)
     distance_matrix = np.zeros((n, n))

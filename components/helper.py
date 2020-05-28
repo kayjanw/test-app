@@ -79,10 +79,12 @@ def table_css():
     """Gets default dash_table CSS components
 
     Returns:
-        (dict): Style for table header
-        (dict): Style for table cell
-        (dict): Style for table
-        (list): CSS component
+        4-element tuple
+
+        - (dict): Style for table header
+        - (dict): Style for table cell
+        - (dict): Style for table
+        - (list): CSS component
     """
     style_header = {
         'fontWeight': 'bold',
@@ -215,10 +217,12 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
         ctx (str): dash callback trigger item name
 
     Returns:
-        (list): list of worksheets options
-        (dict): updated style of worksheet selector dropdown
-        (dash_table.DataTable/list): sample of uploaded data
-        (dict): intermediate data stored in dcc.Store
+        4-element tuple
+
+        - (list): list of worksheets options
+        - (dict): updated style of worksheet selector dropdown
+        - (dash_table.DataTable/list): sample of uploaded data
+        - (dict): intermediate data stored in dcc.Store
     """
     worksheet_options = []
     sample_table = []

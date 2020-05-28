@@ -83,9 +83,15 @@
             
               <p class="caption"><span class="caption-text">Deployment Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../dash.html">Creating Dash Application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../dash.html#installing-dash">Installing Dash</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../dash.html#make-your-first-dash-app">Make your first Dash app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/venv.html">Creating Virtual Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-anaconda">Creating VE using Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-shell-command">Creating VE using Shell Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-python-code">Creating VE using Python Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/dash.html">Creating Dash Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/dash.html#installing-dash">Installing Dash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/dash.html#make-your-first-dash-app">Make your first Dash app</a></li>
 </ul>
 </li>
 </ul>
@@ -274,13 +280,14 @@
 <dd><p>Gets default dash_table CSS components</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Style for table header
-(dict): Style for table cell
-(dict): Style for table
-(list): CSS component</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(dict)</p>
+<dd class="field-odd"><p><p>4-element tuple</p>
+<ul class="simple">
+<li><p>(dict): Style for table header</p></li>
+<li><p>(dict): Style for table cell</p></li>
+<li><p>(dict): Style for table</p></li>
+<li><p>(list): CSS component</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -300,13 +307,14 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list of worksheets options
-(dict): updated style of worksheet selector dropdown
-(dash_table.DataTable/list): sample of uploaded data
-(dict): intermediate data stored in dcc.Store</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(list)</p>
+<dd class="field-even"><p><p>4-element tuple</p>
+<ul class="simple">
+<li><p>(list): list of worksheets options</p></li>
+<li><p>(dict): updated style of worksheet selector dropdown</p></li>
+<li><p>(dash_table.DataTable/list): sample of uploaded data</p></li>
+<li><p>(dict): intermediate data stored in dcc.Store</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

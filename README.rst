@@ -4,7 +4,7 @@ utils.py Project
 
 This ``utils.py`` project aims to be a helper tool to automate repetitive data analysis tasks,
 or perform optimizations that are computationally expensive etc.
-This documentation will also include some code snippets on how to create a Dash application.
+This documentation comprises of deployment documentation and code documentation.
 
 
 File Structure
