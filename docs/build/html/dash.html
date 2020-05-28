@@ -214,8 +214,8 @@ One example of a callback can be as follows</p>
     <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;This is page: </span><span class="si">{</span><span class="n">pathname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Finally, write the line of code that will activate the application!
-Users may set debug to False in production environment.</p>
+<p>Finally, write the line of code that will execute the application!
+Users may set <code class="docutils literal notranslate"><span class="pre">debug=False</span></code> in production environment.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
