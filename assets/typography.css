@@ -151,6 +151,7 @@ button[disabled] {
     border-radius: 10px;
     background-color: #202029;
     color: white;
+    padding: 2%;
 }
 
 /* Tabs
