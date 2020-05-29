@@ -178,7 +178,7 @@ def transpose_dataframe(df, col_identifier, cols):
     Args:
         df (pandas DataFrame): input DataFrame
         col_identifier (str): column for index, which will be the new DataFrame column names
-        list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+        cols (list): column names, which will be the new DataFrame index
 
     Returns:
         (pandas DataFrame)
@@ -224,7 +224,7 @@ def get_line_plot(df2):
                 mode='lines',
                 line=dict(color='#202029'),
                 text=[f'{col}<br><br>'+'<br>'.join([f'{df2.index[idx]}: {x}' for idx, x in
-                                   enumerate(df2[col].values)])] * len(df2.index),
+                                                    enumerate(df2[col].values)])] * len(df2.index),
                 hoverinfo='text',
             )
         )
