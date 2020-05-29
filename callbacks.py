@@ -204,9 +204,9 @@ def register_callbacks(app, print_function):
         Args:
             trigger: trigger on button click
             records (dict): intermediate data stored in dcc.Store
-            x_col (str): column for x-axis
+            x_col (str): column for x-axis, could be None
             x_max (int): maximum value for x-axis, could be None or empty string
-            y_col (str): column for x-axis
+            y_col (str): column for x-axis, could be None
             y_max (int): maximum value for y-axis, could be None or empty string
 
         Returns:
@@ -315,7 +315,7 @@ def register_callbacks(app, print_function):
         Args:
             trigger: trigger on button click
             records (dict): intermediate data stored in dcc.Store
-            col_identifier (str): column for index
+            col_identifier (str): column for index, could be None
             data (list): data of table that stores comparison column information
 
         Returns:
