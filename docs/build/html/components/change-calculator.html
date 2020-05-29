@@ -226,17 +226,6 @@ column as difference between y_col and x_col</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="components.change_calculator.get_changes_table">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_changes_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_changes_table" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the table used to compare changes across multiple periods</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>(dash_table.DataTable)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="components.change_calculator.get_line_plot">
 <code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_line_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_line_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
@@ -300,24 +289,6 @@ column as difference between y_col and x_col</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="components.change_calculator.get_summary_statistics">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_summary_statistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">y_col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_summary_statistics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get summary statistics for DataFrame for two periods</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
-<li><p><strong>x_col</strong> (<em>str</em>) -- column for x-axis</p></li>
-<li><p><strong>y_col</strong> (<em>str</em>) -- column for x-axis</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(dash_table.DataTable)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="components.change_calculator.remove_null">
 <code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">remove_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.remove_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove null values from column(s) in DataFrame</p>
@@ -353,14 +324,14 @@ column as difference between y_col and x_col</p>
 
 <dl class="py function">
 <dt id="components.change_calculator.transpose_dataframe">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">transpose_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.transpose_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">transpose_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.transpose_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>df</strong> (<em>pandas DataFrame</em>) -- input DataFrame</p></li>
 <li><p><strong>col_identifier</strong> (<em>str</em>) -- column for index, which will be the new DataFrame column names</p></li>
-<li><p><strong>list_of_tuples</strong> (<em>list</em>) -- data from table that contains tuple of column(s) and their maximum value(s)</p></li>
+<li><p><strong>cols</strong> (<em>list</em>) -- column names, which will be the new DataFrame index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
