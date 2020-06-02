@@ -18,12 +18,9 @@ def app_1():
         # Left contents
         html.Div([
             html.Div(
-                html.H1([
+                html.H1(
                     'KJ Wong'
-                ]),
-                style={
-                    'margin-top': '15vh',
-                }
+                ),
             ),
             html.Div(
                 dcc.Tabs(
@@ -52,9 +49,6 @@ def app_1():
                 ),
             )
         ],
-            style={
-                'height': '100vh'
-            },
             className='sidebar'),
 
         # Right contents
@@ -62,15 +56,6 @@ def app_1():
             id='tab-content',
             className='contents'
         ),
-
-        # Hidden contents
-        html.Div([
-            html.Div(id='placeholder')
-        ],
-            style={
-                'display': 'none'
-            }
-        )
     ])
 
 
@@ -165,8 +150,7 @@ def trip_tab():
                 html.P(
                     'Name of landmark:',
                     style={
-                        'display': 'inline-block',
-                        'margin': 0,
+                        'display': 'inline-block'
                     }
                 ),
                 dcc.Input(
@@ -198,8 +182,6 @@ def trip_tab():
                             id='trip-results',
                             style={
                                 'margin-top': '30px',
-                                'margin-right': '10px',
-                                'margin-left': '-20px'
                             }
                         ),
                     ],
@@ -208,13 +190,10 @@ def trip_tab():
                 ),
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
                     'padding-bottom': '50px',
-                    'text-align': 'left',
-                    'vertical-align': 'top'
                 },
                 className='custom-div'
             ),
@@ -233,22 +212,17 @@ def trip_tab():
                     ]
                 )],
                 style={
-                    'display': 'inline-block',
                     'width': '60%',
-                    'vertical-align': 'top'
                 },
+                className='custom-div-center'
             ),
         ],
-            style={
-                'margin-top': '20px',
-                'margin-bottom': '20px',
-                'text-align': 'center'
-            }
+            className='custom-container'
         ),
     ])
 
 
-def change_calculator_tab():
+def change_tab():
     return html.Div([
         header('Change Calculator', 'Compare changes over two periods'),
         html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
@@ -266,7 +240,7 @@ def change_calculator_tab():
                     html.P(
                         'Drag and drop files here, or click to upload',
                         style={
-                            'margin': 0
+                            'margin-bottom': 0
                         }
                     ),
                     id='upload-change',
@@ -284,7 +258,6 @@ def change_calculator_tab():
                         'Select worksheet: ',
                         style={
                             'display': 'inline-block',
-                            'margin': 0,
                             'margin-right': '3px'
                         }
                     ),
@@ -310,7 +283,6 @@ def change_calculator_tab():
                     style={
                         'display': 'none',
                         'width': '100%',
-                        'margin': 0,
                         'margin-top': '10px',
                     }
                 ),
@@ -348,7 +320,6 @@ def change_calculator_tab():
                     )
                 ],
                     style={
-                        'margin': 0,
                         'margin-top': '10px'
                     }
                 ),
@@ -380,7 +351,6 @@ def change_calculator_tab():
                     )
                 ],
                     style={
-                        'margin': 0,
                         'margin-top': '10px'
                     }
                 ),
@@ -400,13 +370,10 @@ def change_calculator_tab():
                 ),
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
                     'padding-bottom': '50px',
-                    'text-align': 'left',
-                    'vertical-align': 'top'
                 },
                 className='custom-div'
             ),
@@ -434,22 +401,18 @@ def change_calculator_tab():
                         'scores pulling the mean down'),
                 ],
                     style={
+                        'margin-left': '20px',
                         'text-align': 'left'
                     }
                 ),
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '60%',
-                    'vertical-align': 'top'
-                }
+                },
+                className='custom-div-center'
             ),
         ],
-            style={
-                'margin-top': '20px',
-                'margin-bottom': '20px',
-                'text-align': 'center'
-            }
+            className='custom-container'
         ),
     ])
 
@@ -477,7 +440,7 @@ def get_changes_table():
     )
 
 
-def change_over_time_tab():
+def changes_tab():
     return html.Div([
         header('Change Calculator 2', 'Compare changes over multiple periods'),
         html.P('Users can view summary statistics and changes over time on a line plot. '
@@ -494,7 +457,7 @@ def change_over_time_tab():
                     html.P(
                         'Drag and drop files here, or click to upload',
                         style={
-                            'margin': 0
+                            'margin-bottom': 0
                         }
                     ),
                     id='upload-changes',
@@ -512,7 +475,6 @@ def change_over_time_tab():
                         'Select worksheet: ',
                         style={
                             'display': 'inline-block',
-                            'margin': 0,
                             'margin-right': '3px'
                         }
                     ),
@@ -538,7 +500,6 @@ def change_over_time_tab():
                     style={
                         'display': 'none',
                         'width': '100%',
-                        'margin': 0,
                         'margin-top': '10px',
                     }
                 ),
@@ -556,12 +517,9 @@ def change_over_time_tab():
                 ),
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
-                    'text-align': 'left',
-                    'vertical-align': 'top'
                 },
                 className='custom-div'
             ),
@@ -588,7 +546,6 @@ def change_over_time_tab():
                     )
                 ],
                     style={
-                        'margin': 0,
                         'margin-bottom': '10px'
                     }
                 ),
@@ -611,45 +568,38 @@ def change_over_time_tab():
                     '3. Ensure all column identifier values are unique, if not it will be replaced with running numbers'
                 ],
                     style={
-                        'margin': 0,
                         'margin-top': '10px'
                     }
                 )
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '56%',
                     'margin-top': '40px',
-                    'text-align': 'left',
-                    'vertical-align': 'top'
+                    'margin-bottom': '20px'
                 },
                 className='custom-div'
             ),
-        ],
-            style={
-                'margin-top': '20px',
-                'margin-bottom': '20px',
-                'text-align': 'center'
-            }
-        ),
-        # Bottom item
-        html.Div([
-            dcc.Loading(
+            # Bottom item
+            html.Div([
+                dcc.Loading(
+                    html.P(
+                        id='changes-result',
+                        style={
+                            'display': 'none',
+                        },
+                        className='custom-div'
+                    )
+                ),
                 html.P(
-                    id='changes-result',
+                    id='div-changes-result',
                     style={
-                        'display': 'none',
-                    },
-                    className='custom-div'
+                        'margin-top': '20px'
+                    }
                 )
-            ),
-            html.P(
-                id='div-changes-result',
-                style={
-                    'margin-top': '20px'
-                }
-            )
-        ])
+            ])
+        ],
+            className='custom-container'
+        ),
     ])
 
 
@@ -675,13 +625,10 @@ def sample_tab():
                 # html.P('Left component',),
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '32%',
                     'margin': '2%',
                     'margin-top': '40px',
                     'padding-bottom': '50px',
-                    'text-align': 'left',
-                    'vertical-align': 'top'
                 },
                 className='custom-div'
             ),
@@ -690,16 +637,11 @@ def sample_tab():
                 # html.P('Right component')
             ],
                 style={
-                    'display': 'inline-block',
                     'width': '60%',
-                    'vertical-align': 'top'
                 },
+                className='custom-div-center'
             ),
         ],
-            style={
-                'margin-top': '20px',
-                'margin-bottom': '20px',
-                'text-align': 'center'
-            }
+            className='custom-container'
         ),
     ])

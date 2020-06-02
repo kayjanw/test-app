@@ -9,7 +9,7 @@ from components.helper import violin_plot, print_callback, get_summary_statistic
     result_download_button
 from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
     optimiser_pipeline
-from layouts import app_1, about_me_tab, trip_tab, change_calculator_tab, change_over_time_tab, keyboard_tab
+from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, keyboard_tab
 
 
 def register_callbacks(app, print_function):
@@ -373,16 +373,16 @@ def register_callbacks(app, print_function):
             figure['data'][trace_index]['opacity'] = 1
         return figure
 
-    @app.callback(Output('placeholder', 'children'),
-                  [Input('button_music', 'n_clicks')])
-    @print_callback(print_function)
-    def update_keyboard(trigger):
-        if trigger:
-            import base64
-            sound_filename = 'assets/Music_Note/sample_sound.wav'  # replace with your own .mp3 file
-            # sound_filename = 'assets/Music_Note/C.wav'  # replace with your own .mp3 file
-            encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
-            return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
+    # @app.callback(Output('placeholder', 'children'),
+    #               [Input('button_music', 'n_clicks')])
+    # @print_callback(print_function)
+    # def update_keyboard(trigger):
+    #     if trigger:
+    #         import base64
+    #         sound_filename = 'assets/Music_Note/sample_sound.wav'  # replace with your own .mp3 file
+    #         # sound_filename = 'assets/Music_Note/C.wav'  # replace with your own .mp3 file
+    #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
+    #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
     @app.callback(Output('tab-content', 'children'),
                   [Input('tabs-parent', 'value')])
@@ -401,9 +401,9 @@ def register_callbacks(app, print_function):
         elif tab == 'tab-2':
             return trip_tab()
         elif tab == 'tab-3':
-            return change_calculator_tab()
+            return change_tab()
         elif tab == 'tab-4':
-            return change_over_time_tab()
+            return changes_tab()
         elif tab == 'tab-5':
             return keyboard_tab()
         else:
