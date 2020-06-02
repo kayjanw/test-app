@@ -177,14 +177,12 @@ def trip_tab():
                     id='button-trip-ok',
                 ),
                 dcc.Loading(
-                    children=[
-                        html.Div(
-                            id='trip-results',
-                            style={
-                                'margin-top': '30px',
-                            }
-                        ),
-                    ],
+                    html.Div(
+                        id='trip-results',
+                        style={
+                            'margin-top': '30px',
+                        }
+                    ),
                     type='circle',
                     color='white'
                 ),
@@ -362,12 +360,16 @@ def change_tab():
                     id='intermediate-change-result',
                     storage_type='memory'
                 ),
-                html.Div(
-                    id='change-result',
-                    style={
-                        'margin-top': '30px'
-                    }
-                ),
+                dcc.Loading(
+                    html.Div(
+                        id='change-result',
+                        style={
+                            'margin-top': '30px'
+                        }
+                    ),
+                    type='circle',
+                    color='white'
+                )
             ],
                 style={
                     'width': '32%',
@@ -588,7 +590,9 @@ def changes_tab():
                             'display': 'none',
                         },
                         className='custom-div'
-                    )
+                    ),
+                    type='circle',
+                    color='#202029'
                 ),
                 html.P(
                     id='div-changes-result',
