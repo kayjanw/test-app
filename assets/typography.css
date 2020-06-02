@@ -41,7 +41,6 @@ body::-webkit-scrollbar-thumb {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6, p, span {
     font-family: Source Sans Pro;
-    margin-left: 20px;
 }
 
 h1 {
@@ -107,14 +106,17 @@ button[disabled] {
     cursor: auto;
 }
 
+#dropdown-change-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-change-x .VirtualizedSelectFocusedOption,
 #dropdown-change-y .VirtualizedSelectFocusedOption,
+#dropdown-changes-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-changes-identifier .VirtualizedSelectFocusedOption {
     background-color: #F0E3DF;
 }
 
 #table-changes .Select-value-label {
     color: white !important;
+    margin-left: 20px;
 }
 
 #table-changes .Select-clear, .Select-arrow {
@@ -138,20 +140,42 @@ button[disabled] {
     position: fixed;
     display: inline-block;
     width: 15vw;
+    height: 100vh;
     background-color: #202029;
+}
+
+.sidebar h1 {
+    margin-top: 15vh;
+    margin-left: 20px;
 }
 
 .contents {
     display: inline-block;
-    width: 83vw;
-    margin-left: 15vw
+    width: 80vw;
+    margin-left: 15vw;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw;
+}
+
+.custom-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .custom-div {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
     border-radius: 10px;
     background-color: #202029;
     color: white;
     padding: 2%;
+}
+
+.custom-div-center {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
 }
 
 /* Tabs
@@ -166,16 +190,6 @@ button[disabled] {
     width: 100%;
 }
 
-.custom-tab:hover {
-    background-color: #31313A !important;
-    color: #AFAFB9 !important;
-}
-
-.custom-tab-selected {
-    background-color: #F0E3DF !important;
-    color: #202029 !important;
-}
-
 .custom-tab {
     font-size: 16px;
     font-weight: bold;
@@ -185,4 +199,18 @@ button[disabled] {
     display: flex !important;
     align-items: center;
     justify-content: left;
+}
+
+.custom-tab span {
+    margin-left: 20px;
+}
+
+.custom-tab:hover {
+    background-color: #31313A !important;
+    color: #AFAFB9 !important;
+}
+
+.custom-tab-selected {
+    background-color: #F0E3DF !important;
+    color: #202029 !important;
 }
