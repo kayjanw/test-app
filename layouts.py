@@ -150,7 +150,8 @@ def trip_tab():
                 html.P(
                     'Name of landmark:',
                     style={
-                        'display': 'inline-block'
+                        'display': 'inline-block',
+                        'margin-right': '10px'
                     }
                 ),
                 dcc.Input(
@@ -158,8 +159,7 @@ def trip_tab():
                     type='text',
                     style={
                         'display': 'inline-block',
-                        'width': '50%',
-                        'margin-left': '10px'
+                        'width': '50%'
                     }
                 ),
                 get_trip_table(),
