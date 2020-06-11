@@ -189,6 +189,55 @@ def transpose_dataframe(df, col_identifier, cols):
     return df2
 
 
+def get_box_plot(df, cols):
+    """Get figure for plot
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+        cols (list): list of column(s) for results summary
+
+    Returns:
+        2-element tuple
+
+        - (list): instructions for interacting with figure
+        - (dict): graphical result of change calculator 2
+    """
+    color = ['hsl(' + str(h) + ',50%,70%)' for h in np.linspace(0, 270, len(cols))]
+    trace = []
+    instructions = [
+        html.Br(),
+        'Hover over box to see more information',
+        html.Br(),
+        'Single click on legend to hide entry',
+        html.Br(),
+        'Double click on legend to highlight entry'
+    ]
+    for idx, col in enumerate(cols):
+        trace.append(
+            go.Box(
+                y=df[col],
+                name=col,
+                boxpoints='outliers',
+                marker_color=color[idx],
+                hoverinfo=['y']
+            )
+        )
+    layout = dict(
+        title='Box plot of results',
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        yaxis=dict(
+            autorange=True,
+            dtick=10,
+        ),
+        font=dict(
+            family='Source Sans Pro',
+            color='white'
+        )
+    )
+    return instructions, dict(data=trace, layout=layout)
+
+
 def get_line_plot(df2):
     """Get figure for plot
 
