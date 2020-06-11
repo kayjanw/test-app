@@ -4,11 +4,11 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import compute_change, get_scatter_plot, compute_changes, transpose_dataframe, \
-    get_line_plot
+    get_line_plot, get_box_plot
 from components.helper import violin_plot, print_callback, get_summary_statistics, decode_df, update_when_upload, \
     result_download_button
-from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, get_map_from_table, \
-    optimiser_pipeline
+from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, \
+    get_map_from_table, optimiser_pipeline
 from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, keyboard_tab
 
 
@@ -329,20 +329,21 @@ def register_callbacks(app, print_function):
         style = {'display': 'none'}
         graph = []
         if trigger:
+            style = {'display': 'block'}
             list_of_tuples = [(row['column'], row['max']) for row in data
                               if row['column'] is not ''
                               if row['column'] is not None]
-            cols = [row[0] for row in list_of_tuples]
+            cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
             if 'df' in records and len(list_of_tuples):
                 df = decode_df(records['df'])
                 df = compute_changes(df, col_identifier, list_of_tuples)
                 if len(df):
                     df2 = transpose_dataframe(df, col_identifier, cols)
                     result_table = get_summary_statistics(df, cols)
-                    instructions, fig = get_line_plot(df2)
-                    summary = ['Summary statistics:', result_table]
-                    style = {'display': 'block'}
-                    graph = instructions + [dcc.Graph(figure=fig, id='graph-changes-result')]
+                    instructions_box, fig_box = get_box_plot(df, cols)
+                    instructions_line, fig_line = get_line_plot(df2)
+                    summary = ['Summary statistics:', result_table] + instructions_box + [dcc.Graph(figure=fig_box)]
+                    graph = instructions_line + [dcc.Graph(figure=fig_line, id='graph-changes-result')]
                 elif not len(df):
                     summary = ['Processed dataframe is empty. Please select numeric columns']
             elif 'df' not in records:
