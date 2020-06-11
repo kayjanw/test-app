@@ -202,7 +202,7 @@ def get_box_plot(df, cols):
         - (list): instructions for interacting with figure
         - (dict): graphical result of change calculator 2
     """
-    color = ['hsl(' + str(h) + ',50%,70%)' for h in np.linspace(0, 270, len(cols))]
+    color = ['hsl(' + str(h) + ',50%,70%)' for h in np.linspace(0, 270, max(len(cols), 7))]
     trace = []
     instructions = [
         html.Br(),
@@ -219,7 +219,10 @@ def get_box_plot(df, cols):
                 name=col,
                 boxpoints='outliers',
                 marker_color=color[idx],
-                hoverinfo=['y']
+                hoverinfo='y',
+                hoverlabel=dict(
+                    font=dict(family='Source Sans Pro')
+                )
             )
         )
     layout = dict(
