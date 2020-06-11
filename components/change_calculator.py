@@ -192,6 +192,8 @@ def transpose_dataframe(df, col_identifier, cols):
 def get_box_plot(df, cols):
     """Get figure for plot
 
+    Adds plotly.graph_objects charts for box plot, visualizing summary statistics
+
     Args:
         df (pandas DataFrame): input DataFrame
         cols (list): list of column(s) for results summary
