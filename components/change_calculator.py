@@ -231,6 +231,9 @@ def get_box_plot(df, cols):
         title='Box plot of results',
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            type='category'
+        ),
         yaxis=dict(
             autorange=True,
             dtick=10,
