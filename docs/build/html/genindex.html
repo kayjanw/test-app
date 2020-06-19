@@ -98,6 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="components/change-calculator.html">Change Calculator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="components/helper.html">Helper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/mbti.html">MBTI Personality Test</a></li>
 <li class="toctree-l1"><a class="reference internal" href="components/trip-planner.html">Trip Planner</a></li>
 </ul>
 
@@ -171,10 +172,12 @@
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
@@ -205,6 +208,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/mbti.html#components.mbti.clean_text">clean_text() (in module components.mbti)</a>
+</li>
       <li>
     components.change_calculator
 
@@ -217,6 +222,13 @@
 
       <ul>
         <li><a href="components/helper.html#module-components.helper">module</a>
+</li>
+      </ul></li>
+      <li>
+    components.mbti
+
+      <ul>
+        <li><a href="components/mbti.html#module-components.mbti">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -258,20 +270,26 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="components/helper.html#components.helper.generate_datatable">generate_datatable() (in module components.helper)</a>
 </li>
+      <li><a href="components/mbti.html#components.mbti.get_bar_plot">get_bar_plot() (in module components.mbti)</a>
+</li>
       <li><a href="components/change-calculator.html#components.change_calculator.get_box_plot">get_box_plot() (in module components.change_calculator)</a>
 </li>
       <li><a href="components/trip-planner.html#components.trip_planner.get_distance_and_duration_from_table">get_distance_and_duration_from_table() (in module components.trip_planner)</a>
 </li>
       <li><a href="components/trip-planner.html#components.trip_planner.get_distance_from_routes">get_distance_from_routes() (in module components.trip_planner)</a>
 </li>
+      <li><a href="components/mbti.html#components.mbti.get_gridsearch_model">get_gridsearch_model() (in module components.mbti)</a>
+</li>
       <li><a href="components/change-calculator.html#components.change_calculator.get_line_plot">get_line_plot() (in module components.change_calculator)</a>
 </li>
       <li><a href="components/trip-planner.html#components.trip_planner.get_map_from_table">get_map_from_table() (in module components.trip_planner)</a>
 </li>
-      <li><a href="components/change-calculator.html#components.change_calculator.get_parallel_coord">get_parallel_coord() (in module components.change_calculator)</a>
+      <li><a href="components/mbti.html#components.mbti.get_model">get_model() (in module components.mbti)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/change-calculator.html#components.change_calculator.get_parallel_coord">get_parallel_coord() (in module components.change_calculator)</a>
+</li>
       <li><a href="components/trip-planner.html#components.trip_planner.get_permutation_of_routes">get_permutation_of_routes() (in module components.trip_planner)</a>
 </li>
       <li><a href="components/trip-planner.html#components.trip_planner.get_routes_from_list">get_routes_from_list() (in module components.trip_planner)</a>
@@ -284,7 +302,21 @@
 </li>
       <li><a href="components/helper.html#components.helper.get_summary_statistics">get_summary_statistics() (in module components.helper)</a>
 </li>
+      <li><a href="components/mbti.html#components.mbti.get_train_test">get_train_test() (in module components.mbti)</a>
+</li>
       <li><a href="components/helper.html#components.helper.get_worksheet">get_worksheet() (in module components.helper)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/mbti.html#components.mbti.load_and_save_data">load_and_save_data() (in module components.mbti)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/mbti.html#components.mbti.load_vectorizer">load_vectorizer() (in module components.mbti)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -299,6 +331,8 @@
         <li><a href="components/change-calculator.html#module-components.change_calculator">components.change_calculator</a>
 </li>
         <li><a href="components/helper.html#module-components.helper">components.helper</a>
+</li>
+        <li><a href="components/mbti.html#module-components.mbti">components.mbti</a>
 </li>
         <li><a href="components/trip-planner.html#module-components.trip_planner">components.trip_planner</a>
 </li>
@@ -342,13 +376,25 @@
   </ul></td>
 </tr></table>
 
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/mbti.html#components.mbti.save_vectorizer">save_vectorizer() (in module components.mbti)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="components/helper.html#components.helper.table_css">table_css() (in module components.helper)</a>
 </li>
+      <li><a href="components/mbti.html#components.mbti.test_pipeline">test_pipeline() (in module components.mbti)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="components/mbti.html#components.mbti.train_pipeline">train_pipeline() (in module components.mbti)</a>
+</li>
       <li><a href="components/change-calculator.html#components.change_calculator.transpose_dataframe">transpose_dataframe() (in module components.change_calculator)</a>
 </li>
   </ul></td>

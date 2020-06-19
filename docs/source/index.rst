@@ -32,6 +32,7 @@ Code Documentation
 
    components/change-calculator
    components/helper
+   components/mbti
    components/trip-planner
 
 :doc:`components/change-calculator`
@@ -39,6 +40,9 @@ Code Documentation
 
 :doc:`components/helper`
     List of helper functions
+
+:doc:`components/mbti`
+    List of functions for MBTI Personality Test tab
 
 :doc:`components/trip-planner`
     List of functions for Trip Planner tab
