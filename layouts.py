@@ -38,7 +38,7 @@ def app_1():
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Keyboard (WIP)', value='tab-5', className='custom-tab',
+                        dcc.Tab(label='MBTI', value='tab-5', className='custom-tab',
                                 selected_className='custom-tab-selected'),
                     ],
                     colors={
@@ -134,10 +134,10 @@ def get_trip_table():
 
 def trip_tab():
     return html.Div([
-        header('Trip Planner', 'Shortest distance everrrrr'),
-        html.P('Users can fill in multiple destinations and an optimal route will be calculated, '
+        header('Trip Planner', 'Optimize your route'),
+        html.P('Users can fill in multiple destinations and an optimal route based on distance will be calculated, '
                'starting and ending from the first destination specified. '
-               'This is also known as the Travelling Salesman Problem.'),
+               'This is also known as the Travelling Salesman Problem'),
         html.Br(),
         html.P('Step 1: Fill in the landmark name (optional)'),
         html.P('Step 2: Click the point on map corresponding to the landmark name'),
@@ -225,7 +225,7 @@ def change_tab():
         header('Change Calculator', 'Compare changes over two periods'),
         html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
                '(x axis) against present values (y axis). Users also have the option to download the processed results '
-               'with change value into an excel file.'),
+               'with change value into an excel file'),
         html.Br(),
         html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
         html.P('Step 2: Specify the columns for past values (x axis) and present values (y axis)'),
@@ -605,6 +605,119 @@ def changes_tab():
             className='custom-container'
         ),
     ])
+
+
+def mbti_tab():
+    return html.Div([
+        header('MBTI', 'Predict MBTI with writing style'),
+        html.P('Users can know their MBTI personality based on matching their writing content, specifically their '
+               'choice of words, to other users in an existing database'),
+        html.Details([
+            dcc.Markdown('''
+                ###### Input Distribution
+                > Input data has distribution of
+                > - 77% introvert (vs. 23% extrovert)
+                > - 86% intuition (vs. 14% sensing)
+                > - 54% feeling (vs. 46% thinking)
+                > - 60% perceiving (vs. 40% judging)
+
+                ###### Processing
+                > Processing of training data involves
+                > - Making the words lowercase (so don't worry about your casing)
+                > - Removing URLs `http://` and usernames `@username`
+                > - Removing digits and punctuations
+                > - Remove any mention of MBTI types or the word `mbti`
+                > - Lemmatization of words
+
+                ###### Modelling
+                > After processing the text, input data is split into 80% training and 20% testing data
+
+                > Training data has a vocabulary size of **772 words/bi-grams/tri-grams**
+
+                > The model used is LightGBM model and 4 different models are trained for each personality trait
+
+                > GridSearch is used to tune the model hyperparameters based on best f1 score, and is used with
+                stratified cross validation to handle imbalanced class and prevent overfitting
+
+                ###### Results
+                > To interpret the results, accuracy is probability of being correct,
+                > precision is probability of being correct when prediction is minority class and
+                > recall is probability of being correct when example belongs to minority class.
+                > F1 score is used to balance between precision and recall, since they are conflicting metrics.
+                > - i.e. 70% accuracy means model is correct 70% of the time
+                > - i.e. 70% precision means model is correct 70% of the time when prediction classifies example as
+                minority case
+                > - i.e. 70% recall means model is able to correctly classify actual minority case correctly 70% of
+                the time
+
+                > The results are
+                > - Introversion-Extroversion Model has Accuracy: 65.5%, F1: 0.469
+                > - Intuition-Sensing Model has Accuracy: 65.5%, F1: 0.340
+                > - Thinking-Feeling Model has Accuracy: 71.2%, F1: 0.738
+                > - Judging-Perceiving Model has Accuracy: 55.7%, F1: 0.602
+                > * Please do not take the results too seriously
+                ''')
+        ],
+            title='Expand for details'
+        ),
+        html.Br(),
+        html.P('Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of '
+               'yourself)'),
+        html.P('Step 2: Click "OK" button to generate the results!'),
+        html.Div([
+            # Left item
+            html.Div([
+                dcc.Textarea(
+                    id='input-mbti',
+                    value='Put in your text here, preferably more than 50 words and try not to use words that '
+                          'are too common or too complex!',
+                    style={
+                        'width': '100%',
+                        'height': 300,
+                        'resize': 'vertical'
+                    },
+                ),
+                html.Button(
+                    'OK',
+                    id='button-mbti'
+                )
+            ],
+                style={
+                    'width': '42%',
+                    'margin': '2%',
+                    'margin-top': '40px'
+                },
+                className='custom-div'
+            ),
+            # Right item
+            html.Div([
+                dcc.Loading(
+                    html.Div(
+                        id='mbti-results'
+                    ),
+                    type='circle',
+                    color='#202029'
+                ),
+                html.Div(
+                    dcc.Graph(
+                        id='graph-mbti',
+                    ),
+                    id='div-graph-mbti',
+                    style={
+                        'margin-top': '50px'
+                    }
+                )
+            ],
+                style={
+                    'width': '50%',
+                    'margin-top': '40px'
+                },
+                className='custom-div-center'
+            ),
+        ],
+            className='custom-container'
+        ),
+     ])
 
 
 def keyboard_tab():

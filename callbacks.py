@@ -7,9 +7,10 @@ from components.change_calculator import compute_change, get_scatter_plot, compu
     get_line_plot, get_box_plot
 from components.helper import violin_plot, print_callback, get_summary_statistics, decode_df, update_when_upload, \
     result_download_button
+from components.mbti import test_pipeline, get_bar_plot
 from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, \
     get_map_from_table, optimiser_pipeline
-from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, keyboard_tab
+from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab
 
 
 def register_callbacks(app, print_function):
@@ -374,6 +375,38 @@ def register_callbacks(app, print_function):
             figure['data'][trace_index]['opacity'] = 1
         return figure
 
+    @ app.callback([Output('mbti-results', 'children'),
+                    Output('graph-mbti', 'figure')],
+                   [Input('button-mbti', 'n_clicks')],
+                   [State('input-mbti', 'value')])
+    def update_mbti_results(trigger, input_text):
+        """Update results of mbti personality results and graph
+
+        Args:
+            trigger: Trigger on button click
+            input_text (str): input text
+
+        Returns:
+            2-element tuple
+
+            - (list): div result of mbti model
+            - (dict): graphical result of mbti model
+        """
+        results = []
+        plot = {}
+        if trigger:
+            try:
+                n_words, personality, predictions = test_pipeline(input_text)
+                results = html.P([
+                    f'Result: {personality}',
+                    html.Br(),
+                    f'{n_words} words are in the vocabulary and are used for prediction'
+                ])
+                plot = get_bar_plot(predictions)
+            except FileNotFoundError:
+                results = html.P(['Unable to display results. Source files containing model not found'])
+        return results, plot
+
     # @app.callback(Output('placeholder', 'children'),
     #               [Input('button_music', 'n_clicks')])
     # @print_callback(print_function)
@@ -406,7 +439,7 @@ def register_callbacks(app, print_function):
         elif tab == 'tab-4':
             return changes_tab()
         elif tab == 'tab-5':
-            return keyboard_tab()
+            return mbti_tab()
         else:
             return dcc.Graph(
                 figure=violin_plot(),
