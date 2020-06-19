@@ -381,7 +381,7 @@ def register_callbacks(app, print_function):
                    [Input('button-mbti', 'n_clicks')],
                    [State('input-mbti', 'value'),
                     State('div-graph-mbti', 'style')])
-    def update_mbti_results(trigger, input_text, style):
+    def update_mbti_result(trigger, input_text, style):
         """Update results of mbti personality results and graph
 
         Args:
@@ -396,23 +396,23 @@ def register_callbacks(app, print_function):
             - (dict): graphical result of mbti model
             - (dict): updated style of graphical result of mbti model
         """
-        results = []
+        result = []
         plot = {}
         style['display'] = 'none'
         if trigger:
             try:
                 n_words, personality, predictions = test_pipeline(input_text)
-                results = html.P([
+                result = html.P([
                     f'{n_words} of the words are in vocabulary and are used for prediction'
                 ])
                 plot = get_bar_plot(predictions, personality)
                 style['display'] = 'block'
                 style['height'] = 400
             except FileNotFoundError:
-                results = html.P(['Unable to display results. Source files containing model not found'])
+                result = html.P(['Unable to display results. Source files containing model not found'])
             except Exception as e:
-                results = html.P([f'Error: {e}'])
-        return results, plot, style
+                result = html.P([f'Error: {e}'])
+        return result, plot, style
 
     # @app.callback(Output('placeholder', 'children'),
     #               [Input('button_music', 'n_clicks')])
