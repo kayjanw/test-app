@@ -258,7 +258,7 @@ def test_pipeline(input_text):
     return n_words, personality, predictions
 
 
-def get_bar_plot(results):
+def get_bar_plot(results, personality):
     """Get figure for plot
 
     Adds plotly.graph_objects charts for bar plot
@@ -275,15 +275,15 @@ def get_bar_plot(results):
     data = [go.Bar(
         y=y_data,
         x=x_data_0,
-        hovertext=['Introversion', 'Intuition', 'Feeling', 'Perceiving'],
-        hoverinfo='text',
+        # hovertext=['Introversion', 'Intuition', 'Feeling', 'Perceiving'],
+        hoverinfo='none',
         orientation='h',
         marker_color='#BE9B89',
     ), go.Bar(
         y=y_data,
         x=x_data_1,
-        hovertext=['Extroversion', 'Sensing', 'Thinking', 'Judging'],
-        hoverinfo='text',
+        # hovertext=['Extroversion', 'Sensing', 'Thinking', 'Judging'],
+        hoverinfo='none',
         orientation='h',
         marker_color='#D6CAC7',
     )]
@@ -297,7 +297,7 @@ def get_bar_plot(results):
                 x=xd / 2,
                 y=yd,
                 xanchor='center',
-                text=str(int(np.round(xd * 100, 0))) + '%',
+                text=f"{yd.split('-')[0]}<br>{int(np.round(xd * 100, 0))}%",
                 font=dict(size=14),
                 showarrow=False
             )
@@ -311,24 +311,30 @@ def get_bar_plot(results):
                 x=1 - (xd / 2),
                 y=yd,
                 xanchor='center',
-                text=str(int(np.round(xd * 100))) + '%',
+                text=f"{yd.split('-')[1]}<br>{int(np.round(xd * 100, 0))}%",
                 font=dict(size=14),
                 showarrow=False)
         )
 
     layout = dict(
+        title=f'Result: {personality}',
         annotations=annotations,
         bargap=0.3,
         barmode='stack',
-        margin=dict(l=170, r=50, t=30, b=30),
+        margin=dict(l=50, r=50, t=30, b=30),
         plot_bgcolor='rgba(0,0,0,0)',
         showlegend=False,
         xaxis=dict(
             range=[0, 1],
-            showticklabels=False
+            showticklabels=False,
+            showgrid=False,
+            zeroline=False,
+            fixedrange=True
         ),
         yaxis=dict(
-            categoryarray=y_data[::-1]
+            categoryarray=y_data[::-1],
+            showticklabels=False,
+            fixedrange=True
         ),
         font=dict(
             family='Source Sans Pro',
