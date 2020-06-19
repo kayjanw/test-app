@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_s
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 
 import nltk
-# nltk.download('punkt')
+nltk.download('punkt')
 # nltk.download('wordnet')
 
 
