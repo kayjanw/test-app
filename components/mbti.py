@@ -13,9 +13,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_score
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 
-import nltk
-nltk.download('punkt')
-nltk.download('wordnet')
+# import nltk
+# nltk.download('punkt')
+# nltk.download('wordnet')
 
 
 def clean_text(text, lemma=WordNetLemmatizer()):
