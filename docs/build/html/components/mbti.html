@@ -199,14 +199,14 @@
 
 <dl class="py function">
 <dt id="components.mbti.get_bar_plot">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_bar_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">results</span></em>, <em class="sig-param"><span class="n">personality</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_bar_plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_bar_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">predictions</span></em>, <em class="sig-param"><span class="n">personality</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_bar_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
 <p>Adds plotly.graph_objects charts for bar plot</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>results</strong> (<em>list</em>) -- List of probabilities for each personality trait</p></li>
-<li><p><strong>personality</strong> (<em>str</em>) -- MBTI personality results, to be shown in title</p></li>
+<li><p><strong>predictions</strong> (<em>list</em>) -- list of model prediction probabilities</p></li>
+<li><p><strong>personality</strong> (<em>str</em>) -- MBTI personality results, to be shown in title of bar plot</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -217,14 +217,14 @@
 
 <dl class="py function">
 <dt id="components.mbti.get_gridsearch_model">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_gridsearch_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">model_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_gridsearch_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_gridsearch_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">path_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_gridsearch_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get, save and return best model after grid search and with stratified cross validation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) -- training input</p></li>
 <li><p><strong>y_train</strong> (<em>pandas Series</em>) -- training output</p></li>
-<li><p><strong>model_name</strong> (<em>str</em>) -- name of model to save</p></li>
+<li><p><strong>path_model</strong> (<em>str</em>) -- location and file name of saved model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -279,7 +279,7 @@
 
 <dl class="py function">
 <dt id="components.mbti.load_and_save_data">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">load_and_save_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mbti_cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.load_and_save_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">load_and_save_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mbti_cols</span></em>, <em class="sig-param"><span class="n">path_data</span></em>, <em class="sig-param"><span class="n">path_save_data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.load_and_save_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads in data, performs preprocessing and saves data
 If saved data is present, directly read in the saved data</p>
 <dl class="simple">
@@ -297,7 +297,11 @@ If saved data is present, directly read in the saved data</p>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mbti_cols</strong> (<em>list</em>) -- name of new columns generated</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mbti_cols</strong> (<em>list</em>) -- name of new columns generated</p></li>
+<li><p><strong>path_data</strong> (<em>str</em>) -- location and name of input data</p></li>
+<li><p><strong>path_save_data</strong> (<em>str</em>) -- location and name of saved data</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>processed data</p>
@@ -310,23 +314,27 @@ If saved data is present, directly read in the saved data</p>
 
 <dl class="py function">
 <dt id="components.mbti.load_vectorizer">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">load_vectorizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.load_vectorizer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">load_vectorizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_vect</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.load_vectorizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load and return saved vectorizer</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>(sklearn CountVectorizer)</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path_vect</strong> (<em>str</em>) -- location and file name of saved vectorizer</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(sklearn CountVectorizer)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="components.mbti.save_vectorizer">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">save_vectorizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">corpus</span></em>, <em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.save_vectorizer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">save_vectorizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">corpus</span></em>, <em class="sig-param"><span class="n">path_vect</span></em>, <em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.save_vectorizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vectorize corpus and saves vectorizer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>corpus</strong> (<em>pandas Series</em>) -- input text corpus (training input)</p></li>
+<li><p><strong>path_vect</strong> (<em>str</em>) -- location and file name of saved vectorizer</p></li>
 <li><p><strong>params</strong> (<em>dict</em>) -- specifies parameters for vectorizer, defaults to None</p></li>
 </ul>
 </dd>
@@ -345,10 +353,11 @@ If saved data is present, directly read in the saved data</p>
 <dd class="field-odd"><p><strong>input_text</strong> (<em>str</em>) -- input text</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>2-element tuple</p>
+<dd class="field-even"><p><p>3-element tuple</p>
 <ul class="simple">
 <li><p>n_words (int): number of words in text that are in vocabulary</p></li>
-<li><p>results (list): list of model prediction probabilities</p></li>
+<li><p>personality (str): MBTI personality results, to be shown in title of bar plot</p></li>
+<li><p>predictions (list): list of model prediction probabilities</p></li>
 </ul>
 </p>
 </dd>
