@@ -387,15 +387,18 @@ def register_callbacks(app, print_function):
         Args:
             trigger: Trigger on button click
             input_text (str): input text
+            style (dict): style of graphical result of mbti model
 
         Returns:
-            2-element tuple
+            3-element tuple
 
             - (list): div result of mbti model
             - (dict): graphical result of mbti model
+            - (dict): updated style of graphical result of mbti model
         """
         results = []
         plot = {}
+        style['display'] = 'none'
         if trigger:
             try:
                 n_words, personality, predictions = test_pipeline(input_text)
