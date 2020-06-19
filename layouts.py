@@ -691,22 +691,34 @@ def mbti_tab():
             ),
             # Right item
             html.Div([
+                html.Div(
+                    dcc.Graph(
+                        id='graph-mbti',
+                        config={
+                            'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d',
+                                                       'zoomOut2d',
+                                                       'autoScale2d', 'resetScale2d', 'toggleSpikelines',
+                                                       'hoverClosestCartesian', 'hoverCompareCartesian'],
+                        },
+                        style={
+                            'height': '100%'
+                        }
+                    ),
+                    id='div-graph-mbti',
+                    style={
+                        'display': 'none',
+                    }
+                ),
                 dcc.Loading(
                     html.Div(
-                        id='mbti-results'
+                        id='mbti-results',
+                        style={
+                            'text-align': 'left'
+                        }
                     ),
                     type='circle',
                     color='#202029'
                 ),
-                html.Div(
-                    dcc.Graph(
-                        id='graph-mbti',
-                    ),
-                    id='div-graph-mbti',
-                    style={
-                        'margin-top': '50px'
-                    }
-                )
             ],
                 style={
                     'width': '50%',

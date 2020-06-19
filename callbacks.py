@@ -376,10 +376,12 @@ def register_callbacks(app, print_function):
         return figure
 
     @ app.callback([Output('mbti-results', 'children'),
-                    Output('graph-mbti', 'figure')],
+                    Output('graph-mbti', 'figure'),
+                    Output('div-graph-mbti', 'style')],
                    [Input('button-mbti', 'n_clicks')],
-                   [State('input-mbti', 'value')])
-    def update_mbti_results(trigger, input_text):
+                   [State('input-mbti', 'value'),
+                    State('div-graph-mbti', 'style')])
+    def update_mbti_results(trigger, input_text, style):
         """Update results of mbti personality results and graph
 
         Args:
@@ -398,16 +400,16 @@ def register_callbacks(app, print_function):
             try:
                 n_words, personality, predictions = test_pipeline(input_text)
                 results = html.P([
-                    f'Result: {personality}',
-                    html.Br(),
-                    f'{n_words} words are in the vocabulary and are used for prediction'
+                    f'{n_words} of the words are in vocabulary and are used for prediction'
                 ])
-                plot = get_bar_plot(predictions)
+                plot = get_bar_plot(predictions, personality)
+                style['display'] = 'block'
+                style['height'] = 400
             except FileNotFoundError:
                 results = html.P(['Unable to display results. Source files containing model not found'])
             except Exception as e:
                 results = html.P([f'Error: {e}'])
-        return results, plot
+        return results, plot, style
 
     # @app.callback(Output('placeholder', 'children'),
     #               [Input('button_music', 'n_clicks')])
@@ -449,8 +451,7 @@ def register_callbacks(app, print_function):
                 config={
                     'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
                                                'autoScale2d', 'resetScale2d', 'toggleSpikelines',
-                                               'hoverClosestCartesian',
-                                               'hoverCompareCartesian'],
+                                               'hoverClosestCartesian', 'hoverCompareCartesian'],
                 },
                 style={
                     'margin-top': '15vh',
