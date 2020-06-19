@@ -8,6 +8,7 @@ import scipy
 
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_score
@@ -16,6 +17,58 @@ from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKF
 # import nltk
 # nltk.download('punkt')
 # nltk.download('wordnet')
+
+
+# Variables
+mbti_cols = ['EI', 'SN', 'TF', 'JP']
+path_data = 'sample_data/mbti.csv'
+path_save_data = 'sample_data/mbti_clean.csv'
+path_vect = 'data/vocabulary.pkl'
+path_model = []
+for col in mbti_cols:
+    path_model.append(f'data/model_{col}.pkl')
+non_sw = [
+    'ain',
+    'aint',
+    'aren',
+    'arent',
+    'cant',
+    'couldn',
+    'coulnt',
+    'dont',
+    'arent',
+    'didn',
+    'didnt',
+    'doesn',
+    'doesnt',
+    'hadn',
+    'hadnt',
+    'hasn',
+    'hasnt',
+    'haven',
+    'havent',
+    'isn',
+    'isnt',
+    'mightn',
+    'mightnt',
+    'mustn',
+    'mustnt',
+    'needn',
+    'neednt',
+    'not',
+    'shan',
+    'shant',
+    'shouldn',
+    'shouldnt',
+    'wasn',
+    'wasnt',
+    'weren',
+    'werent',
+    'won',
+    'wont',
+    'wouldn',
+    'wouldnt'
+]
 
 
 def clean_text(text, lemma=WordNetLemmatizer()):
@@ -65,7 +118,7 @@ def clean_text(text, lemma=WordNetLemmatizer()):
     return text
 
 
-def load_and_save_data(mbti_cols):
+def load_and_save_data(mbti_cols, path_data, path_save_data):
     """Reads in data, performs preprocessing and saves data
     If saved data is present, directly read in the saved data
 
@@ -79,12 +132,15 @@ def load_and_save_data(mbti_cols):
 
     Args:
         mbti_cols (list): name of new columns generated
+        path_data (str): location and name of input data
+        path_save_data (str): location and name of saved data
 
     Returns:
         (pandas DataFrame): processed data
     """
-    if not os.path.isfile('sample_data/mbti_clean.csv'):
-        df = pd.read_csv('sample_data/mbti.csv')
+    if not os.path.isfile(path_save_data):
+        print('Read and save data file')
+        df = pd.read_csv(path_data)
 
         # Insert new columns as indicator for each mbti category
         for idx, col in enumerate(mbti_cols):
@@ -94,9 +150,10 @@ def load_and_save_data(mbti_cols):
         df['posts_clean'] = df['posts'].apply(clean_text)
 
         # Save data
-        df.to_csv('sample_data/mbti_clean.csv', index=False)
+        df.to_csv(path_save_data, index=False)
     else:
-        df = pd.read_csv('sample_data/mbti_clean.csv')
+        print('Load saved data file')
+        df = pd.read_csv(path_save_data)
 
     return df
 
@@ -122,34 +179,41 @@ def get_train_test(X, y, test_size=0.2, random_state=0):
     return X_train, X_test, y_train, y_test
 
 
-def save_vectorizer(corpus, params=None):
+def save_vectorizer(corpus, path_vect, params=None):
     """Vectorize corpus and saves vectorizer
 
     Args:
         corpus (pandas Series): input text corpus (training input)
+        path_vect (str): location and file name of saved vectorizer
         params (dict): specifies parameters for vectorizer, defaults to None
 
     Returns:
         (sklearn CountVectorizer)
     """
+    print('Initialize and save vectorizer')
+    sw = [clean_text(word) for word in stopwords.words('english')]
+    sw = list(set(sw) - set(non_sw))
     if params is None:
-        params = dict(ngram_range=(1, 3), max_df=0.9, min_df=0.1, max_features=None, stop_words='english')
+        params = dict(ngram_range=(1, 3), max_df=0.95, min_df=0.05, max_features=None, stop_words=sw)
     model = CountVectorizer(**params)
     vect = model.fit(corpus)
     print(f'Vocabulary size: {len(vect.get_feature_names())}')
-    # pickle.dump(vect, open('data/vect.pkl', 'wb'))
-    pickle.dump(vect.get_feature_names(), open('data/vocabulary.pkl', 'wb'))
+    # pickle.dump(vect, open(path_vect, 'wb'))
+    pickle.dump(vect.get_feature_names(), open(path_vect, 'wb'))
     return vect
 
 
-def load_vectorizer():
+def load_vectorizer(path_vect):
     """Load and return saved vectorizer
+
+    Args:
+        path_vect (str): location and file name of saved vectorizer
 
     Returns:
         (sklearn CountVectorizer)
     """
-    # vect = pd.read_pickle('data/vect.pkl')
-    vocabulary = pd.read_pickle('data/vocabulary.pkl')
+    # vect = pd.read_pickle(path_vect)
+    vocabulary = pd.read_pickle(path_vect)
     vect = CountVectorizer(vocabulary=vocabulary)
     return vect
 
@@ -173,25 +237,26 @@ def get_model(X_train, y_train, params=None):
     return model
 
 
-def get_gridsearch_model(X_train, y_train, model_name):
+def get_gridsearch_model(X_train, y_train, path_model):
     """Get, save and return best model after grid search and with stratified cross validation
 
     Args:
         X_train (pandas DataFrame): training input
         y_train (pandas Series): training output
-        model_name (str): name of model to save
+        path_model (str): location and file name of saved model
 
     Returns:
         (model)
     """
-    scale_pos_weight = len(y_train) / sum(y_train)
+    scale_pos_weight1 = len(y_train) / sum(y_train)
+    scale_pos_weight2 = (len(y_train) - sum(y_train)) / sum(y_train)
     clf = LGBMClassifier()
     values = {'n_estimators': [20, 50, 100, 200],
               'max_depth': [3, 5],
               'num_leaves': [50, 100],
               'n_jobs': [8],
               'learning_rate': [0.1, 0.2, 0.3],
-              'scale_pos_weight': [scale_pos_weight]
+              'scale_pos_weight': [scale_pos_weight1, scale_pos_weight2]
               }
     grid = GridSearchCV(clf,
                         param_grid=values,
@@ -199,24 +264,22 @@ def get_gridsearch_model(X_train, y_train, model_name):
                         scoring='f1')
     grid.fit(X_train, y_train)
     print('Best parameters: ', grid.best_params_)
-    pickle.dump(grid.best_estimator_, open(f'data/model_{model_name}.pkl', 'wb'))
+    pickle.dump(grid.best_estimator_, open(path_model, 'wb'))
     return grid.best_estimator_
 
 
 def train_pipeline():
     """Training pipeline for loading, preprocessing and model training
     """
-    indicator_cols = ['EI', 'SN', 'TF', 'JP']
-    df = load_and_save_data(indicator_cols)
-    X_train, X_test, y_train, y_test = get_train_test(X=df[['posts_clean']],
-                                                      y=df[indicator_cols])
-    # vect = save_vectorizer(X_train['posts_clean'])
-    vect = load_vectorizer()
+    df = load_and_save_data(mbti_cols, path_data, path_save_data)
+    X_train, X_test, y_train, y_test = get_train_test(df[['posts_clean']], df[mbti_cols])
+    vect = save_vectorizer(X_train['posts_clean'], path_vect)
+    # vect = load_vectorizer(path_vect)
     vector_train = vect.transform(X_train['posts_clean']).astype(np.float64)
     vector_test = vect.transform(X_test['posts_clean']).astype(np.float64)
-    for idx, col in enumerate(indicator_cols):
+    for idx, col in enumerate(mbti_cols):
         print(f'Predicting for: {col}')
-        model = get_gridsearch_model(vector_train, y_train[col], col)
+        model = get_gridsearch_model(vector_train, y_train[col], path_model[idx])
         y_pred = model.predict(vector_test)
         print(confusion_matrix(y_test[col], y_pred))
         print(f'Accuracy for {col}: ', accuracy_score(y_test[col], y_pred))
@@ -232,58 +295,56 @@ def test_pipeline(input_text):
         input_text (str): input text
 
     Returns:
-        2-element tuple
+        3-element tuple
 
         - n_words (int): number of words in text that are in vocabulary
-        - results (list): list of model prediction probabilities
+        - personality (str): MBTI personality results, to be shown in title of bar plot
+        - predictions (list): list of model prediction probabilities
     """
-    indicator_cols = ['EI', 'SN', 'TF', 'JP']
     clean_input = clean_text(input_text)
-    vect = load_vectorizer()
+    vect = load_vectorizer(path_vect)
     vector_input = vect.transform(pd.Series(clean_input)).astype(np.float64)
     n_words = scipy.sparse.csr_matrix.count_nonzero(vector_input)
+    personality = ''
     predictions = []
-    for col in indicator_cols:
-        m = pd.read_pickle(f'data/model_{col}.pkl')
+    for idx, _ in enumerate(mbti_cols):
+        m = pd.read_pickle(path_model[idx])
         y_pred = m.predict_proba(vector_input)
         predictions.append(y_pred[0])
 
-    # Decode results
-    personality = ''
-    for idx, r in enumerate(predictions):
-        if r[0] >= 0.5:
-            personality += indicator_cols[idx][1]
+        # Decode results
+        if y_pred[0][0] >= 0.5:
+            personality += mbti_cols[idx][1]
         else:
-            personality += indicator_cols[idx][0]
+            personality += mbti_cols[idx][0]
+
     return n_words, personality, predictions
 
 
-def get_bar_plot(results, personality):
+def get_bar_plot(predictions, personality):
     """Get figure for plot
 
     Adds plotly.graph_objects charts for bar plot
 
     Args:
-        results (list): List of probabilities for each personality trait
-        personality (str): MBTI personality results, to be shown in title
+        predictions (list): list of model prediction probabilities
+        personality (str): MBTI personality results, to be shown in title of bar plot
 
     Returns:
         (dict)
     """
     y_data = ['Introversion-Extroversion', 'Intuition-Sensing', 'Feeling-Thinking', 'Perceiving-Judging']
-    x_data_0 = [r[0] for r in results]
-    x_data_1 = [r[1] for r in results]
+    x_data_0 = [r[0] for r in predictions]
+    x_data_1 = [r[1] for r in predictions]
     data = [go.Bar(
         y=y_data,
         x=x_data_0,
-        # hovertext=['Introversion', 'Intuition', 'Feeling', 'Perceiving'],
         hoverinfo='none',
         orientation='h',
         marker_color='#BE9B89',
     ), go.Bar(
         y=y_data,
         x=x_data_1,
-        # hovertext=['Extroversion', 'Sensing', 'Thinking', 'Judging'],
         hoverinfo='none',
         orientation='h',
         marker_color='#D6CAC7',
