@@ -265,6 +265,7 @@ def get_bar_plot(results, personality):
 
     Args:
         results (list): List of probabilities for each personality trait
+        personality (str): MBTI personality results, to be shown in title
 
     Returns:
         (dict)
