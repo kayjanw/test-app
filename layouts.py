@@ -38,7 +38,7 @@ def app_1():
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        dcc.Tab(label='MBTI', value='tab-5', className='custom-tab',
+                        dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
                                 selected_className='custom-tab-selected'),
                     ],
                     colors={
@@ -609,9 +609,9 @@ def changes_tab():
 
 def mbti_tab():
     return html.Div([
-        header('MBTI', 'Predict MBTI with writing style'),
-        html.P('Users can know their MBTI personality based on matching their writing content, specifically their '
-               'choice of words, to other users in an existing database'),
+        header('MBTI Personality Test', 'Predict MBTI with writing style'),
+        html.P('Users can know their MBTI personality based on comparing their writing content, specifically their '
+               'choice and phrasing of words, to other users in an existing database of over 8000 people'),
         html.Details([
             dcc.Markdown('''
                 ###### Input Distribution
