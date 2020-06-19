@@ -638,25 +638,22 @@ def mbti_tab():
 
                 > The model used is LightGBM model and 4 different models are trained for each personality trait
 
-                > GridSearch is used to tune each model's hyperparameters based on best f1 score, and is used with
-                stratified cross validation to handle imbalanced class and prevent overfitting
+                > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
+                > is used with stratified cross validation to handle imbalanced data
 
                 ###### Results
                 > To interpret the results, accuracy is probability of being correct,
-                > precision is probability of being correct when prediction is minority class and
-                > recall is probability of being correct when example belongs to minority class.
-                > F1 score is used to balance between precision and recall, since they are conflicting metrics
-                > - i.e. 70% accuracy means model is correct 70% of the time
-                > - i.e. 70% precision means model is correct 70% of the time when prediction classifies example as
-                minority case
-                > - i.e. 70% recall means model is able to correctly classify actual minority case correctly 70% of
-                the time
+                > and balanced accuracy is raw accuracy where each sample is weighted according to the inverse 
+                > prevalence of its true class, which avoids inflated performance estimates on imbalanced data
+                > * i.e. 70% accuracy means model is correct 70% of the time
+                > * i.e. If model is able to correctly classify actual majority case 70% of the time, and
+                > correctly classify actual minority case 30% of the time, it achieves a balanced accuracy of 50%
 
                 > The results are
-                > - Introversion-Extroversion Model has Accuracy: 65.4%, F1: 0.463
-                > - Intuition-Sensing Model has Accuracy: 69.3%, F1: 0.338
-                > - Thinking-Feeling Model has Accuracy: 72.4%, F1: 0.748
-                > - Judging-Perceiving Model has Accuracy: 52.8%, F1: 0.600
+                > * Introversion-Extroversion Model has Accuracy: 64.1% and Balanced Accuracy: 63.4%
+                > * Intuition-Sensing Model has Accuracy: 66.5% and Balanced Accuracy: 63.7%
+                > * Thinking-Feeling Model has Accuracy: 75.6% and Balanced Accuracy: 75.7%
+                > * Judging-Perceiving Model has Accuracy: 64.1% and Balanced Accuracy: 63.1%
                 > * Please do not take the results too seriously
                 ''')
         ],
