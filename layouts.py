@@ -610,12 +610,14 @@ def changes_tab():
 def mbti_tab():
     return html.Div([
         header('MBTI Personality Test', 'Predict MBTI with writing style'),
-        html.P('Users can know their MBTI personality based on comparing their writing content, specifically their '
+        html.P('Users can find out their MBTI personality based on comparing their writing content, specifically their '
                'choice and phrasing of words, to other users in an existing database of over 8000 people'),
         html.Details([
+            html.Summary('Click here for more details about the data, processing and modelling steps'),
             dcc.Markdown('''
                 ###### Input Distribution
-                > Input data has distribution of
+                > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
+                has distribution
                 > - 77% introvert (vs. 23% extrovert)
                 > - 86% intuition (vs. 14% sensing)
                 > - 54% feeling (vs. 46% thinking)
@@ -632,18 +634,18 @@ def mbti_tab():
                 ###### Modelling
                 > After processing the text, input data is split into 80% training and 20% testing data
 
-                > Training data has a vocabulary size of **772 words/bi-grams/tri-grams**
+                > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
 
                 > The model used is LightGBM model and 4 different models are trained for each personality trait
 
-                > GridSearch is used to tune the model hyperparameters based on best f1 score, and is used with
+                > GridSearch is used to tune each model's hyperparameters based on best f1 score, and is used with
                 stratified cross validation to handle imbalanced class and prevent overfitting
 
                 ###### Results
                 > To interpret the results, accuracy is probability of being correct,
                 > precision is probability of being correct when prediction is minority class and
                 > recall is probability of being correct when example belongs to minority class.
-                > F1 score is used to balance between precision and recall, since they are conflicting metrics.
+                > F1 score is used to balance between precision and recall, since they are conflicting metrics
                 > - i.e. 70% accuracy means model is correct 70% of the time
                 > - i.e. 70% precision means model is correct 70% of the time when prediction classifies example as
                 minority case
@@ -651,10 +653,10 @@ def mbti_tab():
                 the time
 
                 > The results are
-                > - Introversion-Extroversion Model has Accuracy: 65.5%, F1: 0.469
-                > - Intuition-Sensing Model has Accuracy: 65.5%, F1: 0.340
-                > - Thinking-Feeling Model has Accuracy: 71.2%, F1: 0.738
-                > - Judging-Perceiving Model has Accuracy: 55.7%, F1: 0.602
+                > - Introversion-Extroversion Model has Accuracy: 65.4%, F1: 0.463
+                > - Intuition-Sensing Model has Accuracy: 69.3%, F1: 0.338
+                > - Thinking-Feeling Model has Accuracy: 72.4%, F1: 0.748
+                > - Judging-Perceiving Model has Accuracy: 52.8%, F1: 0.600
                 > * Please do not take the results too seriously
                 ''')
         ],
