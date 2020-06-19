@@ -11,7 +11,7 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_score
+from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, f1_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 
 # import nltk
@@ -261,7 +261,7 @@ def get_gridsearch_model(X_train, y_train, path_model):
     grid = GridSearchCV(clf,
                         param_grid=values,
                         cv=StratifiedKFold(3),
-                        scoring='f1')
+                        scoring='balanced_accuracy')
     grid.fit(X_train, y_train)
     print('Best parameters: ', grid.best_params_)
     pickle.dump(grid.best_estimator_, open(path_model, 'wb'))
@@ -273,8 +273,8 @@ def train_pipeline():
     """
     df = load_and_save_data(mbti_cols, path_data, path_save_data)
     X_train, X_test, y_train, y_test = get_train_test(df[['posts_clean']], df[mbti_cols])
-    vect = save_vectorizer(X_train['posts_clean'], path_vect)
-    # vect = load_vectorizer(path_vect)
+    # vect = save_vectorizer(X_train['posts_clean'], path_vect)
+    vect = load_vectorizer(path_vect)
     vector_train = vect.transform(X_train['posts_clean']).astype(np.float64)
     vector_test = vect.transform(X_test['posts_clean']).astype(np.float64)
     for idx, col in enumerate(mbti_cols):
@@ -283,7 +283,7 @@ def train_pipeline():
         y_pred = model.predict(vector_test)
         print(confusion_matrix(y_test[col], y_pred))
         print(f'Accuracy for {col}: ', accuracy_score(y_test[col], y_pred))
-        print(f'Recall for {col}: ', recall_score(y_test[col], y_pred))
+        print(f'Balanced accuracy score for {col}: ',  balanced_accuracy_score(y_test[col], y_pred))
         print(f'F1 for {col}: ', f1_score(y_test[col], y_pred))
         print()
 
