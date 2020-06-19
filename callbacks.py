@@ -405,6 +405,8 @@ def register_callbacks(app, print_function):
                 plot = get_bar_plot(predictions)
             except FileNotFoundError:
                 results = html.P(['Unable to display results. Source files containing model not found'])
+            except Exception as e:
+                results = html.P([f'Error: {e}'])
         return results, plot
 
     # @app.callback(Output('placeholder', 'children'),
