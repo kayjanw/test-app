@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKF
 
 import nltk
 nltk.download('punkt')
-# nltk.download('wordnet')
+nltk.download('wordnet')
 
 
 def clean_text(text, lemma=WordNetLemmatizer()):
