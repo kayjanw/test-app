@@ -8,16 +8,15 @@ import scipy
 
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import confusion_matrix, accuracy_score, recall_score, f1_score, balanced_accuracy_score
+from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 
 # import nltk
 # nltk.download('punkt')
 # nltk.download('wordnet')
-
 
 # Variables
 mbti_cols = ['EI', 'SN', 'TF', 'JP']
@@ -30,23 +29,33 @@ for col in mbti_cols:
 non_sw = [
     'ain',
     'aint',
+    'are',
     'aren',
     'arent',
+    'can',
     'cant',
+    'could',
     'couldn',
     'coulnt',
     'dont',
+    'are',
     'arent',
+    'did',
     'didn',
     'didnt',
+    'does',
     'doesn',
     'doesnt',
+    'had',
     'hadn',
     'hadnt',
+    'has',
     'hasn',
     'hasnt',
+    'have',
     'haven',
     'havent',
+    'is',
     'isn',
     'isnt',
     'mightn',
@@ -62,10 +71,12 @@ non_sw = [
     'shouldnt',
     'wasn',
     'wasnt',
+    'were',
     'weren',
     'werent',
     'won',
     'wont',
+    'would',
     'wouldn',
     'wouldnt'
 ]
@@ -295,16 +306,14 @@ def test_pipeline(input_text):
         input_text (str): input text
 
     Returns:
-        3-element tuple
+        2-element tuple
 
-        - n_words (int): number of words in text that are in vocabulary
         - personality (str): MBTI personality results, to be shown in title of bar plot
         - predictions (list): list of model prediction probabilities
     """
     clean_input = clean_text(input_text)
     vect = load_vectorizer(path_vect)
     vector_input = vect.transform(pd.Series(clean_input)).astype(np.float64)
-    n_words = scipy.sparse.csr_matrix.count_nonzero(vector_input)
     personality = ''
     predictions = []
     for idx, _ in enumerate(mbti_cols):
@@ -318,7 +327,24 @@ def test_pipeline(input_text):
         else:
             personality += mbti_cols[idx][0]
 
-    return n_words, personality, predictions
+    return personality, predictions
+
+
+def get_num_words(input_text):
+    """Get number of input words in vocabulary
+
+    Args:
+        input_text (str): input text
+
+    Returns:
+        (int)
+    """
+    wordnet.ensure_loaded()
+    clean_input = clean_text(input_text)
+    vect = load_vectorizer(path_vect)
+    vector_input = vect.transform(pd.Series(clean_input)).astype(np.float64)
+    n_words = scipy.sparse.csr_matrix.count_nonzero(vector_input)
+    return n_words
 
 
 def get_bar_plot(predictions, personality):

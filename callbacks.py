@@ -7,7 +7,7 @@ from components.change_calculator import compute_change, get_scatter_plot, compu
     get_line_plot, get_box_plot
 from components.helper import violin_plot, print_callback, get_summary_statistics, decode_df, update_when_upload, \
     result_download_button
-from components.mbti import test_pipeline, get_bar_plot
+from components.mbti import get_num_words, test_pipeline, get_bar_plot
 from components.trip_planner import remove_last_point_on_table, add_new_point_on_table, get_style_table, \
     get_map_from_table, optimiser_pipeline
 from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab
@@ -375,12 +375,28 @@ def register_callbacks(app, print_function):
             figure['data'][trace_index]['opacity'] = 1
         return figure
 
-    @ app.callback([Output('mbti-results', 'children'),
-                    Output('graph-mbti', 'figure'),
-                    Output('div-graph-mbti', 'style')],
-                   [Input('button-mbti', 'n_clicks')],
-                   [State('input-mbti', 'value'),
-                    State('div-graph-mbti', 'style')])
+    @app.callback(Output('text-mbti-words', 'children'),
+                  [Input('input-mbti', 'value')])
+    def update_mbti_words(input_text):
+        """Update number of input words in vocabulary
+
+        Args:
+            input_text (str): input text
+
+        Returns:
+            (str)
+        """
+        try:
+            n_words = get_num_words(input_text)
+            return f'{n_words} word(s) in vocabulary'
+        except Exception as e:
+            return f'Error loading number of word(s). Error message: {e}'
+
+    @app.callback([Output('graph-mbti', 'figure'),
+                   Output('graph-mbti', 'style')],
+                  [Input('button-mbti', 'n_clicks')],
+                  [State('input-mbti', 'value'),
+                   State('graph-mbti', 'style')])
     def update_mbti_result(trigger, input_text, style):
         """Update results of mbti personality results and graph
 
@@ -396,15 +412,11 @@ def register_callbacks(app, print_function):
             - (dict): graphical result of mbti model
             - (dict): updated style of graphical result of mbti model
         """
-        result = []
         plot = {}
         style['display'] = 'none'
         if trigger:
             try:
-                n_words, personality, predictions = test_pipeline(input_text)
-                result = html.P([
-                    f'{n_words} of the words are in vocabulary and are used for prediction'
-                ])
+                personality, predictions = test_pipeline(input_text)
                 plot = get_bar_plot(predictions, personality)
                 style['display'] = 'block'
                 style['height'] = 400
@@ -412,7 +424,7 @@ def register_callbacks(app, print_function):
                 result = html.P(['Unable to display results. Source files containing model not found'])
             except Exception as e:
                 result = html.P([f'Error: {e}'])
-        return result, plot, style
+        return plot, style
 
     # @app.callback(Output('placeholder', 'children'),
     #               [Input('button_music', 'n_clicks')])
