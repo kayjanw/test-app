@@ -218,7 +218,7 @@
 <dl class="py function">
 <dt id="components.mbti.get_gridsearch_model">
 <code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_gridsearch_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">path_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_gridsearch_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get, save and return best model after grid search and with stratified cross validation</p>
+<dd><p>Train, save and return best model after grid search and with stratified cross validation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -235,15 +235,11 @@
 
 <dl class="py function">
 <dt id="components.mbti.get_model">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get model after fitting</p>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get saved best model after grid search and with stratified cross validation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) -- training input</p></li>
-<li><p><strong>y_train</strong> (<em>pandas Series</em>) -- training output</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) -- specifies parameters for model, defaults to None</p></li>
-</ul>
+<dd class="field-odd"><p><strong>path_model</strong> (<em>str</em>) -- location and file name of saved model</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>(model)</p>
@@ -379,8 +375,16 @@ If saved data is present, directly read in the saved data</p>
 
 <dl class="py function">
 <dt id="components.mbti.train_pipeline">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">train_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.train_pipeline" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">train_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_vect</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">train_model</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.train_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training pipeline for loading, preprocessing and model training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_vect</strong> (<em>bool</em>) -- indicates whether to retrain vectorizer, defaults to False</p></li>
+<li><p><strong>train_model</strong> (<em>bool</em>) -- indicates whether to retrain models, defaults to False</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
