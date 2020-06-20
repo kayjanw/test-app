@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="Python" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="Python" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating Dash Application &mdash; utils.py Project 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Change Calculator" href="../components/change-calculator.html" />
+    <link rel="prev" title="Creating Virtual Environment" href="venv.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> utils.py Project
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Deployment Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="venv.html">Creating Virtual Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="venv.html#creating-ve-using-anaconda">Creating VE using Anaconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="venv.html#creating-ve-using-shell-command">Creating VE using Shell Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="venv.html#creating-ve-using-python-code">Creating VE using Python Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating Dash Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-dash">Installing Dash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#make-your-first-dash-app">Make your first Dash app</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../components/change-calculator.html">Change Calculator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/helper.html">Helper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/mbti.html">MBTI Personality Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/trip-planner.html">Trip Planner</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">utils.py Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Creating Dash Application</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/deploy/dash.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-dash-application">
+<h1>Creating Dash Application<a class="headerlink" href="#creating-dash-application" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-dash">
+<h2>Installing Dash<a class="headerlink" href="#installing-dash" title="Permalink to this headline">¶</a></h2>
+<p>Dash package is distributed on PyPI and can be installed with pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dash</span>
+</pre></div>
+</div>
+<p>This should also install other dash packages such as <code class="docutils literal notranslate"><span class="pre">dash-core-components</span></code> and <code class="docutils literal notranslate"><span class="pre">dash-html-components</span></code></p>
+</div>
+<div class="section" id="make-your-first-dash-app">
+<h2>Make your first Dash app<a class="headerlink" href="#make-your-first-dash-app" title="Permalink to this headline">¶</a></h2>
+<p>Create a python file named <code class="docutils literal notranslate"><span class="pre">app.py</span></code> and get started!</p>
+<p>Dash has underlying Flask app that is available by calling <code class="docutils literal notranslate"><span class="pre">app.server</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dash</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">server</span>
+</pre></div>
+</div>
+<p>Alternatively, Flask app instance can be passed into Dash.
+This implementation makes it easier to use Flask endpoints.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dash</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are some other app configurations that are recommended to have.
+Layout can be rendered with <code class="docutils literal notranslate"><span class="pre">dash_core_components</span></code> and <code class="docutils literal notranslate"><span class="pre">dash_html_components</span></code> components.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
+<span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">suppress_callback_exceptions</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># suppresses initial callback error</span>
+<span class="n">app</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">serve_locally</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># reads in CSS from local files (optional, defaults to True anyway)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">scripts</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">serve_locally</span> <span class="o">=</span> <span class="kc">True</span>         <span class="c1"># reads in scripts from local files (optional, defaults to True anyway)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+    <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Location</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;page-content&#39;</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">])</span>
+    <span class="p">])</span>                                          <span class="c1"># your page content!</span>
+</pre></div>
+</div>
+<p>Every action on the web application, i.e. button click or dropdown selection can trigger a callback action.
+Remember to give the widget item an <code class="docutils literal notranslate"><span class="pre">id</span></code> so that the callback knows which item to refer to!
+One example of a callback can be as follows</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash.dependencies</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;page-content&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+              <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;pathname&#39;</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">display_page</span><span class="p">(</span><span class="n">pathname</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;This is page: </span><span class="si">{</span><span class="n">pathname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Finally, write the line of code that will execute the application!
+Users may set <code class="docutils literal notranslate"><span class="pre">debug=False</span></code> in production environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The full list of web widgets such as dropdowns, checklists, sliders etc. and more usage examples can be found on
+<a class="reference external" href="https://dash.plotly.com/">dash</a> documentation website</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../components/change-calculator.html" class="btn btn-neutral float-right" title="Change Calculator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="venv.html" class="btn btn-neutral float-left" title="Creating Virtual Environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kay Jan WONG
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
