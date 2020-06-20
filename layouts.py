@@ -634,12 +634,15 @@ def mbti_tab():
                 ###### Modelling
                 > After processing the text, input data is split into 80% training and 20% testing data
 
-                > Training data has a vocabulary size of **1869 words/bi-grams/tri-grams**
+                > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
 
                 > The model used is LightGBM model and 4 different models are trained for each personality trait
 
                 > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
                 > is used with stratified cross validation to handle imbalanced data
+
+                > Each model, after hyperparameter tuning, is then retrained on the entire training data and scored on
+                > the held out testing data
 
                 ###### Results
                 > To interpret the results, accuracy is probability of being correct,
@@ -651,9 +654,9 @@ def mbti_tab():
 
                 > The results are
                 > * Introversion-Extroversion Model has Accuracy: 64.1% and Balanced Accuracy: 63.4%
-                > * Intuition-Sensing Model has Accuracy: 66.5% and Balanced Accuracy: 63.7%
+                > * Intuition-Sensing Model has Accuracy: 68.1% and Balanced Accuracy: 64.1%
                 > * Thinking-Feeling Model has Accuracy: 75.6% and Balanced Accuracy: 75.7%
-                > * Judging-Perceiving Model has Accuracy: 64.1% and Balanced Accuracy: 63.1%
+                > * Judging-Perceiving Model has Accuracy: 65.1% and Balanced Accuracy: 64.2%
                 > * Please do not take the results too seriously
                 ''')
         ],
