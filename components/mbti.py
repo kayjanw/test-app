@@ -29,33 +29,22 @@ for col in mbti_cols:
 non_sw = [
     'ain',
     'aint',
-    'are',
     'aren',
     'arent',
-    'can',
     'cant',
-    'could',
     'couldn',
     'coulnt',
     'dont',
-    'are',
-    'arent',
-    'did',
     'didn',
     'didnt',
-    'does',
     'doesn',
     'doesnt',
-    'had',
     'hadn',
     'hadnt',
-    'has',
     'hasn',
     'hasnt',
-    'have',
     'haven',
     'havent',
-    'is',
     'isn',
     'isnt',
     'mightn',
@@ -71,12 +60,10 @@ non_sw = [
     'shouldnt',
     'wasn',
     'wasnt',
-    'were',
     'weren',
     'werent',
     'won',
     'wont',
-    'would',
     'wouldn',
     'wouldnt'
 ]
@@ -208,7 +195,6 @@ def save_vectorizer(corpus, path_vect, params=None):
         params = dict(ngram_range=(1, 3), max_df=0.95, min_df=0.05, max_features=None, stop_words=sw)
     model = CountVectorizer(**params)
     vect = model.fit(corpus)
-    print(f'Vocabulary size: {len(vect.get_feature_names())}')
     # pickle.dump(vect, open(path_vect, 'wb'))
     pickle.dump(vect.get_feature_names(), open(path_vect, 'wb'))
     return vect
@@ -229,27 +215,8 @@ def load_vectorizer(path_vect):
     return vect
 
 
-def get_model(X_train, y_train, params=None):
-    """Get model after fitting
-
-    Args:
-        X_train (pandas DataFrame): training input
-        y_train (pandas Series): training output
-        params (dict): specifies parameters for model, defaults to None
-
-    Returns:
-        (model)
-    """
-    if params is None:
-        params = dict(n_estimators=50, max_depth=3, nthread=8, learning_rate=0.2)
-    params['scale_pos_weight'] = len(y_train) / sum(y_train)
-    model = LGBMClassifier(**params)
-    model.fit(X_train, y_train)
-    return model
-
-
 def get_gridsearch_model(X_train, y_train, path_model):
-    """Get, save and return best model after grid search and with stratified cross validation
+    """Train, save and return best model after grid search and with stratified cross validation
 
     Args:
         X_train (pandas DataFrame): training input
@@ -275,27 +242,91 @@ def get_gridsearch_model(X_train, y_train, path_model):
                         scoring='balanced_accuracy')
     grid.fit(X_train, y_train)
     print('Best parameters: ', grid.best_params_)
-    pickle.dump(grid.best_estimator_, open(path_model, 'wb'))
-    return grid.best_estimator_
+
+    # Retrain model on entire data
+    params = grid.best_estimator_.get_params()
+    model = LGBMClassifier(**params)
+    model.fit(X_train, y_train)
+    pickle.dump(model, open(path_model, 'wb'))
+    return model
 
 
-def train_pipeline():
+def get_model(path_model):
+    """Get saved best model after grid search and with stratified cross validation
+
+    Args:
+        path_model (str): location and file name of saved model
+
+    Returns:
+        (model)
+    """
+    EI_model = {
+        'learning_rate': 0.1,
+        'max_depth': 3,
+        'n_estimators': 200,
+        'n_jobs': 8,
+        'num_leaves': 50,
+        'scale_pos_weight': 4.34021263289556
+    }
+    SN_model = {
+        'learning_rate': 0.1,
+        'max_depth': 3,
+        'n_estimators': 50,
+        'n_jobs': 8,
+        'num_leaves': 50,
+        'scale_pos_weight': 6.244258872651357
+    }
+    TF_model = {
+        'learning_rate': 0.1,
+        'max_depth': 5,
+        'n_estimators': 200,
+        'n_jobs': 8,
+        'num_leaves': 50,
+        'scale_pos_weight': 1.1789638932496076
+    }
+    JP_model = {
+        'learning_rate': 0.1,
+        'max_depth': 3,
+        'n_estimators': 100,
+        'n_jobs': 8,
+        'num_leaves': 50,
+        'scale_pos_weight': 1.5254730713245996
+    }
+    model = pd.read_pickle(path_model)
+    return model
+
+
+def train_pipeline(train_vect=False, train_model=False):
     """Training pipeline for loading, preprocessing and model training
+
+    Args:
+        train_vect (bool): indicates whether to retrain vectorizer, defaults to False
+        train_model (bool): indicates whether to retrain models, defaults to False
     """
     df = load_and_save_data(mbti_cols, path_data, path_save_data)
     X_train, X_test, y_train, y_test = get_train_test(df[['posts_clean']], df[mbti_cols])
-    # vect = save_vectorizer(X_train['posts_clean'], path_vect)
-    vect = load_vectorizer(path_vect)
+    if train_vect:
+        vect = save_vectorizer(X_train['posts_clean'], path_vect)
+    else:
+        vect = load_vectorizer(path_vect)
+    print(f'Vocabulary size: {len(vect.get_feature_names())}')
     vector_train = vect.transform(X_train['posts_clean']).astype(np.float64)
     vector_test = vect.transform(X_test['posts_clean']).astype(np.float64)
     for idx, col in enumerate(mbti_cols):
         print(f'Predicting for: {col}')
-        model = get_gridsearch_model(vector_train, y_train[col], path_model[idx])
+        if train_model:
+            model = get_gridsearch_model(vector_train, y_train[col], path_model[idx])
+        else:
+            model = get_model(path_model[idx])
         y_pred = model.predict(vector_test)
+
+        # Metric
+        metric_acc = np.round(accuracy_score(y_test[col], y_pred) * 100, 1)
+        metric_bal_acc = np.round(balanced_accuracy_score(y_test[col], y_pred)*100, 1)
+        metric_f1 = np.round(f1_score(y_test[col], y_pred), 3)
         print(confusion_matrix(y_test[col], y_pred))
-        print(f'Accuracy for {col}: ', accuracy_score(y_test[col], y_pred))
-        print(f'Balanced accuracy score for {col}: ',  balanced_accuracy_score(y_test[col], y_pred))
-        print(f'F1 for {col}: ', f1_score(y_test[col], y_pred))
+        print(f'For {col}: Accuracy: {metric_acc}% and Balanced Accuracy: {metric_bal_acc}%')
+        print(f'F1 for {col}: {metric_f1}')
         print()
 
 
@@ -317,7 +348,7 @@ def test_pipeline(input_text):
     personality = ''
     predictions = []
     for idx, _ in enumerate(mbti_cols):
-        m = pd.read_pickle(path_model[idx])
+        m = get_model(path_model[idx])
         y_pred = m.predict_proba(vector_input)
         predictions.append(y_pred[0])
 
