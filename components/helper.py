@@ -60,7 +60,7 @@ def print_callback(print_function):
     """Decorator function to print callback on backend for debugging purposes
 
     Args:
-        print_function (bool): indicator to print callback
+        print_function (bool): indicates whether to print callback
 
     Returns:
         (function)
