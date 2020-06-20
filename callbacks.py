@@ -1,6 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import traceback
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import compute_change, get_scatter_plot, compute_changes, transpose_dataframe, \
@@ -420,10 +421,8 @@ def register_callbacks(app, print_function):
                 plot = get_bar_plot(predictions, personality)
                 style['display'] = 'block'
                 style['height'] = 400
-            except FileNotFoundError:
-                result = html.P(['Unable to display results. Source files containing model not found'])
             except Exception as e:
-                result = html.P([f'Error: {e}'])
+                print(traceback.print_exc())
         return plot, style
 
     # @app.callback(Output('placeholder', 'children'),
