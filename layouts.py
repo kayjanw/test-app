@@ -634,7 +634,7 @@ def mbti_tab():
                 ###### Modelling
                 > After processing the text, input data is split into 80% training and 20% testing data
 
-                > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
+                > Training data has a vocabulary size of **1869 words/bi-grams/tri-grams**
 
                 > The model used is LightGBM model and 4 different models are trained for each personality trait
 
@@ -668,13 +668,23 @@ def mbti_tab():
             html.Div([
                 dcc.Textarea(
                     id='input-mbti',
-                    value='Put in your text here, preferably more than 50 words and try not to use words that '
-                          'are too common or too complex!',
+                    value='',
+                    placeholder='Put in your text here, preferably more than 50 words and try not to use words that '
+                                'are too common or too complex!',
                     style={
                         'width': '100%',
                         'height': 300,
                         'resize': 'vertical'
                     },
+                ),
+                html.Div([
+                    html.P(
+                        id='text-mbti-words',
+                    ),
+                ],
+                    style={
+                        'float': 'right'
+                    }
                 ),
                 html.Button(
                     'OK',
@@ -690,7 +700,7 @@ def mbti_tab():
             ),
             # Right item
             html.Div([
-                html.Div(
+                dcc.Loading(
                     dcc.Graph(
                         id='graph-mbti',
                         config={
@@ -700,19 +710,8 @@ def mbti_tab():
                                                        'hoverClosestCartesian', 'hoverCompareCartesian'],
                         },
                         style={
+                            'display': 'none',
                             'height': '100%'
-                        }
-                    ),
-                    id='div-graph-mbti',
-                    style={
-                        'display': 'none',
-                    }
-                ),
-                dcc.Loading(
-                    html.Div(
-                        id='mbti-results',
-                        style={
-                            'text-align': 'left'
                         }
                     ),
                     type='circle',
