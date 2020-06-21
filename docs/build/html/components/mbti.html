@@ -83,6 +83,7 @@
             
               <p class="caption"><span class="caption-text">Deployment Documentation</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../deploy/changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deploy/venv.html">Creating Virtual Environment</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-anaconda">Creating VE using Anaconda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../deploy/venv.html#creating-ve-using-shell-command">Creating VE using Shell Command</a></li>
@@ -217,13 +218,13 @@
 
 <dl class="py function">
 <dt id="components.mbti.get_gridsearch_model">
-<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_gridsearch_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X_train</span></em>, <em class="sig-param"><span class="n">y_train</span></em>, <em class="sig-param"><span class="n">path_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_gridsearch_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">components.mbti.</code><code class="sig-name descname">get_gridsearch_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vector_train</span></em>, <em class="sig-param"><span class="n">y_train_series</span></em>, <em class="sig-param"><span class="n">path_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.mbti.get_gridsearch_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train, save and return best model after grid search and with stratified cross validation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) -- training input</p></li>
-<li><p><strong>y_train</strong> (<em>pandas Series</em>) -- training output</p></li>
+<li><p><strong>vector_train</strong> (<em>scipy csr_matrix</em>) -- vectorized training input</p></li>
+<li><p><strong>y_train_series</strong> (<em>pandas Series</em>) -- training output, one-column subset of y_train</p></li>
 <li><p><strong>path_model</strong> (<em>str</em>) -- location and file name of saved model</p></li>
 </ul>
 </dd>
