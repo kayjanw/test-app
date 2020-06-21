@@ -34,9 +34,9 @@ def app_1():
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Change calculator', value='tab-3', className='custom-tab',
+                        dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab',
                                 selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Change calculator 2', value='tab-4', className='custom-tab',
+                        dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab',
                                 selected_className='custom-tab-selected'),
                         dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
                                 selected_className='custom-tab-selected'),
@@ -641,8 +641,7 @@ def mbti_tab():
                 > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
                 > is used with stratified cross validation to handle imbalanced data
 
-                > Each model, after hyperparameter tuning, is then retrained on the entire training data and scored on
-                > the held out testing data
+                > Each model, after hyperparameter tuning, is then scored on the held out testing data
 
                 ###### Results
                 > To interpret the results, accuracy is probability of being correct,
