@@ -5,7 +5,9 @@ Creating Dash Application
 Installing Dash
 ------------------------
 
-Dash package is distributed on PyPI and can be installed with pip::
+Dash package is distributed on PyPI and can be installed with pip
+
+::
 
     pip install dash
 

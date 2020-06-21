@@ -13,8 +13,12 @@ Deployment Documentation
    :caption: Deployment Documentation
    :hidden:
 
+   deploy/changelog
    deploy/venv
    deploy/dash
+
+:doc:`deploy/changelog`
+    Changelog of ``utils.py`` Project
 
 :doc:`deploy/venv`
     Instructions on how to create a virtual environment

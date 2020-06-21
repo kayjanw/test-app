@@ -3,7 +3,7 @@ utils.py Project
 ***************************************
 
 This ``utils.py`` project aims to be a helper tool to automate repetitive data analysis tasks,
-or perform optimizations that are computationally expensive etc.
+or perform predictions and optimizations that are computationally expensive etc.
 This documentation comprises of deployment documentation and code documentation.
 
 
@@ -16,14 +16,19 @@ There are many other ways to structure your codes, but I find this implementatio
 
   project
   ├── assets
-  │   └── default_css.css
+  │   ├── default_css.css
+  │   └── etc (other .ico, .svg, .css files)
   ├── components
-  │   ├── change_calculator.py
   │   ├── helper.py
-  │   └── trip.py
+  │   └── etc (other .py files)
+  ├── data
+  │   ├── model.pkl
+  │   └── etc (other .pkl files)
   ├── docs
   │   ├── build
-  │   └── source
+  │   ├── source
+  │   ├── make.bat
+  │   └── Makefile
   ├── app.py
   ├── callbacks.py
   ├── layouts.py
