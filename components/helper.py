@@ -1,3 +1,6 @@
+"""This file contains helper functions that are used across multiple tabs
+"""
+
 import base64
 import dash
 import dash_core_components as dcc
