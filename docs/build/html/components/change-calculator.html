@@ -13,6 +13,8 @@
 
   
   
+    <link rel="shortcut icon" href="../_static/documentation-icon.svg"/>
+  
   
   
 
@@ -168,9 +170,13 @@
             
   <div class="section" id="module-components.change_calculator">
 <span id="change-calculator"></span><h1>Change Calculator<a class="headerlink" href="#module-components.change_calculator" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt id="components.change_calculator.compute_change">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">compute_change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">x_max</span></em>, <em class="sig-param"><span class="n">y_col</span></em>, <em class="sig-param"><span class="n">y_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.compute_change" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt id="components.change_calculator.ChangeCalculator">
+<em class="property">class </em><code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">ChangeCalculator</code><a class="headerlink" href="#components.change_calculator.ChangeCalculator" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ChangeCalculator object contains functions used for Change Calculator and Change Calculator 2 tab</p>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.compute_change">
+<code class="sig-name descname">compute_change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">x_max</span></em>, <em class="sig-param"><span class="n">y_col</span></em>, <em class="sig-param"><span class="n">y_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.compute_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute change between two periods</p>
 <p>Performs removing non-integer values, removing null rows and conversion of values to float, then adds in 'Change'
 column as difference between y_col and x_col</p>
@@ -190,9 +196,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.compute_changes">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">compute_changes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.compute_changes" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.compute_changes">
+<code class="sig-name descname">compute_changes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.compute_changes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute change between multiple periods</p>
 <p>Performs removing non-integer values, removing null rows and conversion of values to float</p>
 <dl class="field-list simple">
@@ -209,9 +215,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.convert_to_float">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">convert_to_float</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">col_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.convert_to_float" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.convert_to_float">
+<em class="property">static </em><code class="sig-name descname">convert_to_float</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">col_max</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.convert_to_float" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert values to float for column(s) in DataFrame, normalize column if necessary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -227,9 +233,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.get_box_plot">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_box_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_box_plot" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.get_box_plot">
+<em class="property">static </em><code class="sig-name descname">get_box_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.get_box_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
 <p>Adds plotly.graph_objects charts for box plot, visualizing summary statistics</p>
 <dl class="field-list simple">
@@ -250,9 +256,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.get_line_plot">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_line_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_line_plot" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.get_line_plot">
+<em class="property">static </em><code class="sig-name descname">get_line_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.get_line_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
 <p>Adds plotly.graph_objects charts for line plot</p>
 <dl class="field-list simple">
@@ -270,9 +276,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.get_parallel_coord">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_parallel_coord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_parallel_coord" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.get_parallel_coord">
+<em class="property">static </em><code class="sig-name descname">get_parallel_coord</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">list_of_tuples</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.get_parallel_coord" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
 <p>Adds plotly.graph_objects charts for parallel coordinate plot</p>
 <dl class="field-list simple">
@@ -294,9 +300,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.get_scatter_plot">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">get_scatter_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">y_col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.get_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.get_scatter_plot">
+<em class="property">static </em><code class="sig-name descname">get_scatter_plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">x_col</span></em>, <em class="sig-param"><span class="n">y_col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.get_scatter_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get figure for plot</p>
 <p>Adds plotly.graph_objects charts for violin plot, line plot and marginal histograms</p>
 <dl class="field-list simple">
@@ -313,9 +319,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.remove_null">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">remove_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.remove_null" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.remove_null">
+<em class="property">static </em><code class="sig-name descname">remove_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.remove_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove null values from column(s) in DataFrame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -330,9 +336,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.remove_string_values">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">remove_string_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.remove_string_values" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.remove_string_values">
+<em class="property">static </em><code class="sig-name descname">remove_string_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.remove_string_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove non-integer values from column(s) in DataFrame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -347,9 +353,9 @@ column as difference between y_col and x_col</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="components.change_calculator.transpose_dataframe">
-<code class="sig-prename descclassname">components.change_calculator.</code><code class="sig-name descname">transpose_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.transpose_dataframe" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="components.change_calculator.ChangeCalculator.transpose_dataframe">
+<em class="property">static </em><code class="sig-name descname">transpose_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col_identifier</span></em>, <em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.change_calculator.ChangeCalculator.transpose_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -363,6 +369,8 @@ column as difference between y_col and x_col</p>
 <dd class="field-even"><p>(pandas DataFrame)</p>
 </dd>
 </dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
