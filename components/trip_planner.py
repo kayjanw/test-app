@@ -148,6 +148,7 @@ class TripPlanner:
 
         Returns:
             2-element tuple
+
             - (numpy.ndarray): distance matrix
             - (numpy.ndarray): duration matrix
         """
