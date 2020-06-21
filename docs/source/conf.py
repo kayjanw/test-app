@@ -59,6 +59,7 @@ html_theme_options = {
     'collapse_navigation': False
 }
 html_favicon = '../../assets/documentation-icon.svg'
+html_logo = '../../assets/favicon.ico'
 
 # html_theme = 'classic'
 # html_theme_options = {
@@ -74,4 +75,4 @@ html_static_path = ['_static']
 
 
 def setup(app):
-    app.add_css_file('custom.css')
+    app.add_css_file('custom5.css')
