@@ -2,6 +2,10 @@
 utils.py Project
 ***************************************
 
+.. image:: https://readthedocs.org/projects/test-app-rtd/badge/?version=latest
+   :target: https://test-app-rtd.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 This ``utils.py`` project aims to be a helper tool to automate repetitive data analysis tasks,
 or perform predictions and optimizations that are computationally expensive etc.
 This documentation comprises of deployment documentation and code documentation.
