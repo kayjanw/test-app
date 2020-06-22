@@ -6,8 +6,9 @@ from callbacks import register_callbacks
 from layouts import main_layout
 from routes import register_routes
 
-server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
-app = dash.Dash(__name__, server=server)
+# server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
+app = dash.Dash(__name__)
+server = app.server
 app.title = 'wow'
 app.config.suppress_callback_exceptions = True
 app.css.config.serve_locally = True
