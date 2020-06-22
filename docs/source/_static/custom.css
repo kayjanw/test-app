@@ -31,7 +31,7 @@ div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(4) {
     color: #BE9B89
 }
 
-small a, small a:visited, small a:hover {
+.rst-versions a, .rst-versions a:visited, .rst-versions a:hover {
     color: #fcfcfc
 }
 
