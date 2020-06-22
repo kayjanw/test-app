@@ -22,6 +22,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKF
 class MBTI():
     """The MBTI object contains functions used for MBTI Personality Test tab
     """
+
     def __init__(self):
         """Initialize class attributes
 
@@ -200,7 +201,8 @@ class MBTI():
         sw = [self.clean_text(word) for word in stopwords.words('english')]
         sw = list(set(sw) - set(self.non_sw))
         if params is None:
-            params = dict(ngram_range=(1, 3), max_df=0.95, min_df=0.05, max_features=None, stop_words=sw)
+            params = dict(ngram_range=(1, 3), max_df=0.95,
+                          min_df=0.05, max_features=None, stop_words=sw)
         model = CountVectorizer(**params)
         vect = model.fit(corpus)
         # pickle.dump(vect, open(path_vect, 'wb'))
@@ -231,7 +233,8 @@ class MBTI():
             (model)
         """
         scale_pos_weight1 = len(y_train_series) / sum(y_train_series)
-        scale_pos_weight2 = (len(y_train_series) - sum(y_train_series)) / sum(y_train_series)
+        scale_pos_weight2 = (len(y_train_series) -
+                             sum(y_train_series)) / sum(y_train_series)
         clf = LGBMClassifier()
         values = {'n_estimators': [20, 50, 100, 200],
                   'max_depth': [3, 5],
@@ -310,28 +313,33 @@ class MBTI():
             NA
         """
         df = self.load_and_save_data()
-        X_train, X_test, y_train, y_test = self.get_train_test(X=df[['posts_clean']], y=df[self.mbti_cols])
+        X_train, X_test, y_train, y_test = self.get_train_test(
+            X=df[['posts_clean']], y=df[self.mbti_cols])
         if train_vect:
             vect = self.save_vectorizer(X_train['posts_clean'])
         else:
             vect = self.load_vectorizer()
         print(f'Vocabulary size: {len(vect.get_feature_names())}')
-        vector_train = vect.transform(X_train['posts_clean']).astype(np.float64)
+        vector_train = vect.transform(
+            X_train['posts_clean']).astype(np.float64)
         vector_test = vect.transform(X_test['posts_clean']).astype(np.float64)
         for idx, col in enumerate(self.mbti_cols):
             print(f'Predicting for: {col}')
             if train_model:
-                model = self.save_model(vector_train, y_train[col], self.path_models[idx])
+                model = self.save_model(
+                    vector_train, y_train[col], self.path_models[idx])
             else:
                 model = self.load_model(self.path_models[idx])
             y_pred = model.predict(vector_test)
 
             # Metric
             metric_acc = np.round(accuracy_score(y_test[col], y_pred) * 100, 1)
-            metric_bal_acc = np.round(balanced_accuracy_score(y_test[col], y_pred)*100, 1)
+            metric_bal_acc = np.round(
+                balanced_accuracy_score(y_test[col], y_pred)*100, 1)
             metric_f1 = np.round(f1_score(y_test[col], y_pred), 3)
             print(confusion_matrix(y_test[col], y_pred))
-            print(f'For {col}: Accuracy: {metric_acc}% and Balanced Accuracy: {metric_bal_acc}%')
+            print(
+                f'For {col}: Accuracy: {metric_acc}% and Balanced Accuracy: {metric_bal_acc}%')
             print(f'F1 for {col}: {metric_f1}')
             print()
 
@@ -347,7 +355,8 @@ class MBTI():
         wordnet.ensure_loaded()
         clean_input = self.clean_text(input_text)
         vect = self.load_vectorizer()
-        vector_input = vect.transform(pd.Series(clean_input)).astype(np.float64)
+        vector_input = vect.transform(
+            pd.Series(clean_input)).astype(np.float64)
         return vector_input
 
     def test_pipeline(self, input_text):
@@ -404,7 +413,8 @@ class MBTI():
         Returns:
             (dict)
         """
-        y_data = ['Introversion-Extroversion', 'Intuition-Sensing', 'Feeling-Thinking', 'Perceiving-Judging']
+        y_data = ['Introversion-Extroversion', 'Intuition-Sensing',
+                  'Feeling-Thinking', 'Perceiving-Judging']
         x_data_0 = [r[0] for r in predictions]
         x_data_1 = [r[1] for r in predictions]
         data = [go.Bar(

@@ -19,10 +19,12 @@ class ChangeCalculator:
         """
         # Handle string values
         if isinstance(col, str):
-            df[col].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
+            df[col].replace(regex=True, to_replace=r'[^0-9.]',
+                            value=np.nan, inplace=True)
         elif isinstance(col, list):
             for c in col:
-                df[c].replace(regex=True, to_replace=r'[^0-9.]', value=np.nan, inplace=True)
+                df[c].replace(regex=True, to_replace=r'[^0-9.]',
+                              value=np.nan, inplace=True)
         return df
 
     @staticmethod
@@ -109,7 +111,8 @@ class ChangeCalculator:
             x=df[x_col],
             y=df[y_col],
             marker={'color': '#202029'},
-            text=['<br>'.join([f'{df.columns[idx]}: {x[idx]}' for idx in range(len(df.columns))]) for x in df.values],
+            text=['<br>'.join([f'{df.columns[idx]}: {x[idx]}' for idx in range(
+                len(df.columns))]) for x in df.values],
             hoverinfo='text',
             jitter=1,
             points='all',
@@ -140,8 +143,10 @@ class ChangeCalculator:
         )
         layout = dict(
             title='Scatterplot + Histogram of results',
-            xaxis=dict(title=x_col, domain=[0, 0.85], range=[x_min_limit, x_max_limit]),
-            yaxis=dict(title=y_col, domain=[0, 0.85], range=[y_min_limit, y_max_limit]),
+            xaxis=dict(title=x_col, domain=[0, 0.85], range=[
+                       x_min_limit, x_max_limit]),
+            yaxis=dict(title=y_col, domain=[0, 0.85], range=[
+                       y_min_limit, y_max_limit]),
             xaxis2=dict(domain=[0.85, 1]),
             yaxis2=dict(domain=[0.85, 1]),
             hovermode='closest',
@@ -206,7 +211,8 @@ class ChangeCalculator:
             - (list): instructions for interacting with figure
             - (dict): graphical result of change calculator 2
         """
-        color = ['hsl(' + str(h) + ',50%,70%)' for h in np.linspace(0, 270, max(len(cols), 7))]
+        color = [
+            'hsl(' + str(h) + ',50%,70%)' for h in np.linspace(0, 270, max(len(cols), 7))]
         trace = []
         instructions = [
             html.Br(),
@@ -322,25 +328,27 @@ class ChangeCalculator:
         cols = [row[0] for row in list_of_tuples]
         trace = go.Parcoords(
             line_color='#202029',
-            customdata=df[col_identifier],  # cannot seem to support hover information
+            # cannot seem to support hover information
+            customdata=df[col_identifier],
             dimensions=[
-                           dict(
-                               label=col,
-                               values=df[col],
-                               range=[np.round(df[col].min() - 5, -1), np.round(df[col].max() + 5, -1)],
-                               tickvals=np.arange(np.round(df[col].min() - 5, -1), np.round(df[col].max() + 5, -1) + 1,
-                                                  10)
-                           )
-                           for col in cols
-                       ] + [
-                           dict(
-                               label=col_identifier,
-                               values=list(range(len(df))),
-                               range=[0, len(df)],
-                               tickvals=list(range(len(df))),
-                               ticktext=df[col_identifier]
-                           )
-                       ],
+                dict(
+                    label=col,
+                    values=df[col],
+                    range=[np.round(df[col].min() - 5, -1),
+                           np.round(df[col].max() + 5, -1)],
+                    tickvals=np.arange(np.round(df[col].min() - 5, -1), np.round(df[col].max() + 5, -1) + 1,
+                                       10)
+                )
+                for col in cols
+            ] + [
+                dict(
+                    label=col_identifier,
+                    values=list(range(len(df))),
+                    range=[0, len(df)],
+                    tickvals=list(range(len(df))),
+                    ticktext=df[col_identifier]
+                )
+            ],
         )
         layout = dict(
             title='Parallel Coordinate plot of results',
