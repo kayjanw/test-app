@@ -632,7 +632,8 @@ def mbti_tab():
                 > - Lemmatization of words
 
                 ###### Modelling
-                > After processing the text, input data is split into 80% training and 20% testing data
+                > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                fashion
 
                 > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
 
