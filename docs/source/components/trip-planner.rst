@@ -1,5 +1,5 @@
 Trip Planner
 ------------------------
 
-.. automodule:: components.trip_planner
+.. autoclass:: components.trip_planner.TripPlanner
    :members:

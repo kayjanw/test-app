@@ -35,7 +35,7 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom5.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="MBTI Personality Test" href="mbti.html" />
@@ -174,6 +174,48 @@
   <div class="section" id="module-components.helper">
 <span id="helper"></span><h1>Helper<a class="headerlink" href="#module-components.helper" title="Permalink to this headline">¶</a></h1>
 <p>This file contains helper functions that are used across multiple tabs</p>
+<p><strong>Functions</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.decode_df" title="components.helper.decode_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode_df</span></code></a>(df_ser)</p></td>
+<td><p>De-serializes JSON format string to pandas DataFrame</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#components.helper.encode_df" title="components.helper.encode_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode_df</span></code></a>(df)</p></td>
+<td><p>Serializes pandas DataFrame to JSON format</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.generate_datatable" title="components.helper.generate_datatable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_datatable</span></code></a>(df[, max_rows])</p></td>
+<td><p>Generate table from pandas DataFrame</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#components.helper.get_summary_statistics" title="components.helper.get_summary_statistics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_summary_statistics</span></code></a>(df, cols)</p></td>
+<td><p>Generate table of summary statistics for DataFrame for list of columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.get_worksheet" title="components.helper.get_worksheet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_worksheet</span></code></a>(contents)</p></td>
+<td><p>Get worksheet names from an excel file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#components.helper.parse_data" title="components.helper.parse_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_data</span></code></a>(contents, filename[, worksheet])</p></td>
+<td><p>Reads uploaded data into DataFrame</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.print_callback" title="components.helper.print_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_callback</span></code></a>(print_function)</p></td>
+<td><p>Decorator function to print callback on backend for debugging purposes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#components.helper.result_download_button" title="components.helper.result_download_button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_download_button</span></code></a>(df)</p></td>
+<td><p>Download button for processed data or results</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.table_css" title="components.helper.table_css"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table_css</span></code></a>()</p></td>
+<td><p>Gets default dash_table CSS components</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#components.helper.update_when_upload" title="components.helper.update_when_upload"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_when_upload</span></code></a>(contents, worksheet, ...)</p></td>
+<td><p>Reads uploaded data into DataFrame and return dash application objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#components.helper.violin_plot" title="components.helper.violin_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">violin_plot</span></code></a>()</p></td>
+<td><p>Get data for plot</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py function">
 <dt id="components.helper.decode_df">
 <code class="sig-prename descclassname">components.helper.</code><code class="sig-name descname">decode_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_ser</span></em><span class="sig-paren">)</span><a class="headerlink" href="#components.helper.decode_df" title="Permalink to this definition">¶</a></dt>
