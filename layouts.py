@@ -96,7 +96,7 @@ def about_me_tab():
         html.P([
             'This website is made with Dash, deployed using Gunicorn and hosted on Heroku, '
             'view code documentation on Sphinx ',
-            html.A('here', href='/index.html', target='_blank')
+            html.A('here', href='kayjan.readthedocs.io', target='_blank')
         ])
     ])
 
