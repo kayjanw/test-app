@@ -7,6 +7,7 @@ import requests
 class TripPlanner:
     """The TripPlanner object contains functions used for Trip Planner tab
     """
+
     def __init__(self):
         """Initialize class attributes
 
@@ -166,12 +167,15 @@ class TripPlanner:
                         raise Exception(f'Error: Cannot get distance data from Google API, error message: {e}. '
                                         f'Please try again later')
                     if page['rows'][0]['elements'][0]['status'] == 'OK':
-                        distance = page['rows'][0]['elements'][0]['distance']['value']  # in m
-                        duration = page['rows'][0]['elements'][0]['duration']['value']  # in sec
+                        # in m
+                        distance = page['rows'][0]['elements'][0]['distance']['value']
+                        # in sec
+                        duration = page['rows'][0]['elements'][0]['duration']['value']
                         distance_matrix[i][j] = distance
                         duration_matrix[i][j] = duration
                     else:
-                        raise Exception('Error: Cannot get distance due to invalid location entered')
+                        raise Exception(
+                            'Error: Cannot get distance due to invalid location entered')
         return distance_matrix, duration_matrix
 
     @staticmethod
@@ -196,9 +200,12 @@ class TripPlanner:
         model.U = pyEnv.RangeSet(2, n)
 
         # Decision variable (x_ij), dummy variable (u), cost variable (c)
-        model.x = pyEnv.Var(model.N, model.M, within=pyEnv.Binary)  # decision variable x_ij
-        model.u = pyEnv.Var(model.N, within=pyEnv.NonNegativeIntegers, bounds=(0, n - 1))  # dummy variable
-        model.c = pyEnv.Param(model.N, model.M, initialize=lambda model, i, j: distance_matrix[i - 1][j - 1])
+        # decision variable x_ij
+        model.x = pyEnv.Var(model.N, model.M, within=pyEnv.Binary)
+        model.u = pyEnv.Var(model.N, within=pyEnv.NonNegativeIntegers, bounds=(
+            0, n - 1))  # dummy variable
+        model.c = pyEnv.Param(
+            model.N, model.M, initialize=lambda model, i, j: distance_matrix[i - 1][j - 1])
 
         # Constraints
         def min_cost(model):
@@ -213,8 +220,7 @@ class TripPlanner:
         def rule_no_subtours(model, i, j):
             if i != j:
                 return model.u[i] - model.u[j] + model.x[i, j] * n <= n - 1
-            else \
-                    :
+            else:
                 return model.u[i] - model.u[i] == 0
 
         model.objective = pyEnv.Objective(rule=min_cost, sense=pyEnv.minimize)
@@ -227,7 +233,8 @@ class TripPlanner:
         try:
             result = solver.solve(model, tee=False)
         except Exception as e:
-            raise Exception(f'Cannot connect to gurobi optimization solver, error message: {e}')
+            raise Exception(
+                f'Cannot connect to gurobi optimization solver, error message: {e}')
 
         # Optimal route
         routes_unsorted = []
@@ -315,7 +322,8 @@ class TripPlanner:
         Returns:
             (float)
         """
-        distance_km = np.round(np.sum([distance_matrix[route] for route in routes]) / 1000, 2)
+        distance_km = np.round(
+            np.sum([distance_matrix[route] for route in routes]) / 1000, 2)
         return distance_km
 
     def best_route_nearest_insertion(self, distance_matrix):
@@ -334,12 +342,14 @@ class TripPlanner:
             best_distance = np.inf
             if idx_next not in visited_landmarks:
                 # Get permutation of next insertion
-                test_routes = self.get_permutation_of_routes(visited_landmarks, idx_next)
+                test_routes = self.get_permutation_of_routes(
+                    visited_landmarks, idx_next)
                 for test_route in test_routes:
                     # Complete the loop and get shortest distance
                     test_route.append(idx)
                     test_routes = self.get_routes_from_list(test_route)
-                    test_distance = self.get_distance_from_routes(test_routes, distance_matrix)
+                    test_distance = self.get_distance_from_routes(
+                        test_routes, distance_matrix)
                     if test_distance < best_distance:
                         best_route = test_route
                         best_distance = test_distance
@@ -348,9 +358,11 @@ class TripPlanner:
 
         # Double check direction of travel
         best_routes = self.get_routes_from_list(visited_landmarks)
-        best_distance = self.get_distance_from_routes(best_routes, distance_matrix)
+        best_distance = self.get_distance_from_routes(
+            best_routes, distance_matrix)
         best_routes_inv = self.get_routes_from_list(visited_landmarks[::-1])
-        best_distance_inv = self.get_distance_from_routes(best_routes_inv, distance_matrix)
+        best_distance_inv = self.get_distance_from_routes(
+            best_routes_inv, distance_matrix)
         if best_distance > best_distance_inv:
             visited_landmarks = visited_landmarks[::-1]
         routes = self.get_routes_from_list(visited_landmarks)
@@ -369,24 +381,31 @@ class TripPlanner:
             return html.P('Please input more landmarks')
         try:
             landmarks = [x['Landmark'] for x in data]
-            distance_matrix, duration_matrix = self.get_distance_and_duration_from_table(data)
+            distance_matrix, duration_matrix = self.get_distance_and_duration_from_table(
+                data)
             try:
                 routes = self.best_route_gurobi(distance_matrix)
                 print(data)
                 print(f'Using optimiser: {routes}')
-                print(f'Using insertion: {self.best_route_nearest_insertion(distance_matrix)}')
-                print(f'Using neighbour: {self.best_route_nearest_neighbour(distance_matrix)}')
+                print(
+                    f'Using insertion: {self.best_route_nearest_insertion(distance_matrix)}')
+                print(
+                    f'Using neighbour: {self.best_route_nearest_neighbour(distance_matrix)}')
             except Exception:
                 routes = self.best_route_nearest_insertion(distance_matrix)
-            distance_km = self.get_distance_from_routes(routes, distance_matrix)
+            distance_km = self.get_distance_from_routes(
+                routes, distance_matrix)
             duration = np.sum([duration_matrix[route] for route in routes])
             duration_hour = int(np.floor(duration / 3600))
             duration_min = int(np.floor((duration % 3600) / 60))
             answer = [
-                html.P(f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"),
+                html.P(
+                    f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"),
                 html.P(f"Distance: {distance_km} km"),
-                html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins"),
-                html.P("This assumes travel mode by driving, and actual duration may depend on traffic conditions")
+                html.P(
+                    f"Duration: {duration_hour} hour(s), {duration_min} mins"),
+                html.P(
+                    "This assumes travel mode by driving, and actual duration may depend on traffic conditions")
             ]
         except Exception as e:
             return str(e)

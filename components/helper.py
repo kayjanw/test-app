@@ -26,8 +26,10 @@ def violin_plot():
     np.random.seed(1)
     points = (np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200) +
               (np.arange(12) + 2 * np.random.random(12))[:, None])
-    points2 = np.array([np.concatenate((point, [points.min(), points.max()])) for point in points])
-    colors = n_colors('rgb(32, 32, 41)', 'rgb(190, 155, 137)', 12, colortype='rgb')
+    points2 = np.array(
+        [np.concatenate((point, [points.min(), points.max()])) for point in points])
+    colors = n_colors('rgb(32, 32, 41)',
+                      'rgb(190, 155, 137)', 12, colortype='rgb')
     data = []
     for data_line, color in zip(points2, colors):
         trace = go.Violin(
@@ -192,12 +194,13 @@ def get_summary_statistics(df, cols):
     Returns:
         (dash_table.DataTable)
     """
-    param_name = ['Number of values', 'Mean', 'Std. Dev', 'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
+    param_name = ['Number of values', 'Mean', 'Std. Dev',
+                  'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
         columns=[
             {'name': 'Parameter', 'id': 'Parameter'}
-                ] + [
+        ] + [
             {'name': col, 'id': col} for col in cols
         ],
         data=[reduce(lambda a, b: dict(a, **b), [{
@@ -264,7 +267,8 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
         if 'xls' in filename:
             worksheet_list = get_worksheet(contents)
             if len(worksheet_list) > 1:
-                worksheet_options = [{'label': ws, 'value': ws} for ws in worksheet_list]
+                worksheet_options = [{'label': ws, 'value': ws}
+                                     for ws in worksheet_list]
 
         # Update worksheet options display style
         if len(worksheet_options):
