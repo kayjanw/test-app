@@ -1,6 +1,13 @@
-.wy-side-nav-search>a img.logo,
-.wy-side-nav-search .wy-dropdown>a img.logo {
+.wy-side-nav-search>a img.logo {
     height: 80px;
+}
+
+.wy-menu-vertical li.current>a {
+    background: #ffffff;
+}
+
+.wy-menu-vertical li.current>ul {
+    background: #F0E3DF;
 }
 
 .wy-side-nav-search,
