@@ -1,5 +1,5 @@
 /* Limit size of html logo */
-.wy-side-nav-search>a img.logo {
+.wy-side-nav-search > a img.logo {
     height: 80px;
 }
 
@@ -12,10 +12,10 @@ div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(4) {
 }
 
 /* Sidebar selected style */
-.wy-menu-vertical li.current>a {
+.wy-menu-vertical li.current > a {
     background: #ffffff;
 }
-.wy-menu-vertical li.current>ul {
+.wy-menu-vertical li.current > ul {
     background: #F0E3DF;
 }
 
@@ -29,6 +29,10 @@ div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(4) {
 .wy-nav-top a, .wy-nav-top a:visited, .wy-nav-top a:hover,
 .wy-side-scroll a, .wy-side-scroll a:visited, .wy-side-scroll a:hover {
     color: #BE9B89
+}
+
+small a, small a:visited, small a:hover {
+    color: #fcfcfc
 }
 
 /* Links */
