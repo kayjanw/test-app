@@ -59,6 +59,34 @@ def app_1():
     ])
 
 
+def app_2(pathname):
+    return html.Div([
+        # Left contents
+        html.Div([
+            html.Div(
+                html.H1(
+                    'KJ Wong'
+                ),
+            )
+        ],
+            className='sidebar'),
+
+        # Right contents
+        html.Div([
+            header('Nice try', 'Sadly this page does not exist'),
+            html.P([
+                f'What were you hoping for in {pathname} page?',
+                html.Br(),
+                'Click ',
+                html.A('here', href='/'),
+                ' to return to home page',
+            ]),
+        ],
+            className='contents'
+        ),
+    ])
+
+
 def header(title, subtitle=None):
     return html.Div([
         html.H2(
