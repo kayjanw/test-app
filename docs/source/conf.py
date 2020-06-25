@@ -58,7 +58,8 @@ exclude_patterns = []
 #
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    'collapse_navigation': False
+    'collapse_navigation': False,
+    'sticky_navigation': False
 }
 html_favicon = '../../assets/documentation-icon.svg'
 html_logo = '../../assets/favicon.ico'
