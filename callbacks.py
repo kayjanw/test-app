@@ -9,7 +9,7 @@ from components.helper import violin_plot, print_callback, get_summary_statistic
     result_download_button
 from components.mbti import MBTI
 from components.trip_planner import TripPlanner
-from layouts import app_1, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab
+from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab
 
 
 def register_callbacks(app, print_function):
@@ -28,7 +28,7 @@ def register_callbacks(app, print_function):
         if pathname == '/':
             return app_1()
         else:
-            return html.Div([f'This is page {pathname}'])
+            return app_2(pathname)
 
 
     @app.callback([Output('table-trip-landmark', 'data'),
