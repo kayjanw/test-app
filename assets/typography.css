@@ -192,7 +192,7 @@ button[disabled] {
 }
 
 .custom-tab {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #BE9B89;
     border-radius: 3px;
@@ -203,7 +203,7 @@ button[disabled] {
 }
 
 .custom-tab span {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 .custom-tab:hover {
