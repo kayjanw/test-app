@@ -7,7 +7,12 @@ from layouts import main_layout
 from routes import register_routes
 
 # server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
-app = dash.Dash(__name__)
+meta_tags = [
+    {'name': 'og:title',
+     'content': 'Tools to make your life easier'
+    }
+]
+app = dash.Dash(__name__, meta_tags=meta_tags)
 server = app.server
 app.title = 'wow'
 app.config.suppress_callback_exceptions = True
