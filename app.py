@@ -9,8 +9,8 @@ from routes import register_routes
 # server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
 meta_tags = [
     {
-        'property': 'author',
-        'content': '[Kay Jan WONG]'
+        'name': 'author',
+        'content': 'Kay Jan WONG'
     }, {
         'data-react-helmet': 'true',
         'property': 'og:title',
