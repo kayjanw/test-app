@@ -12,6 +12,9 @@ meta_tags = [
         'name': 'author',
         'content': 'Kay Jan WONG'
     }, {
+        'property': 'og:type',
+        'content': 'website'
+    }, {
         'data-react-helmet': 'true',
         'property': 'og:title',
         'content': 'Tools to make life easier'
