@@ -9,12 +9,15 @@ from routes import register_routes
 # server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
 meta_tags = [
     {
+        'data-react-helmet': 'true',
         'property': 'og:title',
         'content': 'Tools to make life easier'
     }, {
+        'data-react-helmet': 'true',
         'property': 'og:description',
         'content': 'Helper tool that automates repetitive data analysis tasks, and perform predictions and optimizations that are computationally expensive'
     }, {
+        'data-react-helmet': 'true',
         'property': 'og:image',
         'content': 'https://svgshare.com/i/MTw.svg'
     }
