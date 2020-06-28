@@ -10,7 +10,7 @@ from routes import register_routes
 meta_tags = [
     {
         'property': 'author',
-        'content': 'Kay Jan WONG'
+        'content': '[Kay Jan WONG]'
     }, {
         'data-react-helmet': 'true',
         'property': 'og:title',
