@@ -23,11 +23,11 @@ meta_tags = [
     }, {
         'data-react-helmet': 'true',
         'property': 'og:image:width',
-        'content': '512px'
+        'content': '512'
     }, {
         'data-react-helmet': 'true',
         'property': 'og:image:height',
-        'content': '512px'
+        'content': '512'
     },     {
         'data-react-helmet': 'true',
         'property': 'twitter:title',
