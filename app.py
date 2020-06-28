@@ -19,7 +19,7 @@ meta_tags = [
     }, {
         'data-react-helmet': 'true',
         'property': 'og:image',
-        'content': 'https://svgshare.com/i/MTw.svg'
+        'content': 'https://i.ibb.co/N6mwPyP/favicon.png'
     }, {
         'data-react-helmet': 'true',
         'property': 'og:image:width',
@@ -28,6 +28,18 @@ meta_tags = [
         'data-react-helmet': 'true',
         'property': 'og:image:height',
         'content': '512px'
+    },     {
+        'data-react-helmet': 'true',
+        'property': 'twitter:title',
+        'content': 'Tools to make life easier'
+    }, {
+        'data-react-helmet': 'true',
+        'property': 'twitter:description',
+        'content': 'Helper tool that automates repetitive data analysis tasks, and perform predictions and optimizations that are computationally expensive'
+    }, {
+        'data-react-helmet': 'true',
+        'property': 'twitter:image',
+        'content': 'https://i.ibb.co/N6mwPyP/favicon.png'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
