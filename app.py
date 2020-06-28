@@ -8,8 +8,15 @@ from routes import register_routes
 
 # server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
 meta_tags = [
-    {'name': 'og:title',
-     'content': 'Tools to make your life easier'
+    {
+        'property': 'og:title',
+        'content': 'Tools to make life easier'
+    }, {
+        'property': 'og:description',
+        'content': 'Helper tool that automates repetitive data analysis tasks, and perform predictions and optimizations that are computationally expensive'
+    }, {
+        'property': 'og:image',
+        'content': 'https://svgshare.com/i/MTw.svg'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
