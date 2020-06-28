@@ -20,6 +20,14 @@ meta_tags = [
         'data-react-helmet': 'true',
         'property': 'og:image',
         'content': 'https://svgshare.com/i/MTw.svg'
+    }, {
+        'data-react-helmet': 'true',
+        'property': 'og:image:width',
+        'content': '512px'
+    }, {
+        'data-react-helmet': 'true',
+        'property': 'og:image:height',
+        'content': '512px'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
