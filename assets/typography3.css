@@ -41,27 +41,8 @@ Pinkish grey #D6CAC7
     }
 }
 
-/* For screen size smaller than 800px (laptop) */
-@media (max-width:800px) {
-    #sidebar-small {
-        display: inline-block;
-    }
-    #sidebar-big {
-        display: none;
-        width: 85vw;
-    }
-    #tab-content {
-        width: 94vw;
-        margin-top: 60px;
-        margin-left: 0;
-    }
-    .custom-tab {
-        font-size: 1.3em;
-    }
-}
-
-/* For screen size larger than 800px (laptop) */
-@media (min-width: 800px) {
+/* For devices larger than 800px */
+@media (min-device-width: 800px) {
     #sidebar-small {
         display: none;
     }
