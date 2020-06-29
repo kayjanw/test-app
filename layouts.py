@@ -27,7 +27,7 @@ def app_1():
                         'KJ Wong'
                     ),
                     style={
-                        'display': 'inline-block',
+                        'display': 'inline-table',
                         'width': '80vw',
                         'text-align': 'center'
                     }

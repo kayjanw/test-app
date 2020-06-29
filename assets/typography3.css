@@ -40,7 +40,7 @@ Pinkish grey #D6CAC7
         margin-left: 0;
     }
     .custom-tab {
-        font-size: 3vh;
+        font-size: 2vh;
     }
 }
 
@@ -219,7 +219,10 @@ button[disabled] {
 }
 
 #sidebar-small h1 {
+    display: table-cell;
+    height: 8vh;
     font-size: 5vh;
+    vertical-align: middle;
 }
 
 #sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
