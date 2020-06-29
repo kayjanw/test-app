@@ -24,21 +24,58 @@ Pinkish grey #D6CAC7
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* For devices larger than 300px */
 @media (min-width: 300px) {
-    .sidebar {
-        display: none !important;
+    #sidebar-small {
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: inline-block;
+        width: 100vw;
+        height: 60px;
+        background-color: #202029;
+        z-index: 1;
+    }
+    #sidebar-big {
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: none;
+        width: 85vw;
+        height: 100vh;
+        background-color: #202029;
+    }
+    #tab-content {
+        display: inline-block;
+        width: 97vw;
+        margin-top: 60px;
+        margin-left: 0;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        overflow: hidden;
     }
 }
 
 /* For devices larger than 500px */
-@media (min-width: 500px) {
-    .sidebar {
+@media (min-width: 800px) {
+    #sidebar-small {
+        display: none;
+    }
+    #sidebar-big {
         top: 0;
         left: 0;
         position: fixed;
-        display: inline-block !important;
+        display: inline-block;
         width: 15vw;
         height: 100vh;
         background-color: #202029;
+    }
+    #tab-content {
+        display: inline-block;
+        width: 80vw;
+        margin-top: 0;
+        margin-left: 15vw;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        overflow: hidden;
     }
 }
 
@@ -122,64 +159,8 @@ button[disabled] {
     cursor: crosshair !important;
 }
 
-/* Custom id
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-#violin-plot .js-plotly-plot .plotly .cursor-pointer,
-#graph-mbti .js-plotly-plot .plotly .cursor-pointer {
-    cursor: auto;
-}
-
-#dropdown-change-worksheet .VirtualizedSelectFocusedOption,
-#dropdown-change-x .VirtualizedSelectFocusedOption,
-#dropdown-change-y .VirtualizedSelectFocusedOption,
-#dropdown-changes-worksheet .VirtualizedSelectFocusedOption,
-#dropdown-changes-identifier .VirtualizedSelectFocusedOption {
-    background-color: #F0E3DF;
-}
-
-#table-changes .Select-value-label {
-    color: white !important;
-    margin-left: 20px;
-}
-
-#table-changes .Select-clear, .Select-arrow {
-    --accent: white !important;
-}
-
-#table-changes .Select-menu-outer, .is-focused {
-    --accent: white !important;
-    background-color: black !important;
-}
-
-#table-changes .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
-    background-color: black;
-}
-
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.sidebar {
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: inline-block;
-    width: 15vw;
-    height: 100vh;
-    background-color: #202029;
-}
-
-.sidebar h1 {
-    margin-top: 15vh;
-    margin-left: 20px;
-}
-
-.contents {
-    display: inline-block;
-    width: 80vw;
-    margin-left: 15vw;
-    padding-left: 1.5vw;
-    padding-right: 1.5vw;
-}
-
 .custom-container {
     margin-top: 10px;
     margin-bottom: 50px;
@@ -210,7 +191,7 @@ button[disabled] {
 .custom-tabs {
     margin-left: 20px;
     margin-right: 10px;
-    width: 100%;
+    width: 90%;
 }
 
 .custom-tab {
@@ -237,4 +218,56 @@ button[disabled] {
 .custom-tab-selected {
     background-color: #F0E3DF !important;
     color: #202029 !important;
+}
+
+/* Custom id
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#sidebar-big h1 {
+    margin-top: 15vh;
+    margin-left: 20px;
+}
+
+#sidebar-small h1 {
+    text-align: center;
+}
+
+#sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
+    height: 60px;
+    font-size: 3rem;
+    color: #BE9B89;
+    vertical-align: top;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+
+#violin-plot .js-plotly-plot .plotly .cursor-pointer,
+#graph-mbti .js-plotly-plot .plotly .cursor-pointer {
+    cursor: auto;
+}
+
+#dropdown-change-worksheet .VirtualizedSelectFocusedOption,
+#dropdown-change-x .VirtualizedSelectFocusedOption,
+#dropdown-change-y .VirtualizedSelectFocusedOption,
+#dropdown-changes-worksheet .VirtualizedSelectFocusedOption,
+#dropdown-changes-identifier .VirtualizedSelectFocusedOption {
+    background-color: #F0E3DF;
+}
+
+#table-changes .Select-value-label {
+    color: white !important;
+    margin-left: 20px;
+}
+
+#table-changes .Select-clear, .Select-arrow {
+    --accent: white !important;
+}
+
+#table-changes .Select-menu-outer, .is-focused {
+    --accent: white !important;
+    background-color: black !important;
+}
+
+#table-changes .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+    background-color: black;
 }

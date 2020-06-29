@@ -15,6 +15,24 @@ def main_layout():
 
 def app_1():
     return html.Div([
+        # Top contents
+        html.Div([
+            html.Div([
+                html.Button(
+                    '☰',
+                    id='button-sidebar'
+                ),
+                html.H1(
+                    'KJ Wong',
+                    style={
+                        'display': 'inline-block'
+                    }
+                ),
+            ]),
+        ],
+            id='sidebar-small'
+        ),
+
         # Left contents
         html.Div([
             html.Div(
@@ -49,12 +67,12 @@ def app_1():
                 ),
             )
         ],
-            className='sidebar'),
+            id='sidebar-big',
+        ),
 
         # Right contents
         html.Div(
-            id='tab-content',
-            className='contents'
+            id='tab-content'
         ),
     ])
 

@@ -1,6 +1,5 @@
 import dash
 import dash_core_components as dcc
-import dash_html_components as html
 import traceback
 from dash.dependencies import Input, Output, State
 
@@ -30,6 +29,52 @@ def register_callbacks(app, print_function):
         else:
             return app_2(pathname)
 
+    @app.callback([Output('sidebar-big', 'style'),
+                   Output('sidebar-small', 'style'),
+                   Output('tab-content', 'style')],
+                  [Input('button-sidebar', 'n_clicks'),
+                   Input('tabs-parent', 'value')],
+                  [State('sidebar-big', 'style'),
+                   State('sidebar-small', 'style'),
+                   State('tab-content', 'style')])
+    @print_callback(print_function)
+    def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar_left, style_sidebar_top, style_contents):
+        """Display sidebar on icon click (mobile device)
+
+        Args:
+            trigger_sidebar: trigger on button click on sidebar
+            trigger_tab: trigger on tab change
+            style_sidebar_left: current style of left sidebar
+            style_sidebar_top: current style of top sidebar
+            style_contents: current style of tab content
+
+        Returns:
+        3-element tuple
+
+        - (dict): updated style of left sidebar
+        - (dict): updated style of top sidebar
+        - (dict): updated style of tab content
+        """
+        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+        if ctx == 'button-sidebar':
+            if isinstance(style_sidebar_left, dict) and style_sidebar_left['display'] == 'inline-block':
+                # Collapse left sidebar
+                style_sidebar_left['display'] = 'none'
+                style_sidebar_top['margin-left'] = '0'
+                style_contents['margin-left'] = '0'
+                style_contents['position'] = 'absolute'
+            else:
+                # Show left sidebar
+                style_sidebar_left = {'display': 'inline-block'}
+                style_sidebar_top = {'margin-left': '85vw'}
+                style_contents = {'margin-left': '85vw', 'position': 'fixed'}
+        elif ctx == 'tabs-parent':
+            # Collapse left sidebar
+            style_sidebar_left['display'] = 'none'
+            style_sidebar_top['margin-left'] = '0'
+            style_contents['margin-left'] = '0'
+            style_contents['position'] = 'absolute'
+        return style_sidebar_left, style_sidebar_top, style_contents
 
     @app.callback([Output('table-trip-landmark', 'data'),
                    Output('table-trip-landmark', 'style_table'),
