@@ -29,13 +29,13 @@ def register_callbacks(app, print_function):
         else:
             return app_2(pathname)
 
-    @app.callback([Output('sidebar-big', 'style'),
-                   Output('sidebar-small', 'style'),
+    @app.callback([Output('sidebar-left-small', 'style'),
+                   Output('sidebar-top-small', 'style'),
                    Output('tab-content', 'style')],
                   [Input('button-sidebar', 'n_clicks'),
                    Input('tabs-parent', 'value')],
-                  [State('sidebar-big', 'style'),
-                   State('sidebar-small', 'style'),
+                  [State('sidebar-left-small', 'style'),
+                   State('sidebar-top-small', 'style'),
                    State('tab-content', 'style')])
     @print_callback(print_function)
     def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar_left, style_sidebar_top, style_contents):
