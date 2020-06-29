@@ -207,9 +207,24 @@ button[disabled] {
     left: 0;
     position: fixed;
     width: 100vw;
-    height: 10vh;
+    height: 8vh;
     background-color: #202029;
     z-index: 1;
+}
+
+#sidebar-small h1 {
+    font-size: 6vh;
+}
+
+#sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
+    height: 8vh;
+    width: 10vw;
+    font-size: 6vh;
+    color: #BE9B89;
+    vertical-align: top;
+    margin: 0;
+    border: none;
+    background-color: transparent;
 }
 
 #sidebar-big {
@@ -220,27 +235,16 @@ button[disabled] {
     background-color: #202029;
 }
 
+#sidebar-big h1 {
+    margin-top: 15vh;
+    margin-left: 20px;
+}
+
 #tab-content {
     display: inline-block;
     padding-left: 1.5vw;
     padding-right: 1.5vw;
     overflow: hidden;
-}
-
-#sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
-    height: 10vh;
-    width: 10vw;
-    font-size: 3rem;
-    color: #BE9B89;
-    vertical-align: top;
-    margin: 0;
-    border: none;
-    background-color: transparent;
-}
-
-#sidebar-big h1 {
-    margin-top: 15vh;
-    margin-left: 20px;
 }
 
 #violin-plot .js-plotly-plot .plotly .cursor-pointer,
