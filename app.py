@@ -19,8 +19,7 @@ meta_tags = [
         'content': 'Tools to make life easier'
     }, {
         'property': 'og:description',
-        'content': 'Automate repetitive data analysis tasks and perform computationally expensive predictions and '
-                   'optimizations'
+        'content': 'Automate repetitive data analysis tasks and perform predictions and optimizations'
     }, {
         'property': 'og:image',
         'content': 'https://i.ibb.co/KrjyLmg/favicon-google.png'
@@ -35,8 +34,7 @@ meta_tags = [
         'content': 'Tools to make life easier'
     }, {
         'property': 'twitter:description',
-        'content': 'Automate repetitive data analysis tasks and perform computationally expensive predictions and '
-                   'optimizations'
+        'content': 'Automate repetitive data analysis tasks and perform predictions and optimizations'
     }, {
         'property': 'twitter:image',
         'content': 'https://i.ibb.co/cFwJMGg/favicon-twitter.png'
