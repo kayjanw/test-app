@@ -1,12 +1,9 @@
 import dash
 
-from flask import Flask
-
 from callbacks import register_callbacks
 from layouts import main_layout
 from routes import register_routes
 
-# server = Flask(__name__, static_url_path='/', static_folder='docs/build/html/')
 meta_tags = [
     {
         'name': 'author',
