@@ -22,12 +22,16 @@ def app_1():
                     '☰',
                     id='button-sidebar'
                 ),
-                html.H1(
-                    'KJ Wong',
+                html.Div(
+                    html.H1(
+                        'KJ Wong'
+                    ),
                     style={
-                        'display': 'inline-block'
+                        'display': 'inline-block',
+                        'width': '80vw',
+                        'text-align': 'center'
                     }
-                ),
+                )
             ]),
         ],
             id='sidebar-small'
