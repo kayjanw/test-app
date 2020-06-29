@@ -26,10 +26,10 @@ meta_tags = [
         'content': 'https://i.ibb.co/hmR8ZCN/favicon-google.png'
     }, {
         'property': 'og:image:width',
-        'content': '512'
+        'content': '1200'
     }, {
         'property': 'og:image:height',
-        'content': '512'
+        'content': '627'
     }, {
         'property': 'twitter:title',
         'content': 'Tools to make life easier'
