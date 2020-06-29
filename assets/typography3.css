@@ -23,7 +23,7 @@ Pinkish grey #D6CAC7
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* For devices smaller than 800px */
-@media (max-width:800px) {
+@media screen and (max-width:800px) {
     #sidebar-small {
         top: 0;
         left: 0;
