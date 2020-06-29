@@ -7,6 +7,8 @@ Changelog
 ========== ===========================================
 Date       Changes
 ========== ===========================================
+2020-06-29 Made Web Application mobile-friendly
+2020-06-28 Made Web Application link share-friendly
 2020-06-19 Added MBTI Personality Test
 2020-05-26 Added Sphinx documentation
 2020-05-25 Added Change Calculator 2

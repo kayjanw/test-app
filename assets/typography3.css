@@ -20,6 +20,28 @@ Pinkish grey #D6CAC7
 */
 
 
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* For devices larger than 300px */
+@media (min-width: 300px) {
+    .sidebar {
+        display: none !important;
+    }
+}
+
+/* For devices larger than 500px */
+@media (min-width: 500px) {
+    .sidebar {
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: inline-block !important;
+        width: 15vw;
+        height: 100vh;
+        background-color: #202029;
+    }
+}
+
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 body {
@@ -200,6 +222,7 @@ button[disabled] {
     display: flex !important;
     align-items: center;
     justify-content: left;
+    text-align: left !important;
 }
 
 .custom-tab span {
