@@ -22,8 +22,8 @@ Pinkish grey #D6CAC7
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/* For devices smaller than 800px */
-@media (max-device-width:800px) {
+/* For devices or screen size smaller than 800px */
+@media (max-width:800px), (max-device-width:800px) {
     #sidebar-small {
         display: inline-block;
     }
@@ -31,24 +31,30 @@ Pinkish grey #D6CAC7
         display: none;
         width: 85vw;
     }
+    #sidebar-big h1 {
+        font-size: 6vh;
+    }
     #tab-content {
         width: 94vw;
         margin-top: 60px;
         margin-left: 0;
     }
     .custom-tab {
-        font-size: 1.3em;
+        font-size: 3vh;
     }
 }
 
 /* For devices larger than 800px */
-@media (min-device-width: 800px) {
+@media (min-width:800px) and (min-device-width:800px) {
     #sidebar-small {
         display: none;
     }
     #sidebar-big {
         display: inline-block;
         width: 15vw;
+    }
+    #sidebar-big h1 {
+        font-size: 45px;
     }
     #tab-content {
         width: 80vw;
@@ -213,13 +219,13 @@ button[disabled] {
 }
 
 #sidebar-small h1 {
-    font-size: 6vh;
+    font-size: 5vh;
 }
 
 #sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
     height: 8vh;
     width: 10vw;
-    font-size: 6vh;
+    font-size: 5vh;
     color: #BE9B89;
     vertical-align: top;
     margin: 0;
