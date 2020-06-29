@@ -64,16 +64,16 @@ def register_callbacks(app, print_function):
                 style_contents['margin-left'] = '0'
                 style_contents['position'] = 'absolute'
             else:
-                # Show left sidebar
+                # First assignment, show left sidebar
                 style_sidebar_left = {'display': 'inline-block'}
                 style_sidebar_top = {'margin-left': '85vw'}
                 style_contents = {'margin-left': '85vw', 'position': 'fixed'}
         elif ctx == 'tabs-parent':
-            # Collapse left sidebar
-            style_sidebar_left['display'] = 'none'
-            style_sidebar_top['margin-left'] = '0'
-            style_contents['margin-left'] = '0'
-            style_contents['position'] = 'absolute'
+            if isinstance(style_sidebar_left, dict):
+                # Collapse left sidebar
+                style_sidebar_left = {'display': 'none'}
+                style_sidebar_top = {'margin-left': '0'}
+                style_contents = {'margin-left': '0', 'position': 'absolute'}
         return style_sidebar_left, style_sidebar_top, style_contents
 
     @app.callback([Output('table-trip-landmark', 'data'),
