@@ -45,7 +45,7 @@ Pinkish grey #D6CAC7
     }
     #tab-content {
         display: inline-block;
-        width: 97vw;
+        width: 94vw;
         margin-top: 60px;
         margin-left: 0;
         padding-left: 1.5vw;
@@ -227,12 +227,9 @@ button[disabled] {
     margin-left: 20px;
 }
 
-#sidebar-small h1 {
-    text-align: center;
-}
-
 #sidebar-small button, #sidebar-small button:hover, #sidebar-small button:focus {
     height: 60px;
+    width: 10vw;
     font-size: 3rem;
     color: #BE9B89;
     vertical-align: top;
