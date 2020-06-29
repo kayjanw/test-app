@@ -34,7 +34,7 @@ def app_1():
                 )
             ]),
         ],
-            id='sidebar-small'
+            id='sidebar-top-small'
         ),
 
         # Left contents
@@ -71,7 +71,7 @@ def app_1():
                 ),
             )
         ],
-            id='sidebar-big',
+            id='sidebar-left-small',
         ),
 
         # Right contents
