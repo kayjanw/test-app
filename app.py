@@ -15,37 +15,31 @@ meta_tags = [
         'property': 'og:type',
         'content': 'website'
     }, {
-        'data-react-helmet': 'true',
         'property': 'og:title',
         'content': 'Tools to make life easier'
     }, {
-        'data-react-helmet': 'true',
         'property': 'og:description',
-        'content': 'Helper tool that automates repetitive data analysis tasks, and perform predictions and optimizations that are computationally expensive'
+        'content': 'Automate repetitive data analysis tasks and perform computationally expensive predictions and '
+                   'optimizations'
     }, {
-        'data-react-helmet': 'true',
         'property': 'og:image',
-        'content': 'https://i.ibb.co/N6mwPyP/favicon.png'
+        'content': 'https://i.ibb.co/hmR8ZCN/favicon-google.png'
     }, {
-        'data-react-helmet': 'true',
         'property': 'og:image:width',
         'content': '512'
     }, {
-        'data-react-helmet': 'true',
         'property': 'og:image:height',
         'content': '512'
-    },     {
-        'data-react-helmet': 'true',
+    }, {
         'property': 'twitter:title',
         'content': 'Tools to make life easier'
     }, {
-        'data-react-helmet': 'true',
         'property': 'twitter:description',
-        'content': 'Helper tool that automates repetitive data analysis tasks, and perform predictions and optimizations that are computationally expensive'
+        'content': 'Automate repetitive data analysis tasks and perform computationally expensive predictions and '
+                   'optimizations'
     }, {
-        'data-react-helmet': 'true',
         'property': 'twitter:image',
-        'content': 'https://i.ibb.co/N6mwPyP/favicon.png'
+        'content': 'https://i.ibb.co/k8JKkRH/favicon-twitter.png'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
