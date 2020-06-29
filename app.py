@@ -23,7 +23,7 @@ meta_tags = [
                    'optimizations'
     }, {
         'property': 'og:image',
-        'content': 'https://i.ibb.co/hmR8ZCN/favicon-google.png'
+        'content': 'https://i.ibb.co/KrjyLmg/favicon-google.png'
     }, {
         'property': 'og:image:width',
         'content': '1200'
@@ -39,7 +39,7 @@ meta_tags = [
                    'optimizations'
     }, {
         'property': 'twitter:image',
-        'content': 'https://i.ibb.co/k8JKkRH/favicon-twitter.png'
+        'content': 'https://i.ibb.co/cFwJMGg/favicon-twitter.png'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
