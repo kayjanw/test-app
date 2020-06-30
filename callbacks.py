@@ -4,8 +4,8 @@ import traceback
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
-from components.helper import violin_plot, print_callback, get_summary_statistics, decode_df, update_when_upload, \
-    result_download_button
+from components.helper import print_callback, get_summary_statistics, decode_df, \
+    update_when_upload, result_download_button
 from components.mbti import MBTI
 from components.trip_planner import TripPlanner
 from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab
@@ -29,52 +29,52 @@ def register_callbacks(app, print_function):
         else:
             return app_2(pathname)
 
-    @app.callback([Output('sidebar-left-small', 'style'),
-                   Output('sidebar-top-small', 'style'),
+    @app.callback([Output('sidebar', 'style'),
+                   Output('banner', 'style'),
                    Output('tab-content', 'style')],
                   [Input('button-sidebar', 'n_clicks'),
                    Input('tabs-parent', 'value')],
-                  [State('sidebar-left-small', 'style'),
-                   State('sidebar-top-small', 'style'),
+                  [State('sidebar', 'style'),
+                   State('banner', 'style'),
                    State('tab-content', 'style')])
     @print_callback(print_function)
-    def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar_left, style_sidebar_top, style_contents):
+    def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar, style_banner, style_contents):
         """Display sidebar on icon click (mobile device)
 
         Args:
             trigger_sidebar: trigger on button click on sidebar
             trigger_tab: trigger on tab change
-            style_sidebar_left: current style of left sidebar
-            style_sidebar_top: current style of top sidebar
+            style_sidebar: current style of sidebar
+            style_banner: current style of banner
             style_contents: current style of tab content
 
         Returns:
         3-element tuple
 
-        - (dict): updated style of left sidebar
-        - (dict): updated style of top sidebar
+        - (dict): updated style of sidebar
+        - (dict): updated style of banner
         - (dict): updated style of tab content
         """
         ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
         if ctx == 'button-sidebar':
-            if isinstance(style_sidebar_left, dict) and style_sidebar_left['display'] == 'inline-block':
+            if isinstance(style_sidebar, dict) and style_sidebar['display'] == 'inline-block':
                 # Collapse left sidebar
-                style_sidebar_left['display'] = 'none'
-                style_sidebar_top['margin-left'] = '0'
+                style_sidebar['display'] = 'none'
+                style_banner['margin-left'] = '0'
                 style_contents['margin-left'] = '0'
                 style_contents['position'] = 'absolute'
             else:
                 # First assignment, show left sidebar
-                style_sidebar_left = {'display': 'inline-block'}
-                style_sidebar_top = {'margin-left': '85vw'}
+                style_sidebar = {'display': 'inline-block'}
+                style_banner = {'margin-left': '85vw'}
                 style_contents = {'margin-left': '85vw', 'position': 'fixed'}
         elif ctx == 'tabs-parent':
-            if isinstance(style_sidebar_left, dict):
+            if isinstance(style_sidebar, dict):
                 # Collapse left sidebar
-                style_sidebar_left = {'display': 'none'}
-                style_sidebar_top = {'margin-left': '0'}
+                style_sidebar = {'display': 'none'}
+                style_banner = {'margin-left': '0'}
                 style_contents = {'margin-left': '0', 'position': 'absolute'}
-        return style_sidebar_left, style_sidebar_top, style_contents
+        return style_sidebar, style_banner, style_contents
 
     @app.callback([Output('table-trip-landmark', 'data'),
                    Output('table-trip-landmark', 'style_table'),
@@ -480,38 +480,28 @@ def register_callbacks(app, print_function):
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
     @app.callback(Output('tab-content', 'children'),
-                  [Input('tabs-parent', 'value')])
+                  [Input('tabs-parent', 'value')],
+                  [State('tab-content', 'children')])
     @print_callback(print_function)
-    def update_output(tab):
+    def update_output(tab, current_content):
         """Update content when tab changes
 
         Args:
             tab: trigger on tab change
+            current_content (html.Div): current tab content
 
         Returns:
             (html.Div)
         """
-        if tab == 'tab-1':
-            return about_me_tab()
-        elif tab == 'tab-2':
-            return trip_tab()
-        elif tab == 'tab-3':
-            return change_tab()
-        elif tab == 'tab-4':
-            return changes_tab()
-        elif tab == 'tab-5':
-            return mbti_tab()
-        else:
-            return dcc.Graph(
-                figure=violin_plot(),
-                id='violin-plot',
-                config={
-                    'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
-                                               'autoScale2d', 'resetScale2d', 'toggleSpikelines',
-                                               'hoverClosestCartesian', 'hoverCompareCartesian'],
-                },
-                style={
-                    'margin-top': '15vh',
-                    'height': '60vh'
-                }
-            )
+        if dash.callback_context.triggered:
+            if tab == 'tab-1':
+                return about_me_tab()
+            elif tab == 'tab-2':
+                return trip_tab()
+            elif tab == 'tab-3':
+                return change_tab()
+            elif tab == 'tab-4':
+                return changes_tab()
+            elif tab == 'tab-5':
+                return mbti_tab()
+        return current_content
