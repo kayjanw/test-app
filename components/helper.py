@@ -15,13 +15,36 @@ from functools import reduce
 from plotly.colors import n_colors
 
 
+def print_callback(print_function):
+    """Decorator function to print callback on backend for debugging purposes
+
+    Args:
+        print_function (bool): indicates whether to print callback
+
+    Returns:
+        (function)
+    """
+
+    def decorator(func):
+        def wrapper(*args, **kw):
+            if print_function:
+                print(f'==== Function called: {func.__name__}')
+                print(f"Triggered by {dash.callback_context.triggered[0]['prop_id']}")
+            result = func(*args, **kw)
+            return result
+
+        return wrapper
+
+    return decorator
+
+
 def violin_plot():
-    """Get data for plot
+    """Get data for plot, return plot
 
     Adds plotly.graph_objects charts for violin plot at initial loading page
 
     Returns:
-        (dict)
+        (dcc.Graph)
     """
     np.random.seed(1)
     points = (np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200) +
@@ -58,26 +81,40 @@ def violin_plot():
         showlegend=False,
         margin=dict(l=0, r=0, t=80, b=0)
     )
-    return dict(data=data, layout=layout)
+    return dcc.Graph(
+        figure=dict(data=data, layout=layout),
+        id='violin-plot',
+        config={
+            'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
+                                       'autoScale2d', 'resetScale2d', 'toggleSpikelines',
+                                       'hoverClosestCartesian', 'hoverCompareCartesian'],
+        },
+        style={
+            'margin-top': '15vh',
+            'height': '60vh'
+        }
+    )
 
 
-def print_callback(print_function):
-    """Decorator function to print callback on backend for debugging purposes
+def dcc_loading(children, dark_bg=True):
+    """Get default dcc.Loading component
 
     Args:
-        print_function (bool): indicates whether to print callback
+        children (list): children of component
+        dark_bg (bool): indicates whether loading icon is on dark background
 
     Returns:
-        (function)
+        (dcc.Loading)
     """
-    def decorator(func):
-        def wrapper(*args, **kw):
-            if print_function:
-                print(f'==== Function called: {func.__name__}')
-            result = func(*args, **kw)
-            return result
-        return wrapper
-    return decorator
+    if dark_bg:
+        color = 'white'
+    else:
+        color = '#202029'
+    return dcc.Loading(
+        children,
+        type='circle',
+        color=color
+    )
 
 
 def table_css():
