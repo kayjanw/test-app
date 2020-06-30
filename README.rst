@@ -21,7 +21,7 @@ There are many other ways to structure your codes, but I find this implementatio
   project
   ├── assets
   │   ├── default_css.css
-  │   └── etc (other .ico, .svg, .css files)
+  │   └── etc (other .css, .ico, .png, .svg files)
   ├── components
   │   ├── helper.py
   │   └── etc (other .py files)
@@ -38,3 +38,8 @@ There are many other ways to structure your codes, but I find this implementatio
   ├── layouts.py
   ├── requirements.txt
   └── routes.py
+
+Project's file structure has the following dependency diagram
+
+.. image:: ../../assets/file-dependency.png
+  :alt: Dependency Diagram
