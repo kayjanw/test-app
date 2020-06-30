@@ -3,7 +3,7 @@ import dash_html_components as html
 import dash_leaflet as dl
 import dash_table
 
-from components.helper import table_css
+from components.helper import violin_plot, dcc_loading, table_css
 
 
 def main_layout():
@@ -13,69 +13,84 @@ def main_layout():
     ])
 
 
+def banner():
+    return html.Div([
+        html.Button(
+            '☰',
+            id='button-sidebar'
+        ),
+        html.Div(
+            html.H1(
+                'KJ Wong'
+            ),
+            style={
+                'display': 'inline-table',
+                'width': '80vw',
+                'text-align': 'center'
+            }
+        )
+    ])
+
+
+def sidebar_header():
+    return html.Div(
+        html.H1(
+            'KJ Wong'
+        ),
+    )
+
+
+def sidebar_dropdown():
+    return html.Div(
+        dcc.Tabs(
+            id='tabs-parent',
+            value=None,
+            vertical=True,
+            parent_className='custom-tabs-parent',
+            className='custom-tabs',
+            children=[
+                dcc.Tab(label='About Me', value='tab-1', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+            ],
+            colors={
+                'background': '#202029'
+            },
+            persistence=True,
+            persistence_type='session'
+        ),
+    )
+
+
 def app_1():
     return html.Div([
         # Top contents
-        html.Div([
-            html.Div([
-                html.Button(
-                    '☰',
-                    id='button-sidebar'
-                ),
-                html.Div(
-                    html.H1(
-                        'KJ Wong'
-                    ),
-                    style={
-                        'display': 'inline-table',
-                        'width': '80vw',
-                        'text-align': 'center'
-                    }
-                )
-            ]),
-        ],
-            id='sidebar-top-small'
+        html.Div(
+            banner(),
+            id='banner'
         ),
 
         # Left contents
         html.Div([
-            html.Div(
-                html.H1(
-                    'KJ Wong'
-                ),
-            ),
-            html.Div(
-                dcc.Tabs(
-                    id='tabs-parent',
-                    value=None,
-                    vertical=True,
-                    parent_className='custom-tabs-parent',
-                    className='custom-tabs',
-                    children=[
-                        dcc.Tab(label='About Me', value='tab-1', className='custom-tab',
-                                selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab',
-                                selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab',
-                                selected_className='custom-tab-selected'),
-                        dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab',
-                                selected_className='custom-tab-selected'),
-                        dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
-                                selected_className='custom-tab-selected'),
-                    ],
-                    colors={
-                        'background': '#202029'
-                    },
-                    persistence=True,
-                    persistence_type='session'
-                ),
-            )
+            sidebar_header(),
+            sidebar_dropdown()
         ],
-            id='sidebar-left-small',
+            id='sidebar',
         ),
 
         # Right contents
         html.Div(
+            dcc_loading(
+                violin_plot(),
+                dark_bg=False
+            ),
             id='tab-content'
         ),
     ])
@@ -83,19 +98,25 @@ def app_1():
 
 def app_2(pathname):
     return html.Div([
+        # Top contents
+        html.Div(
+            banner(),
+            id='banner'
+        ),
+
         # Left contents
         html.Div([
-            html.Div(
-                html.H1(
-                    'KJ Wong'
-                ),
+            sidebar_header(),
+            dcc.Tabs(
+                id='tabs-parent'
             )
         ],
-            className='sidebar'),
+            id='sidebar'
+        ),
 
         # Right contents
         html.Div([
-            header('Nice try', 'Sadly this page does not exist'),
+            content_header('Nice try', 'Sadly this page does not exist'),
             html.P([
                 f'What were you hoping for in {pathname} page?',
                 html.Br(),
@@ -104,12 +125,12 @@ def app_2(pathname):
                 ' to return to home page',
             ]),
         ],
-            className='contents'
+            id='tab-content'
         ),
     ])
 
 
-def header(title, subtitle=None):
+def content_header(title, subtitle=None):
     return html.Div([
         html.H2(
             title,
@@ -128,7 +149,7 @@ def header(title, subtitle=None):
 
 def about_me_tab():
     return html.Div([
-        header('About me'),
+        content_header('About me'),
         html.P(
             'Just someone trying to apply what I learn, and believes coding should make our lives easier'
         ),
@@ -184,7 +205,7 @@ def get_trip_table():
 
 def trip_tab():
     return html.Div([
-        header('Trip Planner', 'Optimize your route'),
+        content_header('Trip Planner', 'Optimize your route'),
         html.P('Users can fill in multiple destinations and an optimal route based on distance will be calculated, '
                'starting and ending from the first destination specified. '
                'This is also known as the Travelling Salesman Problem'),
@@ -226,16 +247,14 @@ def trip_tab():
                     'OK',
                     id='button-trip-ok',
                 ),
-                dcc.Loading(
+                dcc_loading(
                     html.Div(
                         id='trip-results',
                         style={
                             'margin-top': '30px',
                         }
-                    ),
-                    type='circle',
-                    color='white'
-                ),
+                    )
+                )
             ],
                 style={
                     'width': '32%',
@@ -272,7 +291,7 @@ def trip_tab():
 
 def change_tab():
     return html.Div([
-        header('Change Calculator', 'Compare changes over two periods'),
+        content_header('Change Calculator', 'Compare changes over two periods'),
         html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
                '(x axis) against present values (y axis). Users also have the option to download the processed results '
                'with change value into an excel file'),
@@ -410,15 +429,13 @@ def change_tab():
                     id='intermediate-change-result',
                     storage_type='memory'
                 ),
-                dcc.Loading(
+                dcc_loading(
                     html.Div(
                         id='change-result',
                         style={
                             'margin-top': '30px'
                         }
-                    ),
-                    type='circle',
-                    color='white'
+                    )
                 )
             ],
                 style={
@@ -494,8 +511,8 @@ def get_changes_table():
 
 def changes_tab():
     return html.Div([
-        header('Change Calculator 2', 'Compare changes over multiple periods'),
-        html.P('Users can view summary statistics and changes over time on a line plot. '
+        content_header('Change Calculator 2', 'Compare changes over multiple periods'),
+        html.P('Users can view summary statistics in table and box plot, and changes over time on a line plot. '
                'Just minor changes from the other change tab (haha)'),
         html.Br(),
         html.P('Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)'),
@@ -633,7 +650,7 @@ def changes_tab():
             ),
             # Bottom item
             html.Div([
-                dcc.Loading(
+                dcc_loading(
                     html.P(
                         id='changes-result',
                         style={
@@ -641,8 +658,7 @@ def changes_tab():
                         },
                         className='custom-div'
                     ),
-                    type='circle',
-                    color='#202029'
+                    dark_bg=False
                 ),
                 html.P(
                     id='div-changes-result',
@@ -659,7 +675,7 @@ def changes_tab():
 
 def mbti_tab():
     return html.Div([
-        header('MBTI Personality Test', 'Predict MBTI with writing style'),
+        content_header('MBTI Personality Test', 'Predict MBTI with writing style'),
         html.P('Users can find out their MBTI personality based on comparing their writing content, specifically their '
                'choice and phrasing of words, to other users in an existing database of over 8000 people'),
         html.Details([
@@ -753,7 +769,7 @@ def mbti_tab():
             ),
             # Right item
             html.Div([
-                dcc.Loading(
+                dcc_loading(
                     dcc.Graph(
                         id='graph-mbti',
                         config={
@@ -767,8 +783,7 @@ def mbti_tab():
                             'height': '100%'
                         }
                     ),
-                    type='circle',
-                    color='#202029'
+                    dark_bg=False
                 ),
             ],
                 style={
@@ -785,7 +800,7 @@ def mbti_tab():
 
 def keyboard_tab():
     return html.Div([
-        header('Keyboard', 'Play music on the flyyyyy'),
+        content_header('Keyboard', 'Play music on the flyyyyy'),
         html.P('Ideally, users can play the keyboard here. '
                'Im still figuring out how to make it work.'),
         # html.Button('C note', id='button_music')
@@ -794,7 +809,7 @@ def keyboard_tab():
 
 def sample_tab():
     return html.Div([
-        header('Header', 'Subheader'),
+        content_header('Header', 'Subheader'),
         html.P('Description'),
         html.Br(),
         html.P('Step 1: '),
