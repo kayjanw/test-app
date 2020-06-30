@@ -1,5 +1,6 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
+- Media
 - Base Styles
 - Scrollbar
 - Typography
@@ -7,9 +8,9 @@
 - Input
 - Button
 - Dash leaflet style
-- Custom id
 - Custom class
-- Tabs
+- Custom tabs
+- Custom id
 
 Colour Palette
 Grey #57555A
@@ -20,7 +21,7 @@ Pinkish grey #D6CAC7
 */
 
 
-/* Grid
+/* Media
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* For devices or screen size smaller than 800px */
 @media (max-width:800px), (max-device-width:800px) {
@@ -169,7 +170,7 @@ button[disabled] {
     vertical-align: top;
 }
 
-/* Tabs
+/* Custom tabs
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .custom-tabs-parent {
     width: 100%;
