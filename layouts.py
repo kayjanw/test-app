@@ -62,8 +62,8 @@ def sidebar_dropdown():
                         selected_className='custom-tab-selected'),
                 dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
                         selected_className='custom-tab-selected'),
-                # dcc.Tab(label='Image Editing', value='tab-6', className='custom-tab',
-                #         selected_className='custom-tab-selected')
+                dcc.Tab(label='Image Editing', value='tab-6', className='custom-tab',
+                        selected_className='custom-tab-selected')
             ],
             colors={
                 'background': '#202029'
