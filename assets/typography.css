@@ -1,5 +1,6 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
+- Media
 - Base Styles
 - Scrollbar
 - Typography
@@ -7,9 +8,9 @@
 - Input
 - Button
 - Dash leaflet style
-- Custom id
 - Custom class
-- Tabs
+- Custom tabs
+- Custom id
 
 Colour Palette
 Grey #57555A
@@ -20,7 +21,7 @@ Pinkish grey #D6CAC7
 */
 
 
-/* Grid
+/* Media
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* For devices or screen size smaller than 800px */
 @media (max-width:800px), (max-device-width:800px) {
@@ -169,7 +170,7 @@ button[disabled] {
     vertical-align: top;
 }
 
-/* Tabs
+/* Custom tabs
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .custom-tabs-parent {
     width: 100%;
@@ -262,6 +263,8 @@ button[disabled] {
     cursor: auto;
 }
 
+/* Custom id (dropdown)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 #dropdown-change-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-change-x .VirtualizedSelectFocusedOption,
 #dropdown-change-y .VirtualizedSelectFocusedOption,
@@ -270,6 +273,8 @@ button[disabled] {
     background-color: #F0E3DF;
 }
 
+/* Custom id (table)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 #table-changes .Select-value-label {
     color: white !important;
     margin-left: 20px;
@@ -287,3 +292,47 @@ button[disabled] {
 #table-changes .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
     background-color: black;
 }
+
+.dash-input-cell-value-container {
+    padding-bottom: 5px !important;
+}
+
+.dash-input-cell-value-container > input {
+    padding-bottom: 2px !important;
+}
+
+/* Custom id (canvas)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#div-image-output > div > div {
+  background-color: #CCDDFF !important;
+}
+
+#div-image-output > div > div,
+#div-image-output > div > div > div,
+#div-image-output > div > div > div > canvas:nth-child(1) {
+    width: 100% !important;
+    height: 420px !important;
+}
+
+#div-image-output button {
+    color: #202029 !important;
+    height: 38px !important;
+    margin: 10px 5px !important;
+}
+
+#div-image-output > div> button:nth-child(2),
+#div-image-output > div > button:nth-child(4),
+#div-image-output > div > button:nth-child(5) {
+    padding-top: 5px !important;
+}
+
+#div-image-output > div > button:nth-child(2) > svg:nth-child(1),
+ #div-image-output > div > button:nth-child(4) > svg:nth-child(1),
+ #div-image-output > div > button:nth-child(5) > svg:nth-child(1) {
+    transform: translateY(6px)
+}
+
+#div-image-output > div> button:nth-child(3) > svg:nth-child(1) {
+    transform: scale(0.5) translateX(-3px) translateY(-12px);
+}
+

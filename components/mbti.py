@@ -1,8 +1,9 @@
-import os
+import dash_html_components as html
 import pandas as pd
 import numpy as np
 import pickle
 import plotly.graph_objects as go
+import os
 import re
 import scipy
 
@@ -401,14 +402,13 @@ class MBTI():
         return n_words
 
     @staticmethod
-    def get_bar_plot(predictions, personality):
+    def get_bar_plot(predictions):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for bar plot
 
         Args:
             predictions (list): list of model prediction probabilities
-            personality (str): MBTI personality results, to be shown in title of bar plot
 
         Returns:
             (dict)
@@ -460,11 +460,10 @@ class MBTI():
             )
 
         layout = dict(
-            title=f'Result: {personality}',
             annotations=annotations,
             bargap=0.3,
             barmode='stack',
-            margin=dict(l=50, r=50, t=30, b=30),
+            margin=dict(l=50, r=50, t=20, b=30),
             plot_bgcolor='rgba(0,0,0,0)',
             showlegend=False,
             xaxis=dict(
@@ -485,3 +484,87 @@ class MBTI():
             )
         )
         return dict(data=data, layout=layout)
+
+    @staticmethod
+    def get_personality_details(personality):
+        """Get personality details (summary and details)
+
+        Args:
+            personality (str): MBTI personality results, to retrieve detailed results
+
+        Returns:
+            (list))
+        """
+        mbti_dict = {
+            'INTJ': {
+                'summary': 'Architect',
+                'details': 'Imaginative and strategic thinkers, with a plan for everything'
+            },
+            'INTP': {
+                'summary': 'Logician',
+                'details': 'Innovative inventors with an unquenchable thirst for knowledge'
+            },
+            'ENTJ': {
+                'summary': 'Commander',
+                'details': 'Bold, imaginative and strong-willed leaders, always finding a way - or making one'
+            },
+            'ENTP': {
+                'summary': 'Debator',
+                'details': 'Smart and curious thinkers who cannot resist an intellectual challenge'
+            },
+            'INFJ': {
+                'summary': 'Advocate',
+                'details': 'Quiet and mystical, yet very inspiring and tireless idealists'
+            },
+            'INFP': {
+                'summary': 'Mediator',
+                'details': 'Poetic, kind and altruistic people, always eager to help a good cause'
+            },
+            'ENFJ': {
+                'summary': 'Protagonist',
+                'details': 'Charismatic and inspiring leaders, able to mesmerize their listeners'
+            },
+            'ENFP': {
+                'summary': 'Campaigner',
+                'details': 'Enthusiastic, creative and sociable free spirits, who can always find a reason to smile'
+            },
+            'ISTJ': {
+                'summary': 'Logistician',
+                'details': 'Practical and fact-minded individuals, whose reliability cannot be doubted'
+            },
+            'ISFJ': {
+                'summary': 'Defender',
+                'details': 'Very dedicated and warm protectors, always ready to defend their loved ones'
+            },
+            'ESTJ': {
+                'summary': 'Executive',
+                'details': 'Excellent administrators, unsurpassed at managing things - or people'
+            },
+            'ESFJ': {
+                'summary': 'Consul',
+                'details': 'Extraordinarily caring, social and popular people, always eager to help'
+            },
+            'ISTP': {
+                'summary': 'Virtuoso',
+                'details': 'Bold and practical experimenters, masters of all kinds of tools'
+            },
+            'ISFP': {
+                'summary': 'Adventurer',
+                'details': 'Flexible and charming artists, always ready to explore and experience something new'
+            },
+            'ESTP': {
+                'summary': 'Entrepreneur',
+                'details': 'Smart, energetic and very perceptive people, who truly enjoy living on the edge'
+            },
+            'ESFP': {
+                'summary': 'Entertainer',
+                'details': 'Spontaneous, energetic and enthusiastic people - life is never boring around them'
+            },
+        }
+        summary = f"Result: {personality} ({mbti_dict[personality]['summary']})"
+        details = mbti_dict[personality]['details']
+        return [
+            html.P(summary, style={'font-size': 20}),
+            html.P(details)
+        ]
+

@@ -1,7 +1,10 @@
 import dash_core_components as dcc
+import dash_daq as daq
 import dash_html_components as html
 import dash_leaflet as dl
 import dash_table
+
+from dash_canvas import DashCanvas
 
 from components.helper import violin_plot, dcc_loading, table_css
 
@@ -59,6 +62,8 @@ def sidebar_dropdown():
                         selected_className='custom-tab-selected'),
                 dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
                         selected_className='custom-tab-selected'),
+                dcc.Tab(label='Image Editing', value='tab-6', className='custom-tab',
+                        selected_className='custom-tab-selected')
             ],
             colors={
                 'background': '#202029'
@@ -305,7 +310,7 @@ def change_tab():
             html.Div([
                 dcc.Upload(
                     html.P(
-                        'Drag and drop files here, or click to upload',
+                        'Drag and drop file here, or click to upload',
                         style={
                             'margin-bottom': 0
                         }
@@ -524,7 +529,7 @@ def changes_tab():
             html.Div([
                 dcc.Upload(
                     html.P(
-                        'Drag and drop files here, or click to upload',
+                        'Drag and drop file here, or click to upload',
                         style={
                             'margin-bottom': 0
                         }
@@ -652,7 +657,7 @@ def changes_tab():
             html.Div([
                 dcc_loading(
                     html.P(
-                        id='changes-result',
+                        id='changes-result-summary',
                         style={
                             'display': 'none',
                         },
@@ -661,7 +666,7 @@ def changes_tab():
                     dark_bg=False
                 ),
                 html.P(
-                    id='div-changes-result',
+                    id='changes-result-plot',
                     style={
                         'margin-top': '20px'
                     }
@@ -769,6 +774,9 @@ def mbti_tab():
             ),
             # Right item
             html.Div([
+                html.Div(
+                    id='mbti-result'
+                ),
                 dcc_loading(
                     dcc.Graph(
                         id='graph-mbti',
@@ -784,7 +792,7 @@ def mbti_tab():
                         }
                     ),
                     dark_bg=False
-                ),
+                )
             ],
                 style={
                     'width': '50%',
@@ -796,6 +804,103 @@ def mbti_tab():
             className='custom-container'
         ),
      ])
+
+
+def image_edit_tab():
+    return html.Div([
+        content_header('Image Editing', 'Draw on images'),
+        html.P('Users can edit images directly by drawing on them, or just draw on a blank canvas!'),
+        html.Br(),
+        html.P('Step 1: Upload an image (optional)'),
+        html.P('Step 2: Start drawing!'),
+        html.Div([
+            # Left item
+            html.Div([
+                html.Div([
+                    dcc.Upload(
+                        html.P(
+                            'Drag and drop image here, or click to upload',
+                            style={
+                                'margin-bottom': 0
+                            }
+                        ),
+                        id='upload-image',
+                        style={
+                            'borderWidth': '1px',
+                            'borderStyle': 'dashed',
+                            'borderRadius': '5px',
+                            'textAlign': 'center',
+                            'padding': '10px'
+                        },
+                        multiple=False
+                    ),
+                ],
+                    id='div-image-input'
+                ),
+                html.Br(),
+                html.Div([
+                    DashCanvas(
+                        id='image-canvas',
+                        width=600,
+                        height=400,
+                        json_objects=None,
+                        goButtonTitle='Save',
+                        hide_buttons=['zoom', 'line', 'rectangle', 'select'],
+                    ),
+                    html.Button(
+                        'clear',
+                        id='button-canvas-clear',
+                        style={
+                            'float': 'right',
+                            'transform': 'translateY(-58px)'
+                        }
+                    )
+                ],
+                    id='div-image-output')
+            ],
+                style={
+                    'width': '62%',
+                    'margin': '2%',
+                    'margin-top': '40px',
+                },
+                className='custom-div'
+            ),
+            # Right item
+            html.Div([
+                html.P('Brush width'),
+                daq.Knob(
+                    id='knob-canvas',
+                    min=2,
+                    max=40,
+                    value=5
+                ),
+                html.P('Brush colour'),
+                daq.ColorPicker(
+                    id='image-color-picker',
+                    label=' ',
+                    value=dict(hex='#119DFF'),
+                    style={
+                        'border': 'none',
+                        'overflow': 'hidden'
+                    }
+                )
+            ],
+                style={
+                    'width': '30%',
+                    'margin-top': '40px',
+                    'text-align': 'center'
+                },
+                className='custom-div-center'
+            ),
+
+            # Bottom item
+            html.Div(
+                id='image-result'
+            )
+        ],
+            className='custom-container'
+        )
+    ])
 
 
 def keyboard_tab():
