@@ -304,7 +304,7 @@ button[disabled] {
 /* Custom id (canvas)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #div-image-output > div > div {
-  background-color: #CCDDFF !important;
+  background-color: #FFFFFF !important;
 }
 
 #div-image-output > div > div,
@@ -320,12 +320,12 @@ button[disabled] {
     margin: 10px 5px !important;
 }
 
-#div-image-output > div> button:nth-child(2),
-#div-image-output > div > button:nth-child(4),
-#div-image-output > div > button:nth-child(5) {
-    padding-top: 5px !important;
+#div-image-output > div > button:nth-child(2) > svg:nth-child(1),
+ #div-image-output > div > button:nth-child(4) > svg:nth-child(1),
+ #div-image-output > div > button:nth-child(5) > svg:nth-child(1) {
+    transform: translateY(2px)
 }
 
 #div-image-output > div> button:nth-child(3) > svg:nth-child(1) {
-    transform: scale(0.5) translateX(-1px) translateY(-10px);
+    transform: scale(0.5) translateX(-3px) translateY(-12px);
 }

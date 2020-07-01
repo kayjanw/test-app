@@ -63,7 +63,7 @@ XlsxWriter==1.2.8
 zope.event==4.4
 zope.interface==5.1.0
 
-#For sphinx documentation (25 packages)
+#For sphinx documentation (26 packages)
 alabaster==0.7.12
 autodocsumm==0.1.13
 Babel==2.8.0
@@ -90,6 +90,20 @@ sphinxcontrib-napoleon==0.7
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.4
 win-inet-pton==1.1.0
+
+#For Dash Canvas
+cycler==0.10.0
+dash_canvas-0.2.0rc1.tar.gz
+dash-daq==0.5.0
+decorator==4.4.2
+imageio==2.8.0
+kiwisolver==1.2.0
+matplotlib==3.2.2
+networkx==2.4
+Pillow==7.1.2
+PyWavelets==1.1.1
+scikit-image==0.17.2
+tifffile==2020.6.3
 
 #For autopep8
 autopep8==1.5.3
