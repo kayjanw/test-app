@@ -321,9 +321,9 @@ button[disabled] {
 }
 
 #div-image-output > div > button:nth-child(2) > svg:nth-child(1),
- #div-image-output > div > button:nth-child(4) > svg:nth-child(1),
- #div-image-output > div > button:nth-child(5) > svg:nth-child(1) {
-    transform: translateY(2px)
+#div-image-output > div > button:nth-child(4) > svg:nth-child(1),
+#div-image-output > div > button:nth-child(5) > svg:nth-child(1) {
+    transform: translateY(6px)
 }
 
 #div-image-output > div> button:nth-child(3) > svg:nth-child(1) {
