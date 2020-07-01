@@ -878,6 +878,7 @@ def image_edit_tab():
                     id='button-image-minus',
                     style={
                         'display': 'inline-block',
+                        'margin': 0,
                         'transform': 'translateY(-50px)',
                     }
                 ),
@@ -886,6 +887,7 @@ def image_edit_tab():
                     id='button-image-plus',
                     style={
                         'display': 'inline-block',
+                        'margin': 0,
                         'transform': 'translateY(-50px)',
                     }
                 ),
