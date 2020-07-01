@@ -879,6 +879,7 @@ def image_edit_tab():
                     style={
                         'display': 'inline-block',
                         'margin': 0,
+                        'margin-right': '10px',
                         'transform': 'translateY(-50px)',
                     }
                 ),
