@@ -263,6 +263,8 @@ button[disabled] {
     cursor: auto;
 }
 
+/* Custom id (dropdown)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 #dropdown-change-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-change-x .VirtualizedSelectFocusedOption,
 #dropdown-change-y .VirtualizedSelectFocusedOption,
@@ -271,6 +273,8 @@ button[disabled] {
     background-color: #F0E3DF;
 }
 
+/* Custom id (table)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 #table-changes .Select-value-label {
     color: white !important;
     margin-left: 20px;
@@ -287,4 +291,41 @@ button[disabled] {
 
 #table-changes .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
     background-color: black;
+}
+
+.dash-input-cell-value-container {
+    padding-bottom: 5px !important;
+}
+
+.dash-input-cell-value-container > input {
+    padding-bottom: 2px !important;
+}
+
+/* Custom id (canvas)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#div-image-output > div > div {
+  background-color: #CCDDFF !important;
+}
+
+#div-image-output > div > div,
+#div-image-output > div > div > div,
+#div-image-output > div > div > div > canvas:nth-child(1) {
+    width: 100% !important;
+    height: 420px !important;
+}
+
+#div-image-output button {
+    color: #202029 !important;
+    height: 38px !important;
+    margin: 10px 5px !important;
+}
+
+#div-image-output > div> button:nth-child(2),
+#div-image-output > div > button:nth-child(4),
+#div-image-output > div > button:nth-child(5) {
+    padding-top: 5px !important;
+}
+
+#div-image-output > div> button:nth-child(3) > svg:nth-child(1) {
+    transform: scale(0.5) translateX(-1px) translateY(-10px);
 }
