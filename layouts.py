@@ -843,7 +843,6 @@ def image_edit_tab():
                         id='image-canvas',
                         width=600,
                         height=400,
-                        json_objects=None,
                         goButtonTitle='Save',
                         hide_buttons=['zoom', 'line', 'rectangle', 'select'],
                     ),
@@ -873,6 +872,22 @@ def image_edit_tab():
                     min=2,
                     max=40,
                     value=5
+                ),
+                html.Button(
+                    html.P('-', style={'font-size': '2em'}),
+                    id='button-image-minus',
+                    style={
+                        'display': 'inline-block',
+                        'transform': 'translateY(-50px)',
+                    }
+                ),
+                html.Button(
+                    html.P('+', style={'font-size': '2em'}),
+                    id='button-image-plus',
+                    style={
+                        'display': 'inline-block',
+                        'transform': 'translateY(-50px)',
+                    }
                 ),
                 html.P('Brush colour'),
                 daq.ColorPicker(
