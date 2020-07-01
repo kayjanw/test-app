@@ -500,9 +500,32 @@ def register_callbacks(app, print_function):
         Returns:
             (str)
         """
+        strings = ['{"objects":[ ]}', '{"objects":[]}']
         if n_clicks:
-            strings = ['{"objects":[ ]}', '{"objects":[]}']
             return strings[n_clicks % 2]
+        return strings[0]
+
+    @app.callback(Output('knob-canvas', 'value'),
+                  [Input('button-image-minus', 'n_clicks'),
+                   Input('button-image-plus', 'n_clicks')],
+                  [State('knob-canvas', 'value')])
+    def update_canvas_brush(trigger_minus, trigger_plus, value):
+        """Update canvas brush size (line width)
+
+        Args:
+            trigger_minus: trigger from button click
+            trigger_plus: trigger from button click
+            value: value of brush size
+
+        Returns:
+            (int): updated value of brush size
+        """
+        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+        if ctx == 'button-image-minus':
+            value -= 1
+        elif ctx == 'button-image-plus':
+            value += 1
+        return value
 
     @app.callback(Output('image-canvas', 'lineWidth'),
                   [Input('knob-canvas', 'value')])
