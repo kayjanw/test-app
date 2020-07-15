@@ -345,6 +345,22 @@ class MBTI():
             print(f'F1 for {col}: {metric_f1}')
             print()
 
+    def get_feature_importance(self, max_num_features=10):
+        """Print top feature importance for each model
+
+        Args:
+            max_num_features (int): number of top feature importance
+        """
+        vect = self.load_vectorizer()
+        vocab = vect.vocabulary
+        for idx, col in enumerate(self.mbti_cols):
+            print(f'\nFeature Importance for: {col}')
+            model = self.load_model(self.path_models[idx])
+            fi = list(zip(model.feature_importances_, vocab))
+            fi_sorted = sorted(fi, key=lambda x: x[0], reverse=True)
+            for idx in range(max_num_features):
+                print(fi_sorted[idx])
+
     def vectorize_new_input(self, input_text):
         """Load saved vectorizer and transform input text
 
