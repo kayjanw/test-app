@@ -237,13 +237,14 @@ class MBTI():
         scale_pos_weight2 = (len(y_train_series) -
                              sum(y_train_series)) / sum(y_train_series)
         clf = LGBMClassifier()
-        values = {'n_estimators': [20, 50, 100, 200],
-                  'max_depth': [3, 5],
-                  'num_leaves': [50, 100],
-                  'n_jobs': [8],
-                  'learning_rate': [0.1, 0.2, 0.3],
-                  'scale_pos_weight': [scale_pos_weight1, scale_pos_weight2]
-                  }
+        values = {
+            'n_estimators': [20, 50, 100, 200],
+            'max_depth': [3, 5],
+            'num_leaves': [50, 100],
+            'n_jobs': [8],
+            'learning_rate': [0.1, 0.2, 0.3],
+            'scale_pos_weight': [scale_pos_weight1, scale_pos_weight2]
+        }
         grid = GridSearchCV(clf,
                             param_grid=values,
                             cv=StratifiedKFold(3),
