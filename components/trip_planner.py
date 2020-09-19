@@ -28,10 +28,10 @@ class TripPlanner:
 
     @staticmethod
     def remove_last_point_on_table(data):
-        """Removes last entry from data of table that displays landmarks information
+        """Removes last entry from landmark table
 
         Args:
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
 
         Returns:
             (list)
@@ -59,13 +59,13 @@ class TripPlanner:
             return 'Location not found, please select another location.'
 
     def add_new_point_on_table(self, lat, lon, landmark, data):
-        """Adds new entry into data of table that displays landmarks information
+        """Adds new entry into landmark table
 
         Args:
             lat (float): latitude information
             lon (float): longitude information
             landmark (str): name of landmark, could be None or empty string
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
 
         Returns:
             (list)
@@ -94,10 +94,10 @@ class TripPlanner:
 
     @staticmethod
     def get_style_table(data):
-        """Return style of table that displays landmarks information
+        """Return style of landmark table
 
         Args:
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
 
         Returns:
             (dict)
@@ -116,10 +116,10 @@ class TripPlanner:
 
     @staticmethod
     def get_map_from_table(data, children):
-        """Adds landmark location pin on map from data of table that displays landmarks information
+        """Adds landmark location pin on map from landmark table
 
         Args:
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
             children (list): current map children
 
         Returns:
@@ -142,10 +142,10 @@ class TripPlanner:
         return children
 
     def get_distance_and_duration_from_table(self, data):
-        """Get distance and duration matrix from data of table that displays landmarks information, calls Google API
+        """Get distance and duration matrix from landmark table, calls Google API
 
         Args:
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
 
         Returns:
             2-element tuple
@@ -372,7 +372,7 @@ class TripPlanner:
         """Pipeline to run optimization algorithm
 
         Args:
-            data (list): data of table that displays landmarks information
+            data (list): data of landmark table
 
         Returns:
             (str/list)
