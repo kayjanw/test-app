@@ -31,15 +31,6 @@ class ChatAnalyzer:
         self.chat_name = chat['name']
         self.df = df
 
-    def get_number_of_calls(self):
-        """Get total number of phone calls in chat
-
-        Returns:
-            (int)
-        """
-        call_df = self.df.query("type == 'service' & action == 'phone_call'")
-        return len(call_df)
-
     def get_message_info_by_sender(self):
         """Get message information by sender
 
