@@ -24,7 +24,6 @@ def print_callback(print_function):
     Returns:
         (function)
     """
-
     def decorator(func):
         def wrapper(*args, **kw):
             if print_function:
@@ -32,9 +31,7 @@ def print_callback(print_function):
                 print(f"Triggered by {dash.callback_context.triggered[0]['prop_id']}")
             result = func(*args, **kw)
             return result
-
         return wrapper
-
     return decorator
 
 
@@ -194,6 +191,8 @@ def parse_data(contents, filename, worksheet=None):
                 df = pd.read_excel(xls, worksheet)
             else:
                 df = pd.read_excel(io.BytesIO(decoded))
+        elif 'json' in filename:
+            df = decoded
     except Exception as e:
         print(e)
     return df
