@@ -584,4 +584,3 @@ class MBTI():
             html.P(summary, style={'font-size': 20}),
             html.P(details)
         ]
-
