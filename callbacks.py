@@ -5,11 +5,12 @@ import traceback
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
+from components.chat import ChatAnalyzer
 from components.helper import print_callback, get_summary_statistics, decode_df, update_when_upload, \
-    result_download_button
+    result_download_button, parse_data
 from components.mbti import MBTI
 from components.trip_planner import TripPlanner
-from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, image_edit_tab
+from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, image_edit_tab
 
 
 def register_callbacks(app, print_function):
@@ -473,6 +474,71 @@ def register_callbacks(app, print_function):
                 print(traceback.print_exc())
         return plot, style, personality_details
 
+    @app.callback([Output('upload-chat-confirm', 'children'),
+                   Output('intermediate-chat-result', 'data')],
+                  [Input('upload-chat', 'contents')],
+                   [State('upload-chat', 'filename')])
+    def update_chat_upload(contents, filename):
+        """Update chat analyzer interface when file is uploaded
+
+        Args:
+            contents (str): contents of data uploaded, triggers callback
+            filename (str): filename of data uploaded
+
+        Returns:
+            4-element tuple
+
+            - (list): message of upload status
+            - (str): intermediate data stored in dcc.Store
+        """
+        upload_message = ''
+        storage = {}
+        if dash.callback_context.triggered:
+            if 'json' not in filename:
+                upload_message = ['Please upload a JSON file']
+            else:
+                data = parse_data(contents, filename)
+                try:
+                    chat = ChatAnalyzer(data=data)
+                    upload_message = [f'Chat uploaded: {chat.chat_name}']
+                    storage = contents
+                except KeyError:
+                    upload_message = ['Please upload a valid JSON file. Data is not in the correct format']
+        return upload_message, storage
+
+    @app.callback([Output('chat-result', 'children'),
+                   Output('graph-chat-result-day', 'figure'),
+                   Output('graph-chat-result-hour', 'figure')],
+                  [Input('button-chat-ok', 'n_clicks')],
+                  [State('intermediate-chat-result', 'data')])
+    def update_chat_result(trigger, contents):
+        """Update and display chat analyzer results
+
+        Args:
+            trigger: Trigger on button click
+            contents (str): intermediate data stored in dcc.Store
+
+        Returns:
+            3-element tuple
+
+            - (list): chat analyzer result
+            - (dict): graphical result 1 of chat analyzer
+            - (dict): graphical result 2 of chat analyzer
+        """
+        result = []
+        fig1 = {}
+        fig2 = {}
+        if trigger:
+            if not contents:
+                result = ['Please upload a file']
+            else:
+                data = parse_data(contents, 'json')
+                chat = ChatAnalyzer(data=data)
+                result = chat.get_message_info_by_sender()
+                fig1 = chat.get_time_series_hour_plot()
+                fig2 = chat.get_time_series_day_plot()
+        return result, fig1, fig2
+
     @app.callback(Output('image-canvas', 'image_content'),
                   [Input('upload-image', 'contents')])
     def update_canvas_image(contents):
@@ -623,6 +689,8 @@ def register_callbacks(app, print_function):
         elif tab == 'tab-5':
             return mbti_tab()
         elif tab == 'tab-6':
+            return chat_tab()
+        elif tab == 'tab-7':
             return image_edit_tab()
         else:
             return current_content

@@ -62,7 +62,9 @@ def sidebar_dropdown():
                         selected_className='custom-tab-selected'),
                 dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
                         selected_className='custom-tab-selected'),
-                # dcc.Tab(label='Image Editing', value='tab-6', className='custom-tab',
+                dcc.Tab(label='Chat Analyzer', value='tab-6', className='custom-tab',
+                        selected_className='custom-tab-selected')
+                # dcc.Tab(label='Image Editing', value='tab-7', className='custom-tab',
                 #         selected_className='custom-tab-selected')
             ],
             colors={
@@ -258,7 +260,8 @@ def trip_tab():
                         style={
                             'margin-top': '30px',
                         }
-                    )
+                    ),
+                    dark_bg=True
                 )
             ],
                 style={
@@ -440,7 +443,8 @@ def change_tab():
                         style={
                             'margin-top': '30px'
                         }
-                    )
+                    ),
+                    dark_bg=True
                 )
             ],
                 style={
@@ -804,6 +808,92 @@ def mbti_tab():
             className='custom-container'
         ),
      ])
+
+
+def chat_tab():
+    return html.Div([
+        content_header('Chat Analyzer', 'View your messaging pattern'),
+        html.P('Users can find out their messaging diagnostics based on their telegram chat data, simply export your '
+               'telegram chat data in JSON format and upload it here (confidentiality is guaranteed).'),
+        html.Br(),
+        html.P('Step 1: Upload the exported telegram file (.json format)'),
+        html.P('Step 2: Click "OK" button to generate the results!'),
+        html.Div([
+            # Left item
+            html.Div([
+                dcc.Upload(
+                    html.P(
+                        'Drag and drop file here, or click to upload',
+                        style={
+                            'margin-bottom': 0
+                        }
+                    ),
+                    id='upload-chat',
+                    style={
+                        'borderWidth': '1px',
+                        'borderStyle': 'dashed',
+                        'borderRadius': '5px',
+                        'textAlign': 'center',
+                        'padding': '10px'
+                    },
+                    multiple=False
+                ),
+                html.Br(),
+                dcc_loading(
+                    html.P(id='upload-chat-confirm'),
+                    dark_bg=True
+                ),
+                html.Button(
+                    'OK',
+                    id='button-chat-ok',
+                ),
+                html.P(
+                    id='chat-result',
+                    style={
+                        'margin-top': '30px',
+                    }
+                ),
+                dcc.Store(
+                    id='intermediate-chat-result',
+                    storage_type='memory'
+                ),
+            ],
+                style={
+                    'width': '42%',
+                    'margin': '2%',
+                    'margin-top': '40px',
+                },
+                className='custom-div'
+            ),
+            # Right item
+            html.Div([
+                html.Div([
+                    html.P('Mouseover for information, highlight to zoom, double click to reset view'),
+                    dcc_loading(
+                        dcc.Graph(
+                            id='graph-chat-result-day'
+                        ),
+                        dark_bg=False
+                    )
+                ]),
+            ],
+                style={
+                    'width': '50%',
+                },
+                className='custom-div-center'
+            ),
+            # Bottom item
+            html.Div([
+                dcc.Graph(
+                    id='graph-chat-result-hour'
+                )
+            ],
+                id='div-chat-result-hour'
+            ),
+        ],
+            className='custom-container'
+        ),
+    ])
 
 
 def image_edit_tab():
