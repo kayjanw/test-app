@@ -40,14 +40,14 @@ class ChatAnalyzer:
         call_df = self.df.query("type == 'service' & action == 'phone_call'")
         return len(call_df)
 
-
     def get_message_info_by_sender(self):
         """Get message information by sender
 
         Returns:
             (list)
         """
-        cols = ['Sender', 'Message Count', 'Sticker Count', 'Call Count', 'Avg message length (characters)']
+        cols = ['Sender', 'Message Count', 'Sticker Count',
+                'Call Count', 'Avg message length (characters)']
         message_df = self.df.query("type == 'message'")
         text_df = message_df.query('message_len != 0')
         sticker_df = message_df.query('message_len == 0')
@@ -56,7 +56,8 @@ class ChatAnalyzer:
         else:
             call_df = pd.DataFrame(columns=['from', 'actor'])
 
-        text_info_df = text_df.groupby(['from']).agg({'from': 'count', 'message_len': 'mean'})
+        text_info_df = text_df.groupby(['from']).agg(
+            {'from': 'count', 'message_len': 'mean'})
         text_info_df.columns = [cols[1], cols[4]]
         text_info_df.reset_index(inplace=True)
         text_info_df.rename(columns={'from': cols[0]}, inplace=True)
@@ -70,11 +71,13 @@ class ChatAnalyzer:
 
         message_info_df = pd.merge(
             text_info_df.astype(str),
-            pd.merge(sticker_count_df.astype(str), call_count_df.astype(str), on=cols[0], how='outer'),
+            pd.merge(sticker_count_df.astype(str),
+                     call_count_df.astype(str), on=cols[0], how='outer'),
             on=cols[0],
             how='outer')
         message_info_df = message_info_df[cols]
-        message_info_table = generate_datatable(message_info_df, max_rows=len(message_info_df))
+        message_info_table = generate_datatable(
+            message_info_df, max_rows=len(message_info_df))
         results = [html.P('Chat Breakdown'), message_info_table]
         return results
 
@@ -85,7 +88,8 @@ class ChatAnalyzer:
             (pandas DataFrame): Data with columns (sender, date, counts)
         """
         message_df = self.df.query("type == 'message'")
-        date_distribution_df = message_df.groupby(['from', 'date2']).size().reset_index()
+        date_distribution_df = message_df.groupby(
+            ['from', 'date2']).size().reset_index()
         date_distribution_df.columns = ['sender', 'date', 'counts']
         return date_distribution_df
 
@@ -96,7 +100,8 @@ class ChatAnalyzer:
             (pandas DataFrame): Data with columns (sender, hour, counts)
         """
         message_df = self.df.query("type == 'message'")
-        hour_distribution_df = message_df.groupby(['from', 'date3']).size().reset_index()
+        hour_distribution_df = message_df.groupby(
+            ['from', 'date3']).size().reset_index()
         hour_distribution_df.columns = ['sender', 'hour', 'counts']
         return hour_distribution_df
 
