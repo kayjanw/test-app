@@ -37,6 +37,11 @@ div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(4) {
     color: #fcfcfc
 }
 
+/* Make main content larger */
+body > div:nth-child(1) > section > div {
+    max-width: 1200px;
+}
+
 /* Links */
 a, a:visited {
     color: black;
