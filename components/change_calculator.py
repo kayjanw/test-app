@@ -180,7 +180,7 @@ class ChangeCalculator:
 
     @staticmethod
     def transpose_dataframe(df, col_identifier, cols):
-        """Convert long DataFrame to wide DataFrame, with DataFrame index as the original column(s) to compare
+        """Convert long DataFrame to wide DataFrame
 
         Args:
             df (pandas DataFrame): input DataFrame
