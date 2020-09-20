@@ -38,6 +38,9 @@ meta_tags = [
     } , {
         'http-equiv': 'Cache-control',
         'content': 'public'
+    }, {
+        'name': 'google-site-verification',
+        'content': '3AcDEhXtFa35ByGGTh-Fy8bDeDY6hUQUqYcrfh0mGso'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)
