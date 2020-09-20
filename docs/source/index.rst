@@ -35,12 +35,16 @@ Code Documentation
    :hidden:
 
    components/change-calculator
+   components/chat
    components/helper
    components/mbti
    components/trip-planner
 
 :doc:`components/change-calculator`
     List of functions for Change Calculator tab
+
+:doc:`components/chat`
+    List of functions for Chat Analyzer tab
 
 :doc:`components/helper`
     List of helper functions

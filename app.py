@@ -35,6 +35,9 @@ meta_tags = [
     }, {
         'property': 'twitter:image',
         'content': 'https://i.ibb.co/cFwJMGg/favicon-twitter.png'
+    } , {
+        'http-equiv': 'Cache-control',
+        'content': 'public'
     }
 ]
 app = dash.Dash(__name__, meta_tags=meta_tags)

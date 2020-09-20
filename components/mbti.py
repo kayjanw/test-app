@@ -510,7 +510,7 @@ class MBTI():
             personality (str): MBTI personality results, to retrieve detailed results
 
         Returns:
-            (list))
+            (list)
         """
         mbti_dict = {
             'INTJ': {
@@ -584,4 +584,3 @@ class MBTI():
             html.P(summary, style={'font-size': 20}),
             html.P(details)
         ]
-

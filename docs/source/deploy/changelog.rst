@@ -7,6 +7,7 @@ Changelog
 ========== ===========================================
 Date       Changes
 ========== ===========================================
+2020-09-20 Added Chat Analyzer
 2020-06-29 Made Web Application mobile-friendly
 2020-06-28 Made Web Application link share-friendly
 2020-06-19 Added MBTI Personality Test
