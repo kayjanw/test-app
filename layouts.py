@@ -813,8 +813,8 @@ def mbti_tab():
 def chat_tab():
     return html.Div([
         content_header('Chat Analyzer', 'View your messaging pattern'),
-        html.P('Users can find out their messaging diagnostics based on their telegram chat data, simply export your '
-               'telegram chat data in JSON format and upload it here (confidentiality is guaranteed).'),
+        html.P('Users can find out their telegram messaging diagnostics based on their chat data, simply export your '
+               'chat data in JSON format using Telegram Desktop and upload it here (confidentiality guaranteed).'),
         html.Br(),
         html.P('Step 1: Upload the exported telegram file (.json format)'),
         html.P('Step 2: Click "OK" button to generate the results!'),
