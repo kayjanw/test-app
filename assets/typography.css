@@ -43,7 +43,7 @@ Pinkish grey #D6CAC7
         margin-top: 60px;
         margin-left: 0;
     }
-    .custom-tab {
+    .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 1.3em;
     }
 }
@@ -65,7 +65,7 @@ Pinkish grey #D6CAC7
         margin-top: 0;
         margin-left: 15vw;
     }
-    .custom-tab {
+    .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 14px;
     }
 }
@@ -185,22 +185,28 @@ button[disabled] {
     width: 90%;
 }
 
-.custom-tab {
+.custom-tab, .custom-tab-sub, .custom-tab-disabled {
+    color: #BE9B89 !important;
     font-weight: bold;
-    color: #BE9B89;
-    border-radius: 3px;
-    padding: 10px !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: left;
+    border-radius: 5px;
+    padding: 8px !important;
     text-align: left !important;
+}
+
+.custom-tab-disabled {
+    cursor: auto !important;
+    text-decoration: underline;
 }
 
 .custom-tab span {
     margin-left: 0px;
 }
 
-.custom-tab:hover {
+.custom-tab-sub span {
+    margin-left: 20px;
+}
+
+.custom-tab:hover, .custom-tab-sub:hover {
     background-color: #31313A !important;
     color: #AFAFB9 !important;
 }
