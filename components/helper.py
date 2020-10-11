@@ -299,6 +299,10 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
     worksheet_options = []
     sample_table = []
     if dash.callback_context.triggered and contents is not None:
+        # Check file type
+        if 'xls' not in filename and 'csv' not in filename:
+            sample_table = [html.P('File type not supported. Please upload another file.')]
+
         # Get worksheet options
         if 'xls' in filename:
             worksheet_list = get_worksheet(contents)
