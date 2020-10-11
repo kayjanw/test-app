@@ -54,16 +54,22 @@ def sidebar_dropdown():
             children=[
                 dcc.Tab(label='About Me', value='tab-1', className='custom-tab',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab',
+                dcc.Tab(label='Data Analytics', value='optimization', className='custom-tab-disabled',
+                        disabled=True),
+                dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab',
+                dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab',
+                dcc.Tab(label='Chat Analyzer', value='tab-6', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab',
+                dcc.Tab(label='Optimization', value='optimization', className='custom-tab-disabled',
+                        disabled=True),
+                dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Chat Analyzer', value='tab-6', className='custom-tab',
-                        selected_className='custom-tab-selected')
+                dcc.Tab(label='Prediction', value='optimization', className='custom-tab-disabled',
+                        disabled=True),
+                dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab-sub',
+                        selected_className='custom-tab-selected'),
                 # dcc.Tab(label='Image Editing', value='tab-7', className='custom-tab',
                 #         selected_className='custom-tab-selected')
             ],
@@ -160,9 +166,18 @@ def about_me_tab():
         html.P(
             'Just someone trying to apply what I learn, and believes coding should make our lives easier'
         ),
-        html.P(
-            'Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!'
-        ),
+        html.P([
+            html.Strong('Data Analytics'),
+            html.Span(': Using uploaded data, visualize results graphically')
+        ]),
+        html.P([
+            html.Strong('Optimization'),
+            html.Span(': Solve computationally expensive math problems')
+        ]),
+        html.P([
+            html.Strong('Prediction'),
+            html.Span(': Use machine learning methods to churn out predictions')
+        ]),
         html.P([
             'Check out my ',
             html.A('linkedin', href='https://www.linkedin.com/in/kayjan/', target='_blank'),
@@ -171,6 +186,9 @@ def about_me_tab():
         ]),
         html.Br(),
         html.Br(),
+        html.P(
+            'Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!'
+        ),
         html.P([
             'This website is made with Dash, deployed using Gunicorn and hosted on Heroku, '
             'view code documentation on Sphinx ',
