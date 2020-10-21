@@ -8,8 +8,8 @@
 - Input
 - Button
 - Dash leaflet style
-- Custom class
 - Custom tabs
+- Custom class / div
 - Custom id
 - Custom id (dropdown)
 - Custom id (table)
@@ -132,7 +132,11 @@ input {
 button {
     font-family: Source Sans Pro;
     background-color: white;
+    border: none;
+    border-radius: 15px;
     color: #202029;
+    height: 28px;
+    line-height: 28px;
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -144,50 +148,18 @@ button[disabled] {
     pointer-events: none;
 }
 
+[id$="-ok"] {
+    background-color: #F0E3DF;
+    box-shadow: 1px 1px 2px #BE9B89;
+    margin-bottom: 10px;
+}
+
 /* Dash leaflet style
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .leaflet-container {
     cursor: crosshair !important;
 }
 
-/* Custom class
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.content-header {
-    margin-top: 15vh;
-}
-
-.div-with-image Img {
-    display: inline-block;
-    vertical-align: middle;
-    height: 30px;
-    margin-right: 10px;
-}
-
-.div-with-image Span {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.custom-container {
-    margin-top: 10px;
-    margin-bottom: 50px;
-}
-
-.custom-div {
-    display: inline-block;
-    text-align: left;
-    vertical-align: top;
-    border-radius: 10px;
-    background-color: #202029;
-    color: white;
-    padding: 2%;
-}
-
-.custom-div-center {
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-}
 
 /* Custom tabs
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -230,6 +202,120 @@ button[disabled] {
 .custom-tab-selected {
     background-color: #F0E3DF !important;
     color: #202029 !important;
+}
+
+/* Custom class / div
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.content-header {
+    margin-top: 15vh;
+}
+
+.div-with-image Img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.div-with-image Span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.medium-image Img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.small-image Img {
+    height: 20px;
+    margin-right: 5px;
+}
+
+.image-dark-bg Img {
+    filter: invert();
+}
+
+div[id$="-result"] {
+    margin-top: 20px;
+    padding-bottom: 30px;
+}
+
+.custom-container {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.custom-dark-div {
+    border-radius: 10px;
+    background-color: #202029;
+    color: white;
+    margin: 2%;
+    padding: 2%;
+}
+
+.custom-div-left {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+}
+
+.custom-div-center {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.custom-div-space-above {
+    margin-top: 40px;
+}
+
+.custom-div-space-below {
+    margin-bottom: 10px;
+}
+
+.custom-div-smaller {
+    width: 30%;
+}
+
+.custom-div-small {
+    width: 32%;
+}
+
+.custom-div-small-medium {
+    width: 42%;
+}
+
+.custom-div-half {
+    width: 50%;
+}
+
+.custom-div-medium {
+    width: 52%;
+}
+
+.custom-div-large {
+    width: 60%;
+}
+
+.custom-div-large-full {
+    width: 62%
+}
+
+.custom-div-full {
+    width: 100%;
+}
+
+.custom-div-flex {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.custom-div-flex p {
+    margin: 0px 5px 0px 0px;
+    padding: 0;
 }
 
 /* Custom id
@@ -292,6 +378,17 @@ button[disabled] {
 #violin-plot .js-plotly-plot .plotly .cursor-pointer,
 #graph-mbti .js-plotly-plot .plotly .cursor-pointer {
     cursor: auto;
+}
+
+[id^="upload-"] {
+    background-color: transparent;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: dashed;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 /* Custom id (dropdown)
