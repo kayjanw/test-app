@@ -27,9 +27,7 @@ def banner():
                 'KJ Wong'
             ),
             style={
-                'display': 'inline-table',
-                'width': '80vw',
-                'text-align': 'center'
+                'display': 'inline-table'
             }
         )
     ])
@@ -52,25 +50,25 @@ def sidebar_dropdown():
             parent_className='custom-tabs-parent',
             className='custom-tabs',
             children=[
-                dcc.Tab(label='About Me', value='tab-1', className='custom-tab',
+                dcc.Tab(label='About Me', value='tab-aboutme', className='custom-tab',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Data Analytics', value='optimization', className='custom-tab-disabled',
+                dcc.Tab(label='Data Analytics', value='', className='custom-tab-disabled',
                         disabled=True),
-                dcc.Tab(label='Change Calculator', value='tab-3', className='custom-tab-sub',
+                dcc.Tab(label='Change Calculator', value='tab-change', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Change Calculator 2', value='tab-4', className='custom-tab-sub',
+                dcc.Tab(label='Change Calculator 2', value='tab-change2', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Chat Analyzer', value='tab-6', className='custom-tab-sub',
+                dcc.Tab(label='Chat Analyzer', value='tab-chat', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Optimization', value='optimization', className='custom-tab-disabled',
+                dcc.Tab(label='Optimization', value='', className='custom-tab-disabled',
                         disabled=True),
-                dcc.Tab(label='Trip Planner', value='tab-2', className='custom-tab-sub',
+                dcc.Tab(label='Trip Planner', value='tab-trip', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                dcc.Tab(label='Prediction', value='optimization', className='custom-tab-disabled',
+                dcc.Tab(label='Prediction', value='', className='custom-tab-disabled',
                         disabled=True),
-                dcc.Tab(label='MBTI Personality Test', value='tab-5', className='custom-tab-sub',
+                dcc.Tab(label='MBTI Personality Test', value='tab-mbti', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
-                # dcc.Tab(label='Image Editing', value='tab-7', className='custom-tab',
+                # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab',
                 #         selected_className='custom-tab-selected')
             ],
             colors={
@@ -147,9 +145,7 @@ def content_header(title, subtitle=None):
     return html.Div([
         html.H2(
             title,
-            style={
-                'margin-top': '15vh',
-            }
+            className='content-header'
         ),
         html.H3(
             subtitle

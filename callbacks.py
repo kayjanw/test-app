@@ -678,19 +678,19 @@ def register_callbacks(app, print_function):
         Returns:
             (html.Div)
         """
-        if tab == 'tab-1':
+        if tab == 'tab-aboutme':
             return about_me_tab()
-        elif tab == 'tab-2':
-            return trip_tab()
-        elif tab == 'tab-3':
+        elif tab == 'tab-change':
             return change_tab()
-        elif tab == 'tab-4':
+        elif tab == 'tab-change2':
             return changes_tab()
-        elif tab == 'tab-5':
-            return mbti_tab()
-        elif tab == 'tab-6':
+        elif tab == 'tab-chat':
             return chat_tab()
-        elif tab == 'tab-7':
+        elif tab == 'tab-trip':
+            return trip_tab()
+        elif tab == 'tab-mbti':
+            return mbti_tab()
+        elif tab == 'tab-image':
             return image_edit_tab()
         else:
             return current_content
