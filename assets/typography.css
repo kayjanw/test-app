@@ -152,6 +152,10 @@ button[disabled] {
 
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.content-header {
+    margin-top: 15vh
+}
+
 .custom-container {
     margin-top: 10px;
     margin-bottom: 50px;
@@ -228,11 +232,17 @@ button[disabled] {
     z-index: 1;
 }
 
+#banner div {
+    display: inline-table
+}
+
 #banner h1 {
     display: table-cell;
     height: 8vh;
+    width: 80vw;
     font-size: 5vh;
     vertical-align: middle;
+    text-align: center;
 }
 
 #banner button, #banner button:hover, #banner button:focus {
