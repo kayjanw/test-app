@@ -18,27 +18,13 @@ def main_layout():
 
 def banner():
     return html.Div([
-        html.Button(
-            '☰',
-            id='button-sidebar'
-        ),
-        html.Div(
-            html.H1(
-                'KJ Wong'
-            ),
-            style={
-                'display': 'inline-table'
-            }
-        )
+        html.Button('☰', id='button-sidebar'),
+        html.Div(html.H1('KJ Wong'))
     ])
 
 
 def sidebar_header():
-    return html.Div(
-        html.H1(
-            'KJ Wong'
-        ),
-    )
+    return html.Div(html.H1('KJ Wong'))
 
 
 def sidebar_dropdown():
@@ -76,17 +62,14 @@ def sidebar_dropdown():
             },
             persistence=True,
             persistence_type='session'
-        ),
+        )
     )
 
 
 def app_1():
     return html.Div([
         # Top contents
-        html.Div(
-            banner(),
-            id='banner'
-        ),
+        html.Div(banner(), id='banner'),
 
         # Left contents
         html.Div([
@@ -103,24 +86,19 @@ def app_1():
                 dark_bg=False
             ),
             id='tab-content'
-        ),
+        )
     ])
 
 
 def app_2(pathname):
     return html.Div([
         # Top contents
-        html.Div(
-            banner(),
-            id='banner'
-        ),
+        html.Div(banner(), id='banner'),
 
         # Left contents
         html.Div([
             sidebar_header(),
-            dcc.Tabs(
-                id='tabs-parent'
-            )
+            dcc.Tabs(id='tabs-parent')
         ],
             id='sidebar'
         ),
@@ -143,25 +121,16 @@ def app_2(pathname):
 
 def content_header(title, subtitle=None):
     return html.Div([
-        html.H2(
-            title,
-            className='content-header'
-        ),
-        html.H3(
-            subtitle
-        ),
-        html.H4(
-            '————————'
-        )
+        html.H2(title, className='content-header'),
+        html.H3(subtitle),
+        html.H4('————————')
     ])
 
 
 def about_me_tab(app):
     return html.Div([
         content_header('About me'),
-        html.P(
-            'Just someone trying to apply what I learn, and believes coding should make our lives easier'
-        ),
+        html.P('Just someone trying to apply what I learn, and believes coding should make our lives easier'),
         html.P([
             html.Img(src=app.get_asset_url('data-analytics.svg')),
             html.Strong('Data Analytics'),
@@ -194,7 +163,7 @@ def about_me_tab(app):
             html.A('here', href='http://kayjan.readthedocs.io', target='_blank')
         ])
     ],
-        className='div-with-image'
+        className='div-with-image medium-image'
     )
 
 
@@ -229,12 +198,12 @@ def get_trip_table():
     )
 
 
-def trip_tab():
+def trip_tab(app):
     return html.Div([
         content_header('Trip Planner', 'Optimize your route'),
         html.P('Users can fill in multiple destinations and an optimal route based on distance will be calculated, '
-               'starting and ending from the first destination specified. '
-               'This is also known as the Travelling Salesman Problem'),
+               'starting and ending from the first destination specified. This is also known as the Travelling '
+               'Salesman Problem'),
         html.Br(),
         html.P('Step 1: Fill in the landmark name (optional)'),
         html.P('Step 2: Click the point on map corresponding to the landmark name'),
@@ -244,56 +213,39 @@ def trip_tab():
         html.Div([
             # Left item
             html.Div([
-                html.P(
-                    'Name of landmark:',
-                    style={
-                        'display': 'inline-block',
-                        'margin-right': '10px'
-                    }
-                ),
-                dcc.Input(
-                    id='input-trip-landmark',
-                    type='text',
-                    style={
-                        'display': 'inline-block',
-                        'width': '50%'
-                    }
-                ),
-                get_trip_table(),
-                html.Button(
-                    'Remove last landmark',
-                    id='button-trip-remove',
-                ),
-                html.Button(
-                    'Reset all landmarks',
-                    id='button-trip-reset',
-                ),
-                html.Br(),
-                html.Button(
-                    'OK',
-                    id='button-trip-ok',
-                ),
-                dcc_loading(
-                    html.Div(
-                        id='trip-results',
+                html.Div([
+                    html.P('Name of landmark:'),
+                    dcc.Input(
+                        id='input-trip-landmark',
+                        type='text',
+                        placeholder='i.e. Home, Work',
                         style={
-                            'margin-top': '30px',
+                            'width': '50%'
                         }
                     ),
+                ],
+                    className='custom-div-flex'
+                ),
+                get_trip_table(),
+                html.Button('Remove last landmark', id='button-trip-remove'),
+                html.Button('Reset all landmarks', id='button-trip-reset'),
+                html.Br(),
+                html.Button('OK', id='button-trip-ok'),
+                dcc_loading(
+                    html.Div(id='trip-result'),
                     dark_bg=True
                 )
             ],
-                style={
-                    'width': '32%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                    'padding-bottom': '50px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
-                html.P('Scroll to zoom, drag to move'),
+                html.P([
+                    html.Img(src=app.get_asset_url('info.svg')),
+                    html.Span('Scroll to zoom, drag to move')
+                ],
+                    className='div-with-image small-image'
+                ),
                 dl.Map(
                     id='map-trip',
                     style={
@@ -305,10 +257,7 @@ def trip_tab():
                         dl.TileLayer(),
                     ]
                 )],
-                style={
-                    'width': '60%',
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-large'
             ),
         ],
             className='custom-container'
@@ -316,7 +265,7 @@ def trip_tab():
     ])
 
 
-def change_tab():
+def change_tab(app):
     return html.Div([
         content_header('Change Calculator', 'Compare changes over two periods'),
         html.P('Users can view summary statistics and plot a scatterplot with marginal histograms of past values '
@@ -330,32 +279,17 @@ def change_tab():
         html.Div([
             # Left item
             html.Div([
-                dcc.Upload(
-                    html.P(
-                        'Drag and drop file here, or click to upload',
-                        style={
-                            'margin-bottom': 0
-                        }
-                    ),
+                dcc.Upload([
+                    html.Img(src=app.get_asset_url('upload.svg')),
+                    html.Span('Drag and drop file here, or click to upload')
+                ],
                     id='upload-change',
-                    style={
-                        'borderWidth': '1px',
-                        'borderStyle': 'dashed',
-                        'borderRadius': '5px',
-                        'textAlign': 'center',
-                        'padding': '10px'
-                    },
-                    multiple=False
+                    multiple=False,
+                    className='div-with-image small-image image-dark-bg'
                 ),
-                html.P([
-                    html.P(
-                        'Select worksheet: ',
-                        style={
-                            'display': 'inline-block',
-                            'margin-right': '3px'
-                        }
-                    ),
-                    html.Div([
+                html.Div([
+                    html.P('Select worksheet:'),
+                    html.P([
                         dcc.Dropdown(
                             id='dropdown-change-worksheet',
                             placeholder='Select worksheet',
@@ -367,28 +301,23 @@ def change_tab():
                         ),
                     ],
                         style={
-                            'display': 'inline-block',
-                            'width': '40%',
-                            'verticalAlign': 'middle'
+                            'width': '40%'
                         }
                     ),
                 ],
                     id='change-select-worksheet',
+                    className='custom-div-flex',
                     style={
-                        'display': 'none',
-                        'width': '100%',
-                        'margin-top': '10px',
+                        'display': 'none'
                     }
                 ),
                 html.Div(
                     id='change-sample-data',
-                    style={
-                        'margin-top': '10px',
-                    }
+                    className='custom-div-space-below'
                 ),
-                html.P([
-                    'Select x-axis: ',
-                    html.Div([
+                html.Div([
+                    html.P('Select x-axis:'),
+                    html.P([
                         dcc.Dropdown(
                             id='dropdown-change-x',
                             placeholder='Select column',
@@ -400,26 +329,24 @@ def change_tab():
                         ),
                     ],
                         style={
-                            'display': 'inline-block',
-                            'verticalAlign': 'middle',
                             'width': '35%'
                         }
                     ),
-                    ' out of ',
+                    html.P('out of'),
                     dcc.Input(
                         id='input-change-x',
                         type='number',
                         min=1,
-                        style={'display': 'inline-block', 'width': '20%'}
+                        style={
+                            'width': '20%'
+                        }
                     )
                 ],
-                    style={
-                        'margin-top': '10px'
-                    }
+                    className='custom-div-flex'
                 ),
-                html.P([
-                    'Select y-axis: ',
-                    html.Div([
+                html.Div([
+                    html.P('Select y-axis:'),
+                    html.P([
                         dcc.Dropdown(
                             id='dropdown-change-y',
                             placeholder='Select column',
@@ -431,71 +358,55 @@ def change_tab():
                         ),
                     ],
                         style={
-                            'display': 'inline-block',
-                            'verticalAlign': 'middle',
                             'width': '35%'
                         }
                     ),
-                    ' out of ',
+                    html.P('out of'),
                     dcc.Input(
                         id='input-change-y',
                         type='number',
                         min=1,
-                        style={'display': 'inline-block', 'width': '20%'}
+                        style={
+                            'width': '20%'
+                        }
                     )
                 ],
-                    style={
-                        'margin-top': '10px'
-                    }
+                    className='custom-div-flex'
                 ),
-                html.Button(
-                    'OK',
-                    id='button-change-ok',
-                ),
+                html.Button('OK', id='button-change-ok'),
                 dcc.Store(
                     id='intermediate-change-result',
                     storage_type='memory'
                 ),
                 dcc_loading(
                     html.Div(
-                        id='change-result',
-                        style={
-                            'margin-top': '30px'
-                        }
+                        id='change-result'
                     ),
                     dark_bg=True
                 )
             ],
-                style={
-                    'width': '32%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                    'padding-bottom': '50px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
-                html.P('Mouseover for information, highlight to zoom, double click to reset view'),
-                html.Div([
-                    dcc.Graph(
-                        id='graph-change-result'
-                    )
-                ]),
+                html.Img(src=app.get_asset_url('info.svg')),
+                html.Span('Mouseover for information, highlight to zoom, double click to reset view'),
+                html.Div(dcc.Graph(id='graph-change-result')),
                 html.Div([
                     html.P('Footnote:'),
                     html.P('1. Computation ignores rows where either x or y value is not in numerical format'),
                     html.P('2. Points will be very close to each other (but not overlapping) if two rows have '
                            'identical x and y values, it is recommended to zoom or download the results file'),
                     html.P('3. Interpreting the scatterplot above:'),
-                    html.P('** Points above the line represent positive change'),
-                    html.P('** Distance from the line represent magnitude of change'),
+                    html.P('• Points above the line represent positive change', style={'margin-left': '10px'}),
+                    html.P('• Distance from the line represent magnitude of change', style={'margin-left': '10px'}),
                     html.P('4. Interpreting the histogram above:'),
-                    html.P('** Histogram shows the distribution of values for x and y axis respectively'),
+                    html.P('• Histogram shows the distribution of values for x and y axis respectively',
+                           style={'margin-left': '10px'}),
                     html.P('5. Interpreting the summary statistics on the left:'),
                     html.P(
-                        '** If median is higher than mean: data is skewed to the left; there is a long tail of low '
-                        'scores pulling the mean down'),
+                        '• If median is higher than mean: data is skewed to the left; there is a long tail of low '
+                        'scores pulling the mean down', style={'margin-left': '10px'}),
                 ],
                     style={
                         'margin-left': '20px',
@@ -503,10 +414,7 @@ def change_tab():
                     }
                 ),
             ],
-                style={
-                    'width': '60%',
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-large div-with-image small-image'
             ),
         ],
             className='custom-container'
@@ -537,7 +445,7 @@ def get_changes_table():
     )
 
 
-def changes_tab():
+def changes_tab(app):
     return html.Div([
         content_header('Change Calculator 2', 'Compare changes over multiple periods'),
         html.P('Users can view summary statistics in table and box plot, and changes over time on a line plot. '
@@ -550,32 +458,17 @@ def changes_tab():
         html.Div([
             # Left item
             html.Div([
-                dcc.Upload(
-                    html.P(
-                        'Drag and drop file here, or click to upload',
-                        style={
-                            'margin-bottom': 0
-                        }
-                    ),
+                dcc.Upload([
+                    html.Img(src=app.get_asset_url('upload.svg')),
+                    html.Span('Drag and drop file here, or click to upload')
+                ],
                     id='upload-changes',
-                    style={
-                        'borderWidth': '1px',
-                        'borderStyle': 'dashed',
-                        'borderRadius': '5px',
-                        'textAlign': 'center',
-                        'padding': '10px'
-                    },
-                    multiple=False
+                    multiple=False,
+                    className='div-with-image small-image image-dark-bg'
                 ),
-                html.P([
-                    html.P(
-                        'Select worksheet: ',
-                        style={
-                            'display': 'inline-block',
-                            'margin-right': '3px'
-                        }
-                    ),
-                    html.Div([
+                html.Div([
+                    html.P('Select worksheet:'),
+                    html.P([
                         dcc.Dropdown(
                             id='dropdown-changes-worksheet',
                             placeholder='Select worksheet',
@@ -587,44 +480,29 @@ def changes_tab():
                         ),
                     ],
                         style={
-                            'display': 'inline-block',
-                            'width': '40%',
-                            'verticalAlign': 'middle'
+                            'width': '40%'
                         }
                     ),
                 ],
                     id='changes-select-worksheet',
-                    style={
-                        'display': 'none',
-                        'width': '100%',
-                        'margin-top': '10px',
-                    }
-                ),
-                html.Div(
-                    id='changes-sample-data',
-                    style={
-                        'margin-top': '10px',
-                    }
-                ),
-                html.Div(
-                    id='intermediate-changes-result',
+                    className='custom-div-flex',
                     style={
                         'display': 'none'
                     }
                 ),
+                html.Div(id='changes-sample-data'),
+                dcc.Store(
+                    id='intermediate-changes-result',
+                    storage_type='memory'
+                ),
             ],
-                style={
-                    'width': '32%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
-                html.P([
-                    'Column identifier (i.e. Name): ',
-                    html.Div([
+                html.Div([
+                    html.P('Column identifier (i.e. Name):'),
+                    html.P([
                         dcc.Dropdown(
                             id='dropdown-changes-identifier',
                             placeholder='Select column',
@@ -636,25 +514,15 @@ def changes_tab():
                         ),
                     ],
                         style={
-                            'display': 'inline-block',
-                            'verticalAlign': 'middle',
                             'width': '35%'
                         }
                     )
                 ],
-                    style={
-                        'margin-bottom': '10px'
-                    }
+                    className='custom-div-flex'
                 ),
                 get_changes_table(),
-                html.Button(
-                    'Add rows',
-                    id='button-changes-add',
-                ),
-                html.Button(
-                    'OK',
-                    id='button-changes-ok',
-                ),
+                html.Button('Add rows', id='button-changes-add'),
+                html.Button('OK', id='button-changes-ok'),
                 html.P([
                     'Footnote:',
                     html.Br(),
@@ -663,36 +531,25 @@ def changes_tab():
                     '2. Computation ignores rows where column identifier values are empty',
                     html.Br(),
                     '3. Ensure all column identifier values are unique, if not it will be replaced with running numbers'
-                ],
-                    style={
-                        'margin-top': '10px'
-                    }
-                )
+                ])
             ],
-                style={
-                    'width': '56%',
-                    'margin-top': '40px',
-                    'margin-bottom': '20px'
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-medium'
             ),
             # Bottom item
             html.Div([
                 dcc_loading(
                     html.P(
-                        id='changes-result-summary',
+                        id='changes-result',
                         style={
                             'display': 'none',
                         },
-                        className='custom-div'
+                        className='custom-dark-div custom-div-left div-with-image small-image image-dark-bg'
                     ),
                     dark_bg=False
                 ),
                 html.P(
-                    id='changes-result-plot',
-                    style={
-                        'margin-top': '20px'
-                    }
+                    id='graph-changes-result',
+                    className='custom-div-center custom-div-full div-with-image small-image'
                 )
             ])
         ],
@@ -775,38 +632,28 @@ def mbti_tab():
                     },
                 ),
                 html.Div([
-                    html.P(
-                        id='text-mbti-words',
-                    ),
+                    html.P(id='text-mbti-words'),
                 ],
                     style={
                         'float': 'right'
                     }
                 ),
-                html.Button(
-                    'OK',
-                    id='button-mbti'
-                )
+                html.Button('OK', id='button-mbti-ok')
             ],
-                style={
-                    'width': '42%',
-                    'margin': '2%',
-                    'margin-top': '40px'
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small-medium'
             ),
             # Right item
             html.Div([
                 html.Div(
-                    id='mbti-result'
+                    id='mbti-results',
+                    className='custom-div-space-above'
                 ),
                 dcc_loading(
                     dcc.Graph(
                         id='graph-mbti',
                         config={
                             'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d',
-                                                       'zoomOut2d',
-                                                       'autoScale2d', 'resetScale2d', 'toggleSpikelines',
+                                                       'zoomOut2d', 'autoScale2d', 'resetScale2d', 'toggleSpikelines',
                                                        'hoverClosestCartesian', 'hoverCompareCartesian'],
                         },
                         style={
@@ -817,11 +664,7 @@ def mbti_tab():
                     dark_bg=False
                 )
             ],
-                style={
-                    'width': '50%',
-                    'margin-top': '40px'
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-half'
             ),
         ],
             className='custom-container'
@@ -829,43 +672,32 @@ def mbti_tab():
      ])
 
 
-def chat_tab():
+def chat_tab(app):
     return html.Div([
         content_header('Chat Analyzer', 'View your messaging pattern'),
-        html.P('Users can find out their telegram messaging diagnostics based on their chat data, simply export your '
-               'chat data in JSON format using Telegram Desktop and upload it here (confidentiality guaranteed).'),
+        html.P('Users can find out their telegram messaging diagnostics such as number of messages sent, number of '
+               'stickers sent, average message length etc. based on their Telegram chat data. Confidentiality is '
+               'guaranteed as long as this webpage is loaded on HTTPS'),
         html.Br(),
-        html.P('Step 1: Upload the exported telegram file (.json format)'),
-        html.P('Step 2: Click "OK" button to generate the results!'),
+        html.P('Step 1: Export chat data in JSON format using Telegram Desktop'),
+        html.P('Step 2: Upload the exported telegram file (.json format)'),
+        html.P('Step 3: Click "OK" button to generate the results!'),
         html.Div([
             # Left item
             html.Div([
-                dcc.Upload(
-                    html.P(
-                        'Drag and drop file here, or click to upload',
-                        style={
-                            'margin-bottom': 0
-                        }
-                    ),
+                dcc.Upload([
+                    html.Img(src=app.get_asset_url('upload.svg')),
+                    html.Span('Drag and drop file here, or click to upload')
+                ],
                     id='upload-chat',
-                    style={
-                        'borderWidth': '1px',
-                        'borderStyle': 'dashed',
-                        'borderRadius': '5px',
-                        'textAlign': 'center',
-                        'padding': '10px'
-                    },
-                    multiple=False
+                    multiple=False,
+                    className='div-with-image small-image image-dark-bg'
                 ),
-                html.Br(),
                 dcc_loading(
-                    html.P(id='upload-chat-confirm'),
+                    html.P(id='text-chat-confirm'),
                     dark_bg=True
                 ),
-                html.Button(
-                    'OK',
-                    id='button-chat-ok',
-                ),
+                html.Button('OK', id='button-chat-ok'),
                 html.P(
                     id='chat-result',
                     style={
@@ -877,45 +709,32 @@ def chat_tab():
                     storage_type='memory'
                 ),
             ],
-                style={
-                    'width': '42%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small-medium'
             ),
             # Right item
             html.Div([
                 html.Div([
-                    html.P('Mouseover for information, highlight to zoom, double click to reset view'),
+                    html.Img(src=app.get_asset_url('info.svg')),
+                    html.Span('Mouseover for information, highlight to zoom, double click to reset view'),
                     dcc_loading(
-                        dcc.Graph(
-                            id='graph-chat-result-day'
-                        ),
+                        dcc.Graph(id='graph-chat-result-day'),
                         dark_bg=False
                     )
-                ]),
+                ],
+                    className='div-with-image small-image'
+                ),
             ],
-                style={
-                    'width': '50%',
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-half'
             ),
             # Bottom item
-            html.Div([
-                dcc.Graph(
-                    id='graph-chat-result-hour'
-                )
-            ],
-                id='div-chat-result-hour'
-            ),
+            html.Div(dcc.Graph(id='graph-chat-result-hour')),
         ],
             className='custom-container'
         ),
     ])
 
 
-def image_edit_tab():
+def image_edit_tab(app):
     return html.Div([
         content_header('Image Editing', 'Draw on images'),
         html.P('Users can edit images directly by drawing on them, or just draw on a blank canvas!'),
@@ -926,25 +745,16 @@ def image_edit_tab():
             # Left item
             html.Div([
                 html.Div([
-                    dcc.Upload(
-                        html.P(
-                            'Drag and drop image here, or click to upload',
-                            style={
-                                'margin-bottom': 0
-                            }
-                        ),
+                    dcc.Upload([
+                        html.Img(src=app.get_asset_url('upload.svg')),
+                        html.Span('Drag and drop image here, or click to upload')
+                    ],
                         id='upload-image',
-                        style={
-                            'borderWidth': '1px',
-                            'borderStyle': 'dashed',
-                            'borderRadius': '5px',
-                            'textAlign': 'center',
-                            'padding': '10px'
-                        },
                         multiple=False
                     ),
                 ],
-                    id='div-image-input'
+                    id='div-image-input',
+                    className='div-with-image small-image'
                 ),
                 html.Br(),
                 html.Div([
@@ -964,14 +774,10 @@ def image_edit_tab():
                         }
                     )
                 ],
-                    id='div-image-output')
+                    id='div-image-output'
+                )
             ],
-                style={
-                    'width': '62%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-large-full'
             ),
             # Right item
             html.Div([
@@ -1012,12 +818,7 @@ def image_edit_tab():
                     }
                 )
             ],
-                style={
-                    'width': '30%',
-                    'margin-top': '40px',
-                    'text-align': 'center'
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-space-above custom-div-smaller'
             ),
 
             # Bottom item
@@ -1051,22 +852,13 @@ def sample_tab():
             html.Div([
                 # html.P('Left component',),
             ],
-                style={
-                    'width': '32%',
-                    'margin': '2%',
-                    'margin-top': '40px',
-                    'padding-bottom': '50px',
-                },
-                className='custom-div'
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
                 # html.P('Right component')
             ],
-                style={
-                    'width': '60%',
-                },
-                className='custom-div-center'
+                className='custom-div-center custom-div-large'
             ),
         ],
             className='custom-container'
