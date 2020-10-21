@@ -679,7 +679,7 @@ def register_callbacks(app, print_function):
             (html.Div)
         """
         if tab == 'tab-aboutme':
-            return about_me_tab()
+            return about_me_tab(app)
         elif tab == 'tab-change':
             return change_tab()
         elif tab == 'tab-change2':

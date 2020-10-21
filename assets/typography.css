@@ -153,7 +153,19 @@ button[disabled] {
 /* Custom class
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .content-header {
-    margin-top: 15vh
+    margin-top: 15vh;
+}
+
+.div-with-image Img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.div-with-image Span {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .custom-container {
