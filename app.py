@@ -35,7 +35,7 @@ meta_tags = [
     }, {
         'property': 'twitter:image',
         'content': 'https://i.ibb.co/cFwJMGg/favicon-twitter.png'
-    } , {
+    }, {
         'http-equiv': 'Cache-control',
         'content': 'public'
     }, {

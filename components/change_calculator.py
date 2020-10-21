@@ -223,8 +223,7 @@ class ChangeCalculator:
             ],
                 style={
                     'text-align': 'center'
-                }
-            )
+                })
         ]
         for idx, col in enumerate(cols):
             trace.append(
