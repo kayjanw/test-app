@@ -126,8 +126,6 @@ class TripPlanner:
             (list): updated map children
         """
         children = [children[0]] + [
-            # Marker icon (dict) can contain iconUrl ("/assets/images/mapbox-icon.png") and iconSize ([25, 25])
-            # Marker children (list) can contain dl.Tooltip() and dl.Popup()
             dl.Marker(
                 position=[landmark['lat'], landmark['lon']],
                 icon={
