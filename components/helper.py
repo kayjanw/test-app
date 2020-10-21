@@ -312,12 +312,12 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
 
         # Update worksheet options display style
         if len(worksheet_options):
-            style['display'] = 'inline-block'
+            style['display'] = 'flex'
         else:
             style['display'] = 'none'
 
         # Read uploaded contents
-        if ctx == 'dropdown-changes-worksheet':
+        if 'worksheet' in ctx:
             df = parse_data(contents, filename, worksheet)
         else:
             df = parse_data(contents, filename)
@@ -334,10 +334,11 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
     return worksheet_options, style, sample_table, {}
 
 
-def result_download_button(df):
+def result_download_button(app, df):
     """Download button for processed data or results
 
     Args:
+        app (app): get app properties
         df (pandas DataFrame): input DataFrame, to be downloaded by user
 
     Returns:
@@ -350,9 +351,12 @@ def result_download_button(df):
             name='result',
             type='text',
             style={'display': 'none'}),
-        html.Button(
-            'Download results',
-            type='submit'
+        html.Button([
+            html.Img(src=app.get_asset_url('download.svg')),
+            html.Span('Download results')
+        ],
+            type='submit',
+            className='div-with-image small-image'
         )
     ],
         method='POST',
