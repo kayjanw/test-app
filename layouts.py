@@ -156,32 +156,35 @@ def content_header(title, subtitle=None):
     ])
 
 
-def about_me_tab():
+def about_me_tab(app):
     return html.Div([
         content_header('About me'),
         html.P(
             'Just someone trying to apply what I learn, and believes coding should make our lives easier'
         ),
         html.P([
+            html.Img(src=app.get_asset_url('data-analytics.svg')),
             html.Strong('Data Analytics'),
             html.Span(': Using uploaded data, visualize results graphically')
         ]),
         html.P([
+            html.Img(src=app.get_asset_url('optimization.svg')),
             html.Strong('Optimization'),
             html.Span(': Solve computationally expensive math problems')
         ]),
         html.P([
+            html.Img(src=app.get_asset_url('prediction.svg')),
             html.Strong('Prediction'),
             html.Span(': Use machine learning methods to churn out predictions')
         ]),
+        html.Br(),
+        html.Br(),
         html.P([
             'Check out my ',
             html.A('linkedin', href='https://www.linkedin.com/in/kayjan/', target='_blank'),
             ' / ',
             html.A('formal website', href='http://kayjan.github.io/', target='_blank')
         ]),
-        html.Br(),
-        html.Br(),
         html.P(
             'Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!'
         ),
@@ -190,7 +193,9 @@ def about_me_tab():
             'view code documentation on Sphinx ',
             html.A('here', href='http://kayjan.readthedocs.io', target='_blank')
         ])
-    ])
+    ],
+        className='div-with-image'
+    )
 
 
 def get_trip_table():
