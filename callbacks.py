@@ -133,7 +133,7 @@ def register_callbacks(app, print_function):
         children = TripPlanner().get_map_from_table(data, children)
         return children
 
-    @app.callback(Output('trip-results', 'children'),
+    @app.callback(Output('trip-result', 'children'),
                   [Input('button-trip-ok', 'n_clicks'),
                    Input('button-trip-reset', 'n_clicks')],
                   [State('table-trip-landmark', 'data')])
@@ -269,7 +269,7 @@ def register_callbacks(app, print_function):
                 df = decode_df(records['df'])
                 df = ChangeCalculator().compute_change(df, x_col, x_max, y_col, y_max)
                 result_table = get_summary_statistics(df, [x_col, y_col])
-                result = [result_table, result_download_button(df)]
+                result = [result_table, result_download_button(app, df)]
                 fig = ChangeCalculator().get_scatter_plot(df, x_col, y_col)
             elif 'df' not in records:
                 result = ['Please upload a file']
@@ -348,9 +348,9 @@ def register_callbacks(app, print_function):
             data.append(dict(column='', max=''))
         return data
 
-    @app.callback([Output('changes-result-summary', 'children'),
-                   Output('changes-result-summary', 'style'),
-                   Output('changes-result-plot', 'children')],
+    @app.callback([Output('changes-result', 'children'),
+                   Output('changes-result', 'style'),
+                   Output('graph-changes-result', 'children')],
                   [Input('button-changes-ok', 'n_clicks')],
                   [State('intermediate-changes-result', 'data'),
                    State('dropdown-changes-identifier', 'value'),
@@ -387,10 +387,10 @@ def register_callbacks(app, print_function):
                 if len(df):
                     df2 = ChangeCalculator().transpose_dataframe(df, col_identifier, cols)
                     result_table = get_summary_statistics(df, cols)
-                    instructions_box, fig_box = ChangeCalculator().get_box_plot(df, cols)
-                    instructions_line, fig_line = ChangeCalculator().get_line_plot(df2)
+                    instructions_box, fig_box = ChangeCalculator().get_box_plot(app, df, cols)
+                    instructions_line, fig_line = ChangeCalculator().get_line_plot(app, df2)
                     summary = ['Summary statistics:', result_table] + instructions_box + [dcc.Graph(figure=fig_box)]
-                    graph = instructions_line + [dcc.Graph(figure=fig_line, id='graph-changes-result')]
+                    graph = instructions_line + [dcc.Graph(figure=fig_line, id='changes-result-graph')]
                 elif not len(df):
                     summary = ['Processed dataframe is empty. Please select numeric columns']
             elif 'df' not in records:
@@ -399,9 +399,9 @@ def register_callbacks(app, print_function):
                 summary = ['Please specify columns to compare']
         return summary, style, graph
 
-    @app.callback(Output('graph-changes-result', 'figure'),
-                  [Input('graph-changes-result', 'hoverData')],
-                  [State('graph-changes-result', 'figure')])
+    @app.callback(Output('changes-result-graph', 'figure'),
+                  [Input('changes-result-graph', 'hoverData')],
+                  [State('changes-result-graph', 'figure')])
     def update_changes_hover(hover_data, figure):
         """Update layout of plotly graph on hover
 
@@ -440,8 +440,8 @@ def register_callbacks(app, print_function):
 
     @app.callback([Output('graph-mbti', 'figure'),
                    Output('graph-mbti', 'style'),
-                   Output('mbti-result', 'children')],
-                  [Input('button-mbti', 'n_clicks')],
+                   Output('mbti-results', 'children')],
+                  [Input('button-mbti-ok', 'n_clicks')],
                   [State('input-mbti', 'value'),
                    State('graph-mbti', 'style')])
     def update_mbti_result(trigger, input_text, style):
@@ -474,7 +474,7 @@ def register_callbacks(app, print_function):
                 print(traceback.print_exc())
         return plot, style, personality_details
 
-    @app.callback([Output('upload-chat-confirm', 'children'),
+    @app.callback([Output('text-chat-confirm', 'children'),
                    Output('intermediate-chat-result', 'data')],
                   [Input('upload-chat', 'contents')],
                    [State('upload-chat', 'filename')])
@@ -681,16 +681,16 @@ def register_callbacks(app, print_function):
         if tab == 'tab-aboutme':
             return about_me_tab(app)
         elif tab == 'tab-change':
-            return change_tab()
+            return change_tab(app)
         elif tab == 'tab-change2':
-            return changes_tab()
+            return changes_tab(app)
         elif tab == 'tab-chat':
-            return chat_tab()
+            return chat_tab(app)
         elif tab == 'tab-trip':
-            return trip_tab()
+            return trip_tab(app)
         elif tab == 'tab-mbti':
             return mbti_tab()
         elif tab == 'tab-image':
-            return image_edit_tab()
+            return image_edit_tab(app)
         else:
             return current_content

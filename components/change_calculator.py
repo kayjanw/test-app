@@ -196,7 +196,7 @@ class ChangeCalculator:
         return df2
 
     @staticmethod
-    def get_box_plot(df, cols):
+    def get_box_plot(app, df, cols):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for box plot, visualizing summary statistics
@@ -216,11 +216,15 @@ class ChangeCalculator:
         trace = []
         instructions = [
             html.Br(),
-            'Hover over box to see more information',
-            html.Br(),
-            'Single click on legend to hide entry',
-            html.Br(),
-            'Double click on legend to highlight entry'
+            html.Img(src=app.get_asset_url('info.svg')),
+            html.Span([
+                'Hover over box to see more information, Single click on legend to hide entry, Double click '
+                'on legend to highlight entry'
+            ],
+                style={
+                    'text-align': 'center'
+                }
+            )
         ]
         for idx, col in enumerate(cols):
             trace.append(
@@ -254,7 +258,7 @@ class ChangeCalculator:
         return instructions, dict(data=trace, layout=layout)
 
     @staticmethod
-    def get_line_plot(df2):
+    def get_line_plot(app, df2):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for line plot
@@ -270,11 +274,11 @@ class ChangeCalculator:
         """
         trace = []
         instructions = [
-            'Hover over line to see more information',
-            html.Br(),
-            'Single click on legend to hide entry',
-            html.Br(),
-            'Double click on legend to highlight entry'
+            html.Img(src=app.get_asset_url('info.svg')),
+            html.Span([
+                'Hover over line to see more information, Single click on legend to hide entry, Double click '
+                'on legend to highlight entry'
+            ])
         ]
         if df2.columns.nunique() < len(df2.columns):
             df2.columns = range(len(df2.columns))
