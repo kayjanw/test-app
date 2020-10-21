@@ -302,15 +302,13 @@ def change_tab(app):
                     ],
                         style={
                             'width': '40%'
-                        }
-                    ),
+                        }),
                 ],
                     id='change-select-worksheet',
                     className='custom-div-flex',
                     style={
                         'display': 'none'
-                    }
-                ),
+                    }),
                 html.Div(
                     id='change-sample-data',
                     className='custom-div-space-below'
@@ -330,8 +328,7 @@ def change_tab(app):
                     ],
                         style={
                             'width': '35%'
-                        }
-                    ),
+                        }),
                     html.P('out of'),
                     dcc.Input(
                         id='input-change-x',
@@ -359,8 +356,7 @@ def change_tab(app):
                     ],
                         style={
                             'width': '35%'
-                        }
-                    ),
+                        }),
                     html.P('out of'),
                     dcc.Input(
                         id='input-change-y',
@@ -390,16 +386,20 @@ def change_tab(app):
             # Right item
             html.Div([
                 html.Img(src=app.get_asset_url('info.svg')),
-                html.Span('Mouseover for information, highlight to zoom, double click to reset view'),
+                html.Span(
+                    'Mouseover for information, highlight to zoom, double click to reset view'),
                 html.Div(dcc.Graph(id='graph-change-result')),
                 html.Div([
                     html.P('Footnote:'),
-                    html.P('1. Computation ignores rows where either x or y value is not in numerical format'),
+                    html.P(
+                        '1. Computation ignores rows where either x or y value is not in numerical format'),
                     html.P('2. Points will be very close to each other (but not overlapping) if two rows have '
                            'identical x and y values, it is recommended to zoom or download the results file'),
                     html.P('3. Interpreting the scatterplot above:'),
-                    html.P('• Points above the line represent positive change', style={'margin-left': '10px'}),
-                    html.P('• Distance from the line represent magnitude of change', style={'margin-left': '10px'}),
+                    html.P('• Points above the line represent positive change',
+                           style={'margin-left': '10px'}),
+                    html.P('• Distance from the line represent magnitude of change',
+                           style={'margin-left': '10px'}),
                     html.P('4. Interpreting the histogram above:'),
                     html.P('• Histogram shows the distribution of values for x and y axis respectively',
                            style={'margin-left': '10px'}),
@@ -411,8 +411,7 @@ def change_tab(app):
                     style={
                         'margin-left': '20px',
                         'text-align': 'left'
-                    }
-                ),
+                    }),
             ],
                 className='custom-div-center custom-div-large div-with-image small-image'
             ),
@@ -481,8 +480,7 @@ def changes_tab(app):
                     ],
                         style={
                             'width': '40%'
-                        }
-                    ),
+                        }),
                 ],
                     id='changes-select-worksheet',
                     className='custom-div-flex',
@@ -515,8 +513,7 @@ def changes_tab(app):
                     ],
                         style={
                             'width': '35%'
-                        }
-                    )
+                        })
                 ],
                     className='custom-div-flex'
                 ),
@@ -564,7 +561,8 @@ def mbti_tab():
         html.P('Users can find out their MBTI personality based on comparing their writing content, specifically their '
                'choice and phrasing of words, to other users in an existing database of over 8000 people'),
         html.Details([
-            html.Summary('Click here for more details about the data, processing and modelling steps'),
+            html.Summary(
+                'Click here for more details about the data, processing and modelling steps'),
             dcc.Markdown('''
                 ###### Input Distribution
                 > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
@@ -629,7 +627,7 @@ def mbti_tab():
                         'width': '100%',
                         'height': 300,
                         'resize': 'vertical'
-                    },
+                    }
                 ),
                 html.Div([
                     html.P(id='text-mbti-words'),
@@ -669,7 +667,7 @@ def mbti_tab():
         ],
             className='custom-container'
         ),
-     ])
+    ])
 
 
 def chat_tab(app):
@@ -715,7 +713,8 @@ def chat_tab(app):
             html.Div([
                 html.Div([
                     html.Img(src=app.get_asset_url('info.svg')),
-                    html.Span('Mouseover for information, highlight to zoom, double click to reset view'),
+                    html.Span(
+                        'Mouseover for information, highlight to zoom, double click to reset view'),
                     dcc_loading(
                         dcc.Graph(id='graph-chat-result-day'),
                         dark_bg=False
