@@ -57,6 +57,7 @@ tqdm==4.46.1
 urllib3==1.25.9
 Werkzeug==0.15.5
 wincertstore==0.2
+wordcloud==1.8.1
 wrapt==1.11.2
 xlrd==1.2.0
 XlsxWriter==1.2.8
