@@ -1,5 +1,6 @@
 import dash
 import dash_core_components as dcc
+import dash_html_components as html
 import traceback
 
 from dash.dependencies import Input, Output, State
@@ -474,10 +475,16 @@ def register_callbacks(app, print_function):
                 print(traceback.print_exc())
         return plot, style, personality_details
 
+    @app.callback(Output('text-chat-loading', 'children'),
+                  [Input('upload-chat', 'contents')])
+    def update_chat_upload_loading(contents):
+        if dash.callback_context.triggered:
+            return html.P(['Uploading chat...'], id='text-chat-confirm')
+
     @app.callback([Output('text-chat-confirm', 'children'),
                    Output('intermediate-chat-result', 'data')],
                   [Input('upload-chat', 'contents')],
-                   [State('upload-chat', 'filename')])
+                  [State('upload-chat', 'filename')])
     def update_chat_upload(contents, filename):
         """Update chat analyzer interface when file is uploaded
 
@@ -486,7 +493,7 @@ def register_callbacks(app, print_function):
             filename (str): filename of data uploaded
 
         Returns:
-            4-element tuple
+            2-element tuple
 
             - (list): message of upload status
             - (str): intermediate data stored in dcc.Store

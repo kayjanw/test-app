@@ -1,9 +1,12 @@
 import dash_html_components as html
-import datetime
 import json
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
+from sklearn.feature_extraction.text import CountVectorizer
+from wordcloud import WordCloud as wc
 from components.helper import generate_datatable
 
 
@@ -29,8 +32,15 @@ class ChatAnalyzer:
         df['day'] = df['date'].dt.date
         df['hour'] = df['date'].dt.hour
 
+        # Get subset
+        message_df = df.query("type == 'message'")
+        message_df = message_df[message_df.apply(lambda x: isinstance(x['text'], str), axis=1)]  # remove embed links
+        text_df = message_df.query('message_len != 0')
+
         self.chat_name = chat['name']
         self.df = df
+        self.message_df = message_df
+        self.text_df = text_df
 
     def get_message_info_by_sender(self):
         """Get message information by sender
@@ -40,16 +50,17 @@ class ChatAnalyzer:
         """
         cols = ['Sender', 'Message Count', 'Sticker Count',
                 'Call Count', 'Avg message length (characters)']
-        message_df = self.df.query("type == 'message'")
-        text_df = message_df.query('message_len != 0')
-        sticker_df = message_df.query('message_len == 0')
+        if 'media_type' in self.message_df.columns:
+            sticker_df = self.message_df.query("media_type == 'sticker'")
+        else:
+            sticker_df = pd.DataFrame(columns=['from'])
         if 'action' in self.df.columns:
             call_df = self.df.query("type == 'service' & action == 'phone_call'")
         else:
             call_df = pd.DataFrame(columns=['from', 'actor'])
 
         # Get text_info_df (message count, average message length) from text_df
-        text_info_df = text_df.groupby(['from']).agg(
+        text_info_df = self.text_df.groupby(['from']).agg(
             {'from': 'count', 'message_len': 'mean'})
         text_info_df.columns = [cols[1], cols[4]]
         text_info_df.reset_index(inplace=True)
@@ -71,7 +82,7 @@ class ChatAnalyzer:
                      call_info_df.astype(str), on=cols[0], how='outer'),
             on=cols[0],
             how='outer')
-        message_info_df = message_info_df[cols]
+        message_info_df = message_info_df[cols].fillna(0)
 
         # Generate table for UI
         message_info_table = generate_datatable(
@@ -85,8 +96,7 @@ class ChatAnalyzer:
         Returns:
             (pandas DataFrame): Data with columns (sender, hour, counts)
         """
-        message_df = self.df.query("type == 'message'")
-        hour_df = message_df.groupby(
+        hour_df = self.message_df.groupby(
             ['from', 'hour']).size().reset_index()
         hour_df.columns = ['sender', 'hour', 'counts']
         return hour_df
@@ -97,8 +107,7 @@ class ChatAnalyzer:
         Returns:
             (pandas DataFrame): Data with columns (sender, day, counts)
         """
-        message_df = self.df.query("type == 'message'")
-        day_df = message_df.groupby(
+        day_df = self.message_df.groupby(
             ['from', 'day']).size().reset_index()
         day_df.columns = ['sender', 'day', 'counts']
         return day_df
@@ -178,3 +187,24 @@ class ChatAnalyzer:
             )
         )
         return dict(data=data, layout=layout)
+
+    def get_word_cloud(self, max_words=100):
+        """Get figure for plot
+
+        Save word cloud image to be displayed
+
+        Returns:
+            (html.Img)
+        """
+        model = CountVectorizer(
+            ngram_range=(1, 2),
+            max_df=0.01,
+            min_df=1,
+            max_features=max_words,
+            stop_words="english",
+            token_pattern="[A-Za-z]+(?=\\s+)")
+        document = model.fit_transform(self.text_df['text'])
+        word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
+        wc2 = wc(max_words=max_words, background_color="white", color_func=None)
+        wc_diagram = wc2.generate_from_frequencies(word_freq)
+        plt.imshow(wc_diagram, interpolation='bilinear')
