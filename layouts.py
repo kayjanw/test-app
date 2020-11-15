@@ -513,7 +513,8 @@ def changes_tab(app):
                     ],
                         style={
                             'width': '35%'
-                        })
+                        }
+                    )
                 ],
                     className='custom-div-flex'
                 ),
@@ -622,12 +623,7 @@ def mbti_tab():
                     id='input-mbti',
                     value='',
                     placeholder='Put in your text here, preferably more than 50 words and try not to use words that '
-                                'are too common or too complex!',
-                    style={
-                        'width': '100%',
-                        'height': 300,
-                        'resize': 'vertical'
-                    }
+                                'are too common or too complex!'
                 ),
                 html.Div([
                     html.P(id='text-mbti-words'),
@@ -691,17 +687,10 @@ def chat_tab(app):
                     multiple=False,
                     className='div-with-image small-image image-dark-bg'
                 ),
-                dcc_loading(
-                    html.P(id='text-chat-confirm'),
-                    dark_bg=True
-                ),
+                html.P(id='text-chat-loading'),
+                html.P(id='text-chat-confirm'),
                 html.Button('OK', id='button-chat-ok'),
-                html.P(
-                    id='chat-result',
-                    style={
-                        'margin-top': '30px',
-                    }
-                ),
+                html.P(id='chat-result'),
                 dcc.Store(
                     id='intermediate-chat-result',
                     storage_type='memory'
