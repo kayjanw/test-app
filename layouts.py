@@ -687,8 +687,11 @@ def chat_tab(app):
                     multiple=False,
                     className='div-with-image small-image image-dark-bg'
                 ),
-                html.P(id='text-chat-loading'),
-                html.P(id='text-chat-confirm'),
+                html.P([
+                    html.P(id='text-chat-confirm')
+                ],
+                    id='text-chat-loading'
+                ),
                 html.Button('OK', id='button-chat-ok'),
                 html.P(id='chat-result'),
                 dcc.Store(
