@@ -478,8 +478,10 @@ def register_callbacks(app, print_function):
     @app.callback(Output('text-chat-loading', 'children'),
                   [Input('upload-chat', 'contents')])
     def update_chat_upload_loading(contents):
+        content = []
         if dash.callback_context.triggered:
-            return html.P(['Uploading chat...'], id='text-chat-confirm')
+            content = ['Uploading chat...']
+        return html.P(content, id='text-chat-confirm')
 
     @app.callback([Output('text-chat-confirm', 'children'),
                    Output('intermediate-chat-result', 'data')],
