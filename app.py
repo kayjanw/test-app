@@ -43,9 +43,8 @@ meta_tags = [
         'content': '3AcDEhXtFa35ByGGTh-Fy8bDeDY6hUQUqYcrfh0mGso'
     }
 ]
-app = dash.Dash(__name__, meta_tags=meta_tags)
+app = dash.Dash(__name__, title='bowwow', update_title=None, meta_tags=meta_tags)
 server = app.server
-app.title = 'wow'
 app.config.suppress_callback_exceptions = True
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
