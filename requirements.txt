@@ -70,7 +70,7 @@ autodocsumm==0.1.13
 Babel==2.8.0
 cffi==1.14.0
 colorama==0.4.3
-cryptography==3.2
+cryptography==3.3.2
 docutils==0.16
 imagesize==1.2.0
 packaging==20.3
