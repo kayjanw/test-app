@@ -34,7 +34,8 @@ class ChatAnalyzer:
 
         # Get subset
         message_df = df.query("type == 'message'")
-        message_df = message_df[message_df.apply(lambda x: isinstance(x['text'], str), axis=1)]  # remove embed links
+        message_df = message_df[message_df.apply(
+            lambda x: isinstance(x['text'], str), axis=1)]  # remove embed links
         text_df = message_df.query('message_len != 0')
 
         self.chat_name = chat['name']
