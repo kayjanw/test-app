@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import os
 import re
 import scipy
+import tensorflow as tf
 
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
@@ -14,6 +15,8 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # import nltk
 # nltk.download('punkt')
@@ -39,9 +42,20 @@ class MBTI():
         self.path_data = 'sample_data/mbti.csv'
         self.path_save_data = 'sample_data/mbti_clean.csv'
         self.path_vect = 'data/vocabulary.pkl'
+        self.path_tokenizer = 'data/tokenizer.pkl'
         self.path_models = []
         for col in self.mbti_cols:
             self.path_models.append(f'data/model_{col}.pkl')
+        self.path_tf_models = []
+        for col in self.mbti_cols:
+            self.path_tf_models.append(f'data/model_tf_{col}.h5')
+
+        # Parameters for modelling
+        self.use_tf = False
+        self.n_words = 1600
+        self.n_padding = 1000
+        self.embedding_dim = 64
+        self.threshold = 0.5
 
         self.non_sw = [
             'ain',
@@ -198,7 +212,6 @@ class MBTI():
         Returns:
             (sklearn CountVectorizer)
         """
-        print('Initialize and save vectorizer')
         sw = [self.clean_text(word) for word in stopwords.words('english')]
         sw = list(set(sw) - set(self.non_sw))
         if params is None:
@@ -220,6 +233,59 @@ class MBTI():
         vocabulary = pd.read_pickle(self.path_vect)
         vect = CountVectorizer(vocabulary=vocabulary)
         return vect
+
+    def transform_vectorizer(self, vect, corpus):
+        """Transform corpus with vectorizer
+
+        Args:
+            vect (sklearn CountVectorizer): vectorizer to be used to transform text corpus
+            corpus (pandas Series): input text corpus
+
+        Returns:
+            vector_corpus (scipy csr_matrix): vectorized text corpus
+        """
+        vector_corpus = vect.transform(corpus).astype(np.float64)
+        return vector_corpus
+
+    def save_tokenizer(self, corpus, params=None):
+        """Fit, save and return tokenizer
+
+        Args:
+            corpus (pandas Series): input text corpus (training input)
+            params (dict): specifies parameters for tokenizer, defaults to None
+
+        Returns:
+            (keras Tokenizer)
+        """
+        if params is None:
+            params = dict(num_words=self.n_words, oov_token="<OOV>", lower=True, split=" ")
+        tokenizer = Tokenizer(**params)
+        tokenizer.fit_on_texts(corpus)
+        pickle.dump(tokenizer, open(self.path_tokenizer, 'wb'))
+        return tokenizer
+
+    def load_tokenizer(self):
+        """Load and return saved tokenizer
+
+        Returns:
+            (keras Tokenizer)
+        """
+        tokenizer = pd.read_pickle(self.path_tokenizer)
+        return tokenizer
+
+    def transform_tokenizer(self, tokenizer, corpus):
+        """Transform corpus with tokenizer
+
+        Args:
+            tokenizer (keras Tokenizer): tokenizer to be used to transform text corpus
+            corpus (pandas Series): input text corpus
+
+        Returns:
+            vector_corpus (numpy ndarray): tokenized text corpus
+        """
+        corpus_sequences = tokenizer.texts_to_sequences(corpus)
+        vector_corpus = pad_sequences(corpus_sequences, padding="post", truncating="post", maxlen=self.n_padding)
+        return vector_corpus
 
     @staticmethod
     def save_model(vector_train, y_train_series, path_model):
@@ -304,6 +370,68 @@ class MBTI():
         model = pd.read_pickle(path_model)
         return model
 
+    @staticmethod
+    def predict_model(model, vector_test):
+        """Perform prediction on test set
+
+        Args:
+            model (model): model to be used for prediction
+            vector_test (scipy csr_matrix): vectorized training input
+
+        Returns:
+            y_pred (numpy ndarray)
+        """
+        y_pred = model.predict(vector_test)
+        return y_pred
+
+    def save_model_tf(self, vector_train, y_train_series, path_model):
+        """Train, save and return tensorflow model
+
+        Args:
+            vector_train (numpy ndarray): vectorized training input
+            y_train_series (pandas Series): training output, one-column subset of y_train
+            path_model (str): location and file name of saved model
+
+        Returns:
+            (model)
+        """
+        model = tf.keras.Sequential([
+            tf.keras.layers.Embedding(self.n_words, self.embedding_dim, input_length=self.n_padding),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(6, activation='relu'),
+            tf.keras.layers.Dense(1, activation='sigmoid')
+        ])
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
+        model.fit(vector_train, y_train_series, validation_split=0.2, epochs=3, verbose=2)
+        model.save(path_model)
+        return model
+
+    @staticmethod
+    def load_model_tf(path_model):
+        """Load and return saved tensorflow model
+
+        Args:
+            path_model (str): location and file name of saved model
+
+        Returns:
+            (model)
+        """
+        model = tf.keras.models.load_model(path_model)
+        return model
+
+    def predict_model_tf(self, model, vector_test):
+        """Perform prediction on test set
+
+        Args:
+            model (model): model to be used for prediction
+            vector_test (numpy ndarray): vectorized training input
+
+        Returns:
+            y_pred (numpy ndarray)
+        """
+        y_pred = model.predict(vector_test) > self.threshold
+        return y_pred
+
     def train_pipeline(self, train_vect=False, train_model=False):
         """Training pipeline for loading, preprocessing and model training
 
@@ -317,22 +445,45 @@ class MBTI():
         df = self.load_and_save_data()
         X_train, X_test, y_train, y_test = self.get_train_test(
             X=df[['posts_clean']], y=df[self.mbti_cols])
-        if train_vect:
-            vect = self.save_vectorizer(X_train['posts_clean'])
+
+        # Initialize/load vectorizer and transform text
+        if not self.use_tf:
+            if train_vect:
+                print('Initialize and save vectorizer')
+                vect = self.save_vectorizer(X_train['posts_clean'])
+            else:
+                vect = self.load_vectorizer()
+            print(f'Vocabulary size: {len(vect.get_feature_names())}')
+            vector_train = self.transform_vectorizer(vect, X_train['posts_clean'])
+            vector_test = self.transform_vectorizer(vect, X_test['posts_clean'])
+
         else:
-            vect = self.load_vectorizer()
-        print(f'Vocabulary size: {len(vect.get_feature_names())}')
-        vector_train = vect.transform(
-            X_train['posts_clean']).astype(np.float64)
-        vector_test = vect.transform(X_test['posts_clean']).astype(np.float64)
+            if train_vect:
+                print('Initialize and save tokenizer')
+                tokenizer = self.save_tokenizer(X_train['posts_clean'])
+            else:
+                tokenizer = self.load_tokenizer()
+            print(f'Vocabulary size: {self.n_words}')
+            vector_train = self.transform_tokenizer(tokenizer, X_train['posts_clean'])
+            vector_test = self.transform_tokenizer(tokenizer, X_test['posts_clean'])
+
+        # Initialize/load model and get prediction
         for idx, col in enumerate(self.mbti_cols):
             print(f'Predicting for: {col}')
-            if train_model:
-                model = self.save_model(
-                    vector_train, y_train[col], self.path_models[idx])
+            if not self.use_tf:
+                if train_model:
+                    model = self.save_model(
+                        vector_train, y_train[col], self.path_models[idx])
+                else:
+                    model = self.load_model(self.path_models[idx])
+                y_pred = self.predict_model(model, vector_test)
             else:
-                model = self.load_model(self.path_models[idx])
-            y_pred = model.predict(vector_test)
+                if train_model:
+                    model = self.save_model_tf(
+                        vector_train, y_train[col], self.path_tf_models[idx])
+                else:
+                    model = self.load_model_tf(self.path_tf_models[idx])
+                y_pred = self.predict_model_tf(model, vector_test)
 
             # Metric
             metric_acc = np.round(accuracy_score(y_test[col], y_pred) * 100, 1)
@@ -358,8 +509,8 @@ class MBTI():
             model = self.load_model(self.path_models[idx])
             fi = list(zip(model.feature_importances_, vocab))
             fi_sorted = sorted(fi, key=lambda x: x[0], reverse=True)
-            for idx in range(max_num_features):
-                print(fi_sorted[idx])
+            for idx2 in range(max_num_features):
+                print(fi_sorted[idx2])
 
     def vectorize_new_input(self, input_text):
         """Load saved vectorizer and transform input text
@@ -370,12 +521,32 @@ class MBTI():
         Returns:
             (scipy csr_matrix): vectorized input_text
         """
-        wordnet.ensure_loaded()
+        try:
+            wordnet.ensure_loaded()
+        except AttributeError:
+            wordnet.ensure_loaded()
         clean_input = self.clean_text(input_text)
         vect = self.load_vectorizer()
-        vector_input = vect.transform(
-            pd.Series(clean_input)).astype(np.float64)
+        vector_input = self.transform_vectorizer(vect, pd.Series(clean_input))
         return vector_input
+
+    def tokenize_new_input(self, input_text):
+        """Load saved tokenizer and transform input text
+
+        Args:
+            input_text (str): input text
+
+        Returns:
+            (numpy ndarray): tokenized input_text
+        """
+        try:
+            wordnet.ensure_loaded()
+        except AttributeError:
+            wordnet.ensure_loaded()
+        clean_input = self.clean_text(input_text)
+        tokenizer = self.load_tokenizer()
+        tokenizer_input = self.transform_tokenizer(tokenizer, pd.Series(clean_input))
+        return tokenizer_input
 
     def test_pipeline(self, input_text):
         """Testing pipeline for new input text
@@ -387,21 +558,29 @@ class MBTI():
             2-element tuple
 
             - personality (str): MBTI personality results, to be shown in title of bar plot
-            - predictions (list): list of model prediction probabilities
+            - predictions (list): list of tuple of model prediction probabilities
         """
-        vector_input = self.vectorize_new_input(input_text)
+        if not self.use_tf:
+            vector_input = self.vectorize_new_input(input_text)
+        else:
+            vector_input = self.tokenize_new_input(input_text)
+
         personality = ''
         predictions = []
         for idx, _ in enumerate(self.mbti_cols):
-            m = MBTI.load_model(self.path_models[idx])
-            y_pred = m.predict_proba(vector_input)
-            predictions.append(y_pred[0])
+            if not self.use_tf:
+                m = MBTI.load_model(self.path_models[idx])
+                y_prob = m.predict_proba(vector_input)[:, 1][0]
+            else:
+                m = MBTI.load_model_tf(self.path_tf_models[idx])
+                y_prob = m.predict(vector_input)[0][0]
+            predictions.append((1 - y_prob, y_prob))
 
             # Decode results
-            if y_pred[0][0] >= 0.5:
-                personality += self.mbti_cols[idx][1]
-            else:
+            if y_prob >= self.threshold:
                 personality += self.mbti_cols[idx][0]
+            else:
+                personality += self.mbti_cols[idx][1]
 
         return personality, predictions
 
@@ -414,8 +593,12 @@ class MBTI():
         Returns:
             (int)
         """
-        vector_input = self.vectorize_new_input(input_text)
-        n_words = scipy.sparse.csr_matrix.count_nonzero(vector_input)
+        if not self.use_tf:
+            vector_input = self.vectorize_new_input(input_text)
+            n_words = scipy.sparse.csr_matrix.count_nonzero(vector_input)
+        else:
+            vector_input = self.tokenize_new_input(input_text)
+            n_words = sum((vector_input > 1)[0])
         return n_words
 
     @staticmethod

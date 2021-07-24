@@ -581,7 +581,7 @@ def mbti_tab():
                 > - Remove any mention of MBTI types or the word `mbti`
                 > - Lemmatization of words
 
-                ###### Modelling
+                ###### Modelling (v1)
                 > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
                 fashion
 
@@ -593,6 +593,17 @@ def mbti_tab():
                 > is used with stratified cross validation to handle imbalanced data
 
                 > Each model, after hyperparameter tuning, is then scored on the held out testing data
+
+                ###### Modelling (v2)
+                > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                fashion
+
+                > Training data has a vocabulary size of **1600 words** with word embedding dimension of 64
+
+                > The model used is tensorflow neural network model and 4 different models are trained for each
+                > personality trait
+
+                > Each model, after training for several epochs, is then scored on the held out testing data
 
                 ###### Results
                 > To interpret the results, accuracy is probability of being correct,
