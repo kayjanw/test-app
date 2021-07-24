@@ -6,7 +6,6 @@ import plotly.graph_objects as go
 import os
 import re
 import scipy
-import tensorflow as tf
 
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
@@ -15,8 +14,13 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+try:
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.text import Tokenizer
+    from tensorflow.keras.preprocessing.sequence import pad_sequences
+except ModuleNotFoundError:
+    pass
 
 # import nltk
 # nltk.download('punkt')
