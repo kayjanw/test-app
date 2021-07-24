@@ -58,7 +58,7 @@ urllib3==1.25.9
 Werkzeug==0.15.5
 wincertstore==0.2
 wordcloud==1.8.1
-wrapt==1.11.2
+wrapt==1.12.1
 xlrd==1.2.0
 XlsxWriter==1.2.8
 zope.event==4.4
@@ -121,7 +121,7 @@ imageio==2.8.0
 kiwisolver==1.2.0
 matplotlib==3.3.4
 networkx==2.4
-Pillow==8.1.1
+Pillow==8.2.0
 PyWavelets==1.1.1
 scikit-image==0.17.2
 tifffile==2020.6.3
