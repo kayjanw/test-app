@@ -4,9 +4,10 @@ Changelog
 
 .. note::  This changelog records the milestone progress, and does not include any hotfix made
 
-========== ==============================================
+========== =====================================================
 Date       Changes
-========== ==============================================
+========== =====================================================
+2021-07-24 Added tensorflow models in MBTI Personality Test tab
 2020-09-20 Added Chat Analyzer tab and Google Analytics
 2020-06-29 Made Web Application mobile-friendly
 2020-06-28 Made Web Application link share-friendly
@@ -18,4 +19,4 @@ Date       Changes
 2020-05-11 Added Trip Planner tab
 2020-05-08 First deploy
 2020-04-24 First commit
-========== ==============================================
+========== =====================================================
