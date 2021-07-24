@@ -151,10 +151,15 @@ def register_callbacks(app, print_function):
             (str/list)
         """
         ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+        result = ''
         if ctx == 'button-trip-ok':
-            return TripPlanner().optimiser_pipeline(data)
+            try:
+                result = TripPlanner().optimiser_pipeline(data)
+            except IndexError:
+                result = TripPlanner().optimiser_pipeline(data)
         elif ctx == 'button-trip-reset':
-            return ''
+            pass
+        return result
 
     @app.callback([Output('dropdown-change-worksheet', 'options'),
                    Output('change-select-worksheet', 'style'),
