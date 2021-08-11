@@ -26,22 +26,27 @@ class WNRS:
             deck_summary = deck_data.iloc[2, 1]
 
             if deck_type in self.information:
-                self.information[deck_type][deck] = dict(description=deck_description, summary=deck_summary)
+                self.information[deck_type][deck] = dict(
+                    description=deck_description, summary=deck_summary)
             else:
-                self.information[deck_type] = {deck: dict(description=deck_description, summary=deck_summary)}
+                self.information[deck_type] = {deck: dict(
+                    description=deck_description, summary=deck_summary)}
 
             deck_cards = pd.DataFrame(file.parse(deck, skiprows=4))
             deck_cards_dict = {}
-            if 'Level' in deck_cards.columns:
-                self.information[deck_type][deck]["levels"] = list(map(str, deck_cards.Level.unique()))
+            if "Level" in deck_cards.columns:
+                self.information[deck_type][deck]["levels"] = list(
+                    map(str, deck_cards.Level.unique()))
                 for level in deck_cards.Level.unique():
                     deck_cards_level = deck_cards[deck_cards["Level"] == level].copy()
                     deck_cards_level["Deck"] = f"{deck} {level}"
-                    deck_cards_dict[str(level)] = deck_cards_level[["Deck", "Card", "Prompt"]].to_dict()
+                    deck_cards_dict[str(level)] = deck_cards_level[[
+                        "Deck", "Card", "Prompt"]].to_dict()
             else:
                 self.information[deck_type][deck]["levels"] = [1]
                 deck_cards["Deck"] = deck
-                deck_cards_dict[str(1)] = deck_cards[["Deck", "Card", "Prompt"]].to_dict()
+                deck_cards_dict[str(1)] = deck_cards[[
+                    "Deck", "Card", "Prompt"]].to_dict()
             self.cards[deck] = deck_cards_dict
 
     def get_information(self):
@@ -80,7 +85,7 @@ class WNRS:
         if list_of_deck is None:
             list_of_deck = ["Main Deck 1"]
         self.get_all_cards(list_of_deck)
-        index = list(self.playing_cards['Deck'].keys())
+        index = list(self.playing_cards["Deck"].keys())
         random.shuffle(index)
         self.index = index
 
@@ -107,9 +112,9 @@ class WNRS:
         if self.pointer < len(self.index) - 1:
             self.pointer += 1
         idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards['Deck'][idx]
-        card_type = self.playing_cards['Card'][idx]
-        card_prompt = self.playing_cards['Prompt'][idx]
+        card_deck = self.playing_cards["Deck"][idx]
+        card_type = self.playing_cards["Card"][idx]
+        card_prompt = self.playing_cards["Prompt"][idx]
         return card_deck, card_type, card_prompt
 
     def get_previous_card(self):
@@ -122,9 +127,9 @@ class WNRS:
         if self.pointer > 0:
             self.pointer -= 1
         idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards['Deck'][idx]
-        card_type = self.playing_cards['Card'][idx]
-        card_prompt = self.playing_cards['Prompt'][idx]
+        card_deck = self.playing_cards["Deck"][idx]
+        card_type = self.playing_cards["Card"][idx]
+        card_prompt = self.playing_cards["Prompt"][idx]
         return card_deck, card_type, card_prompt
 
     def get_current_card(self):
@@ -135,7 +140,7 @@ class WNRS:
             (str, str, str): Card deck, type, card prompt
         """
         idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards['Deck'][idx]
-        card_type = self.playing_cards['Card'][idx]
-        card_prompt = self.playing_cards['Prompt'][idx]
+        card_deck = self.playing_cards["Deck"][idx]
+        card_type = self.playing_cards["Card"][idx]
+        card_prompt = self.playing_cards["Prompt"][idx]
         return card_deck, card_type, card_prompt
