@@ -617,8 +617,9 @@ def register_callbacks(app, print_function):
         update_wnrs_button_style_wrapper(deck)
 
     @app.callback(Output('intermediate-wnrs', 'data'),
+                  [Input('button-wnrs-ok', 'n_clicks')] +
                   [Input(deck, 'style') for deck in all_decks])
-    def update_wnrs_list_of_decks(*args):
+    def update_wnrs_list_of_decks(trigger, *args):
         """
         Update list of decks selected
 
@@ -643,13 +644,6 @@ def register_callbacks(app, print_function):
                 )
         return data
 
-    @app.callback(Output('intermediate-wnrs2', 'data'),
-                  [Input('button-wnrs-ok', 'n_clicks')])
-    def update_wnrs_list_of_decks(value):
-        if dash.callback_context.triggered:
-            value = dash.callback_context.triggered[0]['value']
-        return value
-
     @app.callback([Output('wnrs-prompt', 'children'),
                    Output('wnrs-deck', 'children'),
                    Output('wnrs-counter', 'children'),
@@ -658,8 +652,8 @@ def register_callbacks(app, print_function):
                   [Input('button-wnrs-ok', 'n_clicks'),
                    Input('button-wnrs-back', 'n_clicks'),
                    Input('button-wnrs-next', 'n_clicks'),
-                   Input('uploadwnrs', 'contents')],
-                  [State('uploadwnrs', 'filename'),
+                   Input('uploadbutton-wnrs', 'contents')],
+                  [State('uploadbutton-wnrs', 'filename'),
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
                    State('wnrs-card', 'style')])
@@ -694,8 +688,7 @@ def register_callbacks(app, print_function):
                     data_new = data.copy()
                 else:  # dummy callback
                     data_new = data2.copy()
-            elif ctx == 'uploadwnrs':
-                print('file uploaded')
+            elif ctx == 'uploadbutton-wnrs':
                 if 'json' not in filename:
                     card_prompt2 = 'Please upload a JSON file'
                 else:

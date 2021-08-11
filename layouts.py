@@ -7,7 +7,7 @@ import dash_table
 
 from dash_canvas import DashCanvas
 
-from components.helper import violin_plot, dcc_loading, table_css
+from components.helper import violin_plot, dcc_loading, table_css, encode_dict
 from components.wnrs import WNRS
 
 
@@ -747,6 +747,11 @@ def wnrs_tab(app):
     list_of_deck = ['Main Deck 1']
     wnrs_game.initialize_game(list_of_deck)
     wnrs_information = wnrs_game.get_information()
+    data_default = dict(
+        ctx_value=-1,
+        list_of_deck=list_of_deck,
+        wnrs_game_dict=wnrs_game.__dict__
+    )
     return html.Div([
         content_header("We're Not Really Strangers", 'Fun fun fun'),
         html.Button('Click to select deck', id='button-wnrs-ok'),
@@ -761,13 +766,7 @@ def wnrs_tab(app):
                         wnrs_information['Main Deck']['Main Deck']['description'],
                         placement='right',
                         target='main-deck-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Main Deck 1', style={'background-color': '#F0E3DF'}),
                     dbc.Button('Level 2', id='Main Deck 2'),
@@ -784,13 +783,7 @@ def wnrs_tab(app):
                         wnrs_information['Crossover']['Bumble x BFF Edition']['description'],
                         placement='right',
                         target='bumble-bff-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Bumble x BFF Edition 1'),
                     dbc.Button('Level 2', id='Bumble x BFF Edition 2'),
@@ -805,13 +798,7 @@ def wnrs_tab(app):
                         wnrs_information['Crossover']['Bumble Bizz Edition']['description'],
                         placement='right',
                         target='bumble-bizz-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Bumble Bizz Edition 1'),
                     dbc.Button('Level 2', id='Bumble Bizz Edition 2'),
@@ -826,13 +813,7 @@ def wnrs_tab(app):
                         wnrs_information['Crossover']['Bumble Date Edition']['description'],
                         placement='right',
                         target='bumble-date-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Bumble Date Edition 1'),
                     dbc.Button('Level 2', id='Bumble Date Edition 2'),
@@ -847,13 +828,7 @@ def wnrs_tab(app):
                         wnrs_information['Crossover']['Cann Edition']['description'],
                         placement='right',
                         target='cann-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Cann Edition 1'),
                     dbc.Button('Level 2', id='Cann Edition 2'),
@@ -868,13 +843,7 @@ def wnrs_tab(app):
                         wnrs_information['Crossover']['Valentino Edition']['description'],
                         placement='right',
                         target='valentino-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Valentino Edition 1'),
                 ],
@@ -888,13 +857,7 @@ def wnrs_tab(app):
                         wnrs_information['Expansion']['Honest Dating Edition']['description'],
                         placement='right',
                         target='dating-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Honest Dating Edition 1'),
                     dbc.Button('Level 2', id='Honest Dating Edition 2'),
@@ -909,13 +872,7 @@ def wnrs_tab(app):
                         wnrs_information['Expansion']['Inner Circle Edition']['description'],
                         placement='right',
                         target='inner-circle-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Inner Circle Edition 1'),
                     dbc.Button('Level 2', id='Inner Circle Edition 2'),
@@ -930,13 +887,7 @@ def wnrs_tab(app):
                         wnrs_information['Expansion']['Own It Edition']['description'],
                         placement='right',
                         target='own-it-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Own It Edition 1'),
                 ],
@@ -949,13 +900,7 @@ def wnrs_tab(app):
                         wnrs_information['Expansion']['Relationship Edition']['description'],
                         placement='right',
                         target='relationship-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Relationship Edition 1'),
                     dbc.Button('Level 2', id='Relationship Edition 2'),
@@ -971,13 +916,7 @@ def wnrs_tab(app):
                         wnrs_information['Online']['Race and Privilege Edition']['description'],
                         placement='right',
                         target='race-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Race and Privilege Edition 1'),
                     dbc.Button('Level 2', id='Race and Privilege Edition 2'),
@@ -992,13 +931,7 @@ def wnrs_tab(app):
                         wnrs_information['Online']['Quarantine Edition']['description'],
                         placement='right',
                         target='quarantine-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Quarantine Edition 1'),
                     dbc.Button('Level 2', id='Quarantine Edition 2'),
@@ -1014,13 +947,7 @@ def wnrs_tab(app):
                         wnrs_information['Online']['Voting Edition']['description'],
                         placement='right',
                         target='voting-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Voting Edition 1'),
                 ],
@@ -1034,13 +961,7 @@ def wnrs_tab(app):
                         wnrs_information['Single-Player']['Breakup Edition']['description'],
                         placement='right',
                         target='breakup-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Breakup Edition 1'),
                     dbc.Button('Final Card', id='Breakup Edition Final'),
@@ -1054,13 +975,7 @@ def wnrs_tab(app):
                         wnrs_information['Single-Player']['Forgiveness Edition']['description'],
                         placement='right',
                         target='forgiveness-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Forgiveness Edition 1'),
                 ],
@@ -1073,13 +988,7 @@ def wnrs_tab(app):
                         wnrs_information['Single-Player']['Healing Edition']['description'],
                         placement='right',
                         target='healing-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Healing Edition 1'),
                 ],
@@ -1092,13 +1001,7 @@ def wnrs_tab(app):
                         wnrs_information['Single-Player']['Self-Love Edition']['description'],
                         placement='right',
                         target='love-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Self-Love Edition 1'),
                     dbc.Button('Final Card', id='Self-Love Edition Final'),
@@ -1112,13 +1015,7 @@ def wnrs_tab(app):
                         wnrs_information['Single-Player']['Self-Reflection Edition']['description'],
                         placement='right',
                         target='reflection-help',
-                        style={
-                            'background-color': '#F0E3DF',
-                            'border': '1px solid black',
-                            'margin-left': '2px',
-                            'padding': '3px',
-                            'white-space': 'pre',
-                        }
+                        className='tooltip',
                     ),
                     dbc.Button('Level 1', id='Self-Reflection Edition 1'),
                 ],
@@ -1128,9 +1025,10 @@ def wnrs_tab(app):
             ]),
         ],
             id='div-wrns',
-            className='custom-dark-div custom-div-large image-dark-bg',
+            className='custom-dark-div image-dark-bg',
             style={
-                'display': 'none'
+                'display': 'none',
+                'width': '80%'
             }
         ),
         html.Div([
@@ -1138,25 +1036,8 @@ def wnrs_tab(app):
                 dcc.Upload([
                     html.Span('Click to upload past progress')
                 ],
-                    id='uploadwnrs',
+                    id='uploadbutton-wnrs',
                     multiple=False,
-                    style={
-                        'background-color': '#F0E3DF',
-                        'box-shadow': '1px 1px 2px #be9b89',
-                        'border': 'none',
-                        'border-radius': '15px',
-                        'color': '#202029',
-                        'display': 'inline-block',
-                        'height': '28px',
-                        'line-height': '28px',
-                        'margin-right': '10px',
-                        'padding': '0px 30px',
-                        'text-transform': 'uppercase',
-                        'font-family': 'Source Sans Pro',
-                        'font-size': '11px',
-                        'font-weight': '600',
-                        'letter-spacing': '.1rem',
-                    },
                 )
             ])
         ]),
@@ -1227,6 +1108,7 @@ def wnrs_tab(app):
                 html.Br(),
                 html.Form([
                     dcc.Input(
+                        value=encode_dict(data_default),
                         name='result',
                         type='text',
                         style={'display': 'none'},
@@ -1253,10 +1135,7 @@ def wnrs_tab(app):
         dcc.Store(
             id='intermediate-wnrs',
             storage_type='memory',
-            data=dict(
-                list_of_deck=list_of_deck,
-                wnrs_game_dict=wnrs_game.__dict__
-            )
+            data=data_default,
         ),
     ])
 
