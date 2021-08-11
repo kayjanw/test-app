@@ -47,6 +47,10 @@ Pinkish grey #D6CAC7
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 1.3em;
     }
+    #div-wnrs {
+        height: 60vw;
+        width: 90vw;
+    }
 }
 
 /* For devices larger than 800px */
@@ -68,6 +72,10 @@ Pinkish grey #D6CAC7
     }
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 14px;
+    }
+    #div-wnrs {
+        height: 45vh;
+        width: 70vh;
     }
 }
 
