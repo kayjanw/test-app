@@ -1211,11 +1211,8 @@ def wnrs_tab(app):
                     }
                 ),
             ],
+                id='div-wnrs',
                 className='custom-div-center',
-                style={
-                    'height': '45vh',
-                    'width': '70vh'
-                }
             ),
             html.Div([
                 html.P(
