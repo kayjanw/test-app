@@ -1,3 +1,4 @@
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_daq as daq
 import dash_html_components as html
@@ -7,6 +8,7 @@ import dash_table
 from dash_canvas import DashCanvas
 
 from components.helper import violin_plot, dcc_loading, table_css
+from components.wnrs import WNRS
 
 
 def main_layout():
@@ -53,6 +55,10 @@ def sidebar_dropdown():
                 dcc.Tab(label='Prediction', value='', className='custom-tab-disabled',
                         disabled=True),
                 dcc.Tab(label='MBTI Personality Test', value='tab-mbti', className='custom-tab-sub',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Others', value='', className='custom-tab-disabled',
+                        disabled=True),
+                dcc.Tab(label="We're Not Really Strangers", value='tab-wnrs', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
                 # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab',
                 #         selected_className='custom-tab-selected')
@@ -732,6 +738,528 @@ def chat_tab(app):
             html.Div(dcc.Graph(id='graph-chat-result-hour')),
         ],
             className='custom-container'
+        ),
+    ])
+
+
+def wnrs_tab(app):
+    wnrs_game = WNRS()
+    list_of_deck = ['Main Deck 1']
+    wnrs_game.initialize_game(list_of_deck)
+    wnrs_information = wnrs_game.get_information()
+    return html.Div([
+        content_header("We're Not Really Strangers", 'Fun fun fun'),
+        html.Button('Click to select deck', id='button-wnrs-ok'),
+        html.Br(),
+        html.Div([
+            html.Div([
+                html.P('Main Deck', style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Main Deck', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='main-deck-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Main Deck']['Main Deck']['description'],
+                        placement='right',
+                        target='main-deck-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Main Deck 1', style={'background-color': '#F0E3DF'}),
+                    dbc.Button('Level 2', id='Main Deck 2'),
+                    dbc.Button('Level 3', id='Main Deck 3'),
+                    dbc.Button('Final Card', id='Main Deck Final'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.P('Crossover', style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Bumble x BFF Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-bff-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Crossover']['Bumble x BFF Edition']['description'],
+                        placement='right',
+                        target='bumble-bff-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Bumble x BFF Edition 1'),
+                    dbc.Button('Level 2', id='Bumble x BFF Edition 2'),
+                    dbc.Button('Level 3', id='Bumble x BFF Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Bumble Bizz Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-bizz-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Crossover']['Bumble Bizz Edition']['description'],
+                        placement='right',
+                        target='bumble-bizz-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Bumble Bizz Edition 1'),
+                    dbc.Button('Level 2', id='Bumble Bizz Edition 2'),
+                    dbc.Button('Level 3', id='Bumble Bizz Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Bumble Date Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-date-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Crossover']['Bumble Date Edition']['description'],
+                        placement='right',
+                        target='bumble-date-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Bumble Date Edition 1'),
+                    dbc.Button('Level 2', id='Bumble Date Edition 2'),
+                    dbc.Button('Level 3', id='Bumble Date Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Cann Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='cann-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Crossover']['Cann Edition']['description'],
+                        placement='right',
+                        target='cann-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Cann Edition 1'),
+                    dbc.Button('Level 2', id='Cann Edition 2'),
+                    dbc.Button('Level 3', id='Cann Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Valentino Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='valentino-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Crossover']['Valentino Edition']['description'],
+                        placement='right',
+                        target='valentino-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Valentino Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.P('Expansion', style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Honest Dating Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='dating-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Expansion']['Honest Dating Edition']['description'],
+                        placement='right',
+                        target='dating-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Honest Dating Edition 1'),
+                    dbc.Button('Level 2', id='Honest Dating Edition 2'),
+                    dbc.Button('Level 3', id='Honest Dating Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Inner Circle Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='inner-circle-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Expansion']['Inner Circle Edition']['description'],
+                        placement='right',
+                        target='inner-circle-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Inner Circle Edition 1'),
+                    dbc.Button('Level 2', id='Inner Circle Edition 2'),
+                    dbc.Button('Level 3', id='Inner Circle Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Own It Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='own-it-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Expansion']['Own It Edition']['description'],
+                        placement='right',
+                        target='own-it-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Own It Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Relationship Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='relationship-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Expansion']['Relationship Edition']['description'],
+                        placement='right',
+                        target='relationship-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Relationship Edition 1'),
+                    dbc.Button('Level 2', id='Relationship Edition 2'),
+                    dbc.Button('Level 3', id='Relationship Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.P('Online', style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Race and Privilege Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='race-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Online']['Race and Privilege Edition']['description'],
+                        placement='right',
+                        target='race-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Race and Privilege Edition 1'),
+                    dbc.Button('Level 2', id='Race and Privilege Edition 2'),
+                    dbc.Button('Level 3', id='Race and Privilege Edition 3'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Quarantine Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='quarantine-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Online']['Quarantine Edition']['description'],
+                        placement='right',
+                        target='quarantine-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Quarantine Edition 1'),
+                    dbc.Button('Level 2', id='Quarantine Edition 2'),
+                    dbc.Button('Level 3', id='Quarantine Edition 3'),
+                    dbc.Button('Final Card', id='Quarantine Edition Final'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Voting Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='voting-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Online']['Voting Edition']['description'],
+                        placement='right',
+                        target='voting-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Voting Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.P('Single-Player', style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Breakup Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='breakup-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Breakup Edition']['description'],
+                        placement='right',
+                        target='breakup-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Breakup Edition 1'),
+                    dbc.Button('Final Card', id='Breakup Edition Final'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Forgiveness Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='forgiveness-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Forgiveness Edition']['description'],
+                        placement='right',
+                        target='forgiveness-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Forgiveness Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Healing Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='healing-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Healing Edition']['description'],
+                        placement='right',
+                        target='healing-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Healing Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Self-Love Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='love-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Self-Love Edition']['description'],
+                        placement='right',
+                        target='love-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Self-Love Edition 1'),
+                    dbc.Button('Final Card', id='Self-Love Edition Final'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Div([
+                    html.Span('Self-Reflection Edition', style={'margin-left': '50px', 'width': '150px'}),
+                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='reflection-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Self-Reflection Edition']['description'],
+                        placement='right',
+                        target='reflection-help',
+                        style={
+                            'background-color': '#F0E3DF',
+                            'border': '1px solid black',
+                            'margin-left': '2px',
+                            'padding': '3px',
+                            'white-space': 'pre',
+                        }
+                    ),
+                    dbc.Button('Level 1', id='Self-Reflection Edition 1'),
+                ],
+                    className='div-with-image small-image'
+                ),
+                html.Button('OK', id='button-wnrs-ok'),
+            ]),
+        ],
+            id='div-wrns',
+            className='custom-dark-div custom-div-large image-dark-bg',
+            style={
+                'display': 'none'
+            }
+        ),
+        html.Div([
+            html.A([
+                dcc.Upload([
+                    html.Span('Click to upload past progress')
+                ],
+                    id='uploadwnrs',
+                    multiple=False,
+                    style={
+                        'background-color': '#F0E3DF',
+                        'box-shadow': '1px 1px 2px #be9b89',
+                        'border': 'none',
+                        'border-radius': '15px',
+                        'color': '#202029',
+                        'display': 'inline-block',
+                        'height': '28px',
+                        'line-height': '28px',
+                        'margin-right': '10px',
+                        'padding': '0px 30px',
+                        'text-transform': 'uppercase',
+                        'font-family': 'Source Sans Pro',
+                        'font-size': '11px',
+                        'font-weight': '600',
+                        'letter-spacing': '.1rem',
+                    },
+                )
+            ])
+        ]),
+        html.Div([
+            html.Div([
+                dbc.Jumbotron(
+                    [
+                        dbc.Container(
+                            [
+                                html.P(
+                                    id='wnrs-prompt',
+                                    style={
+                                        'position': 'absolute',
+                                        'top': 0,
+                                        'bottom': 0,
+                                        'left': 0,
+                                        'right': 0,
+                                        'margin': 'auto',
+                                        'height': '55%',
+                                        'font-family': 'sans-serif',
+                                        'font-weight': 'bold',
+                                        'font-size': '2em',
+                                    }
+                                ),
+                                html.P(
+                                    id='wnrs-deck',
+                                    style={
+                                        'position': 'absolute',
+                                        'bottom': 0,
+                                        'left': 0,
+                                        'right': 0,
+                                        'font-family': 'sans-serif',
+                                        'font-weight': 'bold',
+                                        'font-size': '1em',
+                                        'line-height': '95%',
+                                    }
+                                ),
+                            ],
+                            fluid=True,
+                            style={
+                                'position': 'relative',
+                                'height': '100%',
+                                'text-transform': 'uppercase',
+                            }
+                        )
+                    ],
+                    fluid=True,
+                    id='wnrs-card',
+                    style={
+                        'height': '100%',
+                        'border-radius': '50px',
+                    }
+                ),
+            ],
+                className='custom-div-center',
+                style={
+                    'height': '45vh',
+                    'width': '70vh'
+                }
+            ),
+            html.Div([
+                html.P(
+                    id='wnrs-counter',
+                    style={
+                        'font-family': 'sans-serif',
+                        'color': '#BE9B89'
+                    }
+                ),
+                html.Button('Previous', id='button-wnrs-back'),
+                html.Button('Next', id='button-wnrs-next'),
+                html.Br(),
+                html.Form([
+                    dcc.Input(
+                        name='result',
+                        type='text',
+                        style={'display': 'none'},
+                        id='input-wnrs',
+                    ),
+                    html.Button([
+                        html.Img(src=app.get_asset_url('download.svg')),
+                        html.Span('Save Progress')
+                    ],
+                        type='submit',
+                        className='div-with-image small-image'
+                    )
+                ],
+                    method='POST',
+                    action='/download_dict/'
+                ),
+            ])
+        ],
+            className='custom-container',
+            style={
+                'text-align': 'center'
+            }
+        ),
+        dcc.Store(
+            id='intermediate-wnrs',
+            storage_type='memory',
+            data=dict(
+                list_of_deck=list_of_deck,
+                wnrs_game_dict=wnrs_game.__dict__
+            )
         ),
     ])
 
