@@ -7,6 +7,7 @@ Changelog
 ========== =====================================================
 Date       Changes
 ========== =====================================================
+2021-08-12 Added WNRS tab
 2021-07-24 Added tensorflow models in MBTI Personality Test tab
 2020-09-20 Added Chat Analyzer tab and Google Analytics
 2020-06-29 Made Web Application mobile-friendly
