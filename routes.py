@@ -1,9 +1,10 @@
 import io
+import json
 import pandas as pd
 
 from flask import request, send_file
 
-from components.helper import decode_df
+from components.helper import decode_df, decode_dict
 
 
 def register_routes(app):
@@ -22,6 +23,25 @@ def register_routes(app):
                 buf,
                 mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 attachment_filename="result.xlsx",
+                as_attachment=True,
+                cache_timeout=0
+            )
+
+    @app.server.route('/download_dict/', methods=['POST'])
+    def download_dictionary():
+        d_ser = request.form.get('result')
+        d = decode_dict(d_ser)
+        if d:
+            d_save = dict(
+                list_of_deck=d['list_of_deck'],
+                index=d['wnrs_game_dict']['index'],
+                pointer=d['wnrs_game_dict']['pointer'],
+            )
+            d_save_ser = io.BytesIO(json.dumps(d_save).encode())
+            return send_file(
+                d_save_ser,
+                mimetype='application/json',
+                attachment_filename="wnrs_progress.json",
                 as_attachment=True,
                 cache_timeout=0
             )
