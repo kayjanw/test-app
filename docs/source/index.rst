@@ -39,6 +39,7 @@ Code Documentation
    components/helper
    components/mbti
    components/trip-planner
+   components/wnrs
 
 :doc:`components/change-calculator`
     List of functions for Change Calculator tab
@@ -54,6 +55,9 @@ Code Documentation
 
 :doc:`components/trip-planner`
     List of functions for Trip Planner tab
+
+:doc:`components/wnrs`
+    List of functions for WNRS tab
 
 Indices and tables
 ==================
