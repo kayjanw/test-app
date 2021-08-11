@@ -1,17 +1,20 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import json
 import traceback
 
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
 from components.chat import ChatAnalyzer
-from components.helper import print_callback, get_summary_statistics, decode_df, update_when_upload, \
-    result_download_button, parse_data
+from components.helper import print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
+    update_when_upload, result_download_button, parse_data
 from components.mbti import MBTI
 from components.trip_planner import TripPlanner
-from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, image_edit_tab
+from components.wnrs import WNRS
+from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, wnrs_tab, \
+    image_edit_tab
 
 
 def register_callbacks(app, print_function):
@@ -553,6 +556,208 @@ def register_callbacks(app, print_function):
                 fig2 = chat.get_time_series_day_plot()
         return result, fig1, fig2
 
+    @app.callback(Output('div-wrns', 'style'),
+                  [Input('button-wnrs-ok', 'n_clicks')],
+                  [State('div-wrns', 'style')])
+    def update_wnrs_deck_style(trigger, current_style):
+        """Update visibility of WNRS deck div
+        """
+        if dash.callback_context.triggered:
+            if current_style['display'] == 'inline-block':
+                current_style['display'] = 'none'
+            else:
+                current_style['display'] = 'inline-block'
+        return current_style
+
+    def update_wnrs_button_style_wrapper(deck):
+            @app.callback(Output(deck, 'style'),
+                          [Input(deck, 'n_clicks')],
+                          [State(deck, 'style')])
+            def update_wnrs_button_style(trigger, current_style):
+                """
+                Update button colour of selected WNRS decks
+
+                Args:
+                    trigger: Trigger on button click
+                    current_style (dict): Current style of button
+
+                Returns:
+                    (dict)
+                """
+                if dash.callback_context.triggered:
+                    if current_style is None:
+                        current_style = dict()
+                    if 'background-color' in current_style and current_style['background-color'] == '#F0E3DF':
+                        current_style['background-color'] = 'white'
+                    else:
+                        current_style['background-color'] = '#F0E3DF'
+                return current_style
+
+    all_decks = ['Main Deck 1', 'Main Deck 2', 'Main Deck 3', 'Main Deck Final',
+                 'Bumble x BFF Edition 1', 'Bumble x BFF Edition 2', 'Bumble x BFF Edition 3',
+                 'Bumble Bizz Edition 1', 'Bumble Bizz Edition 2', 'Bumble Bizz Edition 3',
+                 'Bumble Date Edition 1', 'Bumble Date Edition 2', 'Bumble Date Edition 3',
+                 'Cann Edition 1', 'Cann Edition 2', 'Cann Edition 3',
+                 'Valentino Edition 1',
+                 'Honest Dating Edition 1', 'Honest Dating Edition 2', 'Honest Dating Edition 3',
+                 'Inner Circle Edition 1', 'Inner Circle Edition 2', 'Inner Circle Edition 3',
+                 'Own It Edition 1',
+                 'Relationship Edition 1', 'Relationship Edition 2', 'Relationship Edition 3',
+                 'Race and Privilege Edition 1', 'Race and Privilege Edition 2', 'Race and Privilege Edition 3',
+                 'Quarantine Edition 1', 'Quarantine Edition 2', 'Quarantine Edition 3', 'Quarantine Edition Final',
+                 'Voting Edition 1',
+                 'Breakup Edition 1', 'Breakup Edition Final',
+                 'Forgiveness Edition 1',
+                 'Healing Edition 1',
+                 'Self-Love Edition 1', 'Self-Love Edition Final',
+                 'Self-Reflection Edition 1',
+    ]
+
+    for deck in all_decks:
+        update_wnrs_button_style_wrapper(deck)
+
+    @app.callback(Output('intermediate-wnrs', 'data'),
+                  [Input(deck, 'style') for deck in all_decks])
+    def update_wnrs_list_of_decks(*args):
+        """
+        Update list of decks selected
+
+        Args:
+            style (dict): Current style of all buttons
+
+        Returns:
+            (dict)
+        """
+        data = {}
+        if dash.callback_context.triggered:
+            list_of_deck = []
+            for style, deck_name in zip(args, all_decks):
+                if style is not None and style['background-color'] == '#F0E3DF':
+                    list_of_deck.append(deck_name)
+            if len(list_of_deck):
+                wnrs_game = WNRS()
+                wnrs_game.initialize_game(list_of_deck)
+                data = dict(
+                    list_of_deck=list_of_deck,
+                    wnrs_game_dict=wnrs_game.__dict__
+                )
+        return data
+
+    @app.callback(Output('intermediate-wnrs2', 'data'),
+                  [Input('button-wnrs-ok', 'n_clicks')])
+    def update_wnrs_list_of_decks(value):
+        if dash.callback_context.triggered:
+            value = dash.callback_context.triggered[0]['value']
+        return value
+
+    @app.callback([Output('wnrs-prompt', 'children'),
+                   Output('wnrs-deck', 'children'),
+                   Output('wnrs-counter', 'children'),
+                   Output('wnrs-card', 'style'),
+                   Output('input-wnrs', 'value')],
+                  [Input('button-wnrs-ok', 'n_clicks'),
+                   Input('button-wnrs-back', 'n_clicks'),
+                   Input('button-wnrs-next', 'n_clicks'),
+                   Input('uploadwnrs', 'contents')],
+                  [State('uploadwnrs', 'filename'),
+                   State('intermediate-wnrs', 'data'),
+                   State('input-wnrs', 'value'),
+                   State('wnrs-card', 'style')])
+    def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, contents, filename, data,
+                                  data2_ser, card_style):
+        """
+        Update card content and style
+
+        Args:
+            trigger_ok: Trigger on button click
+            trigger_back: Trigger on button click
+            trigger_next: Trigger on button click
+            contents (str): contents of data uploaded, triggers callback
+            filename (str): filename of data uploaded
+            data (dict): Data of WNRS object
+            data2_ser (str): Serialized data of WNRS object
+            card_style (dict): Current style of card
+
+        Returns:
+            (str, str, str, dict, dict)
+        """
+        card_prompt2, card_deck2, card_counter, data_new = '', '', '', {}
+        wnrs_game_dict, style = {}, {}
+        next_card = 0
+        if dash.callback_context.triggered:
+            ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+            data2 = decode_dict(data2_ser)
+            if ctx == 'button-wnrs-ok':
+                if 'wnrs_game_dict' not in data:
+                    card_prompt2 = 'Please select a deck to start'
+                elif dash.callback_context.triggered[0]['value'] != data2['ctx_value']:  # new click
+                    data_new = data.copy()
+                else:  # dummy callback
+                    data_new = data2.copy()
+            elif ctx == 'uploadwnrs':
+                print('file uploaded')
+                if 'json' not in filename:
+                    card_prompt2 = 'Please upload a JSON file'
+                else:
+                    data = parse_data(contents, filename)
+                    data = json.loads(data.decode('utf-8'))
+                    try:
+                        wnrs_game = WNRS()
+                        wnrs_game.load_game(data['list_of_deck'], data['pointer'], data['index'])
+                        data_new = dict(
+                            list_of_deck=data['list_of_deck'],
+                            wnrs_game_dict=wnrs_game.__dict__
+                        )
+                    except KeyError:
+                        card_prompt2 = 'Please upload a valid JSON file. Data is not in the correct format'
+            elif ctx == 'button-wnrs-back':
+                data_new = data2.copy()
+                next_card = -1
+            elif ctx == 'button-wnrs-next':
+                data_new = data2.copy()
+                next_card = 1
+        elif data2_ser is None:  # initial run
+            data_new = data.copy()
+        else:
+            print('Not triggered')
+            data2 = decode_dict(data2_ser)
+            data_new = data2.copy()
+
+        if len(data_new):
+            wnrs_game = WNRS()
+            wnrs_game.playing_cards = data_new['wnrs_game_dict']['playing_cards']
+            wnrs_game.pointer = data_new['wnrs_game_dict']['pointer']
+            wnrs_game.index = data_new['wnrs_game_dict']['index']
+            if next_card == 1:
+                card_deck, card_type, card_prompt = wnrs_game.get_next_card()
+            elif next_card == -1:
+                card_deck, card_type, card_prompt = wnrs_game.get_previous_card()
+            else:
+                card_deck, card_type, card_prompt = wnrs_game.get_current_card()
+            card_counter = f"{wnrs_game.pointer + 1} / {len(wnrs_game.index)}"
+            if card_type == 'W':
+                card_prompt = card_prompt.split('\\n')
+                style = {'background-color': '#FAFAEE', 'color': '#BE001C'}
+            elif card_type == 'R':
+                card_prompt = card_prompt\
+                    .replace('Wild Card ', 'Wild Card:\\n')\
+                    .replace('Reminder ', 'Reminder:\\n')\
+                    .split('\\n')
+                style = {'background-color': '#BE001C', 'color': '#FAFAEE'}
+
+            # Post-processing
+            card_prompt2 = []
+            for line in card_prompt:
+                card_prompt2.append(line)
+                card_prompt2.append(html.Br())
+            card_prompt2.pop()
+            card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+            data_new['wnrs_game_dict'] = wnrs_game.__dict__
+            card_style.update(style)
+        data_new['ctx_value'] = trigger_ok
+        data_new2 = encode_dict(data_new)
+        return [card_prompt2, card_deck2, card_counter, card_style, data_new2]
+
     @app.callback(Output('image-canvas', 'image_content'),
                   [Input('upload-image', 'contents')])
     def update_canvas_image(contents):
@@ -704,6 +909,8 @@ def register_callbacks(app, print_function):
             return trip_tab(app)
         elif tab == 'tab-mbti':
             return mbti_tab()
+        elif tab == 'tab-wnrs':
+            return wnrs_tab(app)
         elif tab == 'tab-image':
             return image_edit_tab(app)
         else:

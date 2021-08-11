@@ -7,6 +7,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
 import io
+import json
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -276,6 +277,30 @@ def decode_df(df_ser):
     df = pd.read_json(df_ser, orient='split')
     df.columns = df.columns.astype(str)
     return df
+
+
+def encode_dict(d):
+    """Serializes dictionary to JSON format
+
+    Args:
+        d (dict): input dictionary
+
+    Returns:
+        (str)
+    """
+    return json.dumps(d)
+
+
+def decode_dict(d_ser):
+    """De-serializes JSON format string to dictionary
+
+    Args:
+        d_ser (str): input serialized dictionary
+
+    Returns:
+        (dict)
+    """
+    return json.loads(d_ser)
 
 
 def update_when_upload(contents, worksheet, filename, style, ctx):
