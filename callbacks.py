@@ -562,7 +562,7 @@ def register_callbacks(app, print_function):
                   [State('div-wnrs-selection', 'style')])
     def update_wnrs_deck_style(trigger1, trigger2, current_style):
         """
-        Update style of WNRS card selection
+        Update style of WNRS card selection (visibility)
 
         Args:
             trigger1: Trigger on button click
@@ -585,7 +585,7 @@ def register_callbacks(app, print_function):
                           [State(deck, 'style')])
             def update_wnrs_button_style(trigger, current_style):
                 """
-                Update button colour of selected WNRS decks
+                Update style of selected WNRS decks (button colour indication)
 
                 Args:
                     trigger: Trigger on button click
@@ -597,7 +597,7 @@ def register_callbacks(app, print_function):
                 if dash.callback_context.triggered:
                     if current_style is None:
                         current_style = dict()
-                    if 'background-color' in current_style and current_style['background-color'] == '#F0E3DF':
+                    if 'background-color' in current_style and current_style['background-color'] == '#BE9B89':
                         current_style['background-color'] = 'white'
                     else:
                         current_style['background-color'] = '#BE9B89'
@@ -643,7 +643,7 @@ def register_callbacks(app, print_function):
         if dash.callback_context.triggered:
             list_of_deck = []
             for style, deck_name in zip(args, all_decks):
-                if style is not None and style['background-color'] == '#F0E3DF':
+                if style is not None and style['background-color'] == '#BE9B89':
                     list_of_deck.append(deck_name)
             if len(list_of_deck):
                 wnrs_game = WNRS()
@@ -657,8 +657,7 @@ def register_callbacks(app, print_function):
     @app.callback([Output('wnrs-text-back', 'children'),
                    Output('wnrs-text-next', 'children'),
                    Output('button-wnrs2-back', 'style'),
-                   Output('button-wnrs2-next', 'style'),
-                   ],
+                   Output('button-wnrs2-next', 'style')],
                   [Input('button-wnrs-back', 'n_clicks'),
                    Input('button-wnrs-next', 'n_clicks'),
                    Input('button-wnrs2-back', 'n_clicks'),
@@ -666,8 +665,7 @@ def register_callbacks(app, print_function):
                   [State('wnrs-text-back', 'children'),
                    State('wnrs-text-next', 'children'),
                    State('button-wnrs2-back', 'style'),
-                   State('button-wnrs2-next', 'style'),
-                   ])
+                   State('button-wnrs2-next', 'style')])
     def update_wnrs_remove_help(trigger_back, trigger_next, trigger_back2, trigger_next2,
                                 text_back, text_next, button_back, button_next):
         """
@@ -708,7 +706,7 @@ def register_callbacks(app, print_function):
                    State('input-wnrs', 'value'),
                    State('wnrs-card', 'style')])
     def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_back2, trigger_next2,
-                                  trigger_shuffle, contents, filename, data, data2_ser, card_style):
+                                  trigger_shuffle, contents, filename, data, data2_ser, current_style):
         """
         Update card content and style
 
@@ -722,28 +720,28 @@ def register_callbacks(app, print_function):
             filename (str): filename of data uploaded
             data (dict): Data of WNRS object
             data2_ser (str): Serialized data of WNRS object
-            card_style (dict): Current style of card
+            current_style (dict): Current style of card
 
         Returns:
-            (str, str, str, dict, dict)
+            (str, str, str, dict, str)
         """
-        card_prompt2, card_deck2, card_counter, data_new = '', '', '', {}
+        card_prompt, card_deck, card_counter, data_new = '', '', '', {}
         next_card = 0
-        if card_style is None:
-            card_style = {}
+        if current_style is None:
+            current_style = {}
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
             data2 = decode_dict(data2_ser)
             if ctx == 'button-wnrs-ok':
                 if 'wnrs_game_dict' not in data:
-                    card_prompt2 = 'Please select a deck to start'
+                    card_prompt = 'Please select a deck to start'
                 elif dash.callback_context.triggered[0]['value'] != data2['ctx_value']:  # new click
                     data_new = data.copy()
                 else:  # dummy callback
                     data_new = data2.copy()
             elif ctx == 'uploadbutton-wnrs':
                 if 'json' not in filename:
-                    card_prompt2 = 'Please upload a JSON file'
+                    card_prompt = 'Please upload a JSON file'
                 else:
                     data = parse_data(contents, filename)
                     data = json.loads(data.decode('utf-8'))
@@ -755,7 +753,7 @@ def register_callbacks(app, print_function):
                             wnrs_game_dict=wnrs_game.__dict__
                         )
                     except KeyError:
-                        card_prompt2 = 'Please upload a valid JSON file. Data is not in the correct format'
+                        card_prompt = 'Please upload a valid JSON file. Data is not in the correct format'
             elif ctx in ['button-wnrs-back', 'button-wnrs2-back', 'button-wnrs-next', 'button-wnrs2-next']:
                 data_new = data2.copy()
                 if (trigger_back or 0) + (trigger_back2 or 0) + (trigger_next or 0) + (trigger_next2 or 0) > 1:
@@ -775,53 +773,20 @@ def register_callbacks(app, print_function):
 
         if len(data_new):
             wnrs_game = WNRS()
-            wnrs_game.playing_cards = data_new['wnrs_game_dict']['playing_cards']
-            wnrs_game.pointer = data_new['wnrs_game_dict']['pointer']
-            wnrs_game.index = data_new['wnrs_game_dict']['index']
-            color_map = {
-                'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
-                'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
-                'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
-                'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
-                'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
-                'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
-                'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
-                'R': ('#BE001C', '#FAFAEE'),  # red (default)
-                'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
-                'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
-                'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
-                'W': ('#FAFAEE', '#BE001C'),  # white (default)
-                'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
-            }
+            wnrs_game.load_game_from_dict(data_new['wnrs_game_dict'])
             if next_card == 1:
-                card_deck, card_type, card_prompt = wnrs_game.get_next_card()
+                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_next_card()
             elif next_card == -1:
-                card_deck, card_type, card_prompt = wnrs_game.get_previous_card()
+                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_previous_card()
             elif next_card == 0:
-                card_deck, card_type, card_prompt = wnrs_game.get_current_card()
+                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_current_card()
             elif next_card == 2:
-                card_deck, card_type, card_prompt = wnrs_game.shuffle_remaining_cards()
-            card_counter = f"{wnrs_game.pointer + 1} / {len(wnrs_game.index)}"
-
-            # Post-processing
-            card_prompt = card_prompt\
-                .replace("\\'", "'")\
-                .replace('\\"', '"')\
-                .replace('Wild Card ', 'Wild Card:\\n')\
-                .replace('Reminder ', 'Reminder:\\n')\
-                .split('\\n')
-            card_prompt2 = []
-            for line in card_prompt:
-                card_prompt2.append(line)
-                card_prompt2.append(html.Br())
-            card_prompt2.pop()
-            card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+                card_deck, card_prompt, card_style, card_counter = wnrs_game.shuffle_remaining_cards()
             data_new['wnrs_game_dict'] = wnrs_game.__dict__
-            card_style['background-color'] = color_map[card_type][0]
-            card_style['color'] = color_map[card_type][1]
+            current_style.update(card_style)
         data_new['ctx_value'] = trigger_ok
         data_new2 = encode_dict(data_new)
-        return [card_prompt2, card_deck2, card_counter, card_style, data_new2]
+        return [card_prompt, card_deck, card_counter, current_style, data_new2]
 
     @app.callback(Output('image-canvas', 'image_content'),
                   [Input('upload-image', 'contents')])
