@@ -169,7 +169,7 @@ def about_me_tab(app):
             html.A('here', href='http://kayjan.readthedocs.io', target='_blank')
         ])
     ],
-        className='div-with-image medium-image'
+        className='div-with-image div-with-image-left medium-image'
     )
 
 
@@ -250,7 +250,7 @@ def trip_tab(app):
                     html.Img(src=app.get_asset_url('info.svg')),
                     html.Span('Scroll to zoom, drag to move')
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 dl.Map(
                     id='map-trip',
@@ -291,7 +291,7 @@ def change_tab(app):
                 ],
                     id='upload-change',
                     multiple=False,
-                    className='div-with-image small-image image-dark-bg'
+                    className='div-with-image div-with-image-left small-image image-dark-bg'
                 ),
                 html.Div([
                     html.P('Select worksheet:'),
@@ -419,7 +419,7 @@ def change_tab(app):
                         'text-align': 'left'
                     }),
             ],
-                className='custom-div-center custom-div-large div-with-image small-image'
+                className='custom-div-center custom-div-large div-with-image div-with-image-left small-image'
             ),
         ],
             className='custom-container'
@@ -469,7 +469,7 @@ def changes_tab(app):
                 ],
                     id='upload-changes',
                     multiple=False,
-                    className='div-with-image small-image image-dark-bg'
+                    className='div-with-image div-with-image-left small-image image-dark-bg'
                 ),
                 html.Div([
                     html.P('Select worksheet:'),
@@ -547,13 +547,13 @@ def changes_tab(app):
                         style={
                             'display': 'none',
                         },
-                        className='custom-dark-div custom-div-left div-with-image small-image image-dark-bg'
+                        className='custom-dark-div custom-div-left div-with-image div-with-image-left small-image image-dark-bg'
                     ),
                     dark_bg=False
                 ),
                 html.P(
                     id='graph-changes-result',
-                    className='custom-div-center custom-div-full div-with-image small-image'
+                    className='custom-div-center custom-div-full div-with-image div-with-image-left small-image'
                 )
             ])
         ],
@@ -702,7 +702,7 @@ def chat_tab(app):
                 ],
                     id='upload-chat',
                     multiple=False,
-                    className='div-with-image small-image image-dark-bg'
+                    className='div-with-image div-with-image-left small-image image-dark-bg'
                 ),
                 html.P([
                     html.P(id='text-chat-confirm')
@@ -729,7 +729,7 @@ def chat_tab(app):
                         dark_bg=False
                     )
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
             ],
                 className='custom-div-center custom-div-half'
@@ -753,15 +753,23 @@ def wnrs_tab(app):
         wnrs_game_dict=wnrs_game.__dict__
     )
     return html.Div([
-        content_header("We're Not Really Strangers", 'Fun fun fun'),
-        html.Button('Click to select deck', id='button-wnrs-ok'),
+        content_header("We're Not Really Strangers", ''),
+        html.Button('Click to select deck', id='button-wnrs-show-ok'),
+        html.A([
+            dcc.Upload([
+                html.Span('Click to upload past progress')
+            ],
+                id='uploadbutton-wnrs',
+                multiple=False,
+            )
+        ]),
         html.Br(),
         html.Div([
             html.Div([
                 html.P('Main Deck', style={'margin-top': '20px'}),
                 html.Div([
-                    html.Span('Main Deck', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='main-deck-help'),
+                    html.Span('Main Deck', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='main-deck-help'),
                     dbc.Tooltip(
                         wnrs_information['Main Deck']['Main Deck']['description'],
                         placement='right',
@@ -773,12 +781,12 @@ def wnrs_tab(app):
                     dbc.Button('Level 3', id='Main Deck 3'),
                     dbc.Button('Final Card', id='Main Deck Final'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.P('Crossover', style={'margin-top': '20px'}),
                 html.Div([
-                    html.Span('Bumble x BFF Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-bff-help'),
+                    html.Span('Bumble x BFF Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='bumble-bff-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Bumble x BFF Edition']['description'],
                         placement='right',
@@ -789,11 +797,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Bumble x BFF Edition 2'),
                     dbc.Button('Level 3', id='Bumble x BFF Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Bumble Bizz Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-bizz-help'),
+                    html.Span('Bumble Bizz Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='bumble-bizz-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Bumble Bizz Edition']['description'],
                         placement='right',
@@ -804,11 +812,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Bumble Bizz Edition 2'),
                     dbc.Button('Level 3', id='Bumble Bizz Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Bumble Date Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='bumble-date-help'),
+                    html.Span('Bumble Date Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='bumble-date-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Bumble Date Edition']['description'],
                         placement='right',
@@ -819,11 +827,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Bumble Date Edition 2'),
                     dbc.Button('Level 3', id='Bumble Date Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Cann Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='cann-help'),
+                    html.Span('Cann Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='cann-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Cann Edition']['description'],
                         placement='right',
@@ -834,11 +842,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Cann Edition 2'),
                     dbc.Button('Level 3', id='Cann Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Valentino Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='valentino-help'),
+                    html.Span('Valentino Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='valentino-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Valentino Edition']['description'],
                         placement='right',
@@ -847,12 +855,12 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Valentino Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.P('Expansion', style={'margin-top': '20px'}),
                 html.Div([
-                    html.Span('Honest Dating Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='dating-help'),
+                    html.Span('Honest Dating Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='dating-help'),
                     dbc.Tooltip(
                         wnrs_information['Expansion']['Honest Dating Edition']['description'],
                         placement='right',
@@ -863,11 +871,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Honest Dating Edition 2'),
                     dbc.Button('Level 3', id='Honest Dating Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Inner Circle Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='inner-circle-help'),
+                    html.Span('Inner Circle Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='inner-circle-help'),
                     dbc.Tooltip(
                         wnrs_information['Expansion']['Inner Circle Edition']['description'],
                         placement='right',
@@ -878,11 +886,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Inner Circle Edition 2'),
                     dbc.Button('Level 3', id='Inner Circle Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Own It Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='own-it-help'),
+                    html.Span('Own It Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='own-it-help'),
                     dbc.Tooltip(
                         wnrs_information['Expansion']['Own It Edition']['description'],
                         placement='right',
@@ -891,11 +899,11 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Own It Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Relationship Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='relationship-help'),
+                    html.Span('Relationship Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='relationship-help'),
                     dbc.Tooltip(
                         wnrs_information['Expansion']['Relationship Edition']['description'],
                         placement='right',
@@ -906,12 +914,12 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Relationship Edition 2'),
                     dbc.Button('Level 3', id='Relationship Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.P('Online', style={'margin-top': '20px'}),
                 html.Div([
-                    html.Span('Race and Privilege Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='race-help'),
+                    html.Span('Race and Privilege Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='race-help'),
                     dbc.Tooltip(
                         wnrs_information['Online']['Race and Privilege Edition']['description'],
                         placement='right',
@@ -922,11 +930,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 2', id='Race and Privilege Edition 2'),
                     dbc.Button('Level 3', id='Race and Privilege Edition 3'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Quarantine Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='quarantine-help'),
+                    html.Span('Quarantine Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='quarantine-help'),
                     dbc.Tooltip(
                         wnrs_information['Online']['Quarantine Edition']['description'],
                         placement='right',
@@ -938,11 +946,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 3', id='Quarantine Edition 3'),
                     dbc.Button('Final Card', id='Quarantine Edition Final'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Voting Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='voting-help'),
+                    html.Span('Voting Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='voting-help'),
                     dbc.Tooltip(
                         wnrs_information['Online']['Voting Edition']['description'],
                         placement='right',
@@ -951,12 +959,12 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Voting Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.P('Single-Player', style={'margin-top': '20px'}),
                 html.Div([
-                    html.Span('Breakup Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='breakup-help'),
+                    html.Span('Breakup Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='breakup-help'),
                     dbc.Tooltip(
                         wnrs_information['Single-Player']['Breakup Edition']['description'],
                         placement='right',
@@ -966,11 +974,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 1', id='Breakup Edition 1'),
                     dbc.Button('Final Card', id='Breakup Edition Final'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Forgiveness Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='forgiveness-help'),
+                    html.Span('Forgiveness Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='forgiveness-help'),
                     dbc.Tooltip(
                         wnrs_information['Single-Player']['Forgiveness Edition']['description'],
                         placement='right',
@@ -979,11 +987,11 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Forgiveness Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Healing Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='healing-help'),
+                    html.Span('Healing Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='healing-help'),
                     dbc.Tooltip(
                         wnrs_information['Single-Player']['Healing Edition']['description'],
                         placement='right',
@@ -992,11 +1000,11 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Healing Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Self-Love Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='love-help'),
+                    html.Span('Self-Love Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='love-help'),
                     dbc.Tooltip(
                         wnrs_information['Single-Player']['Self-Love Edition']['description'],
                         placement='right',
@@ -1006,11 +1014,11 @@ def wnrs_tab(app):
                     dbc.Button('Level 1', id='Self-Love Edition 1'),
                     dbc.Button('Final Card', id='Self-Love Edition Final'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Self-Reflection Edition', style={'margin-left': '50px', 'width': '150px'}),
-                    html.Img(src=app.get_asset_url('info.svg'), style={'margin-left': '10px'}, id='reflection-help'),
+                    html.Span('Self-Reflection Edition', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='reflection-help'),
                     dbc.Tooltip(
                         wnrs_information['Single-Player']['Self-Reflection Edition']['description'],
                         placement='right',
@@ -1019,28 +1027,18 @@ def wnrs_tab(app):
                     ),
                     dbc.Button('Level 1', id='Self-Reflection Edition 1'),
                 ],
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Button('OK', id='button-wnrs-ok'),
             ]),
         ],
-            id='div-wrns',
+            id='div-wnrs-selection',
             className='custom-dark-div image-dark-bg',
             style={
                 'display': 'none',
-                'width': '80%'
+                'width': '90%'
             }
         ),
-        html.Div([
-            html.A([
-                dcc.Upload([
-                    html.Span('Click to upload past progress')
-                ],
-                    id='uploadbutton-wnrs',
-                    multiple=False,
-                )
-            ])
-        ]),
         html.Div([
             html.Div([
                 dbc.Jumbotron(
@@ -1049,31 +1047,9 @@ def wnrs_tab(app):
                             [
                                 html.P(
                                     id='wnrs-prompt',
-                                    style={
-                                        'position': 'absolute',
-                                        'top': 0,
-                                        'bottom': 0,
-                                        'left': 0,
-                                        'right': 0,
-                                        'margin': 'auto',
-                                        'height': '55%',
-                                        'font-family': 'sans-serif',
-                                        'font-weight': 'bold',
-                                        'font-size': '2em',
-                                    }
                                 ),
                                 html.P(
                                     id='wnrs-deck',
-                                    style={
-                                        'position': 'absolute',
-                                        'bottom': 0,
-                                        'left': 0,
-                                        'right': 0,
-                                        'font-family': 'sans-serif',
-                                        'font-weight': 'bold',
-                                        'font-size': '1em',
-                                        'line-height': '95%',
-                                    }
                                 ),
                             ],
                             fluid=True,
@@ -1086,14 +1062,12 @@ def wnrs_tab(app):
                     ],
                     fluid=True,
                     id='wnrs-card',
-                    style={
-                        'height': '100%',
-                        'border-radius': '50px',
-                    }
                 ),
+                html.Button(id='button-wnrs-back'),
+                html.Button(id='button-wnrs-next'),
             ],
                 id='div-wnrs',
-                className='custom-div-center',
+                className='custom-div-center div-with-invisible-button',
             ),
             html.Div([
                 html.P(
@@ -1106,6 +1080,7 @@ def wnrs_tab(app):
                 html.Button('Previous', id='button-wnrs-back'),
                 html.Button('Next', id='button-wnrs-next'),
                 html.Br(),
+                html.Button('Shuffle Remaining Cards', id='button-wnrs-shuffle-ok'),
                 html.Form([
                     dcc.Input(
                         value=encode_dict(data_default),
@@ -1119,17 +1094,22 @@ def wnrs_tab(app):
                         html.Span('Save Progress')
                     ],
                         type='submit',
-                        className='div-with-image small-image'
+                        id='button-wnrs-download-ok',
+                        className='div-with-image div-with-image-left small-image'
                     )
                 ],
                     method='POST',
-                    action='/download_dict/'
+                    action='/download_dict/',
+                    style={
+                        'display': 'inline-block'
+                    }
                 ),
             ])
         ],
             className='custom-container',
             style={
-                'text-align': 'center'
+                'text-align': 'center',
+                'margin-bottom': 0,
             }
         ),
         dcc.Store(
@@ -1160,7 +1140,7 @@ def image_edit_tab(app):
                     ),
                 ],
                     id='div-image-input',
-                    className='div-with-image small-image'
+                    className='div-with-image div-with-image-left small-image'
                 ),
                 html.Br(),
                 html.Div([

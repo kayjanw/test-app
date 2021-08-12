@@ -556,11 +556,21 @@ def register_callbacks(app, print_function):
                 fig2 = chat.get_time_series_day_plot()
         return result, fig1, fig2
 
-    @app.callback(Output('div-wrns', 'style'),
-                  [Input('button-wnrs-ok', 'n_clicks')],
-                  [State('div-wrns', 'style')])
-    def update_wnrs_deck_style(trigger, current_style):
-        """Update visibility of WNRS deck div
+    @app.callback(Output('div-wnrs-selection', 'style'),
+                  [Input('button-wnrs-ok', 'n_clicks'),
+                   Input('button-wnrs-show-ok', 'n_clicks')],
+                  [State('div-wnrs-selection', 'style')])
+    def update_wnrs_deck_style(trigger1, trigger2, current_style):
+        """
+        Update style of WNRS card selection
+
+        Args:
+            trigger1: Trigger on button click
+            trigger2: Trigger on button click
+            current_style (dict): Current style of card selection div
+
+        Returns:
+            (dict): Updated style of card selection div
         """
         if dash.callback_context.triggered:
             if current_style['display'] == 'inline-block':
@@ -582,7 +592,7 @@ def register_callbacks(app, print_function):
                     current_style (dict): Current style of button
 
                 Returns:
-                    (dict)
+                    (dict): Updated style of button
                 """
                 if dash.callback_context.triggered:
                     if current_style is None:
@@ -627,7 +637,7 @@ def register_callbacks(app, print_function):
             style (dict): Current style of all buttons
 
         Returns:
-            (dict)
+            (dict): Updated style of all buttons
         """
         data = {}
         if dash.callback_context.triggered:
@@ -652,12 +662,13 @@ def register_callbacks(app, print_function):
                   [Input('button-wnrs-ok', 'n_clicks'),
                    Input('button-wnrs-back', 'n_clicks'),
                    Input('button-wnrs-next', 'n_clicks'),
+                   Input('button-wnrs-shuffle-ok', 'n_clicks'),
                    Input('uploadbutton-wnrs', 'contents')],
                   [State('uploadbutton-wnrs', 'filename'),
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
                    State('wnrs-card', 'style')])
-    def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, contents, filename, data,
+    def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_shuffle, contents, filename, data,
                                   data2_ser, card_style):
         """
         Update card content and style
@@ -678,6 +689,8 @@ def register_callbacks(app, print_function):
         card_prompt2, card_deck2, card_counter, data_new = '', '', '', {}
         wnrs_game_dict, style = {}, {}
         next_card = 0
+        if card_style is None:
+            card_style = {}
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
             data2 = decode_dict(data2_ser)
@@ -709,10 +722,13 @@ def register_callbacks(app, print_function):
             elif ctx == 'button-wnrs-next':
                 data_new = data2.copy()
                 next_card = 1
-        elif data2_ser is None:  # initial run
-            data_new = data.copy()
-        else:
+            elif ctx == 'button-wnrs-shuffle-ok':
+                data_new = data2.copy()
+                next_card = 2
+        elif data2_ser is None:
             print('Not triggered')
+            data_new = data.copy()
+        else: # initial run
             data2 = decode_dict(data2_ser)
             data_new = data2.copy()
 
@@ -725,8 +741,10 @@ def register_callbacks(app, print_function):
                 card_deck, card_type, card_prompt = wnrs_game.get_next_card()
             elif next_card == -1:
                 card_deck, card_type, card_prompt = wnrs_game.get_previous_card()
-            else:
+            elif next_card == 0:
                 card_deck, card_type, card_prompt = wnrs_game.get_current_card()
+            elif next_card == 2:
+                card_deck, card_type, card_prompt = wnrs_game.shuffle_remaining_cards()
             card_counter = f"{wnrs_game.pointer + 1} / {len(wnrs_game.index)}"
             if card_type == 'W':
                 card_prompt = card_prompt.split('\\n')

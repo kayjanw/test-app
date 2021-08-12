@@ -144,3 +144,14 @@ class WNRS:
         card_type = self.playing_cards["Card"][idx]
         card_prompt = self.playing_cards["Prompt"][idx]
         return card_deck, card_type, card_prompt
+
+    def shuffle_remaining_cards(self):
+        """
+        Shuffle remaining cards
+        """
+        past_index = self.index[:self.pointer + 1].copy()
+        remaining_index = self.index[self.pointer + 1:].copy()
+        random.shuffle(remaining_index)
+        new_index = [*past_index, *remaining_index]
+        self.index = new_index
+        return self.get_next_card()
