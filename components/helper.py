@@ -382,7 +382,7 @@ def result_download_button(app, df):
             html.Span('Download results')
         ],
             type='submit',
-            className='div-with-image small-image'
+            className='div-with-image div-with-image-left small-image'
         )
     ],
         method='POST',
