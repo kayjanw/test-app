@@ -748,7 +748,6 @@ def wnrs_tab(app):
     wnrs_game.initialize_game(list_of_deck)
     wnrs_information = wnrs_game.get_information()
     data_default = dict(
-        ctx_value=-1,
         list_of_deck=list_of_deck,
         wnrs_game_dict=wnrs_game.__dict__
     )
