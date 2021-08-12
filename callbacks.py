@@ -600,7 +600,7 @@ def register_callbacks(app, print_function):
                     if 'background-color' in current_style and current_style['background-color'] == '#F0E3DF':
                         current_style['background-color'] = 'white'
                     else:
-                        current_style['background-color'] = '#F0E3DF'
+                        current_style['background-color'] = '#BE9B89'
                 return current_style
 
     all_decks = ['Main Deck 1', 'Main Deck 2', 'Main Deck 3', 'Main Deck Final',
