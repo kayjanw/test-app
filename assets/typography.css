@@ -51,6 +51,9 @@ Pinkish grey #D6CAC7
         height: 60vw;
         width: 90vw;
     }
+    #wnrs-prompt {
+        font-size: 2em;
+    }
 }
 
 /* For devices larger than 800px */
@@ -76,6 +79,9 @@ Pinkish grey #D6CAC7
     #div-wnrs {
         height: 45vh;
         width: 70vh;
+    }
+    #wnrs-prompt {
+        font-size: 1.3em;
     }
 }
 
@@ -494,7 +500,6 @@ div[id$="-result"] {
     height: 55%;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 1.3em;
     line-height: 140%;
 }
 
