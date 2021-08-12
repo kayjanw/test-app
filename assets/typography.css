@@ -216,7 +216,7 @@ button[disabled] {
 /* Custom class / div
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .content-header {
-    margin-top: 15vh;
+    margin-top: 10vh;
 }
 
 .div-with-image Img {
@@ -230,14 +230,41 @@ button[disabled] {
     margin-bottom: 0;
 }
 
+.div-with-image-left Img {
+    margin-right: 10px
+}
+
+.div-with-image-right Img {
+    margin-left: 10px;
+}
+
+.div-with-invisible-button {
+    position: relative;
+}
+
+.div-with-invisible-button button {
+    position: absolute;
+    opacity: 0;
+    margin: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.div-with-invisible-button button[id$="-back"] {
+    left: -50%;
+}
+
+.div-with-invisible-button button[id$="-next"] {
+    left: 50%;
+}
+
 .medium-image Img {
     height: 30px;
-    margin-right: 10px;
 }
 
 .small-image Img {
     height: 20px;
-    margin-right: 5px;
 }
 
 .image-dark-bg Img {
@@ -373,7 +400,7 @@ div[id$="-result"] {
 }
 
 #sidebar h1 {
-    margin-top: 15vh;
+    margin-top: 10vh;
     margin-left: 20px;
 }
 
@@ -414,11 +441,46 @@ div[id$="-result"] {
     letter-spacing: .1rem;
 }
 
-[class^="tooltip-"] {
+[class^="tooltip"] {
     background-color: #F0E3DF;
     margin-left: 2px;
     padding: 3px;
     white-space: pre;
+}
+
+.span-short {
+    margin-left: 50px;
+    width: 180px;
+}
+
+#wnrs-prompt {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+    height: 55%;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#wnrs-deck {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+    line-height: 95%;
+}
+
+#wnrs-card {
+    height: 100%;
+    border-radius: 50px;
 }
 
 /* Custom id (tabs content)
