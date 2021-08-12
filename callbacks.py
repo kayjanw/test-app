@@ -411,6 +411,7 @@ def register_callbacks(app, print_function):
     @app.callback(Output('changes-result-graph', 'figure'),
                   [Input('changes-result-graph', 'hoverData')],
                   [State('changes-result-graph', 'figure')])
+    @print_callback(print_function)
     def update_changes_hover(hover_data, figure):
         """Update layout of plotly graph on hover
 
@@ -432,6 +433,7 @@ def register_callbacks(app, print_function):
 
     @app.callback(Output('text-mbti-words', 'children'),
                   [Input('input-mbti', 'value')])
+    @print_callback(print_function)
     def update_mbti_words(input_text):
         """Update number of input words in vocabulary
 
@@ -453,6 +455,7 @@ def register_callbacks(app, print_function):
                   [Input('button-mbti-ok', 'n_clicks')],
                   [State('input-mbti', 'value'),
                    State('graph-mbti', 'style')])
+    @print_callback(print_function)
     def update_mbti_result(trigger, input_text, style):
         """Update results of mbti personality results and graph
 
@@ -495,6 +498,7 @@ def register_callbacks(app, print_function):
                    Output('intermediate-chat-result', 'data')],
                   [Input('upload-chat', 'contents')],
                   [State('upload-chat', 'filename')])
+    @print_callback(print_function)
     def update_chat_upload(contents, filename):
         """Update chat analyzer interface when file is uploaded
 
@@ -528,6 +532,7 @@ def register_callbacks(app, print_function):
                    Output('graph-chat-result-hour', 'figure')],
                   [Input('button-chat-ok', 'n_clicks')],
                   [State('intermediate-chat-result', 'data')])
+    @print_callback(print_function)
     def update_chat_result(trigger, contents):
         """Update and display chat analyzer results
 
@@ -560,6 +565,7 @@ def register_callbacks(app, print_function):
                   [Input('button-wnrs-ok', 'n_clicks'),
                    Input('button-wnrs-show-ok', 'n_clicks')],
                   [State('div-wnrs-selection', 'style')])
+    @print_callback(print_function)
     def update_wnrs_deck_style(trigger1, trigger2, current_style):
         """
         Update style of WNRS card selection (visibility)
@@ -583,6 +589,7 @@ def register_callbacks(app, print_function):
             @app.callback(Output(deck, 'style'),
                           [Input(deck, 'n_clicks')],
                           [State(deck, 'style')])
+            @print_callback(print_function)
             def update_wnrs_button_style(trigger, current_style):
                 """
                 Update style of selected WNRS decks (button colour indication)
@@ -629,6 +636,7 @@ def register_callbacks(app, print_function):
     @app.callback(Output('intermediate-wnrs', 'data'),
                   [Input('button-wnrs-ok', 'n_clicks')] +
                   [Input(deck, 'style') for deck in all_decks])
+    @print_callback(print_function)
     def update_wnrs_list_of_decks(trigger, *args):
         """
         Update list of decks selected
@@ -666,6 +674,7 @@ def register_callbacks(app, print_function):
                    State('wnrs-text-next', 'children'),
                    State('button-wnrs2-back', 'style'),
                    State('button-wnrs2-next', 'style')])
+    @print_callback(print_function)
     def update_wnrs_remove_help(trigger_back, trigger_next, trigger_back2, trigger_next2,
                                 text_back, text_next, button_back, button_next):
         """
@@ -705,6 +714,7 @@ def register_callbacks(app, print_function):
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
                    State('wnrs-card', 'style')])
+    @print_callback(print_function)
     def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_back2, trigger_next2,
                                   trigger_shuffle, contents, filename, data, data2_ser, current_style):
         """
@@ -790,6 +800,7 @@ def register_callbacks(app, print_function):
 
     @app.callback(Output('image-canvas', 'image_content'),
                   [Input('upload-image', 'contents')])
+    @print_callback(print_function)
     def update_canvas_image(contents):
         """Update canvas with loaded image
 
@@ -806,6 +817,7 @@ def register_callbacks(app, print_function):
 
     @app.callback(Output('image-canvas', 'json_objects'),
                   [Input('button-canvas-clear', 'n_clicks')])
+    @print_callback(print_function)
     def clear_canvas(n_clicks):
         """Clear canvas to blank state
 
@@ -824,6 +836,7 @@ def register_callbacks(app, print_function):
                   [Input('button-image-minus', 'n_clicks'),
                    Input('button-image-plus', 'n_clicks')],
                   [State('knob-canvas', 'value')])
+    @print_callback(print_function)
     def update_canvas_brush(trigger_minus, trigger_plus, value):
         """Update canvas brush size (line width)
 
@@ -844,6 +857,7 @@ def register_callbacks(app, print_function):
 
     @app.callback(Output('image-canvas', 'lineWidth'),
                   [Input('knob-canvas', 'value')])
+    @print_callback(print_function)
     def update_canvas_brush(value):
         """Update canvas brush size (line width)
 
@@ -857,6 +871,7 @@ def register_callbacks(app, print_function):
 
     @app.callback(Output('image-canvas', 'lineColor'),
                   [Input('image-color-picker', 'value')])
+    @print_callback(print_function)
     def update_canvas_color(value):
         """Update canvas brush colour (line colour)
 
