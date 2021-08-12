@@ -562,17 +562,15 @@ def register_callbacks(app, print_function):
         return result, fig1, fig2
 
     @app.callback(Output('div-wnrs-selection', 'style'),
-                  [Input('button-wnrs-ok', 'n_clicks'),
-                   Input('button-wnrs-show-ok', 'n_clicks')],
+                  [Input('button-wnrs-show-ok', 'n_clicks')],
                   [State('div-wnrs-selection', 'style')])
     @print_callback(print_function)
-    def update_wnrs_deck_style(trigger1, trigger2, current_style):
+    def update_wnrs_deck_style(trigger, current_style):
         """
         Update style of WNRS card selection (visibility)
 
         Args:
-            trigger1: Trigger on button click
-            trigger2: Trigger on button click
+            trigger: Trigger on button click
             current_style (dict): Current style of card selection div
 
         Returns:
@@ -634,15 +632,13 @@ def register_callbacks(app, print_function):
         update_wnrs_button_style_wrapper(deck)
 
     @app.callback(Output('intermediate-wnrs', 'data'),
-                  [Input('button-wnrs-ok', 'n_clicks')],
-                  [State(deck, 'style') for deck in all_decks])
+                  [Input(deck, 'style') for deck in all_decks])
     @print_callback(print_function)
-    def update_wnrs_list_of_decks(trigger, *args):
+    def update_wnrs_list_of_decks(*args):
         """
         Update list of decks selected
 
         Args:
-            trigger: Trigger on button click
             style (dict): Current style of all buttons
 
         Returns:

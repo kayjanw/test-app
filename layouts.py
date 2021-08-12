@@ -1027,8 +1027,7 @@ def wnrs_tab(app):
                     dbc.Button('Level 1', id='Self-Reflection Edition 1'),
                 ],
                     className='div-with-image div-with-image-left small-image'
-                ),
-                html.Button('OK', id='button-wnrs-ok'),
+                )
             ]),
         ],
             id='div-wnrs-selection',
