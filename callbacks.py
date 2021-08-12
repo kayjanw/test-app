@@ -687,7 +687,6 @@ def register_callbacks(app, print_function):
             (str, str, str, dict, dict)
         """
         card_prompt2, card_deck2, card_counter, data_new = '', '', '', {}
-        wnrs_game_dict, style = {}, {}
         next_card = 0
         if card_style is None:
             card_style = {}
@@ -737,6 +736,21 @@ def register_callbacks(app, print_function):
             wnrs_game.playing_cards = data_new['wnrs_game_dict']['playing_cards']
             wnrs_game.pointer = data_new['wnrs_game_dict']['pointer']
             wnrs_game.index = data_new['wnrs_game_dict']['index']
+            color_map = {
+                'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
+                'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
+                'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
+                'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
+                'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
+                'N': ('#282C69', '#FFFFFF'),  # navy (voting edition)
+                'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
+                'R': ('#BE001C', '#FAFAEE'),  # red (default)
+                'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
+                'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
+                'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
+                'W': ('#FAFAEE', '#BE001C'),  # white (default)
+                'Y': ('#F6CA69', '#FFFFFF'),  # yellow (bumble edition)
+            }
             if next_card == 1:
                 card_deck, card_type, card_prompt = wnrs_game.get_next_card()
             elif next_card == -1:
@@ -746,17 +760,14 @@ def register_callbacks(app, print_function):
             elif next_card == 2:
                 card_deck, card_type, card_prompt = wnrs_game.shuffle_remaining_cards()
             card_counter = f"{wnrs_game.pointer + 1} / {len(wnrs_game.index)}"
-            if card_type == 'W':
-                card_prompt = card_prompt.split('\\n')
-                style = {'background-color': '#FAFAEE', 'color': '#BE001C'}
-            elif card_type == 'R':
-                card_prompt = card_prompt\
-                    .replace('Wild Card ', 'Wild Card:\\n')\
-                    .replace('Reminder ', 'Reminder:\\n')\
-                    .split('\\n')
-                style = {'background-color': '#BE001C', 'color': '#FAFAEE'}
 
             # Post-processing
+            card_prompt = card_prompt\
+                .replace("\\'", "'")\
+                .replace('\\"', '"')\
+                .replace('Wild Card ', 'Wild Card:\\n')\
+                .replace('Reminder ', 'Reminder:\\n')\
+                .split('\\n')
             card_prompt2 = []
             for line in card_prompt:
                 card_prompt2.append(line)
@@ -764,7 +775,8 @@ def register_callbacks(app, print_function):
             card_prompt2.pop()
             card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
             data_new['wnrs_game_dict'] = wnrs_game.__dict__
-            card_style.update(style)
+            card_style['background-color'] = color_map[card_type][0]
+            card_style['color'] = color_map[card_type][1]
         data_new['ctx_value'] = trigger_ok
         data_new2 = encode_dict(data_new)
         return [card_prompt2, card_deck2, card_counter, card_style, data_new2]
