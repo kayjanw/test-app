@@ -13,22 +13,7 @@ class WNRS:
         file = pd.ExcelFile("data/WNRS.xlsx")
         decks = file.sheet_names
         self.information = {}
-        self.cards = {}
-        self.color_map = {
-            'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
-            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
-            'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
-            'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
-            'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
-            'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
-            'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
-            'R': ('#BE001C', '#FAFAEE'),  # red (default)
-            'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
-            'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
-            'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
-            'W': ('#FAFAEE', '#BE001C'),  # white (default)
-            'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
-        }
+
         # Needed for game play
         self.playing_cards = None
         self.pointer = 0
@@ -48,21 +33,11 @@ class WNRS:
                     description=deck_description, summary=deck_summary)}
 
             deck_cards = pd.DataFrame(file.parse(deck, skiprows=4))
-            deck_cards_dict = {}
             if "Level" in deck_cards.columns:
                 self.information[deck_type][deck]["levels"] = list(
                     map(str, deck_cards.Level.unique()))
-                for level in deck_cards.Level.unique():
-                    deck_cards_level = deck_cards[deck_cards["Level"] == level].copy()
-                    deck_cards_level["Deck"] = f"{deck} {level}"
-                    deck_cards_dict[str(level)] = deck_cards_level[[
-                        "Deck", "Card", "Prompt"]].to_dict()
             else:
                 self.information[deck_type][deck]["levels"] = [1]
-                deck_cards["Deck"] = deck
-                deck_cards_dict[str(1)] = deck_cards[[
-                    "Deck", "Card", "Prompt"]].to_dict()
-            self.cards[deck] = deck_cards_dict
 
     def get_information(self):
         """
@@ -73,7 +48,35 @@ class WNRS:
         """
         return self.information
 
-    def get_all_cards(self, list_of_deck):
+    @staticmethod
+    def get_all_cards():
+        """
+        Get all cards to retrieve playable cards
+
+        Returns:
+            (dict)
+        """
+        file = pd.ExcelFile("data/WNRS.xlsx")
+        decks = file.sheet_names
+        cards = {}
+
+        for deck in decks:
+            deck_cards = pd.DataFrame(file.parse(deck, skiprows=4))
+            deck_cards_dict = {}
+            if "Level" in deck_cards.columns:
+                for level in deck_cards.Level.unique():
+                    deck_cards_level = deck_cards[deck_cards["Level"] == level].copy()
+                    deck_cards_level["Deck"] = f"{deck} {level}"
+                    deck_cards_dict[str(level)] = deck_cards_level[[
+                        "Deck", "Card", "Prompt"]].to_dict()
+            else:
+                deck_cards["Deck"] = deck
+                deck_cards_dict[str(1)] = deck_cards[[
+                    "Deck", "Card", "Prompt"]].to_dict()
+            cards[deck] = deck_cards_dict
+        return cards
+
+    def get_all_playable_cards(self, list_of_deck):
         """
         Initialize playing cards and index from list of deck for gameplay
 
@@ -81,11 +84,12 @@ class WNRS:
             list_of_deck (list): List of all selected games to play
         """
         assert list_of_deck, "Please select at least one deck to start with"
+        cards = self.get_all_cards()
         playing_cards = []
         for selected_deck in list_of_deck:
             deck = " ".join(selected_deck.split(" ")[:-1])
             level = selected_deck.split(" ")[-1]
-            playing_cards.append(pd.DataFrame(self.cards[deck][level]))
+            playing_cards.append(pd.DataFrame(cards[deck][level]))
         playing_cards = reduce(lambda x, y: x.merge(y, how="outer"), playing_cards)
         playing_cards.index = playing_cards.index.map(str)
         self.playing_cards = playing_cards.to_dict()
@@ -99,7 +103,7 @@ class WNRS:
         """
         if list_of_deck is None:
             list_of_deck = ["Main Deck 1"]
-        self.get_all_cards(list_of_deck)
+        self.get_all_playable_cards(list_of_deck)
         index = list(self.playing_cards["Deck"].keys())
         random.shuffle(index)
         self.index = index
@@ -113,7 +117,7 @@ class WNRS:
             pointer (int): Current pointer of card
             index (list): Order of cards to play
         """
-        self.get_all_cards(list_of_deck)
+        self.get_all_playable_cards(list_of_deck)
         self.pointer = pointer
         self.index = index
 
@@ -157,6 +161,22 @@ class WNRS:
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
         """
+        color_map = {
+            'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
+            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
+            'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
+            'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
+            'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
+            'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
+            'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
+            'R': ('#BE001C', '#FAFAEE'),  # red (default)
+            'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
+            'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
+            'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
+            'W': ('#FAFAEE', '#BE001C'),  # white (default)
+            'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
+        }
+
         idx = str(self.index[self.pointer])
         card_deck = self.playing_cards["Deck"][idx]
         card_type = self.playing_cards["Card"][idx]
@@ -175,7 +195,7 @@ class WNRS:
             card_prompt2.append(line)
             card_prompt2.append(html.Br())
         card_prompt2.pop()
-        background_color, font_color = self.color_map[card_type]
+        background_color, font_color = color_map[card_type]
         card_style = {'background-color': background_color, 'color': font_color}
         card_counter = f"{self.pointer + 1} / {len(self.index)}"
         return card_deck2, card_prompt2, card_style, card_counter
