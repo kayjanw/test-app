@@ -519,6 +519,10 @@ div[id$="-result"] {
     text-shadow: 0 0 #BE9B89;
 }
 
+#button-wnrs-back, #button-wnrs-next {
+    width: 10vw;
+}
+
 /* Custom id (tabs content)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #input-mbti {
