@@ -654,6 +654,43 @@ def register_callbacks(app, print_function):
                 )
         return data
 
+    @app.callback([Output('wnrs-text-back', 'children'),
+                   Output('wnrs-text-next', 'children'),
+                   Output('button-wnrs2-back', 'style'),
+                   Output('button-wnrs2-next', 'style'),
+                   ],
+                  [Input('button-wnrs-back', 'n_clicks'),
+                   Input('button-wnrs-next', 'n_clicks'),
+                   Input('button-wnrs2-back', 'n_clicks'),
+                   Input('button-wnrs2-next', 'n_clicks')],
+                  [State('wnrs-text-back', 'children'),
+                   State('wnrs-text-next', 'children'),
+                   State('button-wnrs2-back', 'style'),
+                   State('button-wnrs2-next', 'style'),
+                   ])
+    def update_wnrs_remove_help(trigger_back, trigger_next, trigger_back2, trigger_next2,
+                                text_back, text_next, button_back, button_next):
+        """
+        Remove help function
+
+        Args:
+            trigger_back: Trigger on button click
+            trigger_next: Trigger on button click
+            trigger_back2: Trigger on button click
+            trigger_next2: Trigger on button click
+            text_back (str): Current text of words for back button
+            text_next (str): Current text of words for next button
+            button_back (dict): Current opacity for back button
+            button_next (dict): Current opacity for next button
+
+        Returns:
+            (str, str, dict, dict)
+        """
+        if dash.callback_context.triggered:
+            text_back = text_next = ''
+            button_back = button_next = dict(opacity=0)
+        return text_back, text_next, button_back, button_next
+
     @app.callback([Output('wnrs-prompt', 'children'),
                    Output('wnrs-deck', 'children'),
                    Output('wnrs-counter', 'children'),
@@ -662,14 +699,16 @@ def register_callbacks(app, print_function):
                   [Input('button-wnrs-ok', 'n_clicks'),
                    Input('button-wnrs-back', 'n_clicks'),
                    Input('button-wnrs-next', 'n_clicks'),
+                   Input('button-wnrs2-back', 'n_clicks'),
+                   Input('button-wnrs2-next', 'n_clicks'),
                    Input('button-wnrs-shuffle-ok', 'n_clicks'),
                    Input('uploadbutton-wnrs', 'contents')],
                   [State('uploadbutton-wnrs', 'filename'),
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
                    State('wnrs-card', 'style')])
-    def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_shuffle, contents, filename, data,
-                                  data2_ser, card_style):
+    def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_back2, trigger_next2,
+                                  trigger_shuffle, contents, filename, data, data2_ser, card_style):
         """
         Update card content and style
 
@@ -677,6 +716,8 @@ def register_callbacks(app, print_function):
             trigger_ok: Trigger on button click
             trigger_back: Trigger on button click
             trigger_next: Trigger on button click
+            trigger_back2: Trigger on button click
+            trigger_next2: Trigger on button click
             contents (str): contents of data uploaded, triggers callback
             filename (str): filename of data uploaded
             data (dict): Data of WNRS object
@@ -715,19 +756,20 @@ def register_callbacks(app, print_function):
                         )
                     except KeyError:
                         card_prompt2 = 'Please upload a valid JSON file. Data is not in the correct format'
-            elif ctx == 'button-wnrs-back':
+            elif ctx in ['button-wnrs-back', 'button-wnrs2-back', 'button-wnrs-next', 'button-wnrs2-next']:
                 data_new = data2.copy()
-                next_card = -1
-            elif ctx == 'button-wnrs-next':
-                data_new = data2.copy()
-                next_card = 1
+                if (trigger_back or 0) + (trigger_back2 or 0) + (trigger_next or 0) + (trigger_next2 or 0) > 1:
+                    if ctx.endswith('back'):
+                        next_card = -1
+                    elif ctx.endswith('next'):
+                        next_card = 1
             elif ctx == 'button-wnrs-shuffle-ok':
                 data_new = data2.copy()
                 next_card = 2
         elif data2_ser is None:
             print('Not triggered')
             data_new = data.copy()
-        else: # initial run
+        else:  # initial run
             data2 = decode_dict(data2_ser)
             data_new = data2.copy()
 
@@ -742,14 +784,14 @@ def register_callbacks(app, print_function):
                 'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
                 'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
                 'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
-                'N': ('#282C69', '#FFFFFF'),  # navy (voting edition)
+                'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
                 'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
                 'R': ('#BE001C', '#FAFAEE'),  # red (default)
                 'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
                 'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
                 'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
                 'W': ('#FAFAEE', '#BE001C'),  # white (default)
-                'Y': ('#F6CA69', '#FFFFFF'),  # yellow (bumble edition)
+                'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
             }
             if next_card == 1:
                 card_deck, card_type, card_prompt = wnrs_game.get_next_card()
