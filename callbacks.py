@@ -662,11 +662,11 @@ def register_callbacks(app, print_function):
                 )
         return data
 
-    @app.callback([Output('wnrs-prompt', 'children'),
+    @app.callback([Output('input-wnrs', 'value'),
+                   Output('wnrs-prompt', 'children'),
                    Output('wnrs-deck', 'children'),
                    Output('wnrs-counter', 'children'),
                    Output('wnrs-card', 'style'),
-                   Output('input-wnrs', 'value'),
                    Output('wnrs-text-back', 'children'),
                    Output('wnrs-text-next', 'children'),
                    Output('button-wnrs2-back', 'style'),
@@ -681,6 +681,7 @@ def register_callbacks(app, print_function):
                   [State('uploadbutton-wnrs', 'filename'),
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
+                   State('wnrs-prompt', 'children'),
                    State('wnrs-card', 'style'),
                    State('wnrs-text-back', 'children'),
                    State('wnrs-text-next', 'children'),
@@ -688,10 +689,10 @@ def register_callbacks(app, print_function):
                    State('button-wnrs2-next', 'style')])
     @print_callback(print_function)
     def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_back2, trigger_next2,
-                                  trigger_shuffle, contents, filename, data, data2_ser, current_style,
-                                  text_back, text_next, button_back, button_next):
+                                  trigger_shuffle, contents, filename, data, data2_ser, card_prompt,
+                                  current_style, text_back, text_next, button_back, button_next):
         """
-        Update card content and style
+        Update underlying data, card content and style
 
         Args:
             trigger_ok: Trigger on button click
@@ -712,7 +713,7 @@ def register_callbacks(app, print_function):
         Returns:
             (str, str, str, dict, str, str, str, dict, dict)
         """
-        card_prompt, card_deck, card_counter, data_new = '', '', '', {}
+        card_deck, card_counter, data_new = '', '', {}
         next_card = 0
         if current_style is None:
             current_style = {}
@@ -761,7 +762,7 @@ def register_callbacks(app, print_function):
             data2 = decode_dict(data2_ser)
             data_new = data2.copy()
 
-        if len(data_new):
+        if len(data_new) > 1:
             wnrs_game = WNRS()
             wnrs_game.load_game_from_dict(data_new['wnrs_game_dict'])
             if next_card == 1:
@@ -777,7 +778,7 @@ def register_callbacks(app, print_function):
         data_new['ctx_value'] = trigger_ok
         data_new2 = encode_dict(data_new)
         return [
-            card_prompt, card_deck, card_counter, current_style, data_new2,
+            data_new2, card_prompt, card_deck, card_counter, current_style,
             text_back, text_next, button_back, button_next
         ]
 
