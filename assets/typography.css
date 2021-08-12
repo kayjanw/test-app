@@ -476,6 +476,13 @@ div[id$="-result"] {
     width: 180px;
 }
 
+#wnrs-card {
+    height: 100%;
+    border-radius: 50px;
+    background-color: #BE001C;
+    color: #FAFAEE;
+}
+
 #wnrs-prompt {
     position: absolute;
     top: 0;
@@ -500,13 +507,13 @@ div[id$="-result"] {
     font-weight: bold;
     font-size: 1em;
     line-height: 95%;
+    text-shadow: 0 0 black;
 }
 
-#wnrs-card {
-    height: 100%;
-    border-radius: 50px;
-    background-color: #BE001C;
-    color: #FAFAEE;
+#wnrs-counter {
+    font-family: sans-serif;
+    color: #BE9B89;
+    text-shadow: 0 0 #BE9B89;
 }
 
 /* Custom id (tabs content)
