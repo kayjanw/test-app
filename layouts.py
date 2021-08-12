@@ -1048,7 +1048,11 @@ def wnrs_tab(app):
                                 html.P(
                                     id='wnrs-prompt',
                                 ),
-                                html.P(
+                                html.P([
+                                    "We're Not Really Strangers",
+                                    html.Br(),
+                                    html.Br(),
+                                ],
                                     id='wnrs-deck',
                                 ),
                             ],
@@ -1063,8 +1067,10 @@ def wnrs_tab(app):
                     fluid=True,
                     id='wnrs-card',
                 ),
-                html.Button(id='button-wnrs-back'),
-                html.Button(id='button-wnrs-next'),
+                html.Button(id='button-wnrs2-back'),
+                html.Button(id='button-wnrs2-next'),
+                html.Span('Press here for previous card', id='wnrs-text-back'),
+                html.Span('Press here for next card', id='wnrs-text-next'),
             ],
                 id='div-wnrs',
                 className='custom-div-center div-with-invisible-button',
