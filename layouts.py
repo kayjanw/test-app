@@ -776,7 +776,7 @@ def wnrs_tab(app):
                         target='main-deck-help',
                         className='tooltip',
                     ),
-                    dbc.Button('Level 1', id='Main Deck 1', style={'background-color': '#F0E3DF'}),
+                    dbc.Button('Level 1', id='Main Deck 1', style={'background-color': '#BE9B89'}),
                     dbc.Button('Level 2', id='Main Deck 2'),
                     dbc.Button('Level 3', id='Main Deck 3'),
                     dbc.Button('Final Card', id='Main Deck Final'),
@@ -1076,13 +1076,7 @@ def wnrs_tab(app):
                 className='custom-div-center div-with-invisible-button',
             ),
             html.Div([
-                html.P(
-                    id='wnrs-counter',
-                    style={
-                        'font-family': 'sans-serif',
-                        'color': '#BE9B89'
-                    }
-                ),
+                html.P(id='wnrs-counter'),
                 html.Button('Previous', id='button-wnrs-back'),
                 html.Button('Next', id='button-wnrs-next'),
                 html.Br(),

@@ -1,3 +1,4 @@
+import dash_html_components as html
 import pandas as pd
 import random
 
@@ -13,7 +14,21 @@ class WNRS:
         decks = file.sheet_names
         self.information = {}
         self.cards = {}
-
+        self.color_map = {
+            'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
+            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
+            'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
+            'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
+            'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
+            'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
+            'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
+            'R': ('#BE001C', '#FAFAEE'),  # red (default)
+            'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
+            'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
+            'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
+            'W': ('#FAFAEE', '#BE001C'),  # white (default)
+            'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
+        }
         # Needed for game play
         self.playing_cards = None
         self.pointer = 0
@@ -91,7 +106,7 @@ class WNRS:
 
     def load_game(self, list_of_deck, pointer, index):
         """
-        Load existing game
+        Load existing game from deck selection
 
         Args:
             list_of_deck (list): List of all selected games to play
@@ -102,52 +117,75 @@ class WNRS:
         self.pointer = pointer
         self.index = index
 
+    def load_game_from_dict(self, game_dict):
+        """
+        Load existing game from dictionary
+
+        Args:
+            game_dict (dict): Dictionary of existing game, called with WNRS().__dict__
+        """
+        self.playing_cards = game_dict['playing_cards']
+        self.pointer = game_dict['pointer']
+        self.index = game_dict['index']
+
     def get_next_card(self):
         """
         Get next card
 
         Returns:
-            (str, str, str): Card deck, type, card prompt
+            (str, list, dict, str): Card deck, prompt, style, counter
         """
         if self.pointer < len(self.index) - 1:
             self.pointer += 1
-        idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards["Deck"][idx]
-        card_type = self.playing_cards["Card"][idx]
-        card_prompt = self.playing_cards["Prompt"][idx]
-        return card_deck, card_type, card_prompt
+        return self.get_current_card()
 
     def get_previous_card(self):
         """
         Get previous card
 
         Returns:
-            (str, str, str): Card deck, type, card prompt
+            (str, list, dict, str): Card deck, prompt, style, counter
         """
         if self.pointer > 0:
             self.pointer -= 1
-        idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards["Deck"][idx]
-        card_type = self.playing_cards["Card"][idx]
-        card_prompt = self.playing_cards["Prompt"][idx]
-        return card_deck, card_type, card_prompt
+        return self.get_current_card()
 
     def get_current_card(self):
         """
         Get current card
 
         Returns:
-            (str, str, str): Card deck, type, card prompt
+            (str, list, dict, str): Card deck, prompt, style, counter
         """
         idx = str(self.index[self.pointer])
         card_deck = self.playing_cards["Deck"][idx]
         card_type = self.playing_cards["Card"][idx]
         card_prompt = self.playing_cards["Prompt"][idx]
-        return card_deck, card_type, card_prompt
+
+        # Post-processing
+        card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+        card_prompt = card_prompt \
+            .replace("\\'", "'") \
+            .replace('\\"', '"') \
+            .replace('Wild Card ', 'Wild Card:\\n') \
+            .replace('Reminder ', 'Reminder:\\n') \
+            .split('\\n')
+        card_prompt2 = []
+        for line in card_prompt:
+            card_prompt2.append(line)
+            card_prompt2.append(html.Br())
+        card_prompt2.pop()
+        background_color, font_color = self.color_map[card_type]
+        card_style = {'background-color': background_color, 'color': font_color}
+        card_counter = f"{self.pointer + 1} / {len(self.index)}"
+        return card_deck2, card_prompt2, card_style, card_counter
 
     def shuffle_remaining_cards(self):
         """
-        Shuffle remaining cards
+        Shuffle remaining cards, return next card
+
+        Returns:
+            (str, list, dict, str): Card deck, prompt, style, counter
         """
         past_index = self.index[:self.pointer + 1].copy()
         remaining_index = self.index[self.pointer + 1:].copy()
