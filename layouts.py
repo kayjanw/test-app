@@ -1041,29 +1041,22 @@ def wnrs_tab(app):
         ),
         html.Div([
             html.Div([
-                dbc.Jumbotron(
-                    [
-                        dbc.Container(
-                            [
-                                html.P(
-                                    id='wnrs-prompt',
-                                ),
-                                html.P([
-                                    "We're Not Really Strangers",
-                                    html.Br(),
-                                    html.Br(),
-                                ],
-                                    id='wnrs-deck',
-                                ),
-                            ],
-                            fluid=True,
-                            style={
-                                'position': 'relative',
-                                'height': '100%',
-                                'text-transform': 'uppercase',
-                            }
-                        )
-                    ],
+                dbc.Jumbotron([
+                    html.Div([
+                        html.P(id='wnrs-prompt'),
+                        html.P([
+                            "We're Not Really Strangers",
+                            html.Br(),
+                            html.Br(),
+                        ],
+                            id='wnrs-deck',
+                        )],
+                        style={
+                            'position': 'relative',
+                            'height': '100%',
+                            'text-transform': 'uppercase',
+                        })
+                ],
                     fluid=True,
                     id='wnrs-card',
                 ),
