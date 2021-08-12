@@ -662,47 +662,15 @@ def register_callbacks(app, print_function):
                 )
         return data
 
-    @app.callback([Output('wnrs-text-back', 'children'),
-                   Output('wnrs-text-next', 'children'),
-                   Output('button-wnrs2-back', 'style'),
-                   Output('button-wnrs2-next', 'style')],
-                  [Input('button-wnrs-back', 'n_clicks'),
-                   Input('button-wnrs-next', 'n_clicks'),
-                   Input('button-wnrs2-back', 'n_clicks'),
-                   Input('button-wnrs2-next', 'n_clicks')],
-                  [State('wnrs-text-back', 'children'),
-                   State('wnrs-text-next', 'children'),
-                   State('button-wnrs2-back', 'style'),
-                   State('button-wnrs2-next', 'style')])
-    @print_callback(print_function)
-    def update_wnrs_remove_help(trigger_back, trigger_next, trigger_back2, trigger_next2,
-                                text_back, text_next, button_back, button_next):
-        """
-        Remove help function
-
-        Args:
-            trigger_back: Trigger on button click
-            trigger_next: Trigger on button click
-            trigger_back2: Trigger on button click
-            trigger_next2: Trigger on button click
-            text_back (str): Current text of words for back button
-            text_next (str): Current text of words for next button
-            button_back (dict): Current opacity for back button
-            button_next (dict): Current opacity for next button
-
-        Returns:
-            (str, str, dict, dict)
-        """
-        if dash.callback_context.triggered:
-            text_back = text_next = ''
-            button_back = button_next = dict(opacity=0)
-        return text_back, text_next, button_back, button_next
-
     @app.callback([Output('wnrs-prompt', 'children'),
                    Output('wnrs-deck', 'children'),
                    Output('wnrs-counter', 'children'),
                    Output('wnrs-card', 'style'),
-                   Output('input-wnrs', 'value')],
+                   Output('input-wnrs', 'value'),
+                   Output('wnrs-text-back', 'children'),
+                   Output('wnrs-text-next', 'children'),
+                   Output('button-wnrs2-back', 'style'),
+                   Output('button-wnrs2-next', 'style')],
                   [Input('button-wnrs-ok', 'n_clicks'),
                    Input('button-wnrs-back', 'n_clicks'),
                    Input('button-wnrs-next', 'n_clicks'),
@@ -713,10 +681,15 @@ def register_callbacks(app, print_function):
                   [State('uploadbutton-wnrs', 'filename'),
                    State('intermediate-wnrs', 'data'),
                    State('input-wnrs', 'value'),
-                   State('wnrs-card', 'style')])
+                   State('wnrs-card', 'style'),
+                   State('wnrs-text-back', 'children'),
+                   State('wnrs-text-next', 'children'),
+                   State('button-wnrs2-back', 'style'),
+                   State('button-wnrs2-next', 'style')])
     @print_callback(print_function)
     def update_wnrs_list_of_decks(trigger_ok, trigger_back, trigger_next, trigger_back2, trigger_next2,
-                                  trigger_shuffle, contents, filename, data, data2_ser, current_style):
+                                  trigger_shuffle, contents, filename, data, data2_ser, current_style,
+                                  text_back, text_next, button_back, button_next):
         """
         Update card content and style
 
@@ -731,9 +704,13 @@ def register_callbacks(app, print_function):
             data (dict): Data of WNRS object
             data2_ser (str): Serialized data of WNRS object
             current_style (dict): Current style of card
+            text_back (str): Current text of words for back button
+            text_next (str): Current text of words for next button
+            button_back (dict): Current opacity for back button
+            button_next (dict): Current opacity for next button
 
         Returns:
-            (str, str, str, dict, str)
+            (str, str, str, dict, str, str, str, dict, dict)
         """
         card_prompt, card_deck, card_counter, data_new = '', '', '', {}
         next_card = 0
@@ -771,6 +748,9 @@ def register_callbacks(app, print_function):
                         next_card = -1
                     elif ctx.endswith('next'):
                         next_card = 1
+                else:
+                    text_back = text_next = ''
+                    button_back = button_next = dict(opacity=0)
             elif ctx == 'button-wnrs-shuffle-ok':
                 data_new = data2.copy()
                 next_card = 2
@@ -796,7 +776,10 @@ def register_callbacks(app, print_function):
             current_style.update(card_style)
         data_new['ctx_value'] = trigger_ok
         data_new2 = encode_dict(data_new)
-        return [card_prompt, card_deck, card_counter, current_style, data_new2]
+        return [
+            card_prompt, card_deck, card_counter, current_style, data_new2,
+            text_back, text_next, button_back, button_next
+        ]
 
     @app.callback(Output('image-canvas', 'image_content'),
                   [Input('upload-image', 'contents')])
