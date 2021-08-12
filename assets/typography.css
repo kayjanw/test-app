@@ -224,7 +224,7 @@ button[disabled] {
     vertical-align: middle;
 }
 
-.div-with-image Span {
+.div-with-image span {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 0;
@@ -244,11 +244,13 @@ button[disabled] {
 
 .div-with-invisible-button button {
     position: absolute;
-    opacity: 0;
     margin: 0;
     top: 0;
     height: 100%;
     width: 100%;
+    background-color: rgb(190, 0, 28);
+    opacity: 50%;
+    border: 10px dashed black;
 }
 
 .div-with-invisible-button button[id$="-back"] {
@@ -257,6 +259,27 @@ button[disabled] {
 
 .div-with-invisible-button button[id$="-next"] {
     left: 50%;
+}
+
+.div-with-invisible-button span {
+    position: absolute;
+    margin: 0;
+    padding: 20px;
+    top: 40%;
+    pointer-events: none;
+    font-size: 150%;
+    font-weight: bold;
+    text-shadow: 0px 0px 10px #FFF;
+}
+
+.div-with-invisible-button span[id$="-back"]  {
+    right: 50%;
+    text-align: right;
+}
+
+.div-with-invisible-button span[id$="-next"] {
+    left: 50%;
+    text-align: left;
 }
 
 .medium-image Img {
@@ -482,6 +505,8 @@ div[id$="-result"] {
 #wnrs-card {
     height: 100%;
     border-radius: 50px;
+    background-color: #BE001C;
+    color: #FAFAEE;
 }
 
 /* Custom id (tabs content)
