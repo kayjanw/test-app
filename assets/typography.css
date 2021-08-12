@@ -54,6 +54,9 @@ Pinkish grey #D6CAC7
     #wnrs-prompt {
         font-size: 2em;
     }
+    #button-wnrs-back, #button-wnrs-next {
+        width: 20vw;
+    }
 }
 
 /* For devices larger than 800px */
@@ -82,6 +85,9 @@ Pinkish grey #D6CAC7
     }
     #wnrs-prompt {
         font-size: 1.3em;
+    }
+    #button-wnrs-back, #button-wnrs-next {
+        width: 10vw;
     }
 }
 
@@ -517,10 +523,6 @@ div[id$="-result"] {
     font-family: sans-serif;
     color: #BE9B89;
     text-shadow: 0 0 #BE9B89;
-}
-
-#button-wnrs-back, #button-wnrs-next {
-    width: 10vw;
 }
 
 /* Custom id (tabs content)
