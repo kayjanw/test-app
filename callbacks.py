@@ -718,12 +718,12 @@ def register_callbacks(app, print_function):
             data2 = decode_dict(data2_ser)
             if ctx == 'intermediate-wnrs':
                 if 'wnrs_game_dict' not in data:
-                    card_prompt = 'Please select a deck to start'
+                    card_prompt = html.P('Please select a deck to start')
                 else:  # dummy callback
                     data_new = data.copy()
             elif ctx == 'uploadbutton-wnrs':
                 if 'json' not in filename:
-                    card_prompt = 'Please upload a JSON file'
+                    card_prompt = html.P('Please upload a JSON file')
                 else:
                     data = parse_data(contents, filename)
                     data = json.loads(data.decode('utf-8'))
@@ -735,7 +735,7 @@ def register_callbacks(app, print_function):
                             wnrs_game_dict=wnrs_game.__dict__
                         )
                     except KeyError:
-                        card_prompt = 'Please upload a valid JSON file. Data is not in the correct format'
+                        card_prompt = html.P('Please upload a valid JSON file. Data is not in the correct format')
             elif ctx in ['button-wnrs-back', 'button-wnrs2-back', 'button-wnrs-next', 'button-wnrs2-next']:
                 data_new = data2.copy()
                 if text_back == '':

@@ -1,6 +1,7 @@
 import dash_html_components as html
 import pandas as pd
 import random
+import re
 
 from functools import reduce
 
@@ -163,7 +164,7 @@ class WNRS:
         """
         color_map = {
             'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
-            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting edition)
+            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting, own it edition)
             'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
             'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
             'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
@@ -171,30 +172,49 @@ class WNRS:
             'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
             'R': ('#BE001C', '#FAFAEE'),  # red (default)
             'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
+            'S1': ('#5f86b5', '#FAFAEE'),  # special blue card white font (own it edition)
+            'S2': ('#af2637', '#FAFAEE'),  # special maroon card white font (own it edition)
+            'S3': ('#275835', '#FAFAEE'),  # special green card white font (own it edition)
             'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
             'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
             'W': ('#FAFAEE', '#BE001C'),  # white (default)
             'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
         }
 
-        idx = str(self.index[self.pointer])
-        card_deck = self.playing_cards["Deck"][idx]
-        card_type = self.playing_cards["Card"][idx]
-        card_prompt = self.playing_cards["Prompt"][idx]
+        index = str(self.index[self.pointer])
+        card_deck = self.playing_cards["Deck"][index]
+        card_type = self.playing_cards["Card"][index]
+        card_prompt = self.playing_cards["Prompt"][index]
 
         # Post-processing
+        def append_line(current_list, current_sentence, current_style=None, pattern=0):
+            if current_style is None:
+                current_style = {}
+            inline_style = {'display': 'inline'}
+            current_sentence = current_sentence \
+                .replace("\\'", "'") \
+                .replace('\\"', '"') \
+                .replace('Wild Card ', 'Wild Card:\\n') \
+                .replace('Reminder ', 'Reminder:\\n') \
+                .split('\\n')
+            for idx, line in enumerate(current_sentence):
+                if (pattern == 1 and idx == len(current_sentence) - 1) or (pattern == 2) or (pattern == 3 and idx == 0):
+                    current_list.append(html.P(line, style={**current_style, **inline_style}))
+                else:
+                    current_list.append(html.P(line, style=current_style))
+            return current_list
         card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
-        card_prompt = card_prompt \
-            .replace("\\'", "'") \
-            .replace('\\"', '"') \
-            .replace('Wild Card ', 'Wild Card:\\n') \
-            .replace('Reminder ', 'Reminder:\\n') \
-            .split('\\n')
+        word_colour = re.findall(r"\[(#\w+)\]\((.+?)\)", card_prompt)
         card_prompt2 = []
-        for line in card_prompt:
-            card_prompt2.append(line)
-            card_prompt2.append(html.Br())
-        card_prompt2.pop()
+        if len(word_colour):
+            assert len(word_colour) == 1, "There are more than one word that need special formatting"
+            _colour, _sentence = word_colour[0]
+            a, b = card_prompt.split(f"[{_colour}]({_sentence})")
+            card_prompt2 = append_line(card_prompt2, a, pattern=1)
+            card_prompt2 = append_line(card_prompt2, _sentence, {'color': _colour}, pattern=2)
+            card_prompt2 = append_line(card_prompt2, b, pattern=3)
+        else:
+            card_prompt2 = append_line(card_prompt2, card_prompt)
         background_color, font_color = color_map[card_type]
         card_style = {'background-color': background_color, 'color': font_color}
         card_counter = f"{self.pointer + 1} / {len(self.index)}"
