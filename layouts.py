@@ -753,10 +753,10 @@ def wnrs_tab(app):
     )
     return html.Div([
         content_header("We're Not Really Strangers", ''),
-        html.Button('Click to select deck', id='button-wnrs-show-ok'),
+        html.Button('Select deck', id='button-wnrs-show-ok', title='Show/hide deck selection'),
         html.A([
             dcc.Upload([
-                html.Span('Click to upload past progress')
+                html.Span('Upload past progress')
             ],
                 id='uploadbutton-wnrs',
                 multiple=False,
