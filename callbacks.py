@@ -660,6 +660,8 @@ def register_callbacks(app, print_function):
 
     @app.callback([Output('input-wnrs', 'value'),
                    Output('wnrs-prompt', 'children'),
+                   Output('wnrs-reminder-text', 'children'),
+                   Output('wnrs-reminder', 'children'),
                    Output('wnrs-deck', 'children'),
                    Output('wnrs-counter', 'children'),
                    Output('wnrs-card', 'style'),
@@ -771,7 +773,7 @@ def register_callbacks(app, print_function):
             current_style.update(card_style)
         data_new2 = encode_dict(data_new)
         return [
-            data_new2, card_prompt, card_deck, card_counter, current_style,
+            data_new2, *card_prompt, card_deck, card_counter, current_style,
             text_back, text_next, button_back, button_next
         ]
 
