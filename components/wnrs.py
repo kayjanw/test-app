@@ -187,6 +187,11 @@ class WNRS:
         card_prompt = self.playing_cards["Prompt"][index]
 
         # Post-processing
+        card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+        background_color, font_color = color_map[card_type]
+        card_style = {'background-color': background_color, 'color': font_color}
+        card_counter = f"{self.pointer + 1} / {len(self.index)}"
+
         def append_line(current_list, current_sentence, current_style=None, pattern=0):
             if current_style is None:
                 current_style = {}
@@ -203,22 +208,29 @@ class WNRS:
                 else:
                     current_list.append(html.P(line, style=current_style))
             return current_list
-        card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+
+        # Different card style for reminder cards
+        card_prompt1, card_prompt2, card_prompt3 = [], [], []
+        if card_prompt.startswith('Reminder'):
+            card_prompt = card_prompt.replace('Reminder ', '')
+            card_prompt2 = html.P(['Reminder'])
+            card_prompt_used = card_prompt3
+        else:
+            card_prompt_used = card_prompt1
+
+        # Different card style for word colour
         word_colour = re.findall(r"\[(#\w+)\]\((.+?)\)", card_prompt)
-        card_prompt2 = []
         if len(word_colour):
             assert len(word_colour) == 1, "There are more than one word that need special formatting"
             _colour, _sentence = word_colour[0]
             a, b = card_prompt.split(f"[{_colour}]({_sentence})")
-            card_prompt2 = append_line(card_prompt2, a, pattern=1)
-            card_prompt2 = append_line(card_prompt2, _sentence, {'color': _colour}, pattern=2)
-            card_prompt2 = append_line(card_prompt2, b, pattern=3)
+            card_prompt_used = append_line(card_prompt_used, a, pattern=1)
+            card_prompt_used = append_line(card_prompt_used, _sentence, {'color': _colour}, pattern=2)
+            card_prompt_used = append_line(card_prompt_used, b, pattern=3)
         else:
-            card_prompt2 = append_line(card_prompt2, card_prompt)
-        background_color, font_color = color_map[card_type]
-        card_style = {'background-color': background_color, 'color': font_color}
-        card_counter = f"{self.pointer + 1} / {len(self.index)}"
-        return card_deck2, card_prompt2, card_style, card_counter
+            card_prompt_used = append_line(card_prompt_used, card_prompt)
+
+        return card_deck2, [card_prompt1, card_prompt2, card_prompt3], card_style, card_counter
 
     def shuffle_remaining_cards(self):
         """
