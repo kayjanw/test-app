@@ -51,7 +51,7 @@ Pinkish grey #D6CAC7
         height: 60vw;
         width: 90vw;
     }
-    #wnrs-prompt {
+    #wnrs-prompt, #wnrs-reminder-text, #wnrs-reminder {
         font-size: 2em;
     }
     #button-wnrs-back, #button-wnrs-next {
@@ -83,7 +83,7 @@ Pinkish grey #D6CAC7
         height: 45vh;
         width: 70vh;
     }
-    #wnrs-prompt {
+    #wnrs-prompt, #wnrs-reminder-text, #wnrs-reminder {
         font-size: 1.3em;
     }
     #button-wnrs-back, #button-wnrs-next {
@@ -496,6 +496,12 @@ div[id$="-result"] {
     color: #FAFAEE;
 }
 
+#wnrs-prompt p, #wnrs-reminder-text p, #wnrs-reminder p {
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 0;
+}
+
 #wnrs-prompt {
     position: absolute;
     top: 50%;
@@ -505,10 +511,22 @@ div[id$="-result"] {
     padding: 10px;
 }
 
-#wnrs-prompt p {
-    font-family: sans-serif;
-    font-weight: bold;
-    margin: 0;
+#wnrs-reminder-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 60%;
+    transform: translateY(-50%) translateX(-10%);
+    text-align: right;
+}
+
+#wnrs-reminder {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: left;
 }
 
 #wnrs-deck {

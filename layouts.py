@@ -1042,6 +1042,8 @@ def wnrs_tab(app):
                 dbc.Jumbotron([
                     html.Div([
                         html.P(id='wnrs-prompt'),
+                        html.P(id='wnrs-reminder-text'),
+                        html.P(id='wnrs-reminder'),
                         html.P([
                             "We're Not Really Strangers",
                             html.Br(),
