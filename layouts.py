@@ -829,7 +829,10 @@ def wnrs_tab(app):
                     className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Cann Edition', className='span-short'),
+                    html.Span([
+                        'Cann Edition',
+                        html.Sup('Drinking', className='blinker'),
+                    ], className='span-short'),
                     html.Img(src=app.get_asset_url('info.svg'), id='cann-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Cann Edition']['description'],
@@ -844,7 +847,10 @@ def wnrs_tab(app):
                     className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
-                    html.Span('Valentino Edition', className='span-short'),
+                    html.Span([
+                        'Valentino Edition',
+                        html.Sup('Reflection', className='blinker'),
+                    ], className='span-short'),
                     html.Img(src=app.get_asset_url('info.svg'), id='valentino-help'),
                     dbc.Tooltip(
                         wnrs_information['Crossover']['Valentino Edition']['description'],
