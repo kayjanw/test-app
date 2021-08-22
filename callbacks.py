@@ -622,6 +622,7 @@ def register_callbacks(app, print_function):
                  'Quarantine Edition 1', 'Quarantine Edition 2', 'Quarantine Edition 3', 'Quarantine Edition Final',
                  'Voting Edition 1',
                  'Breakup Edition 1', 'Breakup Edition Final',
+                 'Existential Crisis Edition 1',
                  'Forgiveness Edition 1',
                  'Healing Edition 1',
                  'Self-Love Edition 1', 'Self-Love Edition Final',
