@@ -533,8 +533,8 @@ div[id$="-result"] {
     position: absolute;
     top: 50%;
     left: 0;
-    right: 60%;
-    transform: translateY(-50%) translateX(-10%);
+    right: 65%;
+    transform: translateY(-50%);
     text-align: right;
 }
 
