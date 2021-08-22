@@ -982,6 +982,22 @@ def wnrs_tab(app):
                     className='div-with-image div-with-image-left small-image'
                 ),
                 html.Div([
+                    html.Span([
+                        'Existential Crisis Edition',
+                        html.Sup('Mine', className='blinker'),
+                    ], className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='crisis-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Single-Player']['Existential Crisis Edition']['description'],
+                        placement='right',
+                        target='crisis-help',
+                        className='tooltip',
+                    ),
+                    dbc.Button('Level 1', id='Existential Crisis Edition 1'),
+                ],
+                    className='div-with-image div-with-image-left small-image'
+                ),
+                html.Div([
                     html.Span('Forgiveness Edition', className='span-short'),
                     html.Img(src=app.get_asset_url('info.svg'), id='forgiveness-help'),
                     dbc.Tooltip(
