@@ -526,7 +526,7 @@ div[id$="-result"] {
     left: 0;
     right: 0;
     transform: translateY(-50%);
-    padding: 10px;
+    padding: 0 10px;
 }
 
 #wnrs-reminder-text {
@@ -544,6 +544,7 @@ div[id$="-result"] {
     left: 40%;
     right: 0;
     transform: translateY(-50%);
+    padding-right: 10px;
     text-align: left;
 }
 

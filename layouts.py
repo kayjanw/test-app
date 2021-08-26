@@ -14,7 +14,8 @@ from components.wnrs import WNRS
 def main_layout():
     return html.Div([
         dcc.Location(id='url', refresh=False),
-        html.Div(id='page-content')
+        html.Div(id='page-content'),
+        html.Div(id='blank-output')
     ])
 
 
