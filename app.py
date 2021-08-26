@@ -13,12 +13,6 @@ meta_tags = [
         'content': "Kay Jan's Side Project - "
                    "Automate repetitive data analysis tasks and perform predictions and optimizations"
     }, {
-        'http-equiv': 'X-UA-Compatible',
-        'content': 'IE=edge'
-    }, {
-        'name': 'viewport',
-        'content': 'width=device-width, initial-scale=1.0'
-    }, {
         'property': 'og:type',
         'content': 'website'
     }, {
