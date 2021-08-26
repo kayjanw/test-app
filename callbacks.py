@@ -940,3 +940,29 @@ def register_callbacks(app, print_function):
             return image_edit_tab(app)
         else:
             return current_content
+
+    app.clientside_callback(
+        """
+        function(tab_value) {
+            if (tab_value === 'tab-aboutme') {
+                document.title = 'About Me'
+            } else if (tab_value === 'tab-change') {
+                document.title = 'Change Calculator'
+            } else if (tab_value === 'tab-change2') {
+                document.title = 'Change Calculator 2'
+            } else if (tab_value === 'tab-chat') {
+                document.title = 'Chat Analyzer'
+            } else if (tab_value === 'tab-trip') {
+                document.title = 'Trip Planner'
+            } else if (tab_value === 'tab-mbti') {
+                document.title = 'MBTI Personality Test'
+            } else if (tab_value === 'tab-wnrs') {
+                document.title = 'WNRS Card Game'
+            } else if (tab_value === 'tab-image') {
+                document.title = 'Image Editing'
+            }
+        }
+        """,
+        Output('blank-output', 'children'),
+        [Input('tabs-parent', 'value')]
+    )
