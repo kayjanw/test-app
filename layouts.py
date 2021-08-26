@@ -141,17 +141,17 @@ def about_me_tab(app):
         html.P([
             html.Img(src=app.get_asset_url('data-analytics.svg')),
             html.Strong('Data Analytics'),
-            html.Span(': Using uploaded data, visualize results graphically')
+            html.P(': Using uploaded data, visualize results graphically', className='p-short')
         ]),
         html.P([
             html.Img(src=app.get_asset_url('optimization.svg')),
             html.Strong('Optimization'),
-            html.Span(': Solve computationally expensive math problems')
+            html.P(': Solve computationally expensive math problems', className='p-short')
         ]),
         html.P([
             html.Img(src=app.get_asset_url('prediction.svg')),
             html.Strong('Prediction'),
-            html.Span(': Use machine learning methods to churn out predictions')
+            html.P(': Use machine learning methods to churn out predictions', className='p-short')
         ]),
         html.Br(),
         html.Br(),
