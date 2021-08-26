@@ -390,6 +390,30 @@ div[id$="-result"] {
     padding: 0;
 }
 
+.p-short {
+    display: inline-block;
+    padding: 0;
+}
+
+.span-short {
+    margin-left: 50px;
+    width: 200px;
+}
+
+.blinker {
+    display: inline-block;
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: blinking 2s linear infinite;
+}
+
+@keyframes blinking {
+  50% {
+    opacity: 50%;
+  }
+}
+
 /* Custom id
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #banner {
@@ -484,23 +508,16 @@ div[id$="-result"] {
     white-space: pre;
 }
 
-.span-short {
-    margin-left: 50px;
-    width: 200px;
+/* Custom id (tabs content)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+#input-mbti {
+    width: 100%;
+    height: 300px;
+    resize: vertical;
 }
 
-.blinker {
-    display: inline-block;
-    color: red;
-    font-weight: bold;
-    text-transform: uppercase;
-    animation: blinking 2s linear infinite;
-}
-
-@keyframes blinking {
-  50% {
-    opacity: 50%;
-  }
+#chat-result {
+    margin-top: 20px;
 }
 
 #wnrs-card {
@@ -564,18 +581,6 @@ div[id$="-result"] {
     font-family: sans-serif;
     color: #BE9B89;
     text-shadow: 0 0 #BE9B89;
-}
-
-/* Custom id (tabs content)
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-#input-mbti {
-    width: 100%;
-    height: 300px;
-    resize: vertical;
-}
-
-#chat-result {
-    margin-top: 20px;
 }
 
 /* Custom id (dropdown)
