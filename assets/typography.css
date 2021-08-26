@@ -390,9 +390,17 @@ div[id$="-result"] {
     padding: 0;
 }
 
+.custom-div-space-below {
+    margin-bottom: 5px;
+}
+
 .p-short {
     display: inline-block;
     padding: 0;
+}
+
+.p-bold {
+    font-weight: bold;
 }
 
 .span-short {

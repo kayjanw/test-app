@@ -138,21 +138,27 @@ def about_me_tab(app):
     return html.Div([
         content_header('About me'),
         html.P('Just someone trying to apply what I learn, and believes coding should make our lives easier'),
-        html.P([
+        html.Div([
             html.Img(src=app.get_asset_url('data-analytics.svg')),
-            html.Strong('Data Analytics'),
+            html.P('Data Analytics', className='p-short p-bold'),
             html.P(': Using uploaded data, visualize results graphically', className='p-short')
-        ]),
-        html.P([
+        ],
+            className='custom-div-space-below'
+        ),
+        html.Div([
             html.Img(src=app.get_asset_url('optimization.svg')),
-            html.Strong('Optimization'),
+            html.P('Optimization', className='p-short p-bold'),
             html.P(': Solve computationally expensive math problems', className='p-short')
-        ]),
-        html.P([
+        ],
+            className='custom-div-space-below'
+        ),
+        html.Div([
             html.Img(src=app.get_asset_url('prediction.svg')),
-            html.Strong('Prediction'),
+            html.P('Prediction', className='p-short p-bold'),
             html.P(': Use machine learning methods to churn out predictions', className='p-short')
-        ]),
+        ],
+            className='custom-div-space-below'
+        ),
         html.Br(),
         html.Br(),
         html.P([
