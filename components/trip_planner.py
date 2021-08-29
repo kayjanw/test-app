@@ -1,3 +1,6 @@
+import gevent.monkey
+gevent.monkey.patch_all()
+
 import dash_html_components as html
 import dash_leaflet as dl
 import numpy as np
@@ -52,10 +55,11 @@ class TripPlanner:
             (str)
         """
         url = f'https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={self.GOOGLE_API_KEY}'
+        print(url)
         try:
             page = requests.get(url).json()
         except Exception as e:
-            return f'Error connecting to Google API. Error message: {e}'
+            return f'Cannot get distance data from Google API, error message: {e}'
         if page['status'] == 'OK':
             return page['results'][0]['address_components'][1]['long_name']
         else:
