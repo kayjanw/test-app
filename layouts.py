@@ -1234,7 +1234,7 @@ def wnrs_tab(app):
 def contact_tab():
     return html.Div([
         content_header('Contact Me'),
-        html.P('If you have any questions, feedback and suggestions, please feel free to drop me an email.'),
+        html.P('If you have any questions, feedback or suggestions, please feel free to drop me an email.'),
         dcc.Input(
             id='input-contact-name',
             type='text',
