@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'utils.py Project'
-copyright = '2020, Kay Jan WONG'
+copyright = '2021, Kay Jan WONG'
 author = 'Kay Jan WONG'
 
 # The full version, including alpha/beta/rc tags
