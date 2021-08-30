@@ -7,6 +7,9 @@ from functools import reduce
 
 
 class WNRS:
+    """The WNRS object contains functions used for We're Not Really Strangers tab
+    """
+
     def __init__(self):
         """Read and initalize the card game
         """

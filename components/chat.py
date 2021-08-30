@@ -11,7 +11,7 @@ from components.helper import generate_datatable
 
 
 class ChatAnalyzer:
-    """The Chat object contains functions used for Chat Analyzer tab
+    """The ChatAnalyzer object contains functions used for Chat Analyzer tab
     """
 
     def __init__(self, fp='', data=None):
