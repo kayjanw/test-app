@@ -9,11 +9,15 @@ import dash_table
 import io
 import json
 import numpy as np
+import os
 import pandas as pd
 import plotly.graph_objects as go
+import re
+import sendgrid
 
 from functools import reduce
 from plotly.colors import n_colors
+from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
 def print_callback(print_function):
@@ -388,3 +392,52 @@ def result_download_button(app, df):
         method='POST',
         action='/download_df/'
     )
+
+
+def valid_email(email):
+    """Helper function to validate email address
+
+    Args:
+        email (str): email address
+
+    Returns:
+        (bool)
+    """
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if (re.fullmatch(regex, email)):
+        return True
+    else:
+        return False
+
+
+def send_email(email_body):
+    """Helper function to send email
+
+    Args:
+        email_body (str): email body to be sent
+
+    Returns:
+        (bool)
+    """
+    try:
+        SENDGRID_API_KEY = ENV['SENDGRID_API_KEY']
+    except NameError:
+        try:
+            SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+        except KeyError:
+            print('No SENDGRID_API_KEY found')
+    try:
+        my_sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
+        from_email = Email("kay.jan@hotmail.com")  # verified sender
+        to_email = To("e0503512@u.nus.edu")  # recipient
+        subject = "Email from Herokuapp"
+        content = Content("text/plain", email_body)
+        mail = Mail(from_email, to_email, subject, content)
+        mail_json = mail.get()
+        response = my_sg.client.mail.send.post(request_body=mail_json)
+        if response.status_code == 202:
+            return True
+        else:
+            return False
+    except Exception:
+        return False
