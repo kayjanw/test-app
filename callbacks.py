@@ -569,8 +569,7 @@ def register_callbacks(app, print_function):
                    State('div-wnrs-suggestion', 'style')])
     @print_callback(print_function)
     def update_wnrs_deck_style(trigger_selection, trigger_suggestion, selection_style, suggestion_style):
-        """
-        Update style of WNRS card selection and card suggestion (visibility)
+        """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
             trigger_selection: Trigger on button click
@@ -605,8 +604,7 @@ def register_callbacks(app, print_function):
                    State('input-wnrs-suggestion2', 'value')])
     @print_callback(print_function)
     def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
-        """
-        Send email for WNRS card suggestion
+        """Send email for WNRS card suggestion
 
         Args:
             trigger: Trigger on button click
@@ -636,8 +634,7 @@ def register_callbacks(app, print_function):
                           [State(deck, 'style')])
             @print_callback(print_function)
             def update_wnrs_button_style(trigger, current_style):
-                """
-                Update style of selected WNRS decks (button colour indication)
+                """Update style of selected WNRS decks (button colour indication)
 
                 Args:
                     trigger: Trigger on button click
@@ -684,11 +681,10 @@ def register_callbacks(app, print_function):
                   [Input(deck, 'style') for deck in all_decks])
     @print_callback(print_function)
     def update_wnrs_list_of_decks(*args):
-        """
-        Update list of decks selected
+        """Update list of decks selected
 
         Args:
-            style (dict): Current style of all buttons
+            *args (dict): Current style of all buttons
 
         Returns:
             (dict): Updated style of all buttons
@@ -737,8 +733,7 @@ def register_callbacks(app, print_function):
     def update_wnrs_card(trigger_back, trigger_next, trigger_back2, trigger_next2,
                          trigger_shuffle, data, contents, filename, data2_ser, card_prompt,
                          current_style, text_back, text_next, button_back, button_next):
-        """
-        Update underlying data, card content and style
+        """Update underlying data, card content and style
 
         Args:
             trigger_back: Trigger on button click
@@ -966,8 +961,7 @@ def register_callbacks(app, print_function):
                    State('input-contact-content', 'value')])
     @print_callback(print_function)
     def update_contact_send_email(trigger, contact_name, contact_email, contact_content):
-        """
-        Send email for contact information
+        """Send email for contact information
 
         Args:
             trigger: Trigger on button click
@@ -981,7 +975,7 @@ def register_callbacks(app, print_function):
         reply = ''
         if dash.callback_context.triggered:
             if contact_name is None or contact_name.strip() == '':
-                reply = 'Please fill in a your name (required field)'
+                reply = 'Please fill in your name (required field)'
             elif contact_email is None or contact_email.strip() == '':
                 reply = 'Please fill in your email (required field)'
             elif not valid_email(contact_email):
