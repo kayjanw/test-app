@@ -9,12 +9,12 @@ from dash.dependencies import Input, Output, State
 from components.change_calculator import ChangeCalculator
 from components.chat import ChatAnalyzer
 from components.helper import print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
-    update_when_upload, result_download_button, parse_data
+    update_when_upload, result_download_button, parse_data, valid_email, send_email
 from components.mbti import MBTI
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
 from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, wnrs_tab, \
-    image_edit_tab
+    image_edit_tab, contact_tab
 
 
 def register_callbacks(app, print_function):
@@ -561,27 +561,74 @@ def register_callbacks(app, print_function):
                 fig2 = chat.get_time_series_day_plot()
         return result, fig1, fig2
 
-    @app.callback(Output('div-wnrs-selection', 'style'),
-                  [Input('button-wnrs-show-ok', 'n_clicks')],
-                  [State('div-wnrs-selection', 'style')])
+    @app.callback([Output('div-wnrs-selection', 'style'),
+                   Output('div-wnrs-suggestion', 'style')],
+                  [Input('button-wnrs-show-ok', 'n_clicks'),
+                   Input('button-wnrs-suggestion-ok', 'n_clicks')],
+                  [State('div-wnrs-selection', 'style'),
+                   State('div-wnrs-suggestion', 'style')])
     @print_callback(print_function)
-    def update_wnrs_deck_style(trigger, current_style):
+    def update_wnrs_deck_style(trigger_selection, trigger_suggestion, selection_style, suggestion_style):
         """
-        Update style of WNRS card selection (visibility)
+        Update style of WNRS card selection and card suggestion (visibility)
+
+        Args:
+            trigger_selection: Trigger on button click
+            trigger_suggestion: Trigger on button click
+            selection_style (dict): Current style of card selection div
+            suggestion_style (dict): Current style of card suggestion div
+
+        Returns:
+            (dict): Updated style of card selection and card suggestion div
+        """
+        if dash.callback_context.triggered:
+            ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+            if ctx == 'button-wnrs-show-ok':
+                if selection_style['display'] == 'inline-block':
+                    selection_style['display'] = 'none'
+                else:
+                    selection_style['display'] = 'inline-block'
+                suggestion_style['display'] = 'none'
+            elif ctx == 'button-wnrs-suggestion-ok':
+                if suggestion_style['display'] == 'inline-block':
+                    suggestion_style['display'] = 'none'
+                else:
+                    suggestion_style['display'] = 'inline-block'
+                selection_style['display'] = 'none'
+        return selection_style, suggestion_style
+
+    @app.callback([Output('input-wnrs-suggestion', 'value'),
+                   Output('input-wnrs-suggestion2', 'value'),
+                   Output('wnrs-suggestion-reply', 'children')],
+                  [Input('button-wnrs-send-ok', 'n_clicks')],
+                  [State('input-wnrs-suggestion', 'value'),
+                   State('input-wnrs-suggestion2', 'value')])
+    @print_callback(print_function)
+    def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
+        """
+        Send email for WNRS card suggestion
 
         Args:
             trigger: Trigger on button click
-            current_style (dict): Current style of card selection div
+            card_prompt (str): Input for card prompt
+            additional_info (str): Input for additional information
 
         Returns:
-            (dict): Updated style of card selection div
+            (str): Feedback for email sent
         """
+        reply = ''
         if dash.callback_context.triggered:
-            if current_style['display'] == 'inline-block':
-                current_style['display'] = 'none'
+            if card_prompt is None or card_prompt.strip() == '':
+                reply = 'Please fill in a card prompt (required field)'
             else:
-                current_style['display'] = 'inline-block'
-        return current_style
+                status_code = send_email(f'{card_prompt}\n\n{additional_info}')
+                if status_code:
+                    card_prompt = ''
+                    additional_info = ''
+                    reply = 'Suggestion received! Thank you.'
+                else:
+                    reply = 'Email failed to send, please contact kay.jan@hotmail.com directly.'
+        return card_prompt, additional_info, reply
 
     def update_wnrs_button_style_wrapper(deck):
             @app.callback(Output(deck, 'style'),
@@ -627,6 +674,7 @@ def register_callbacks(app, print_function):
                  'Healing Edition 1',
                  'Self-Love Edition 1', 'Self-Love Edition Final',
                  'Self-Reflection Edition 1',
+                 'Love Maps 1', 'Open Ended Questions 1', 'Rituals of Connection 1', 'Opportunity 1'
     ]
 
     for deck in all_decks:
@@ -686,9 +734,9 @@ def register_callbacks(app, print_function):
                    State('button-wnrs2-back', 'style'),
                    State('button-wnrs2-next', 'style')])
     @print_callback(print_function)
-    def update_wnrs_list_of_decks(trigger_back, trigger_next, trigger_back2, trigger_next2,
-                                  trigger_shuffle, data, contents, filename, data2_ser, card_prompt,
-                                  current_style, text_back, text_next, button_back, button_next):
+    def update_wnrs_card(trigger_back, trigger_next, trigger_back2, trigger_next2,
+                         trigger_shuffle, data, contents, filename, data2_ser, card_prompt,
+                         current_style, text_back, text_next, button_back, button_next):
         """
         Update underlying data, card content and style
 
@@ -908,6 +956,47 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
+    @app.callback([Output('input-contact-name', 'value'),
+                   Output('input-contact-email', 'value'),
+                   Output('input-contact-content', 'value'),
+                   Output('contact-reply', 'children')],
+                  [Input('button-contact-ok', 'n_clicks')],
+                  [State('input-contact-name', 'value'),
+                   State('input-contact-email', 'value'),
+                   State('input-contact-content', 'value')])
+    @print_callback(print_function)
+    def update_contact_send_email(trigger, contact_name, contact_email, contact_content):
+        """
+        Send email for contact information
+
+        Args:
+            trigger: Trigger on button click
+            contact_name (str): Input for contact name
+            contact_email (str): Input for contact email
+            contact_content (str): Input for email body
+
+        Returns:
+            (str): Feedback for email sent
+        """
+        reply = ''
+        if dash.callback_context.triggered:
+            if contact_name is None or contact_name.strip() == '':
+                reply = 'Please fill in a your name (required field)'
+            elif contact_email is None or contact_email.strip() == '':
+                reply = 'Please fill in your email (required field)'
+            elif not valid_email(contact_email):
+                reply = 'Please fill in a valid email address'
+            elif contact_content is None or contact_content.strip() == '':
+                reply = 'Please fill in content into email body (required field)'
+            else:
+                status_code = send_email(f'Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}')
+                if status_code:
+                    contact_content = ''
+                    reply = 'Feedback received! Thank you.'
+                else:
+                    reply = 'Email failed to send, please contact kay.jan@hotmail.com directly.'
+        return contact_name, contact_email, contact_content, reply
+
     @app.callback(Output('tab-content', 'children'),
                   [Input('tabs-parent', 'value')],
                   [State('tab-content', 'children')])
@@ -938,6 +1027,8 @@ def register_callbacks(app, print_function):
             return wnrs_tab(app)
         elif tab == 'tab-image':
             return image_edit_tab(app)
+        elif tab == 'tab-contact':
+            return contact_tab()
         else:
             return current_content
 
@@ -960,6 +1051,8 @@ def register_callbacks(app, print_function):
                 document.title = 'WNRS Card Game'
             } else if (tab_value === 'tab-image') {
                 document.title = 'Image Editing'
+            } else if (tab_value === 'tab-contact') {
+                document.title = 'Contact Me'
             }
         }
         """,
