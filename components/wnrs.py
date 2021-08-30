@@ -8,8 +8,7 @@ from functools import reduce
 
 class WNRS:
     def __init__(self):
-        """
-        Read and initalize the card game
+        """Read and initalize the card game
         """
         file = pd.ExcelFile("data/WNRS.xlsx")
         decks = file.sheet_names
@@ -41,8 +40,7 @@ class WNRS:
                 self.information[deck_type][deck]["levels"] = [1]
 
     def get_information(self):
-        """
-        Get information (type, description, summary) of all card deck
+        """Get information (type, description, summary) of all card deck
 
         Returns:
             (dict)
@@ -51,8 +49,7 @@ class WNRS:
 
     @staticmethod
     def get_all_cards():
-        """
-        Get all cards to retrieve playable cards
+        """Get all cards to retrieve playable cards
 
         Returns:
             (dict)
@@ -78,8 +75,7 @@ class WNRS:
         return cards
 
     def get_all_playable_cards(self, list_of_deck):
-        """
-        Initialize playing cards and index from list of deck for gameplay
+        """Initialize playing cards and index from list of deck for game play
 
         Args:
             list_of_deck (list): List of all selected games to play
@@ -96,8 +92,7 @@ class WNRS:
         self.playing_cards = playing_cards.to_dict()
 
     def initialize_game(self, list_of_deck=None):
-        """
-        Initialize new game
+        """Initialize new game
 
         Args:
             list_of_deck (list): List of all selected games to play
@@ -110,8 +105,7 @@ class WNRS:
         self.index = index
 
     def load_game(self, list_of_deck, pointer, index):
-        """
-        Load existing game from deck selection
+        """Load existing game from deck selection
 
         Args:
             list_of_deck (list): List of all selected games to play
@@ -123,8 +117,7 @@ class WNRS:
         self.index = index
 
     def load_game_from_dict(self, game_dict):
-        """
-        Load existing game from dictionary
+        """Load existing game from dictionary
 
         Args:
             game_dict (dict): Dictionary of existing game, called with WNRS().__dict__
@@ -134,8 +127,7 @@ class WNRS:
         self.index = game_dict['index']
 
     def get_next_card(self):
-        """
-        Get next card
+        """Get next card
 
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
@@ -145,8 +137,7 @@ class WNRS:
         return self.get_current_card()
 
     def get_previous_card(self):
-        """
-        Get previous card
+        """Get previous card
 
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
@@ -156,8 +147,7 @@ class WNRS:
         return self.get_current_card()
 
     def get_current_card(self):
-        """
-        Get current card
+        """Get current card
 
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
@@ -233,8 +223,7 @@ class WNRS:
         return card_deck2, [card_prompt1, card_prompt2, card_prompt3], card_style, card_counter
 
     def shuffle_remaining_cards(self):
-        """
-        Shuffle remaining cards, return next card
+        """Shuffle remaining cards, return next card
 
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
