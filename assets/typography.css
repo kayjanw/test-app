@@ -503,6 +503,7 @@ div[id$="-result"] {
     display: inline-block;
     line-height: 28px;
     padding: 0px 30px;
+    margin-right: 10px;
     text-transform: uppercase;
     font-size: 11px;
     font-weight: 600;

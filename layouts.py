@@ -61,6 +61,8 @@ def sidebar_dropdown():
                         disabled=True),
                 dcc.Tab(label="We're Not Really Strangers", value='tab-wnrs', className='custom-tab-sub',
                         selected_className='custom-tab-selected'),
+                dcc.Tab(label='Contact Me', value='tab-contact', className='custom-tab',
+                        selected_className='custom-tab-selected'),
                 # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab',
                 #         selected_className='custom-tab-selected')
             ],
@@ -769,7 +771,38 @@ def wnrs_tab(app):
                 multiple=False,
             )
         ]),
+        html.Button('Suggest prompts', id='button-wnrs-suggestion-ok', title='Send in your card prompt ideas'),
         html.Br(),
+        html.Div([
+            html.P('You can contribute too!', style={'margin-top': '20px'}),
+            dcc.Input(
+                id='input-wnrs-suggestion',
+                type='text',
+                placeholder='Your prompt(s)',
+                style={
+                    'width': '60%'
+                }
+            ),
+            dcc.Textarea(
+                id='input-wnrs-suggestion2',
+                value='',
+                placeholder='(Optional) Additional comments or feedback, include your contact details if you expect '
+                            'a reply!',
+                style={
+                    'width': '60%'
+                }
+            ),
+            html.Br(),
+            html.Button('Send', id='button-wnrs-send-ok'),
+            html.P(id='wnrs-suggestion-reply')
+        ],
+            id='div-wnrs-suggestion',
+            className='custom-dark-div image-dark-bg',
+            style={
+                'display': 'none',
+                'width': '90%'
+            }
+        ),
         html.Div([
             html.Div([
                 html.P('Main Deck', style={'margin-top': '20px'}),
@@ -1056,7 +1089,63 @@ def wnrs_tab(app):
                     dbc.Button('Level 1', id='Self-Reflection Edition 1'),
                 ],
                     className='div-with-image div-with-image-left small-image'
-                )
+                ),
+                html.P([
+                    'Gotmann Card Deck',
+                    html.Sup('improve relationship', className='blinker')
+                ], style={'margin-top': '20px'}),
+                html.Div([
+                    html.Span('Love Maps', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='love-maps-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Gotmann']['Love Maps']['description'],
+                        placement='right',
+                        target='love-maps-help',
+                        className='tooltip',
+                    ),
+                    dbc.Button('Level 1', id='Love Maps 1'),
+                ],
+                    className='div-with-image div-with-image-left small-image'
+                ),
+                html.Div([
+                    html.Span('Open Ended Questions', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='open-ended-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Gotmann']['Open Ended Questions']['description'],
+                        placement='right',
+                        target='open-ended-help',
+                        className='tooltip',
+                    ),
+                    dbc.Button('Level 1', id='Open Ended Questions 1'),
+                ],
+                    className='div-with-image div-with-image-left small-image'
+                ),
+                html.Div([
+                    html.Span('Rituals of Connection', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='rituals-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Gotmann']['Rituals of Connection']['description'],
+                        placement='right',
+                        target='rituals-help',
+                        className='tooltip',
+                    ),
+                    dbc.Button('Level 1', id='Rituals of Connection 1'),
+                ],
+                    className='div-with-image div-with-image-left small-image'
+                ),
+                html.Div([
+                    html.Span('Opportunity', className='span-short'),
+                    html.Img(src=app.get_asset_url('info.svg'), id='opportunity-help'),
+                    dbc.Tooltip(
+                        wnrs_information['Gotmann']['Opportunity']['description'],
+                        placement='right',
+                        target='opportunity-help',
+                        className='tooltip',
+                    ),
+                    dbc.Button('Level 1', id='Opportunity 1'),
+                ],
+                    className='div-with-image div-with-image-left small-image'
+                ),
             ]),
         ],
             id='div-wnrs-selection',
@@ -1139,6 +1228,40 @@ def wnrs_tab(app):
             storage_type='memory',
             data=data_default,
         ),
+    ])
+
+
+def contact_tab():
+    return html.Div([
+        content_header('Contact Me'),
+        html.P('If you have any questions, feedback and suggestions, please feel free to drop me an email.'),
+        dcc.Input(
+            id='input-contact-name',
+            type='text',
+            placeholder='Name',
+            style={
+                'width': '60%'
+            }
+        ),
+        dcc.Input(
+            id='input-contact-email',
+            type='text',
+            placeholder='Email',
+            style={
+                'width': '60%'
+            }
+        ),
+        dcc.Textarea(
+            id='input-contact-content',
+            value='',
+            placeholder='Email body',
+            style={
+                'width': '60%'
+            }
+        ),
+        html.Br(),
+        html.Button('Send', id='button-contact-ok'),
+        html.P(id='contact-reply')
     ])
 
 
