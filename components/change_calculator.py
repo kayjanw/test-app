@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 class ChangeCalculator:
     """The ChangeCalculator object contains functions used for Change Calculator and Change Calculator 2 tab
     """
+
     @staticmethod
     def remove_string_values(df, col):
         """Remove non-integer values from column(s) in DataFrame
