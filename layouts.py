@@ -145,6 +145,7 @@ def about_me_tab(app):
             html.P('Data Analytics', className='p-short p-bold'),
             html.P(': Using uploaded data, visualize results graphically', className='p-short')
         ],
+            style={'display': 'flex'},
             className='custom-div-space-below'
         ),
         html.Div([
