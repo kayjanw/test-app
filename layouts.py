@@ -21,7 +21,7 @@ def main_layout():
 
 def banner():
     return html.Div([
-        html.Button('≡', id='button-sidebar'),
+        html.Button('☰', id='button-sidebar'),
         html.Div(html.H1('KJ Wong'))
     ])
 
