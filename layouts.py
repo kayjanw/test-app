@@ -21,7 +21,7 @@ def main_layout():
 
 def banner():
     return html.Div([
-        html.Button('☰', id='button-sidebar'),
+        html.Button('≡', id='button-sidebar'),
         html.Div(html.H1('KJ Wong'))
     ])
 
@@ -145,7 +145,6 @@ def about_me_tab(app):
             html.P('Data Analytics', className='p-short p-bold'),
             html.P(': Using uploaded data, visualize results graphically', className='p-short')
         ],
-            style={'display': 'flex'},
             className='custom-div-space-below'
         ),
         html.Div([
