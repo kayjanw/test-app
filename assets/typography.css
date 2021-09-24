@@ -397,6 +397,7 @@ div[id$="-result"] {
 .p-short {
     display: inline-block;
     padding: 0;
+    font-size: 100%;
 }
 
 .p-bold {
