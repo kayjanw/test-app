@@ -80,8 +80,8 @@ Pinkish grey #D6CAC7
         font-size: 14px;
     }
     #div-wnrs {
-        height: 45vh;
-        width: 70vh;
+        height: 53vh;
+        width: 80vh;
     }
     #wnrs-prompt, #wnrs-reminder-text, #wnrs-reminder {
         font-size: 1.3em;
@@ -592,6 +592,7 @@ div[id$="-result"] {
     font-family: sans-serif;
     color: #BE9B89;
     text-shadow: 0 0 #BE9B89;
+    margin-bottom: 0;
 }
 
 /* Custom id (dropdown)

@@ -1189,9 +1189,8 @@ def wnrs_tab(app):
             ),
             html.Div([
                 html.P(id='wnrs-counter'),
-                html.Button('Previous', id='button-wnrs-back'),
-                html.Button('Next', id='button-wnrs-next'),
-                html.Br(),
+                html.Button('Previous', id='button-wnrs-back', style={'display': 'none'}),
+                html.Button('Next', id='button-wnrs-next', style={'display': 'none'}),
                 html.Button('Shuffle Remaining Cards', id='button-wnrs-shuffle-ok'),
                 html.Form([
                     dcc.Input(
