@@ -275,6 +275,7 @@ button[disabled] {
 
 .div-with-invisible-button span {
     position: absolute;
+    width: 80%;
     margin: 0;
     padding: 20px;
     top: 50%;

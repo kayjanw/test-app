@@ -765,16 +765,40 @@ def wnrs_tab(app):
         html.Button('Select deck', id='button-wnrs-show-ok', title='Show/hide deck selection'),
         html.A([
             dcc.Upload([
-                html.Span('Upload past progress')
+                html.Span('Upload past progress', title='Upload past progress')
             ],
                 id='uploadbutton-wnrs',
                 multiple=False,
             )
         ]),
-        html.Button('Suggest prompts', id='button-wnrs-suggestion-ok', title='Send in your card prompt ideas'),
+        html.Button(' + Instructions', id='button-wnrs-instruction-ok', title='How to play'),
+        html.Button(' + Suggest prompts', id='button-wnrs-suggestion-ok', title='Send in your card prompt ideas'),
         html.Br(),
         html.Div([
-            html.P('You can contribute too! Suggest prompts that you would like to see in the game', style={'margin-top': '20px'}),
+            html.P('How to Play (2-6 players)', style={'margin-top': '20px'}, className='p-bold'),
+            html.P('The game is played on a single device. Sit in a circle with device in middle of all players. '
+                   'Select the decks you want to play with and the levels. Players take turn to answer questions shown '
+                   'on the screen and tap on the right side of card to proceed to next question.'),
+            html.P('Wildcards', style={'margin-top': '20px'}, className='p-bold'),
+            html.P("If you're presented with a wildcard you must complete the instructions otherwise stated. "
+                   "These cards can appear at any moment during the game!"),
+            html.P('Save your progress!', style={'margin-top': '20px'}, className='p-bold'),
+            html.P("Couldn't manage to go through all the cards in one session? Save your progress by clicking on the "
+                   "'Save progress' button at the bottom of the page and load the game next time to pick up exactly "
+                   "where you left off."),
+            html.P('Have fun!', style={'margin-top': '20px'}, className='p-bold'),
+        ],
+            id='div-wnrs-instruction',
+            className='custom-dark-div image-dark-bg',
+            style={
+                'display': 'none',
+                'width': '90%'
+            }
+        ),
+        html.Div([
+            html.P(
+                'You can contribute too! Suggest prompts that you would like to see in the game',
+                style={'margin-top': '20px'}),
             dcc.Input(
                 id='input-wnrs-suggestion',
                 type='text',

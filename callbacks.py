@@ -562,20 +562,26 @@ def register_callbacks(app, print_function):
         return result, fig1, fig2
 
     @app.callback([Output('div-wnrs-selection', 'style'),
+                   Output('div-wnrs-instruction', 'style'),
                    Output('div-wnrs-suggestion', 'style'),
                    Output('button-wnrs-show-ok', 'style'),
+                   Output('button-wnrs-instruction-ok', 'style'),
                    Output('button-wnrs-suggestion-ok', 'style')
                    ],
                   [Input('button-wnrs-show-ok', 'n_clicks'),
+                   Input('button-wnrs-instruction-ok', 'n_clicks'),
                    Input('button-wnrs-suggestion-ok', 'n_clicks')],
                   [State('div-wnrs-selection', 'style'),
+                   State('div-wnrs-instruction', 'style'),
                    State('div-wnrs-suggestion', 'style'),
                    State('button-wnrs-show-ok', 'style'),
+                   State('button-wnrs-instruction-ok', 'style'),
                    State('button-wnrs-suggestion-ok', 'style')
                    ])
     @print_callback(print_function)
-    def update_wnrs_deck_style(trigger_selection, trigger_suggestion, selection_style, suggestion_style,
-                               selection_button_style, suggestion_button_style):
+    def update_wnrs_deck_style(trigger_selection, trigger_instruction, trigger_suggestion,
+                               selection_style, instruction_style, suggestion_style,
+                               selection_button_style, instruction_button_style, suggestion_button_style):
         """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
@@ -597,6 +603,8 @@ def register_callbacks(app, print_function):
             hide_button_style = {'background-color': '#F0E3DF'}
             if not selection_button_style:
                 selection_button_style = {}
+            if not instruction_button_style:
+                instruction_button_style = {}
             if not suggestion_button_style:
                 suggestion_button_style = {}
             if ctx == 'button-wnrs-show-ok':
@@ -606,6 +614,19 @@ def register_callbacks(app, print_function):
                 else:
                     selection_style.update(show_style)
                     selection_button_style.update(show_button_style)
+                instruction_style.update(hide_style)
+                instruction_button_style.update(hide_button_style)
+                suggestion_style.update(hide_style)
+                suggestion_button_style.update(hide_button_style)
+            elif ctx == 'button-wnrs-instruction-ok':
+                if instruction_style['display'] == 'inline-block':
+                    instruction_style.update(hide_style)
+                    instruction_button_style.update(hide_button_style)
+                else:
+                    instruction_style.update(show_style)
+                    instruction_button_style.update(show_button_style)
+                selection_style.update(hide_style)
+                selection_button_style.update(hide_button_style)
                 suggestion_style.update(hide_style)
                 suggestion_button_style.update(hide_button_style)
             elif ctx == 'button-wnrs-suggestion-ok':
@@ -617,7 +638,10 @@ def register_callbacks(app, print_function):
                     suggestion_button_style.update(show_button_style)
                 selection_style.update(hide_style)
                 selection_button_style.update(hide_button_style)
-        return selection_style, suggestion_style, selection_button_style, suggestion_button_style
+                instruction_style.update(hide_style)
+                instruction_button_style.update(hide_button_style)
+        return selection_style, instruction_style, suggestion_style,\
+            selection_button_style, instruction_button_style, suggestion_button_style
 
     @app.callback([Output('input-wnrs-suggestion', 'value'),
                    Output('input-wnrs-suggestion2', 'value'),
