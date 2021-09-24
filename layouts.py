@@ -774,13 +774,14 @@ def wnrs_tab(app):
         html.Button('Suggest prompts', id='button-wnrs-suggestion-ok', title='Send in your card prompt ideas'),
         html.Br(),
         html.Div([
-            html.P('You can contribute too!', style={'margin-top': '20px'}),
+            html.P('You can contribute too! Suggest prompts that you would like to see in the game', style={'margin-top': '20px'}),
             dcc.Input(
                 id='input-wnrs-suggestion',
                 type='text',
                 placeholder='Your prompt(s)',
                 style={
-                    'width': '60%'
+                    'width': '70%',
+                    'margin-bottom': '3px'
                 }
             ),
             dcc.Textarea(
@@ -789,7 +790,7 @@ def wnrs_tab(app):
                 placeholder='(Optional) Additional comments or feedback, include your contact details if you expect '
                             'a reply!',
                 style={
-                    'width': '60%'
+                    'width': '70%'
                 }
             ),
             html.Br(),
@@ -1240,15 +1241,17 @@ def contact_tab():
             type='text',
             placeholder='Name',
             style={
-                'width': '60%'
+                'width': '70%',
+                'margin-bottom': '5px'
             }
         ),
         dcc.Input(
             id='input-contact-email',
             type='text',
-            placeholder='Email',
+            placeholder='Email Address',
             style={
-                'width': '60%'
+                'width': '70%',
+                'margin-bottom': '5px'
             }
         ),
         dcc.Textarea(
@@ -1256,7 +1259,8 @@ def contact_tab():
             value='',
             placeholder='Email body',
             style={
-                'width': '60%'
+                'width': '70%',
+                'margin-bottom': '5px'
             }
         ),
         html.Br(),
