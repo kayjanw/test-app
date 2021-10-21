@@ -93,7 +93,7 @@ starkbank-ecdsa==1.1.1
 #For sphinx documentation (26 packages)
 alabaster==0.7.12
 autodocsumm==0.1.13
-Babel==2.8.0
+Babel==2.9.1
 cffi==1.14.0
 colorama==0.4.3
 cryptography==3.3.2
