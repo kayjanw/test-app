@@ -24,9 +24,9 @@ class WNRS:
 
         for deck in decks:
             deck_data = file.parse(deck, header=None)
-            deck_type = deck_data.iloc[0, 1]
-            deck_description = deck_data.iloc[1, 1]
-            deck_summary = deck_data.iloc[2, 1]
+            deck_type = deck_data.iloc[1, 1]
+            deck_description = deck_data.iloc[2, 1]
+            deck_summary = deck_data.iloc[3, 1]
 
             if deck_type in self.information:
                 self.information[deck_type][deck] = dict(
@@ -35,7 +35,7 @@ class WNRS:
                 self.information[deck_type] = {deck: dict(
                     description=deck_description, summary=deck_summary)}
 
-            deck_cards = pd.DataFrame(file.parse(deck, skiprows=4))
+            deck_cards = pd.DataFrame(file.parse(deck, skiprows=5))
             if "Level" in deck_cards.columns:
                 self.information[deck_type][deck]["levels"] = list(
                     map(str, deck_cards.Level.unique()))
@@ -62,18 +62,23 @@ class WNRS:
         cards = {}
 
         for deck in decks:
-            deck_cards = pd.DataFrame(file.parse(deck, skiprows=4))
+            deck_data = file.parse(deck, header=None)
+            deck_name = deck_data.iloc[0, 1]
+
+            deck_cards = pd.DataFrame(file.parse(deck, skiprows=5))
             deck_cards_dict = {}
             if "Level" in deck_cards.columns:
                 for level in deck_cards.Level.unique():
                     deck_cards_level = deck_cards[deck_cards["Level"] == level].copy()
+                    deck_cards_level["Deck Name"] = deck_name
                     deck_cards_level["Deck"] = f"{deck} {level}"
                     deck_cards_dict[str(level)] = deck_cards_level[[
-                        "Deck", "Card", "Prompt"]].to_dict()
+                        "Deck Name", "Deck", "Card", "Prompt"]].to_dict()
             else:
+                deck_cards["Deck Name"] = deck_name
                 deck_cards["Deck"] = deck
                 deck_cards_dict[str(1)] = deck_cards[[
-                    "Deck", "Card", "Prompt"]].to_dict()
+                    "Deck Name", "Deck", "Card", "Prompt"]].to_dict()
             cards[deck] = deck_cards_dict
         return cards
 
@@ -153,7 +158,7 @@ class WNRS:
         """Get current card
 
         Returns:
-            (str, list, dict, str): Card deck, prompt, style, counter
+            (list, list, dict, str): Card deck, prompt, style, counter
         """
         color_map = {
             'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
@@ -175,12 +180,13 @@ class WNRS:
         }
 
         index = str(self.index[self.pointer])
+        card_deck_name = self.playing_cards["Deck Name"][index]
         card_deck = self.playing_cards["Deck"][index]
         card_type = self.playing_cards["Card"][index]
         card_prompt = self.playing_cards["Prompt"][index]
 
         # Post-processing
-        card_deck2 = ["We're Not Really Strangers", html.Br(), card_deck]
+        card_bottom = [card_deck_name, html.Br(), card_deck]
         background_color, font_color = color_map[card_type]
         card_style = {'background-color': background_color, 'color': font_color}
         card_counter = f"{self.pointer + 1} / {len(self.index)}"
@@ -188,13 +194,13 @@ class WNRS:
         def append_line(current_list, current_sentence, current_style=None, pattern=0):
             if current_style is None:
                 current_style = {}
-            inline_style = {'display': 'inline'}
+            inline_style = {"display": "inline"}
             current_sentence = current_sentence \
                 .replace("\\'", "'") \
                 .replace('\\"', '"') \
-                .replace('Wild Card ', 'Wild Card:\\n') \
-                .replace('Reminder ', 'Reminder:\\n') \
-                .split('\\n')
+                .replace("Wild Card ", "Wild Card:\\n") \
+                .replace("Reminder ", "Reminder:\\n") \
+                .split("\\n")
             for idx, line in enumerate(current_sentence):
                 if (pattern == 1 and idx == len(current_sentence) - 1) or (pattern == 2) or (pattern == 3 and idx == 0):
                     current_list.append(html.P(line, style={**current_style, **inline_style}))
@@ -218,12 +224,12 @@ class WNRS:
             _colour, _sentence = word_colour[0]
             a, b = card_prompt.split(f"[{_colour}]({_sentence})")
             card_prompt_used = append_line(card_prompt_used, a, pattern=1)
-            card_prompt_used = append_line(card_prompt_used, _sentence, {'color': _colour}, pattern=2)
+            card_prompt_used = append_line(card_prompt_used, _sentence, {"color": _colour}, pattern=2)
             card_prompt_used = append_line(card_prompt_used, b, pattern=3)
         else:
             card_prompt_used = append_line(card_prompt_used, card_prompt)
 
-        return card_deck2, [card_prompt1, card_prompt2, card_prompt3], card_style, card_counter
+        return card_bottom, [card_prompt1, card_prompt2, card_prompt3], card_style, card_counter
 
     def shuffle_remaining_cards(self):
         """Shuffle remaining cards, return next card
