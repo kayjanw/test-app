@@ -5,8 +5,7 @@ import requests
 
 
 class TripPlanner:
-    """The TripPlanner object contains functions used for Trip Planner tab
-    """
+    """The TripPlanner object contains functions used for Trip Planner tab"""
 
     def __init__(self):
         """Initialize class attributes
@@ -15,16 +14,17 @@ class TripPlanner:
             GOOGLE_API_KEY (str): encrypted Google API key
         """
         try:
-            self.GOOGLE_API_KEY = ENV['GOOGLE_API_KEY']
+            self.GOOGLE_API_KEY = ENV["GOOGLE_API_KEY"]
         except NameError:
             try:
                 import os
                 import sys
-                self.GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-                os.environ['GRB_LICENSE_FILE'] = sys.path[-1] + '/gurobi.lic'
+
+                self.GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
+                os.environ["GRB_LICENSE_FILE"] = sys.path[-1] + "/gurobi.lic"
             except KeyError:
-                print('No GOOGLE_API_KEY found')
-                self.GOOGLE_API_KEY = ''
+                print("No GOOGLE_API_KEY found")
+                self.GOOGLE_API_KEY = ""
 
     @staticmethod
     def remove_last_point_on_table(data):
@@ -51,16 +51,16 @@ class TripPlanner:
         Returns:
             (str)
         """
-        url = f'https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={self.GOOGLE_API_KEY}'
+        url = f"https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={self.GOOGLE_API_KEY}"
         print(url)
         try:
             page = requests.get(url).json()
         except Exception as e:
-            return f'Cannot get distance data from Google API, error message: {e}'
-        if page['status'] == 'OK':
-            return page['results'][0]['address_components'][1]['long_name']
+            return f"Cannot get distance data from Google API, error message: {e}"
+        if page["status"] == "OK":
+            return page["results"][0]["address_components"][1]["long_name"]
         else:
-            return 'Location not found, please select another location.'
+            return "Location not found, please select another location."
 
     def add_new_point_on_table(self, lat, lon, landmark, data):
         """Adds new entry into landmark table
@@ -75,24 +75,28 @@ class TripPlanner:
             (list)
         """
         # Initialize landmark name if not provided
-        if landmark is None or landmark == '':
-            landmark = f'Landmark {len(data) + 1}'
+        if landmark is None or landmark == "":
+            landmark = f"Landmark {len(data) + 1}"
 
         if len(data):
             # Subsequent landmarks
             data.append(
-                dict(Landmark=landmark,
-                     Street=self.get_street_name(lat, lon),
-                     lat=lat,
-                     lon=lon)
+                dict(
+                    Landmark=landmark,
+                    Street=self.get_street_name(lat, lon),
+                    lat=lat,
+                    lon=lon,
+                )
             )
         else:
             # If first landmark
             data = [
-                dict(Landmark=landmark,
-                     Street=self.get_street_name(lat, lon),
-                     lat=lat,
-                     lon=lon)
+                dict(
+                    Landmark=landmark,
+                    Street=self.get_street_name(lat, lon),
+                    lat=lat,
+                    lon=lon,
+                )
             ]
         return data
 
@@ -108,14 +112,12 @@ class TripPlanner:
         """
         if len(data):
             style_table = {
-                'width': '80%',
-                'margin': '10px 0px 0px 10px',
-                'overflowX': 'auto'
+                "width": "80%",
+                "margin": "10px 0px 0px 10px",
+                "overflowX": "auto",
             }
         else:
-            style_table = {
-                'display': 'none'
-            }
+            style_table = {"display": "none"}
         return style_table
 
     @staticmethod
@@ -131,15 +133,17 @@ class TripPlanner:
         """
         children = [children[0]] + [
             dl.Marker(
-                position=[landmark['lat'], landmark['lon']],
+                position=[landmark["lat"], landmark["lon"]],
                 icon={
-                    'iconUrl': '/assets/map-icon.svg',
-                    'iconSize': [38, 100],
-                    'iconAnchor': [19, 70]
+                    "iconUrl": "/assets/map-icon.svg",
+                    "iconSize": [38, 100],
+                    "iconAnchor": [19, 70],
                 },
                 children=[
-                    dl.Tooltip(landmark['Landmark']),
-                ]) for landmark in data
+                    dl.Tooltip(landmark["Landmark"]),
+                ],
+            )
+            for landmark in data
         ]
         return children
 
@@ -161,23 +165,28 @@ class TripPlanner:
         for i in range(n):
             for j in range(n):
                 if i != j:
-                    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?&origins={data[i]['lat']}," \
-                          f"{data[i]['lon']}&destinations={data[j]['lat']},{data[j]['lon']}&key={self.GOOGLE_API_KEY}"
+                    url = (
+                        f"https://maps.googleapis.com/maps/api/distancematrix/json?&origins={data[i]['lat']},"
+                        f"{data[i]['lon']}&destinations={data[j]['lat']},{data[j]['lon']}&key={self.GOOGLE_API_KEY}"
+                    )
                     try:
                         page = requests.get(url).json()
                     except Exception as e:
-                        raise Exception(f'Error: Cannot get distance data from Google API, error message: {e}. '
-                                        f'Please try again later')
-                    if page['rows'][0]['elements'][0]['status'] == 'OK':
+                        raise Exception(
+                            f"Error: Cannot get distance data from Google API, error message: {e}. "
+                            f"Please try again later"
+                        )
+                    if page["rows"][0]["elements"][0]["status"] == "OK":
                         # in m
-                        distance = page['rows'][0]['elements'][0]['distance']['value']
+                        distance = page["rows"][0]["elements"][0]["distance"]["value"]
                         # in sec
-                        duration = page['rows'][0]['elements'][0]['duration']['value']
+                        duration = page["rows"][0]["elements"][0]["duration"]["value"]
                         distance_matrix[i][j] = distance
                         duration_matrix[i][j] = duration
                     else:
                         raise Exception(
-                            'Error: Cannot get distance due to invalid location entered')
+                            "Error: Cannot get distance due to invalid location entered"
+                        )
         return distance_matrix, duration_matrix
 
     @staticmethod
@@ -192,6 +201,7 @@ class TripPlanner:
         """
         import pyomo.environ as pyEnv
         import pyutilib.subprocess.GlobalData
+
         pyutilib.subprocess.GlobalData.DEFINE_SIGNAL_HANDLERS_DEFAULT = False
         n = len(distance_matrix)
         model = pyEnv.ConcreteModel()
@@ -204,10 +214,14 @@ class TripPlanner:
         # Decision variable (x_ij), dummy variable (u), cost variable (c)
         # decision variable x_ij
         model.x = pyEnv.Var(model.N, model.M, within=pyEnv.Binary)
-        model.u = pyEnv.Var(model.N, within=pyEnv.NonNegativeIntegers, bounds=(
-            0, n - 1))  # dummy variable
+        model.u = pyEnv.Var(
+            model.N, within=pyEnv.NonNegativeIntegers, bounds=(0, n - 1)
+        )  # dummy variable
         model.c = pyEnv.Param(
-            model.N, model.M, initialize=lambda model, i, j: distance_matrix[i - 1][j - 1])
+            model.N,
+            model.M,
+            initialize=lambda model, i, j: distance_matrix[i - 1][j - 1],
+        )
 
         # Constraints
         def min_cost(model):
@@ -231,12 +245,13 @@ class TripPlanner:
         model.rest3 = pyEnv.Constraint(model.U, model.N, rule=rule_no_subtours)
 
         # Solve
-        solver = pyEnv.SolverFactory('gurobi')
+        solver = pyEnv.SolverFactory("gurobi")
         try:
             result = solver.solve(model, tee=False)
         except Exception as e:
             raise Exception(
-                f'Cannot connect to gurobi optimization solver, error message: {e}')
+                f"Cannot connect to gurobi optimization solver, error message: {e}"
+            )
 
         # Optimal route
         routes_unsorted = []
@@ -311,7 +326,10 @@ class TripPlanner:
         Returns:
             (list of tuple)
         """
-        return [(routes_list[idx], routes_list[idx + 1]) for idx, _ in enumerate(routes_list[:-1])]
+        return [
+            (routes_list[idx], routes_list[idx + 1])
+            for idx, _ in enumerate(routes_list[:-1])
+        ]
 
     @staticmethod
     def get_distance_from_routes(routes, distance_matrix):
@@ -325,7 +343,8 @@ class TripPlanner:
             (float)
         """
         distance_km = np.round(
-            np.sum([distance_matrix[route] for route in routes]) / 1000, 2)
+            np.sum([distance_matrix[route] for route in routes]) / 1000, 2
+        )
         return distance_km
 
     def best_route_nearest_insertion(self, distance_matrix):
@@ -345,13 +364,15 @@ class TripPlanner:
             if idx_next not in visited_landmarks:
                 # Get permutation of next insertion
                 test_routes = self.get_permutation_of_routes(
-                    visited_landmarks, idx_next)
+                    visited_landmarks, idx_next
+                )
                 for test_route in test_routes:
                     # Complete the loop and get shortest distance
                     test_route.append(idx)
                     test_routes = self.get_routes_from_list(test_route)
                     test_distance = self.get_distance_from_routes(
-                        test_routes, distance_matrix)
+                        test_routes, distance_matrix
+                    )
                     if test_distance < best_distance:
                         best_route = test_route
                         best_distance = test_distance
@@ -360,11 +381,11 @@ class TripPlanner:
 
         # Double check direction of travel
         best_routes = self.get_routes_from_list(visited_landmarks)
-        best_distance = self.get_distance_from_routes(
-            best_routes, distance_matrix)
+        best_distance = self.get_distance_from_routes(best_routes, distance_matrix)
         best_routes_inv = self.get_routes_from_list(visited_landmarks[::-1])
         best_distance_inv = self.get_distance_from_routes(
-            best_routes_inv, distance_matrix)
+            best_routes_inv, distance_matrix
+        )
         if best_distance > best_distance_inv:
             visited_landmarks = visited_landmarks[::-1]
         routes = self.get_routes_from_list(visited_landmarks)
@@ -380,33 +401,38 @@ class TripPlanner:
             (str/list)
         """
         if len(data) < 2:
-            return html.P('Please input more landmarks')
+            return html.P("Please input more landmarks")
         try:
-            landmarks = [x['Landmark'] for x in data]
-            distance_matrix, duration_matrix = self.get_distance_and_duration_from_table(
-                data)
+            landmarks = [x["Landmark"] for x in data]
+            (
+                distance_matrix,
+                duration_matrix,
+            ) = self.get_distance_and_duration_from_table(data)
             try:
                 routes = self.best_route_gurobi(distance_matrix)
                 print(data)
-                print(f'Using optimiser: {routes}')
+                print(f"Using optimiser: {routes}")
                 print(
-                    f'Using insertion: {self.best_route_nearest_insertion(distance_matrix)}')
+                    f"Using insertion: {self.best_route_nearest_insertion(distance_matrix)}"
+                )
                 print(
-                    f'Using neighbour: {self.best_route_nearest_neighbour(distance_matrix)}')
+                    f"Using neighbour: {self.best_route_nearest_neighbour(distance_matrix)}"
+                )
             except Exception:
                 routes = self.best_route_nearest_insertion(distance_matrix)
-            distance_km = self.get_distance_from_routes(
-                routes, distance_matrix)
+            distance_km = self.get_distance_from_routes(routes, distance_matrix)
             duration = np.sum([duration_matrix[route] for route in routes])
             duration_hour = int(np.floor(duration / 3600))
             duration_min = int(np.floor((duration % 3600) / 60))
             answer = [
                 html.P(
-                    f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"),
+                    f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"
+                ),
                 html.P(f"Distance: {distance_km} km"),
                 html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins"),
                 html.P(
-                    "This assumes travel mode by driving, and actual duration may depend on traffic conditions")
+                    "This assumes travel mode by driving, and actual duration may depend on traffic conditions"
+                ),
             ]
         except Exception as e:
             return str(e)
