@@ -8,19 +8,42 @@ from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
 from components.chat import ChatAnalyzer
-from components.helper import return_message, print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
-    update_when_upload, result_download_button, parse_data, valid_email, send_email
+from components.helper import (
+    return_message,
+    print_callback,
+    get_summary_statistics,
+    decode_df,
+    decode_dict,
+    encode_dict,
+    update_when_upload,
+    result_download_button,
+    parse_data,
+    valid_email,
+    send_email,
+)
 from components.mbti import MBTI
 from components.santa import Santa
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
-from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, wnrs_tab, \
-    image_edit_tab, contact_tab, app_santa, santa_tab
+from layouts import (
+    app_1,
+    app_2,
+    about_me_tab,
+    trip_tab,
+    change_tab,
+    changes_tab,
+    mbti_tab,
+    chat_tab,
+    wnrs_tab,
+    image_edit_tab,
+    contact_tab,
+    app_santa,
+    santa_tab,
+)
 
 
 def register_callbacks(app, print_function):
-    @app.callback(Output('page-content', 'children'),
-                  [Input('url', 'pathname')])
+    @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
     @print_callback(print_function)
     def display_page(pathname):
         """Display page based on URL
@@ -31,21 +54,21 @@ def register_callbacks(app, print_function):
         Returns:
             (html.Div)
         """
-        if pathname == '/':
+        if pathname == "/":
             return app_1()
-        elif pathname == '/santa':
+        elif pathname == "/santa":
             return app_santa()
         else:
             return app_2(pathname)
 
-    @app.callback([Output('sidebar', 'style'),
-                   Output('banner', 'style'),
-                   Output('tab-content', 'style')],
-                  [Input('button-sidebar', 'n_clicks'),
-                   Input('tabs-parent', 'value')],
-                  [State('sidebar', 'style'),
-                   State('banner', 'style'),
-                   State('tab-content', 'style')])
+    @app.callback([Output("sidebar", "style"),
+                   Output("banner", "style"),
+                   Output("tab-content", "style")],
+                  [Input("button-sidebar", "n_clicks"),
+                   Input("tabs-parent", "value")],
+                  [State("sidebar", "style"),
+                   State("banner", "style"),
+                   State("tab-content", "style")])
     @print_callback(print_function)
     def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar, style_banner, style_contents):
         """Display sidebar on icon click (mobile device)
@@ -64,35 +87,35 @@ def register_callbacks(app, print_function):
         - (dict): updated style of banner
         - (dict): updated style of tab content
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-        if ctx == 'button-sidebar':
-            if isinstance(style_sidebar, dict) and style_sidebar['display'] == 'inline-block':
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        if ctx == "button-sidebar":
+            if isinstance(style_sidebar, dict) and style_sidebar["display"] == "inline-block":
                 # Collapse left sidebar
-                style_sidebar['display'] = 'none'
-                style_banner['margin-left'] = '0'
-                style_contents['margin-left'] = '0'
-                style_contents['position'] = 'absolute'
+                style_sidebar["display"] = "none"
+                style_banner["margin-left"] = "0"
+                style_contents["margin-left"] = "0"
+                style_contents["position"] = "absolute"
             else:
                 # First assignment, show left sidebar
-                style_sidebar = {'display': 'inline-block'}
-                style_banner = {'margin-left': '85vw'}
-                style_contents = {'margin-left': '85vw', 'position': 'fixed'}
-        elif ctx == 'tabs-parent':
+                style_sidebar = {"display": "inline-block"}
+                style_banner = {"margin-left": "85vw"}
+                style_contents = {"margin-left": "85vw", "position": "fixed"}
+        elif ctx == "tabs-parent":
             if isinstance(style_sidebar, dict):
                 # Collapse left sidebar
-                style_sidebar = {'display': 'none'}
-                style_banner = {'margin-left': '0'}
-                style_contents = {'margin-left': '0', 'position': 'absolute'}
+                style_sidebar = {"display": "none"}
+                style_banner = {"margin-left": "0"}
+                style_contents = {"margin-left": "0", "position": "absolute"}
         return style_sidebar, style_banner, style_contents
 
-    @app.callback([Output('table-trip-landmark', 'data'),
-                   Output('table-trip-landmark', 'style_table'),
-                   Output('input-trip-landmark', 'value')],
-                  [Input('map-trip', 'click_lat_lng'),
-                   Input('button-trip-remove', 'n_clicks'),
-                   Input('button-trip-reset', 'n_clicks')],
-                  [State('input-trip-landmark', 'value'),
-                   State('table-trip-landmark', 'data')])
+    @app.callback([Output("table-trip-landmark", "data"),
+                   Output("table-trip-landmark", "style_table"),
+                   Output("input-trip-landmark", "value")],
+                  [Input("map-trip", "click_lat_lng"),
+                   Input("button-trip-remove", "n_clicks"),
+                   Input("button-trip-reset", "n_clicks")],
+                  [State("input-trip-landmark", "value"),
+                   State("table-trip-landmark", "data")])
     @print_callback(print_function)
     def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
         """Update trip table
@@ -111,21 +134,21 @@ def register_callbacks(app, print_function):
             - (dict): style of table that displays landmarks information
             - (str): reset name of next landmark to be added
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-        if ctx == 'button-trip-remove':
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        if ctx == "button-trip-remove":
             data = TripPlanner().remove_last_point_on_table(data)
-        elif ctx == 'button-trip-reset':
+        elif ctx == "button-trip-reset":
             data = []
         else:
             if e is not None:
                 lat, lon = e
                 data = TripPlanner().add_new_point_on_table(lat, lon, landmark, data)
         style_table = TripPlanner().get_style_table(data)
-        return data, style_table, ''
+        return data, style_table, ""
 
-    @app.callback(Output('map-trip', 'children'),
-                  [Input('table-trip-landmark', 'data')],
-                  [State('map-trip', 'children')])
+    @app.callback(Output("map-trip", "children"),
+                  [Input("table-trip-landmark", "data")],
+                  [State("map-trip", "children")])
     @print_callback(print_function)
     def update_trip_map(data, children):
         """Update trip map to include landmark location pin
@@ -140,10 +163,10 @@ def register_callbacks(app, print_function):
         children = TripPlanner().get_map_from_table(data, children)
         return children
 
-    @app.callback(Output('trip-result', 'children'),
-                  [Input('button-trip-ok', 'n_clicks'),
-                   Input('button-trip-reset', 'n_clicks')],
-                  [State('table-trip-landmark', 'data')])
+    @app.callback(Output("trip-result", "children"),
+                  [Input("button-trip-ok", "n_clicks"),
+                   Input("button-trip-reset", "n_clicks")],
+                  [State("table-trip-landmark", "data")])
     @print_callback(print_function)
     def update_trip_results(trigger_ok, trigger_reset, data):
         """Update and display trip results
@@ -156,25 +179,25 @@ def register_callbacks(app, print_function):
         Returns:
             (str/list)
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-        result = ''
-        if ctx == 'button-trip-ok':
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        result = ""
+        if ctx == "button-trip-ok":
             try:
                 result = TripPlanner().optimiser_pipeline(data)
             except IndexError:
                 result = TripPlanner().optimiser_pipeline(data)
-        elif ctx == 'button-trip-reset':
+        elif ctx == "button-trip-reset":
             pass
         return result
 
-    @app.callback([Output('dropdown-change-worksheet', 'options'),
-                   Output('change-select-worksheet', 'style'),
-                   Output('change-sample-data', 'children'),
-                   Output('intermediate-change-result', 'data')],
-                  [Input('upload-change', 'contents'),
-                   Input('dropdown-change-worksheet', 'value')],
-                  [State('upload-change', 'filename'),
-                   State('change-select-worksheet', 'style')])
+    @app.callback([Output("dropdown-change-worksheet", "options"),
+                   Output("change-select-worksheet", "style"),
+                   Output("change-sample-data", "children"),
+                   Output("intermediate-change-result", "data")],
+                  [Input("upload-change", "contents"),
+                   Input("dropdown-change-worksheet", "value")],
+                  [State("upload-change", "filename"),
+                   State("change-select-worksheet", "style")])
     @print_callback(print_function)
     def update_change_upload(contents, worksheet, filename, style):
         """Update change calculator interface when file is uploaded
@@ -193,12 +216,12 @@ def register_callbacks(app, print_function):
             - (dash_table.DataTable/list): sample of uploaded data
             - (dict): intermediate data stored in dcc.Store
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
 
-    @app.callback([Output('dropdown-change-x', 'options'),
-                   Output('dropdown-change-y', 'options')],
-                  [Input('intermediate-change-result', 'data')])
+    @app.callback([Output("dropdown-change-x", "options"),
+                   Output("dropdown-change-y", "options")],
+                  [Input("intermediate-change-result", "data")])
     @print_callback(print_function)
     def update_change_dropdown_options(records):
         """Update change calculator column selector dropdown options
@@ -212,18 +235,18 @@ def register_callbacks(app, print_function):
             - (list): column selector dropdown options for x-axis
             - (list): column selector dropdown options for y-axis
         """
-        if 'df' in records:
-            df = decode_df(records['df'])
-            col_options = [{'label': col, 'value': col} for col in df.columns]
+        if "df" in records:
+            df = decode_df(records["df"])
+            col_options = [{"label": col, "value": col} for col in df.columns]
             return col_options, col_options
         return [], []
 
-    @app.callback([Output('dropdown-change-x', 'value'),
-                   Output('dropdown-change-y', 'value')],
-                  [Input('dropdown-change-x', 'options'),
-                   Input('dropdown-change-y', 'options')],
-                  [State('dropdown-change-x', 'value'),
-                   State('dropdown-change-y', 'value')])
+    @app.callback([Output("dropdown-change-x", "value"),
+                   Output("dropdown-change-y", "value")],
+                  [Input("dropdown-change-x", "options"),
+                   Input("dropdown-change-y", "options")],
+                  [State("dropdown-change-x", "value"),
+                   State("dropdown-change-y", "value")],)
     @print_callback(print_function)
     def update_change_dropdown_value(x_options, y_options, x_value, y_value):
         """Update change calculator column selector dropdown value
@@ -240,22 +263,22 @@ def register_callbacks(app, print_function):
             - (str): updated column selector dropdown value for x-axis
             - (str): updated column selector dropdown value for y-axis
         """
-        x_options_list = [opt['label'] for opt in x_options]
-        y_options_list = [opt['label'] for opt in y_options]
+        x_options_list = [opt["label"] for opt in x_options]
+        y_options_list = [opt["label"] for opt in y_options]
         if x_value not in x_options_list:
             x_value = None
         if y_value not in y_options_list:
             y_value = None
         return x_value, y_value
 
-    @app.callback([Output('change-result', 'children'),
-                   Output('graph-change-result', 'figure')],
-                  [Input('button-change-ok', 'n_clicks')],
-                  [State('intermediate-change-result', 'data'),
-                   State('dropdown-change-x', 'value'),
-                   State('input-change-x', 'value'),
-                   State('dropdown-change-y', 'value'),
-                   State('input-change-y', 'value')])
+    @app.callback([Output("change-result", "children"),
+                   Output("graph-change-result", "figure")],
+                  [Input("button-change-ok", "n_clicks")],
+                  [State("intermediate-change-result", "data"),
+                   State("dropdown-change-x", "value"),
+                   State("input-change-x", "value"),
+                   State("dropdown-change-y", "value"),
+                   State("input-change-y", "value")])
     @print_callback(print_function)
     def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
         """Update and display change calculator results
@@ -277,28 +300,28 @@ def register_callbacks(app, print_function):
         result = []
         fig = {}
         if trigger:
-            if 'df' in records and x_col is not None and y_col is not None and x_col != y_col:
-                df = decode_df(records['df'])
+            if "df" in records and x_col is not None and y_col is not None and x_col != y_col:
+                df = decode_df(records["df"])
                 df = ChangeCalculator().compute_change(df, x_col, x_max, y_col, y_max)
                 result_table = get_summary_statistics(df, [x_col, y_col])
                 result = [result_table, result_download_button(app, df)]
                 fig = ChangeCalculator().get_scatter_plot(df, x_col, y_col)
-            elif 'df' not in records:
-                result = ['Please upload a file']
+            elif "df" not in records:
+                result = [return_message["file_not_uploaded"]]
             elif x_col is None or y_col is None:
-                result = ['Please specify columns as axis']
+                result = [return_message["change_axis"]]
             elif x_col == y_col:
-                result = ['Please select different columns for comparison']
+                result = [return_message["change_columns"]]
         return result, fig
 
-    @app.callback([Output('dropdown-changes-worksheet', 'options'),
-                   Output('changes-select-worksheet', 'style'),
-                   Output('changes-sample-data', 'children'),
-                   Output('intermediate-changes-result', 'data')],
-                  [Input('upload-changes', 'contents'),
-                   Input('dropdown-changes-worksheet', 'value')],
-                  [State('upload-changes', 'filename'),
-                   State('changes-select-worksheet', 'style')])
+    @app.callback([Output("dropdown-changes-worksheet", "options"),
+                   Output("changes-select-worksheet", "style"),
+                   Output("changes-sample-data", "children"),
+                   Output("intermediate-changes-result", "data")],
+                  [Input("upload-changes", "contents"),
+                   Input("dropdown-changes-worksheet", "value")],
+                  [State("upload-changes", "filename"),
+                   State("changes-select-worksheet", "style")])
     @print_callback(print_function)
     def update_changes_upload(contents, worksheet, filename, style):
         """Update change calculator 2 interface when file is uploaded
@@ -317,12 +340,12 @@ def register_callbacks(app, print_function):
             - (dash_table.DataTable/list): sample of uploaded data
             - (dict): intermediate data stored in dcc.Store
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
 
-    @app.callback([Output('table-changes', 'dropdown'),
-                   Output('dropdown-changes-identifier', 'options')],
-                  [Input('intermediate-changes-result', 'data')])
+    @app.callback([Output("table-changes", "dropdown"),
+                   Output("dropdown-changes-identifier", "options")],
+                  [Input("intermediate-changes-result", "data")])
     @print_callback(print_function)
     def update_changes_dropdown_options(records):
         """Update change calculator 2 column selector dropdown options
@@ -336,15 +359,15 @@ def register_callbacks(app, print_function):
             - (list): column selector dropdown options for table
             - (list): column selector dropdown options for column indicators
         """
-        if 'df' in records:
-            df = decode_df(records['df'])
-            col_options = [{'label': col, 'value': col} for col in df.columns]
+        if "df" in records:
+            df = decode_df(records["df"])
+            col_options = [{"label": col, "value": col} for col in df.columns]
             return dict(column=dict(options=col_options)), col_options
         return {}, []
 
-    @app.callback(Output('table-changes', 'data'),
-                  [Input('button-changes-add', 'n_clicks')],
-                  [State('table-changes', 'data')])
+    @app.callback(Output("table-changes", "data"),
+                  [Input("button-changes-add", "n_clicks")],
+                  [State("table-changes", "data")])
     @print_callback(print_function)
     def update_changes_add_row(trigger, data):
         """Update and adds additional row to change calculator 2 table
@@ -357,16 +380,16 @@ def register_callbacks(app, print_function):
             (list): updated data of table that stores comparison column information
         """
         if trigger:
-            data.append(dict(column='', max=''))
+            data.append(dict(column="", max=""))
         return data
 
-    @app.callback([Output('changes-result', 'children'),
-                   Output('changes-result', 'style'),
-                   Output('graph-changes-result', 'children')],
-                  [Input('button-changes-ok', 'n_clicks')],
-                  [State('intermediate-changes-result', 'data'),
-                   State('dropdown-changes-identifier', 'value'),
-                   State('table-changes', 'data')])
+    @app.callback([Output("changes-result", "children"),
+                   Output("changes-result", "style"),
+                   Output("graph-changes-result", "children")],
+                  [Input("button-changes-ok", "n_clicks")],
+                  [State("intermediate-changes-result", "data"),
+                   State("dropdown-changes-identifier", "value"),
+                   State("table-changes", "data")])
     @print_callback(print_function)
     def update_changes_result(trigger, records, col_identifier, data):
         """Update and display change calculator 2 results
@@ -385,35 +408,44 @@ def register_callbacks(app, print_function):
             - (dict): graphical result of change calculator 2
         """
         summary = []
-        style = {'display': 'none'}
+        style = {"display": "none"}
         graph = []
         if trigger:
-            style = {'display': 'block'}
-            list_of_tuples = [(row['column'], row['max']) for row in data
-                              if row['column'] is not ''
-                              if row['column'] is not None]
+            style = {"display": "block"}
+            list_of_tuples = [
+                (row["column"], row["max"])
+                for row in data
+                if row["column"] is not ""
+                if row["column"] is not None
+            ]
             cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
-            if 'df' in records and len(list_of_tuples):
-                df = decode_df(records['df'])
-                df = ChangeCalculator().compute_changes(df, col_identifier, list_of_tuples)
+            if "df" in records and len(list_of_tuples):
+                df = decode_df(records["df"])
+                df = ChangeCalculator().compute_changes(
+                    df, col_identifier, list_of_tuples
+                )
                 if len(df):
                     df2 = ChangeCalculator().transpose_dataframe(df, col_identifier, cols)
                     result_table = get_summary_statistics(df, cols)
                     instructions_box, fig_box = ChangeCalculator().get_box_plot(app, df, cols)
                     instructions_line, fig_line = ChangeCalculator().get_line_plot(app, df2)
-                    summary = ['Summary statistics:', result_table] + instructions_box + [dcc.Graph(figure=fig_box)]
-                    graph = instructions_line + [dcc.Graph(figure=fig_line, id='changes-result-graph')]
+                    summary = (
+                        ["Summary statistics:", result_table]
+                        + instructions_box
+                        + [dcc.Graph(figure=fig_box)]
+                    )
+                    graph = instructions_line + [dcc.Graph(figure=fig_line, id="changes-result-graph")]
                 elif not len(df):
-                    summary = ['Processed dataframe is empty. Please select numeric columns']
-            elif 'df' not in records:
-                summary = ['Please upload a file']
+                    summary = [return_message["change_numeric"]]
+            elif "df" not in records:
+                summary = [return_message["file_not_uploaded"]]
             elif not len(list_of_tuples):
-                summary = ['Please specify columns to compare']
+                summary = [return_message["change_columns_empty"]]
         return summary, style, graph
 
-    @app.callback(Output('changes-result-graph', 'figure'),
-                  [Input('changes-result-graph', 'hoverData')],
-                  [State('changes-result-graph', 'figure')])
+    @app.callback(Output("changes-result-graph", "figure"),
+                  [Input("changes-result-graph", "hoverData")],
+                  [State("changes-result-graph", "figure")])
     @print_callback(print_function)
     def update_changes_hover(hover_data, figure):
         """Update layout of plotly graph on hover
@@ -425,17 +457,17 @@ def register_callbacks(app, print_function):
         Returns:
             (dict): updated figure for plot
         """
-        for trace in figure['data']:
+        for trace in figure["data"]:
             trace["line"]["width"] = 1
             trace["opacity"] = 0.7
         if hover_data:
-            trace_index = hover_data['points'][0]['curveNumber']
-            figure['data'][trace_index]['line']['width'] = 3
-            figure['data'][trace_index]['opacity'] = 1
+            trace_index = hover_data["points"][0]["curveNumber"]
+            figure["data"][trace_index]["line"]["width"] = 3
+            figure["data"][trace_index]["opacity"] = 1
         return figure
 
-    @app.callback(Output('text-mbti-words', 'children'),
-                  [Input('input-mbti', 'value')])
+    @app.callback(Output("text-mbti-words", "children"),
+                  [Input("input-mbti", "value")])
     @print_callback(print_function)
     def update_mbti_words(input_text):
         """Update number of input words in vocabulary
@@ -448,16 +480,16 @@ def register_callbacks(app, print_function):
         """
         try:
             n_words = MBTI().get_num_words(input_text)
-            return f'{n_words} word(s) in vocabulary'
+            return f"{n_words} word(s) in vocabulary"
         except Exception as e:
-            return f'Error loading number of word(s), error message: {e}'
+            return f"Error loading number of word(s), error message: {e}"
 
-    @app.callback([Output('graph-mbti', 'figure'),
-                   Output('graph-mbti', 'style'),
-                   Output('mbti-results', 'children')],
-                  [Input('button-mbti-ok', 'n_clicks')],
-                  [State('input-mbti', 'value'),
-                   State('graph-mbti', 'style')])
+    @app.callback([Output("graph-mbti", "figure"),
+                   Output("graph-mbti", "style"),
+                   Output("mbti-results", "children")],
+                  [Input("button-mbti-ok", "n_clicks")],
+                  [State("input-mbti", "value"),
+                   State("graph-mbti", "style")])
     @print_callback(print_function)
     def update_mbti_result(trigger, input_text, style):
         """Update results of mbti personality results and graph
@@ -475,17 +507,19 @@ def register_callbacks(app, print_function):
             - (list): result of mbti model
         """
         plot = {}
-        style['display'] = 'none'
+        style["display"] = "none"
         personality_details = []
         if trigger:
             try:
                 personality, predictions = MBTI().test_pipeline(input_text)
                 plot = MBTI().get_bar_plot(predictions)
                 personality_details = MBTI().get_personality_details(personality)
-                style['display'] = 'block'
-                style['height'] = 400
+                style["display"] = "block"
+                style["height"] = 400
             except Exception as e:
-                personality_details = [f'Error loading results, error message: {e}. Please try again.']
+                personality_details = [
+                    f"Error loading results, error message: {e}. Please try again."
+                ]
                 print(traceback.print_exc())
         return plot, style, personality_details
 
@@ -497,10 +531,10 @@ def register_callbacks(app, print_function):
     #         content = ['Uploading chat...']
     #     return html.P(content, id='text-chat-confirm')
 
-    @app.callback([Output('text-chat-confirm', 'children'),
-                   Output('intermediate-chat-result', 'data')],
-                  [Input('upload-chat', 'contents')],
-                  [State('upload-chat', 'filename')])
+    @app.callback([Output("text-chat-confirm", "children"),
+                   Output("intermediate-chat-result", "data")],
+                  [Input("upload-chat", "contents")],
+                  [State("upload-chat", "filename")])
     @print_callback(print_function)
     def update_chat_upload(contents, filename):
         """Update chat analyzer interface when file is uploaded
@@ -515,26 +549,26 @@ def register_callbacks(app, print_function):
             - (list): message of upload status
             - (str): intermediate data stored in dcc.Store
         """
-        upload_message = ''
+        upload_message = ""
         storage = {}
         if dash.callback_context.triggered:
-            if 'json' not in filename:
-                upload_message = [return_message['file_not_uploaded_json']]
+            if "json" not in filename:
+                upload_message = [return_message["file_not_uploaded_json"]]
             else:
                 data = parse_data(contents, filename)
                 try:
                     chat = ChatAnalyzer(data=data)
-                    upload_message = [f'Chat uploaded: {chat.chat_name}']
+                    upload_message = [f"Chat uploaded: {chat.chat_name}"]
                     storage = contents
                 except KeyError:
-                    upload_message = [return_message['wrong_format_json']]
+                    upload_message = [return_message["wrong_format_json"]]
         return upload_message, storage
 
-    @app.callback([Output('chat-result', 'children'),
-                   Output('graph-chat-result-day', 'figure'),
-                   Output('graph-chat-result-hour', 'figure')],
-                  [Input('button-chat-ok', 'n_clicks')],
-                  [State('intermediate-chat-result', 'data')])
+    @app.callback([Output("chat-result", "children"),
+                   Output("graph-chat-result-day", "figure"),
+                   Output("graph-chat-result-hour", "figure")],
+                  [Input("button-chat-ok", "n_clicks")],
+                  [State("intermediate-chat-result", "data")])
     @print_callback(print_function)
     def update_chat_result(trigger, contents):
         """Update and display chat analyzer results
@@ -555,36 +589,42 @@ def register_callbacks(app, print_function):
         fig2 = {}
         if trigger:
             if not contents:
-                result = [return_message['file_not_uploaded']]
+                result = [return_message["file_not_uploaded"]]
             else:
-                data = parse_data(contents, 'json')
+                data = parse_data(contents, "json")
                 chat = ChatAnalyzer(data=data)
                 result = chat.get_message_info_by_sender()
                 fig1 = chat.get_time_series_hour_plot()
                 fig2 = chat.get_time_series_day_plot()
         return result, fig1, fig2
 
-    @app.callback([Output('div-wnrs-selection', 'style'),
-                   Output('div-wnrs-instruction', 'style'),
-                   Output('div-wnrs-suggestion', 'style'),
-                   Output('button-wnrs-show-ok', 'style'),
-                   Output('button-wnrs-instruction-ok', 'style'),
-                   Output('button-wnrs-suggestion-ok', 'style')
-                   ],
-                  [Input('button-wnrs-show-ok', 'n_clicks'),
-                   Input('button-wnrs-instruction-ok', 'n_clicks'),
-                   Input('button-wnrs-suggestion-ok', 'n_clicks')],
-                  [State('div-wnrs-selection', 'style'),
-                   State('div-wnrs-instruction', 'style'),
-                   State('div-wnrs-suggestion', 'style'),
-                   State('button-wnrs-show-ok', 'style'),
-                   State('button-wnrs-instruction-ok', 'style'),
-                   State('button-wnrs-suggestion-ok', 'style')
-                   ])
+    @app.callback([Output("div-wnrs-selection", "style"),
+                   Output("div-wnrs-instruction", "style"),
+                   Output("div-wnrs-suggestion", "style"),
+                   Output("button-wnrs-show-ok", "style"),
+                   Output("button-wnrs-instruction-ok", "style"),
+                   Output("button-wnrs-suggestion-ok", "style")],
+                  [Input("button-wnrs-show-ok", "n_clicks"),
+                   Input("button-wnrs-instruction-ok", "n_clicks"),
+                   Input("button-wnrs-suggestion-ok", "n_clicks")],
+                  [State("div-wnrs-selection", "style"),
+                   State("div-wnrs-instruction", "style"),
+                   State("div-wnrs-suggestion", "style"),
+                   State("button-wnrs-show-ok", "style"),
+                   State("button-wnrs-instruction-ok", "style"),
+                   State("button-wnrs-suggestion-ok", "style")])
     @print_callback(print_function)
-    def update_wnrs_deck_style(trigger_selection, trigger_instruction, trigger_suggestion,
-                               selection_style, instruction_style, suggestion_style,
-                               selection_button_style, instruction_button_style, suggestion_button_style):
+    def update_wnrs_deck_style(
+        trigger_selection,
+        trigger_instruction,
+        trigger_suggestion,
+        selection_style,
+        instruction_style,
+        suggestion_style,
+        selection_button_style,
+        instruction_button_style,
+        suggestion_button_style,
+    ):
         """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
@@ -599,19 +639,19 @@ def register_callbacks(app, print_function):
             (dict): Updated style of card selection and card suggestion div
         """
         if dash.callback_context.triggered:
-            ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-            show_style = {'display': 'inline-block'}
-            hide_style = {'display': 'none'}
-            show_button_style = {'background-color': '#BE9B89'}
-            hide_button_style = {'background-color': '#F0E3DF'}
+            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+            show_style = {"display": "inline-block"}
+            hide_style = {"display": "none"}
+            show_button_style = {"background-color": "#BE9B89"}
+            hide_button_style = {"background-color": "#F0E3DF"}
             if not selection_button_style:
                 selection_button_style = {}
             if not instruction_button_style:
                 instruction_button_style = {}
             if not suggestion_button_style:
                 suggestion_button_style = {}
-            if ctx == 'button-wnrs-show-ok':
-                if selection_style['display'] == 'inline-block':
+            if ctx == "button-wnrs-show-ok":
+                if selection_style["display"] == "inline-block":
                     selection_style.update(hide_style)
                     selection_button_style.update(hide_button_style)
                 else:
@@ -621,8 +661,8 @@ def register_callbacks(app, print_function):
                 instruction_button_style.update(hide_button_style)
                 suggestion_style.update(hide_style)
                 suggestion_button_style.update(hide_button_style)
-            elif ctx == 'button-wnrs-instruction-ok':
-                if instruction_style['display'] == 'inline-block':
+            elif ctx == "button-wnrs-instruction-ok":
+                if instruction_style["display"] == "inline-block":
                     instruction_style.update(hide_style)
                     instruction_button_style.update(hide_button_style)
                 else:
@@ -632,8 +672,8 @@ def register_callbacks(app, print_function):
                 selection_button_style.update(hide_button_style)
                 suggestion_style.update(hide_style)
                 suggestion_button_style.update(hide_button_style)
-            elif ctx == 'button-wnrs-suggestion-ok':
-                if suggestion_style['display'] == 'inline-block':
+            elif ctx == "button-wnrs-suggestion-ok":
+                if suggestion_style["display"] == "inline-block":
                     suggestion_style.update(hide_style)
                     suggestion_button_style.update(hide_button_style)
                 else:
@@ -643,15 +683,15 @@ def register_callbacks(app, print_function):
                 selection_button_style.update(hide_button_style)
                 instruction_style.update(hide_style)
                 instruction_button_style.update(hide_button_style)
-        return selection_style, instruction_style, suggestion_style,\
-            selection_button_style, instruction_button_style, suggestion_button_style
+        return (selection_style, instruction_style, suggestion_style, selection_button_style, instruction_button_style,
+                suggestion_button_style)
 
-    @app.callback([Output('input-wnrs-suggestion', 'value'),
-                   Output('input-wnrs-suggestion2', 'value'),
-                   Output('wnrs-suggestion-reply', 'children')],
-                  [Input('button-wnrs-send-ok', 'n_clicks')],
-                  [State('input-wnrs-suggestion', 'value'),
-                   State('input-wnrs-suggestion2', 'value')])
+    @app.callback([Output("input-wnrs-suggestion", "value"),
+                   Output("input-wnrs-suggestion2", "value"),
+                   Output("wnrs-suggestion-reply", "children")],
+                  [Input("button-wnrs-send-ok", "n_clicks")],
+                  [State("input-wnrs-suggestion", "value"),
+                   State("input-wnrs-suggestion2", "value")])
     @print_callback(print_function)
     def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
         """Send email for WNRS card suggestion
@@ -664,71 +704,78 @@ def register_callbacks(app, print_function):
         Returns:
             (str): Feedback for email sent
         """
-        reply = ''
+        reply = ""
         if dash.callback_context.triggered:
-            if card_prompt is None or card_prompt.strip() == '':
-                reply = return_message['card_not_filled']
+            if card_prompt is None or card_prompt.strip() == "":
+                reply = return_message["card_not_filled"]
             else:
-                status_code = send_email(f'{card_prompt}\n\n{additional_info}')
+                status_code = send_email(f"{card_prompt}\n\n{additional_info}")
                 if status_code:
-                    card_prompt = ''
-                    additional_info = ''
-                    reply = return_message['email_sent_suggestion']
+                    card_prompt = ""
+                    additional_info = ""
+                    reply = return_message["email_sent_suggestion"]
                 else:
-                    reply = return_message['email_fail']
+                    reply = return_message["email_fail"]
         return card_prompt, additional_info, reply
 
     def update_wnrs_button_style_wrapper(deck):
-            @app.callback(Output(deck, 'style'),
-                          [Input(deck, 'n_clicks')],
-                          [State(deck, 'style')])
-            @print_callback(print_function)
-            def update_wnrs_button_style(trigger, current_style):
-                """Update style of selected WNRS decks (button colour indication)
+        @app.callback(Output(deck, "style"),
+                      [Input(deck, "n_clicks")],
+                      [State(deck, "style")])
+        @print_callback(print_function)
+        def update_wnrs_button_style(trigger, current_style):
+            """Update style of selected WNRS decks (button colour indication)
 
-                Args:
-                    trigger: Trigger on button click
-                    current_style (dict): Current style of button
+            Args:
+                trigger: Trigger on button click
+                current_style (dict): Current style of button
 
-                Returns:
-                    (dict): Updated style of button
-                """
-                if dash.callback_context.triggered:
-                    if current_style is None:
-                        current_style = dict()
-                    if 'background-color' in current_style and current_style['background-color'] == '#BE9B89':
-                        current_style['background-color'] = 'white'
-                    else:
-                        current_style['background-color'] = '#BE9B89'
-                return current_style
+            Returns:
+                (dict): Updated style of button
+            """
+            if dash.callback_context.triggered:
+                if current_style is None:
+                    current_style = dict()
+                if (
+                    "background-color" in current_style
+                    and current_style["background-color"] == "#BE9B89"
+                ):
+                    current_style["background-color"] = "white"
+                else:
+                    current_style["background-color"] = "#BE9B89"
+            return current_style
 
-    all_decks = ['Main Deck 1', 'Main Deck 2', 'Main Deck 3', 'Main Deck Final',
-                 'Bumble x BFF Edition 1', 'Bumble x BFF Edition 2', 'Bumble x BFF Edition 3',
-                 'Bumble Bizz Edition 1', 'Bumble Bizz Edition 2', 'Bumble Bizz Edition 3',
-                 'Bumble Date Edition 1', 'Bumble Date Edition 2', 'Bumble Date Edition 3',
-                 'Cann Edition 1', 'Cann Edition 2', 'Cann Edition 3',
-                 'Valentino Edition 1',
-                 'Honest Dating Edition 1', 'Honest Dating Edition 2', 'Honest Dating Edition 3',
-                 'Inner Circle Edition 1', 'Inner Circle Edition 2', 'Inner Circle Edition 3',
-                 'Own It Edition 1',
-                 'Relationship Edition 1', 'Relationship Edition 2', 'Relationship Edition 3',
-                 'Race and Privilege Edition 1', 'Race and Privilege Edition 2', 'Race and Privilege Edition 3',
-                 'Quarantine Edition 1', 'Quarantine Edition 2', 'Quarantine Edition 3', 'Quarantine Edition Final',
-                 'Voting Edition 1',
-                 'Breakup Edition 1', 'Breakup Edition Final',
-                 'Existential Crisis Edition 1',
-                 'Forgiveness Edition 1',
-                 'Healing Edition 1',
-                 'Self-Love Edition 1', 'Self-Love Edition Final',
-                 'Self-Reflection Edition 1',
-                 'Love Maps 1', 'Open Ended Questions 1', 'Rituals of Connection 1', 'Opportunity 1'
+    all_decks = [
+        "Main Deck 1", "Main Deck 2", "Main Deck 3", "Main Deck Final",
+        "Bumble x BFF Edition 1", "Bumble x BFF Edition 2", "Bumble x BFF Edition 3",
+        "Bumble Bizz Edition 1", "Bumble Bizz Edition 2", "Bumble Bizz Edition 3",
+        "Bumble Date Edition 1", "Bumble Date Edition 2", "Bumble Date Edition 3",
+        "Cann Edition 1", "Cann Edition 2", "Cann Edition 3",
+        "Valentino Edition 1",
+        "Honest Dating Edition 1", "Honest Dating Edition 2", "Honest Dating Edition 3",
+        "Inner Circle Edition 1", "Inner Circle Edition 2", "Inner Circle Edition 3",
+        "Own It Edition 1",
+        "Relationship Edition 1", "Relationship Edition 2", "Relationship Edition 3",
+        "Race and Privilege Edition 1", "Race and Privilege Edition 2", "Race and Privilege Edition 3",
+        "Quarantine Edition 1", "Quarantine Edition 2", "Quarantine Edition 3", "Quarantine Edition Final",
+        "Voting Edition 1",
+        "Breakup Edition 1", "Breakup Edition Final",
+        "Existential Crisis Edition 1",
+        "Forgiveness Edition 1",
+        "Healing Edition 1",
+        "Self-Love Edition 1", "Self-Love Edition Final",
+        "Self-Reflection Edition 1",
+        "Love Maps 1",
+        "Open Ended Questions 1",
+        "Rituals of Connection 1",
+        "Opportunity 1",
     ]
 
     for deck in all_decks:
         update_wnrs_button_style_wrapper(deck)
 
-    @app.callback(Output('intermediate-wnrs', 'data'),
-                  [Input(deck, 'style') for deck in all_decks])
+    @app.callback(Output("intermediate-wnrs", "data"),
+                  [Input(deck, "style") for deck in all_decks])
     @print_callback(print_function)
     def update_wnrs_list_of_decks(*args):
         """Update list of decks selected
@@ -742,47 +789,44 @@ def register_callbacks(app, print_function):
         data = {}
         list_of_deck = []
         for style, deck_name in zip(args, all_decks):
-            if style is not None and style['background-color'] == '#BE9B89':
+            if style is not None and style["background-color"] == "#BE9B89":
                 list_of_deck.append(deck_name)
         if len(list_of_deck):
             wnrs_game = WNRS()
             wnrs_game.initialize_game(list_of_deck)
-            data = dict(
-                list_of_deck=list_of_deck,
-                wnrs_game_dict=wnrs_game.__dict__
-            )
+            data = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
         return data
 
-    @app.callback([Output('input-wnrs', 'value'),
-                   Output('wnrs-prompt', 'children'),
-                   Output('wnrs-reminder-text', 'children'),
-                   Output('wnrs-reminder', 'children'),
-                   Output('wnrs-deck', 'children'),
-                   Output('wnrs-counter', 'children'),
-                   Output('wnrs-card', 'style'),
-                   Output('wnrs-text-back', 'children'),
-                   Output('wnrs-text-next', 'children'),
-                   Output('button-wnrs2-back', 'style'),
-                   Output('button-wnrs2-next', 'style')],
-                  [Input('button-wnrs-back', 'n_clicks'),
-                   Input('button-wnrs-next', 'n_clicks'),
-                   Input('button-wnrs2-back', 'n_clicks'),
-                   Input('button-wnrs2-next', 'n_clicks'),
-                   Input('button-wnrs-shuffle-ok', 'n_clicks'),
-                   Input('intermediate-wnrs', 'data'),
-                   Input('uploadbutton-wnrs', 'contents')],
-                  [State('uploadbutton-wnrs', 'filename'),
-                   State('input-wnrs', 'value'),
-                   State('wnrs-prompt', 'children'),
-                   State('wnrs-card', 'style'),
-                   State('wnrs-text-back', 'children'),
-                   State('wnrs-text-next', 'children'),
-                   State('button-wnrs2-back', 'style'),
-                   State('button-wnrs2-next', 'style')])
+    @app.callback([Output("input-wnrs", "value"),
+                   Output("wnrs-prompt", "children"),
+                   Output("wnrs-reminder-text", "children"),
+                   Output("wnrs-reminder", "children"),
+                   Output("wnrs-deck", "children"),
+                   Output("wnrs-counter", "children"),
+                   Output("wnrs-card", "style"),
+                   Output("wnrs-text-back", "children"),
+                   Output("wnrs-text-next", "children"),
+                   Output("button-wnrs2-back", "style"),
+                   Output("button-wnrs2-next", "style")],
+                  [Input("button-wnrs-back", "n_clicks"),
+                   Input("button-wnrs-next", "n_clicks"),
+                   Input("button-wnrs2-back", "n_clicks"),
+                   Input("button-wnrs2-next", "n_clicks"),
+                   Input("button-wnrs-shuffle-ok", "n_clicks"),
+                   Input("intermediate-wnrs", "data"),
+                   Input("uploadbutton-wnrs", "contents")],
+                  [State("uploadbutton-wnrs", "filename"),
+                   State("input-wnrs", "value"),
+                   State("wnrs-prompt", "children"),
+                   State("wnrs-card", "style"),
+                   State("wnrs-text-back", "children"),
+                   State("wnrs-text-next", "children"),
+                   State("button-wnrs2-back", "style"),
+                   State("button-wnrs2-next", "style")])
     @print_callback(print_function)
-    def update_wnrs_card(trigger_back, trigger_next, trigger_back2, trigger_next2,
-                         trigger_shuffle, data, contents, filename, data2_ser, card_prompt,
-                         current_style, text_back, text_next, button_back, button_next):
+    def update_wnrs_card(trigger_back, trigger_next, trigger_back2, trigger_next2, trigger_shuffle, data, contents,
+                         filename, data2_ser, card_prompt, current_style, text_back, text_next, button_back,
+                         button_next):
         """Update underlying data, card content and style
 
         Args:
@@ -805,48 +849,48 @@ def register_callbacks(app, print_function):
         Returns:
             (str, str, str, dict, str, str, str, dict, dict)
         """
-        card_prompt, card_deck, card_counter, data_new = [card_prompt, '', ''], '', '', {}
+        card_prompt, card_deck, card_counter, data_new = [card_prompt, "", ""], "", "", {}
         next_card = 0
         if current_style is None:
             current_style = {}
         if dash.callback_context.triggered:
-            ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             data2 = decode_dict(data2_ser)
-            if ctx == 'intermediate-wnrs':
-                if 'wnrs_game_dict' not in data:
-                    card_prompt[0] = html.P(return_message['card_not_select'])
+            if ctx == "intermediate-wnrs":
+                if "wnrs_game_dict" not in data:
+                    card_prompt[0] = html.P(return_message["card_not_select"])
                 else:  # dummy callback
                     data_new = data.copy()
-            elif ctx == 'uploadbutton-wnrs':
-                if 'json' not in filename:
-                    card_prompt[0] = html.P(return_message['file_not_uploaded_json'])
+            elif ctx == "uploadbutton-wnrs":
+                if "json" not in filename:
+                    card_prompt[0] = html.P(return_message["file_not_uploaded_json"])
                 else:
                     data = parse_data(contents, filename)
-                    data = json.loads(data.decode('utf-8'))
+                    data = json.loads(data.decode("utf-8"))
                     try:
                         wnrs_game = WNRS()
-                        wnrs_game.load_game(data['list_of_deck'], data['pointer'], data['index'])
+                        wnrs_game.load_game(data["list_of_deck"], data["pointer"], data["index"])
                         data_new = dict(
-                            list_of_deck=data['list_of_deck'],
-                            wnrs_game_dict=wnrs_game.__dict__
+                            list_of_deck=data["list_of_deck"],
+                            wnrs_game_dict=wnrs_game.__dict__,
                         )
                     except KeyError:
-                        card_prompt[0] = html.P(return_message['wrong_format_json'])
-            elif ctx in ['button-wnrs-back', 'button-wnrs2-back', 'button-wnrs-next', 'button-wnrs2-next']:
+                        card_prompt[0] = html.P(return_message["wrong_format_json"])
+            elif ctx in ["button-wnrs-back", "button-wnrs2-back", "button-wnrs-next", "button-wnrs2-next"]:
                 data_new = data2.copy()
-                if text_back == '':
-                    if ctx.endswith('back'):
+                if text_back == "":
+                    if ctx.endswith("back"):
                         next_card = -1
-                    elif ctx.endswith('next'):
+                    elif ctx.endswith("next"):
                         next_card = 1
                 else:
-                    text_back = text_next = ''
+                    text_back = text_next = ""
                     button_back = button_next = dict(opacity=0)
-            elif ctx == 'button-wnrs-shuffle-ok':
+            elif ctx == "button-wnrs-shuffle-ok":
                 data_new = data2.copy()
                 next_card = 2
         elif data2_ser is None:
-            print('Not triggered')
+            print("Not triggered")
             data_new = data.copy()
         else:  # initial run
             data2 = decode_dict(data2_ser)
@@ -854,7 +898,7 @@ def register_callbacks(app, print_function):
 
         if len(data_new) > 1:
             wnrs_game = WNRS()
-            wnrs_game.load_game_from_dict(data_new['wnrs_game_dict'])
+            wnrs_game.load_game_from_dict(data_new["wnrs_game_dict"])
             if next_card == 1:
                 card_deck, card_prompt, card_style, card_counter = wnrs_game.get_next_card()
             elif next_card == -1:
@@ -863,16 +907,14 @@ def register_callbacks(app, print_function):
                 card_deck, card_prompt, card_style, card_counter = wnrs_game.get_current_card()
             elif next_card == 2:
                 card_deck, card_prompt, card_style, card_counter = wnrs_game.shuffle_remaining_cards()
-            data_new['wnrs_game_dict'] = wnrs_game.__dict__
+            data_new["wnrs_game_dict"] = wnrs_game.__dict__
             current_style.update(card_style)
         data_new2 = encode_dict(data_new)
-        return [
-            data_new2, *card_prompt, card_deck, card_counter, current_style,
-            text_back, text_next, button_back, button_next
-        ]
+        return [data_new2, *card_prompt, card_deck, card_counter, current_style, text_back, text_next, button_back,
+            button_next]
 
-    @app.callback(Output('image-canvas', 'image_content'),
-                  [Input('upload-image', 'contents')])
+    @app.callback(Output("image-canvas", "image_content"),
+                  [Input("upload-image", "contents")])
     @print_callback(print_function)
     def update_canvas_image(contents):
         """Update canvas with loaded image
@@ -884,12 +926,12 @@ def register_callbacks(app, print_function):
             (str): contents of data uploaded
         """
         if dash.callback_context.triggered:
-            contents_type, _ = contents.split(';')
-            if 'image' in contents_type:
+            contents_type, _ = contents.split(";")
+            if "image" in contents_type:
                 return contents
 
-    @app.callback(Output('image-canvas', 'json_objects'),
-                  [Input('button-canvas-clear', 'n_clicks')])
+    @app.callback(Output("image-canvas", "json_objects"),
+                  [Input("button-canvas-clear", "n_clicks")])
     @print_callback(print_function)
     def clear_canvas(n_clicks):
         """Clear canvas to blank state
@@ -905,10 +947,10 @@ def register_callbacks(app, print_function):
             return strings[n_clicks % 2]
         return strings[0]
 
-    @app.callback(Output('knob-canvas', 'value'),
-                  [Input('button-image-minus', 'n_clicks'),
-                   Input('button-image-plus', 'n_clicks')],
-                  [State('knob-canvas', 'value')])
+    @app.callback(Output("knob-canvas", "value"),
+                  [Input("button-image-minus", "n_clicks"),
+                   Input("button-image-plus", "n_clicks")],
+                  [State("knob-canvas", "value")])
     @print_callback(print_function)
     def update_canvas_brush(trigger_minus, trigger_plus, value):
         """Update canvas brush size (line width)
@@ -921,15 +963,15 @@ def register_callbacks(app, print_function):
         Returns:
             (int): updated value of brush size
         """
-        ctx = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-        if ctx == 'button-image-minus':
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        if ctx == "button-image-minus":
             value -= 1
-        elif ctx == 'button-image-plus':
+        elif ctx == "button-image-plus":
             value += 1
         return value
 
-    @app.callback(Output('image-canvas', 'lineWidth'),
-                  [Input('knob-canvas', 'value')])
+    @app.callback(Output("image-canvas", "lineWidth"),
+                  [Input("knob-canvas", "value")])
     @print_callback(print_function)
     def update_canvas_brush(value):
         """Update canvas brush size (line width)
@@ -942,8 +984,8 @@ def register_callbacks(app, print_function):
         """
         return value
 
-    @app.callback(Output('image-canvas', 'lineColor'),
-                  [Input('image-color-picker', 'value')])
+    @app.callback(Output("image-canvas", "lineColor"),
+                  [Input("image-color-picker", "value")])
     @print_callback(print_function)
     def update_canvas_color(value):
         """Update canvas brush colour (line colour)
@@ -955,7 +997,7 @@ def register_callbacks(app, print_function):
             (str): updated value of brush colour
         """
         if isinstance(value, dict):
-            return value['hex']
+            return value["hex"]
         else:
             return value
 
@@ -1001,10 +1043,10 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
-    @app.callback([Output('text-santa-confirm', 'children'),
-                   Output('intermediate-santa-result', 'data')],
-                  [Input('upload-santa', 'contents')],
-                  [State('upload-santa', 'filename')])
+    @app.callback([Output("text-santa-confirm", "children"),
+                   Output("intermediate-santa-result", "data")],
+                  [Input("upload-santa", "contents")],
+                  [State("upload-santa", "filename")])
     @print_callback(print_function)
     def update_santa_upload(contents, filename):
         """Update santa interface when file is uploaded
@@ -1019,30 +1061,30 @@ def register_callbacks(app, print_function):
             - (list): message of upload status
             - (str): intermediate data stored in dcc.Store
         """
-        upload_message = ''
+        upload_message = ""
         storage = {}
         if dash.callback_context.triggered:
-            _, _, _, records = update_when_upload(contents, 'Sheet1', filename, {}, '')
-            if 'df' in records:
-                df = decode_df(records['df'])
-                if df.columns[0] == 'Name' and df.columns[1] == 'Email (Optional)':
+            _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
+            if "df" in records:
+                df = decode_df(records["df"])
+                if df.columns[0] == "Name" and df.columns[1] == "Email (Optional)":
                     storage = records
-                    upload_message = [return_message['file_uploaded']]
+                    upload_message = [return_message["file_uploaded"]]
                 else:
-                    upload_message = [return_message['wrong_format_demo']]
-            elif 'df' not in records:
-                upload_message = [return_message['wrong_file_type']]
+                    upload_message = [return_message["wrong_format_demo"]]
+            elif "df" not in records:
+                upload_message = [return_message["wrong_file_type"]]
         return upload_message, storage
 
-    @app.callback([Output('santa-result', 'children'),
-                   Output('santa-output', 'children'),
-                   Output('santa-output', 'style')],
-                  [Input('button-santa-ok', 'n_clicks')],
-                  [State('intermediate-santa-result', 'data'),
-                   State('input-santa-group', 'value'),
-                   State('checklist-santa-email', 'value'),
-                   State('checklist-santa-display', 'value'),
-                   State('santa-output', 'style')])
+    @app.callback([Output("santa-result", "children"),
+                   Output("santa-output", "children"),
+                   Output("santa-output", "style")],
+                  [Input("button-santa-ok", "n_clicks")],
+                  [State("intermediate-santa-result", "data"),
+                   State("input-santa-group", "value"),
+                   State("checklist-santa-email", "value"),
+                   State("checklist-santa-display", "value"),
+                   State("santa-output", "style")])
     @print_callback(print_function)
     def update_santa_result(trigger, records, n_groups, email_flag, hide_flag, style):
         """Update and display secret santa results
@@ -1065,23 +1107,27 @@ def register_callbacks(app, print_function):
         result = []
         output = []
         if trigger:
-            if 'df' in records:
-                df = decode_df(records['df'])
-                result, output, style = Santa().process_result(df, n_groups, email_flag, hide_flag, style)
+            if "df" in records:
+                df = decode_df(records["df"])
+                result, output, style = Santa().process_result(
+                    df, n_groups, email_flag, hide_flag, style
+                )
             else:
-                result = ['Please upload a file']
+                result = ["Please upload a file"]
         return result, output, style
 
-    @app.callback([Output('input-contact-name', 'value'),
-                   Output('input-contact-email', 'value'),
-                   Output('input-contact-content', 'value'),
-                   Output('contact-reply', 'children')],
-                  [Input('button-contact-ok', 'n_clicks')],
-                  [State('input-contact-name', 'value'),
-                   State('input-contact-email', 'value'),
-                   State('input-contact-content', 'value')])
+    @app.callback([Output("input-contact-name", "value"),
+                   Output("input-contact-email", "value"),
+                   Output("input-contact-content", "value"),
+                   Output("contact-reply", "children")],
+                  [Input("button-contact-ok", "n_clicks")],
+                  [State("input-contact-name", "value"),
+                   State("input-contact-email", "value"),
+                   State("input-contact-content", "value")])
     @print_callback(print_function)
-    def update_contact_send_email(trigger, contact_name, contact_email, contact_content):
+    def update_contact_send_email(
+        trigger, contact_name, contact_email, contact_content
+    ):
         """Send email for contact information
 
         Args:
@@ -1093,28 +1139,28 @@ def register_callbacks(app, print_function):
         Returns:
             (str): Feedback for email sent
         """
-        reply = ''
+        reply = ""
         if dash.callback_context.triggered:
-            if contact_name is None or contact_name.strip() == '':
-                reply = return_message['email_empty_name']
-            elif contact_email is None or contact_email.strip() == '':
-                reply = return_message['email_empty_email']
+            if contact_name is None or contact_name.strip() == "":
+                reply = return_message["email_empty_name"]
+            elif contact_email is None or contact_email.strip() == "":
+                reply = return_message["email_empty_email"]
             elif not valid_email(contact_email):
-                reply = return_message['email_email_valid']
-            elif contact_content is None or contact_content.strip() == '':
-                reply = return_message['email_empty_body']
+                reply = return_message["email_email_valid"]
+            elif contact_content is None or contact_content.strip() == "":
+                reply = return_message["email_empty_body"]
             else:
-                status_code = send_email(f'Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}')
+                status_code = send_email(f"Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}")
                 if status_code:
-                    contact_content = ''
-                    reply = return_message['email_sent_feedback']
+                    contact_content = ""
+                    reply = return_message["email_sent_feedback"]
                 else:
-                    reply = return_message['email_fail']
+                    reply = return_message["email_fail"]
         return contact_name, contact_email, contact_content, reply
 
-    @app.callback(Output('tab-content', 'children'),
-                  [Input('tabs-parent', 'value')],
-                  [State('tab-content', 'children')])
+    @app.callback(Output("tab-content", "children"),
+                  [Input("tabs-parent", "value")],
+                  [State("tab-content", "children")])
     @print_callback(print_function)
     def update_output(tab, current_content):
         """Update content when tab changes
@@ -1126,25 +1172,25 @@ def register_callbacks(app, print_function):
         Returns:
             (html.Div)
         """
-        if tab == 'tab-aboutme':
+        if tab == "tab-aboutme":
             return about_me_tab(app)
-        elif tab == 'tab-change':
+        elif tab == "tab-change":
             return change_tab(app)
-        elif tab == 'tab-change2':
+        elif tab == "tab-change2":
             return changes_tab(app)
-        elif tab == 'tab-chat':
+        elif tab == "tab-chat":
             return chat_tab(app)
-        elif tab == 'tab-trip':
+        elif tab == "tab-trip":
             return trip_tab(app)
-        elif tab == 'tab-mbti':
+        elif tab == "tab-mbti":
             return mbti_tab()
-        elif tab == 'tab-wnrs':
+        elif tab == "tab-wnrs":
             return wnrs_tab(app)
-        elif tab == 'tab-image':
+        elif tab == "tab-image":
             return image_edit_tab(app)
-        elif tab == 'tab-contact':
+        elif tab == "tab-contact":
             return contact_tab()
-        elif tab == 'tab-santa':
+        elif tab == "tab-santa":
             return santa_tab(app)
         else:
             return current_content
@@ -1175,6 +1221,6 @@ def register_callbacks(app, print_function):
             }
         }
         """,
-        Output('blank-output', 'children'),
-        [Input('tabs-parent', 'value')]
+        Output("blank-output", "children"),
+        [Input("tabs-parent", "value")],
     )

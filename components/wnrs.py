@@ -7,12 +7,10 @@ from functools import reduce
 
 
 class WNRS:
-    """The WNRS object contains functions used for We're Not Really Strangers tab
-    """
+    """The WNRS object contains functions used for We're Not Really Strangers tab"""
 
     def __init__(self):
-        """Read and initalize the card game
-        """
+        """Read and initalize the card game"""
         file = pd.ExcelFile("data/WNRS.xlsx")
         decks = file.sheet_names
         self.information = {}
@@ -30,15 +28,18 @@ class WNRS:
 
             if deck_type in self.information:
                 self.information[deck_type][deck] = dict(
-                    description=deck_description, summary=deck_summary)
+                    description=deck_description, summary=deck_summary
+                )
             else:
-                self.information[deck_type] = {deck: dict(
-                    description=deck_description, summary=deck_summary)}
+                self.information[deck_type] = {
+                    deck: dict(description=deck_description, summary=deck_summary)
+                }
 
             deck_cards = pd.DataFrame(file.parse(deck, skiprows=5))
             if "Level" in deck_cards.columns:
                 self.information[deck_type][deck]["levels"] = list(
-                    map(str, deck_cards.Level.unique()))
+                    map(str, deck_cards.Level.unique())
+                )
             else:
                 self.information[deck_type][deck]["levels"] = [1]
 
@@ -72,13 +73,15 @@ class WNRS:
                     deck_cards_level = deck_cards[deck_cards["Level"] == level].copy()
                     deck_cards_level["Deck Name"] = deck_name
                     deck_cards_level["Deck"] = f"{deck} {level}"
-                    deck_cards_dict[str(level)] = deck_cards_level[[
-                        "Deck Name", "Deck", "Card", "Prompt"]].to_dict()
+                    deck_cards_dict[str(level)] = deck_cards_level[
+                        ["Deck Name", "Deck", "Card", "Prompt"]
+                    ].to_dict()
             else:
                 deck_cards["Deck Name"] = deck_name
                 deck_cards["Deck"] = deck
-                deck_cards_dict[str(1)] = deck_cards[[
-                    "Deck Name", "Deck", "Card", "Prompt"]].to_dict()
+                deck_cards_dict[str(1)] = deck_cards[
+                    ["Deck Name", "Deck", "Card", "Prompt"]
+                ].to_dict()
             cards[deck] = deck_cards_dict
         return cards
 
@@ -130,9 +133,9 @@ class WNRS:
         Args:
             game_dict (dict): Dictionary of existing game, called with WNRS().__dict__
         """
-        self.playing_cards = game_dict['playing_cards']
-        self.pointer = game_dict['pointer']
-        self.index = game_dict['index']
+        self.playing_cards = game_dict["playing_cards"]
+        self.pointer = game_dict["pointer"]
+        self.index = game_dict["index"]
 
     def get_next_card(self):
         """Get next card
@@ -161,22 +164,22 @@ class WNRS:
             (list, list, dict, str): Card deck, prompt, style, counter
         """
         color_map = {
-            'B1': ('#000000', '#FFFFFF'),  # black card white font (race edition)
-            'B2': ('#FAFAEE', '#000000'),  # white card black font (race, bumble, voting, own it edition)
-            'Bl': ('#4598BA', '#000000'),  # blue card black font (bumble edition)
-            'Br1': ('#4D1015', '#FFFFFF'),  # brown card white font (valentino edition)
-            'Br2': ('#FAFAEE', '#4D1015'),  # white card brown font (valentino edition)
-            'N': ('#282C69', '#FAFAEE'),  # navy card white font (voting edition)
-            'O': ('#EB744C', '#000000'),  # orange card black font (bumble edition)
-            'R': ('#BE001C', '#FAFAEE'),  # red (default)
-            'P': ('#EEC4C5', '#BE001C'),  # pink (self-love edition)
-            'S1': ('#5f86b5', '#FAFAEE'),  # special blue card white font (own it edition)
-            'S2': ('#af2637', '#FAFAEE'),  # special maroon card white font (own it edition)
-            'S3': ('#275835', '#FAFAEE'),  # special green card white font (own it edition)
-            'V1': ('#EAD2E0', '#1695C8'),  # violet card blue font (cann edition)
-            'V2': ('#FAFAEE', '#1695C8'),  # white card blue font (cann edition)
-            'W': ('#FAFAEE', '#BE001C'),  # white (default)
-            'Y': ('#F6CA69', '#FAFAEE'),  # yellow card white font (bumble edition)
+            "B1": ("#000000", "#FFFFFF"),  # black card white font (race edition)
+            "B2": ("#FAFAEE", "#000000"),  # white card black font (race, bumble, voting, own it edition)
+            "Bl": ("#4598BA", "#000000"),  # blue card black font (bumble edition)
+            "Br1": ("#4D1015", "#FFFFFF"),  # brown card white font (valentino edition)
+            "Br2": ("#FAFAEE", "#4D1015"),  # white card brown font (valentino edition)
+            "N": ("#282C69", "#FAFAEE"),  # navy card white font (voting edition)
+            "O": ("#EB744C", "#000000"),  # orange card black font (bumble edition)
+            "R": ("#BE001C", "#FAFAEE"),  # red (default)
+            "P": ("#EEC4C5", "#BE001C"),  # pink (self-love edition)
+            "S1": ("#5f86b5", "#FAFAEE"),  # special blue card white font (own it edition)
+            "S2": ("#af2637", "#FAFAEE"),  # special maroon card white font (own it edition)
+            "S3": ("#275835", "#FAFAEE"),  # special green card white font (own it edition)
+            "V1": ("#EAD2E0", "#1695C8"),  # violet card blue font (cann edition)
+            "V2": ("#FAFAEE", "#1695C8"),  # white card blue font (cann edition)
+            "W": ("#FAFAEE", "#BE001C"),  # white (default)
+            "Y": ("#F6CA69", "#FAFAEE"),  # yellow card white font (bumble edition)
         }
 
         index = str(self.index[self.pointer])
@@ -188,31 +191,38 @@ class WNRS:
         # Post-processing
         card_bottom = [card_deck_name, html.Br(), card_deck]
         background_color, font_color = color_map[card_type]
-        card_style = {'background-color': background_color, 'color': font_color}
+        card_style = {"background-color": background_color, "color": font_color}
         card_counter = f"{self.pointer + 1} / {len(self.index)}"
 
         def append_line(current_list, current_sentence, current_style=None, pattern=0):
             if current_style is None:
                 current_style = {}
             inline_style = {"display": "inline"}
-            current_sentence = current_sentence \
-                .replace("\\'", "'") \
-                .replace('\\"', '"') \
-                .replace("Wild Card ", "Wild Card:\\n") \
-                .replace("Reminder ", "Reminder:\\n") \
+            current_sentence = (
+                current_sentence.replace("\\'", "'")
+                .replace('\\"', '"')
+                .replace("Wild Card ", "Wild Card:\\n")
+                .replace("Reminder ", "Reminder:\\n")
                 .split("\\n")
+            )
             for idx, line in enumerate(current_sentence):
-                if (pattern == 1 and idx == len(current_sentence) - 1) or (pattern == 2) or (pattern == 3 and idx == 0):
-                    current_list.append(html.P(line, style={**current_style, **inline_style}))
+                if (
+                    (pattern == 1 and idx == len(current_sentence) - 1)
+                    or (pattern == 2)
+                    or (pattern == 3 and idx == 0)
+                ):
+                    current_list.append(
+                        html.P(line, style={**current_style, **inline_style})
+                    )
                 else:
                     current_list.append(html.P(line, style=current_style))
             return current_list
 
         # Different card style for reminder cards
         card_prompt1, card_prompt2, card_prompt3 = [], [], []
-        if card_prompt.startswith('Reminder'):
-            card_prompt = card_prompt.replace('Reminder ', '')
-            card_prompt2 = html.P(['Reminder'])
+        if card_prompt.startswith("Reminder"):
+            card_prompt = card_prompt.replace("Reminder ", "")
+            card_prompt2 = html.P(["Reminder"])
             card_prompt_used = card_prompt3
         else:
             card_prompt_used = card_prompt1
@@ -220,16 +230,25 @@ class WNRS:
         # Different card style for word colour
         word_colour = re.findall(r"\[(#\w+)\]\((.+?)\)", card_prompt)
         if len(word_colour):
-            assert len(word_colour) == 1, "There are more than one word that need special formatting"
+            assert (
+                len(word_colour) == 1
+            ), "There are more than one word that need special formatting"
             _colour, _sentence = word_colour[0]
             a, b = card_prompt.split(f"[{_colour}]({_sentence})")
             card_prompt_used = append_line(card_prompt_used, a, pattern=1)
-            card_prompt_used = append_line(card_prompt_used, _sentence, {"color": _colour}, pattern=2)
+            card_prompt_used = append_line(
+                card_prompt_used, _sentence, {"color": _colour}, pattern=2
+            )
             card_prompt_used = append_line(card_prompt_used, b, pattern=3)
         else:
             card_prompt_used = append_line(card_prompt_used, card_prompt)
 
-        return card_bottom, [card_prompt1, card_prompt2, card_prompt3], card_style, card_counter
+        return (
+            card_bottom,
+            [card_prompt1, card_prompt2, card_prompt3],
+            card_style,
+            card_counter,
+        )
 
     def shuffle_remaining_cards(self):
         """Shuffle remaining cards, return next card
@@ -237,7 +256,7 @@ class WNRS:
         Returns:
             (str, list, dict, str): Card deck, prompt, style, counter
         """
-        past_index = self.index[:self.pointer + 1].copy()
+        past_index = self.index[: self.pointer + 1].copy()
         remaining_index = self.index[self.pointer + 1:].copy()
         random.shuffle(remaining_index)
         new_index = [*past_index, *remaining_index]
