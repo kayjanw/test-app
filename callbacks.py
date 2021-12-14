@@ -8,7 +8,7 @@ from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
 from components.chat import ChatAnalyzer
-from components.helper import print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
+from components.helper import return_message, print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
     update_when_upload, result_download_button, parse_data, valid_email, send_email
 from components.mbti import MBTI
 from components.santa import Santa
@@ -519,7 +519,7 @@ def register_callbacks(app, print_function):
         storage = {}
         if dash.callback_context.triggered:
             if 'json' not in filename:
-                upload_message = ['Please upload a JSON file']
+                upload_message = [return_message['file_not_uploaded_json']]
             else:
                 data = parse_data(contents, filename)
                 try:
@@ -527,7 +527,7 @@ def register_callbacks(app, print_function):
                     upload_message = [f'Chat uploaded: {chat.chat_name}']
                     storage = contents
                 except KeyError:
-                    upload_message = ['Please upload a valid JSON file. Data is not in the correct format']
+                    upload_message = [return_message['wrong_format_json']]
         return upload_message, storage
 
     @app.callback([Output('chat-result', 'children'),
@@ -555,7 +555,7 @@ def register_callbacks(app, print_function):
         fig2 = {}
         if trigger:
             if not contents:
-                result = ['Please upload a file']
+                result = [return_message['file_not_uploaded']]
             else:
                 data = parse_data(contents, 'json')
                 chat = ChatAnalyzer(data=data)
@@ -667,15 +667,15 @@ def register_callbacks(app, print_function):
         reply = ''
         if dash.callback_context.triggered:
             if card_prompt is None or card_prompt.strip() == '':
-                reply = 'Please fill in a card prompt (required field)'
+                reply = return_message['card_not_filled']
             else:
                 status_code = send_email(f'{card_prompt}\n\n{additional_info}')
                 if status_code:
                     card_prompt = ''
                     additional_info = ''
-                    reply = 'Suggestion received! Thank you.'
+                    reply = return_message['email_sent_suggestion']
                 else:
-                    reply = 'Email failed to send, please contact kay.jan@hotmail.com directly.'
+                    reply = return_message['email_fail']
         return card_prompt, additional_info, reply
 
     def update_wnrs_button_style_wrapper(deck):
@@ -814,12 +814,12 @@ def register_callbacks(app, print_function):
             data2 = decode_dict(data2_ser)
             if ctx == 'intermediate-wnrs':
                 if 'wnrs_game_dict' not in data:
-                    card_prompt[0] = html.P('Please select a deck to start')
+                    card_prompt[0] = html.P(return_message['card_not_select'])
                 else:  # dummy callback
                     data_new = data.copy()
             elif ctx == 'uploadbutton-wnrs':
                 if 'json' not in filename:
-                    card_prompt[0] = html.P('Please upload a JSON file')
+                    card_prompt[0] = html.P(return_message['file_not_uploaded_json'])
                 else:
                     data = parse_data(contents, filename)
                     data = json.loads(data.decode('utf-8'))
@@ -831,7 +831,7 @@ def register_callbacks(app, print_function):
                             wnrs_game_dict=wnrs_game.__dict__
                         )
                     except KeyError:
-                        card_prompt[0] = html.P('Please upload a valid JSON file. Data is not in the correct format')
+                        card_prompt[0] = html.P(return_message['wrong_format_json'])
             elif ctx in ['button-wnrs-back', 'button-wnrs2-back', 'button-wnrs-next', 'button-wnrs2-next']:
                 data_new = data2.copy()
                 if text_back == '':
@@ -1027,12 +1027,11 @@ def register_callbacks(app, print_function):
                 df = decode_df(records['df'])
                 if df.columns[0] == 'Name' and df.columns[1] == 'Email (Optional)':
                     storage = records
-                    upload_message = ['File uploaded']
+                    upload_message = [return_message['file_uploaded']]
                 else:
-                    upload_message = ['File is not in expected format. Please download the demo worksheet and follow '
-                                      'the format accordingly']
+                    upload_message = [return_message['wrong_format_demo']]
             elif 'df' not in records:
-                upload_message = ['Please upload a valid XLSX file. Data is not in the correct format']
+                upload_message = [return_message['wrong_file_type']]
         return upload_message, storage
 
     @app.callback([Output('santa-result', 'children'),
@@ -1097,20 +1096,20 @@ def register_callbacks(app, print_function):
         reply = ''
         if dash.callback_context.triggered:
             if contact_name is None or contact_name.strip() == '':
-                reply = 'Please fill in your name (required field)'
+                reply = return_message['email_empty_name']
             elif contact_email is None or contact_email.strip() == '':
-                reply = 'Please fill in your email (required field)'
+                reply = return_message['email_empty_email']
             elif not valid_email(contact_email):
-                reply = 'Please fill in a valid email address'
+                reply = return_message['email_email_valid']
             elif contact_content is None or contact_content.strip() == '':
-                reply = 'Please fill in content into email body (required field)'
+                reply = return_message['email_empty_body']
             else:
                 status_code = send_email(f'Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}')
                 if status_code:
                     contact_content = ''
-                    reply = 'Feedback received! Thank you.'
+                    reply = return_message['email_sent_feedback']
                 else:
-                    reply = 'Email failed to send, please contact kay.jan@hotmail.com directly.'
+                    reply = return_message['email_fail']
         return contact_name, contact_email, contact_content, reply
 
     @app.callback(Output('tab-content', 'children'),

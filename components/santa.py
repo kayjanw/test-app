@@ -2,7 +2,7 @@ import dash_html_components as html
 import numpy as np
 import pandas as pd
 
-from components.helper import valid_email, generate_datatable, send_email
+from components.helper import return_message, generate_datatable, valid_email, send_email
 
 
 class Santa:
@@ -83,9 +83,9 @@ class Santa:
                 email_dict = dict(zip(people, emails))
                 status_code = Santa().email_results(output_df, email_dict)
                 if status_code:
-                    reply = 'Results emailed successfully to all participants!'
+                    reply = return_message['email_sent_all']
                 else:
-                    reply = 'Some email failed to send to participants, please contact kay.jan@hotmail.com directly.'
+                    reply = return_message['email_fail_all']
                 output.append(html.P(reply))
 
         return result, output, style
