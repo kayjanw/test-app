@@ -186,6 +186,7 @@ def parse_data(contents, filename, worksheet=None):
     """
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
+    df = None
     try:
         if 'csv' in filename:
             file = io.StringIO(decoded.decode('utf-8'))
@@ -198,6 +199,8 @@ def parse_data(contents, filename, worksheet=None):
                 df = pd.read_excel(io.BytesIO(decoded))
         elif 'json' in filename:
             df = decoded
+        else:
+            raise Exception('File format not supported')
     except Exception as e:
         print(e)
     return df
@@ -215,7 +218,7 @@ def generate_datatable(df, max_rows=3):
     """
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
-        columns=[{"name": col, "id": col} for col in df.columns],
+        columns=[{'name': col, 'id': col} for col in df.columns],
         data=df.to_dict('records')[:max_rows],
         style_as_list_view=True,
         style_header=style_header,
@@ -394,6 +397,47 @@ def result_download_button(app, df):
     )
 
 
+def result_download_text(df, input_text):
+    """Download text for processed data or results
+
+    Args:
+        df (pandas DataFrame): input DataFrame, to be downloaded by user
+        input_text (str): text to display
+
+    Returns:
+        (html.Form)
+    """
+    df_ser = encode_df(df)
+    return html.Form([
+        dcc.Input(
+            value=df_ser,
+            name='demo',
+            type='text',
+            style={'display': 'none'}
+        ),
+        html.Button([
+            input_text
+        ],
+            style={
+                'height': '5px',
+                'margin': 0,
+                'padding': 0,
+                'font-size': '1em',
+                'font-weight': 'bold',
+                'letter-spacing': 'normal',
+                'text-transform': 'none'
+            },
+            type='submit',
+        )
+    ],
+        style={
+          'display': 'inline-block'
+        },
+        method='POST',
+        action='/download_demo/'
+    )
+
+
 def valid_email(email):
     """Helper function to validate email address
 
@@ -410,7 +454,7 @@ def valid_email(email):
         return False
 
 
-def send_email(email_body):
+def send_email(email_body, subject='Email from Herokuapp', recipient='e0503512@u.nus.edu'):
     """Helper function to send email
 
     Args:
@@ -428,10 +472,10 @@ def send_email(email_body):
             print('No SENDGRID_API_KEY found')
     try:
         my_sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
-        from_email = Email("kay.jan@hotmail.com")  # verified sender
-        to_email = To("e0503512@u.nus.edu")  # recipient
-        subject = "Email from Herokuapp"
-        content = Content("text/plain", email_body)
+        from_email = Email('kay.jan@hotmail.com')  # verified sender
+        to_email = To(recipient)
+        subject = subject
+        content = Content('text/plain', email_body)
         mail = Mail(from_email, to_email, subject, content)
         mail_json = mail.get()
         response = my_sg.client.mail.send.post(request_body=mail_json)

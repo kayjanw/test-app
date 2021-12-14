@@ -14,15 +14,42 @@ def register_routes(app):
         df = decode_df(df_ser)
         if len(df) > 0:
             buf = io.BytesIO()
-            excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
-            df.to_excel(excel_writer, sheet_name="Sheet1")
+            excel_writer = pd.ExcelWriter(buf, engine='xlsxwriter')
+            df.to_excel(excel_writer, sheet_name='Sheet1', index=False)
             excel_writer.save()
             excel_data = buf.getvalue()
             buf.seek(0)
             return send_file(
                 buf,
                 mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                attachment_filename="result.xlsx",
+                attachment_filename='result.xlsx',
+                as_attachment=True,
+                cache_timeout=0
+            )
+
+    @app.server.route('/download_demo/', methods=['POST'])
+    def download_demo():
+        df_ser = request.form.get('demo')
+        df = decode_df(df_ser)
+        if len(df) > 0:
+            buf = io.BytesIO()
+            excel_writer = pd.ExcelWriter(buf, engine='xlsxwriter')
+            df.to_excel(excel_writer, sheet_name='Sheet1', index=False)
+
+            # Set style
+            worksheet = excel_writer.sheets['Sheet1']
+            workbook = excel_writer.book
+            cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
+            worksheet.write('A1', 'Name', cell_format)
+            worksheet.write('B1', 'Email (Optional)', cell_format)
+
+            excel_writer.save()
+            excel_data = buf.getvalue()
+            buf.seek(0)
+            return send_file(
+                buf,
+                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                attachment_filename='demo.xlsx',
                 as_attachment=True,
                 cache_timeout=0
             )
