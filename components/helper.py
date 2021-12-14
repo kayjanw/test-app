@@ -20,6 +20,28 @@ from plotly.colors import n_colors
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
+return_message = {
+    'card_not_filled': 'Please fill in a card prompt (required field)',
+    'card_not_select': 'Please select a deck to start',
+    'file_uploaded': 'File uploaded',
+    'file_not_uploaded': 'Please upload a file',
+    'file_not_uploaded_json': 'Please upload a JSON file',
+    'email_email_valid': 'Please fill in a valid email address',
+    'email_empty_body': 'Please fill in content into email body (required field)',
+    'email_empty_email': 'Please fill in your email (required field)',
+    'email_empty_name': 'Please fill in your name (required field)',
+    'email_fail': 'Email failed to send, please contact kay.jan@hotmail.com directly',
+    'email_fail_all': 'Some email failed to send to participants, please contact kay.jan@hotmail.com directly',
+    'email_sent_feedback': 'Feedback received! Thank you',
+    'email_sent_suggestion': 'Suggestion received! Thank you',
+    'email_sent_all': 'Results emailed successfully to all participants!',
+    'wrong_format_demo': 'File is not in expected format. Please download the demo worksheet and follow the format '
+                         'accordingly',
+    'wrong_format_json': 'Please upload a valid JSON file. Data is not in the correct format',
+    'wrong_file_type': 'File type not supported. Please upload another file',
+}
+
+
 def print_callback(print_function):
     """Decorator function to print callback on backend for debugging purposes
 
@@ -334,7 +356,7 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
         # Check file type
         if 'xls' not in filename and 'csv' not in filename:
             sample_table = [
-                html.P('File type not supported. Please upload another file.')]
+                html.P(return_message['wrong_file_type'])]
 
         # Get worksheet options
         if 'xls' in filename:
@@ -452,6 +474,8 @@ def send_email(email_body, subject='Email from Herokuapp', recipient='e0503512@u
 
     Args:
         email_body (str): email body to be sent
+        subject (str): email subject to be sent
+        recipient (str): email recipient to receive email
 
     Returns:
         (bool)
