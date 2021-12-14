@@ -398,6 +398,7 @@ div[id$="-result"] {
 .p-short {
     display: inline-block;
     padding: 0;
+    margin: 0;
 }
 
 .p-bold {

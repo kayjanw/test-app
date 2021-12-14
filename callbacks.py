@@ -1001,7 +1001,8 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
-    @app.callback(Output('intermediate-santa-result', 'data'),
+    @app.callback([Output('text-santa-confirm', 'children'),
+                   Output('intermediate-santa-result', 'data')],
                   [Input('upload-santa', 'contents')],
                   [State('upload-santa', 'filename')])
     @print_callback(print_function)
@@ -1013,10 +1014,26 @@ def register_callbacks(app, print_function):
             filename (str): filename of data uploaded
 
         Returns:
-            (dict): intermediate data stored in dcc.Store
+            2-element tuple
+
+            - (list): message of upload status
+            - (str): intermediate data stored in dcc.Store
         """
-        _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
-        return records
+        upload_message = ''
+        storage = {}
+        if dash.callback_context.triggered:
+            _, _, _, records = update_when_upload(contents, 'Sheet1', filename, {}, '')
+            if 'df' in records:
+                df = decode_df(records['df'])
+                if df.columns[0] == 'Name' and df.columns[1] == 'Email (Optional)':
+                    storage = records
+                    upload_message = ['File uploaded']
+                else:
+                    upload_message = ['File is not in expected format. Please download the demo worksheet and follow '
+                                      'the format accordingly']
+            elif 'df' not in records:
+                upload_message = ['Please upload a valid XLSX file. Data is not in the correct format']
+        return upload_message, storage
 
     @app.callback([Output('santa-result', 'children'),
                    Output('santa-output', 'children'),
@@ -1048,16 +1065,11 @@ def register_callbacks(app, print_function):
         """
         result = []
         output = []
-        fig = {}
         if trigger:
             if 'df' in records:
                 df = decode_df(records['df'])
-                if df.columns[0] == 'Name' and df.columns[1] == 'Email (Optional)':
-                    result, output, style = Santa().process_result(df, n_groups, email_flag, hide_flag, style)
-                else:
-                    result = ['File is not in expected format. Please download the demo worksheet and follow the '
-                              'format accordingly']
-            elif 'df' not in records:
+                result, output, style = Santa().process_result(df, n_groups, email_flag, hide_flag, style)
+            else:
                 result = ['Please upload a file']
         return result, output, style
 

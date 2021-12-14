@@ -1548,6 +1548,8 @@ def santa_tab(app):
                         ),
                     ]),
                 ]),
+                html.P(id='text-santa-confirm', className='p-short'),
+                html.Br(),
                 html.Button('OK', id='button-santa-ok'),
                 dcc.Store(
                     id='intermediate-santa-result',
