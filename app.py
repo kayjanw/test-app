@@ -1,4 +1,6 @@
 import dash
+import gevent.monkey
+gevent.monkey.patch_all()
 
 from callbacks import register_callbacks
 from layouts import main_layout
