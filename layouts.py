@@ -1478,8 +1478,6 @@ def app_santa():
 
 
 def santa_tab(app):
-    import pandas as pd
-    df = pd.read_excel('data/demo.xlsx')
     return html.Div([
         content_header('Secret Santa', 'Generate random matches and groups'),
         html.P('Users can perform random matching of people with other specified criterias and/or split participants '
@@ -1487,7 +1485,7 @@ def santa_tab(app):
         html.Br(),
         html.P([
             'Step 1: Download demo worksheet ',
-            result_download_text(df, 'here'),
+            result_download_text('here'),
             ' and fill in the values. Do not change items in red.'
         ]),
         html.P('Step 2: Upload completed worksheet'),
@@ -1558,7 +1556,7 @@ def santa_tab(app):
                     storage_type='memory'
                 ),
                 dcc_loading(
-                    html.Div(
+                    html.P(
                         id='santa-result'
                     ),
                     dark_bg=True

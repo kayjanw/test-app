@@ -29,30 +29,38 @@ def register_routes(app):
 
     @app.server.route('/download_demo/', methods=['POST'])
     def download_demo():
-        df_ser = request.form.get('demo')
-        df = decode_df(df_ser)
-        if len(df) > 0:
-            buf = io.BytesIO()
-            excel_writer = pd.ExcelWriter(buf, engine='xlsxwriter')
-            df.to_excel(excel_writer, sheet_name='Sheet1', index=False)
+        buf = io.BytesIO()
+        excel_writer = pd.ExcelWriter(buf, engine='xlsxwriter')
+        pd.DataFrame().to_excel(excel_writer, sheet_name='Sheet1', index=False)
 
-            # Set style
-            worksheet = excel_writer.sheets['Sheet1']
-            workbook = excel_writer.book
-            cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
-            worksheet.write('A1', 'Name', cell_format)
-            worksheet.write('B1', 'Email (Optional)', cell_format)
+        # Add items
+        worksheet = excel_writer.sheets['Sheet1']
+        workbook = excel_writer.book
+        bold_red = workbook.add_format({'bold': True, 'font_color': 'red'})
+        bold = workbook.add_format({'bold': True})
+        worksheet.write('A1', 'Name', bold_red)
+        for idx in range(5):
+            worksheet.write(f'A{idx + 2}', f'Person {idx + 1}')
+        worksheet.write('B1', 'Email (Optional)', bold_red)
+        colour_list = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Black']
+        worksheet.write('C1', 'Criteria Colour', bold)
+        for idx in range(len(colour_list)):
+            worksheet.write(f'C{idx + 2}', colour_list[idx])
+        colour_texture = ['Shiny', 'Round', 'Smooth']
+        worksheet.write('D1', 'Criteria Texture', bold)
+        for idx in range(len(colour_texture)):
+            worksheet.write(f'D{idx + 2}', colour_texture[idx])
 
-            excel_writer.save()
-            excel_data = buf.getvalue()
-            buf.seek(0)
-            return send_file(
-                buf,
-                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                attachment_filename='demo.xlsx',
-                as_attachment=True,
-                cache_timeout=0
-            )
+        excel_writer.save()
+        excel_data = buf.getvalue()
+        buf.seek(0)
+        return send_file(
+            buf,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            attachment_filename='demo.xlsx',
+            as_attachment=True,
+            cache_timeout=0
+        )
 
     @app.server.route('/download_dict/', methods=['POST'])
     def download_dictionary():
