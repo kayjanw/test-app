@@ -21,24 +21,28 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
 return_message = {
-    'card_not_filled': 'Please fill in a card prompt (required field)',
-    'card_not_select': 'Please select a deck to start',
-    'file_uploaded': 'File uploaded',
-    'file_not_uploaded': 'Please upload a file',
-    'file_not_uploaded_json': 'Please upload a JSON file',
-    'email_email_valid': 'Please fill in a valid email address',
-    'email_empty_body': 'Please fill in content into email body (required field)',
-    'email_empty_email': 'Please fill in your email (required field)',
-    'email_empty_name': 'Please fill in your name (required field)',
-    'email_fail': 'Email failed to send, please contact kay.jan@hotmail.com directly',
-    'email_fail_all': 'Some email failed to send to participants, please contact kay.jan@hotmail.com directly',
-    'email_sent_feedback': 'Feedback received! Thank you',
-    'email_sent_suggestion': 'Suggestion received! Thank you',
-    'email_sent_all': 'Results emailed successfully to all participants!',
-    'wrong_format_demo': 'File is not in expected format. Please download the demo worksheet and follow the format '
-                         'accordingly',
-    'wrong_format_json': 'Please upload a valid JSON file. Data is not in the correct format',
-    'wrong_file_type': 'File type not supported. Please upload another file',
+    "card_not_filled": "Please fill in a card prompt (required field)",
+    "card_not_select": "Please select a deck to start",
+    "change_axis": "Please specify columns as axis",
+    "change_columns": "Please select different columns for comparison",
+    "change_columns_empty": "Please specify columns to compare",
+    "change_numeric": "Processed dataframe is empty. Please select numeric columns",
+    "file_uploaded": "File uploaded",
+    "file_not_uploaded": "Please upload a file",
+    "file_not_uploaded_json": "Please upload a JSON file",
+    "email_email_valid": "Please fill in a valid email address",
+    "email_empty_body": "Please fill in content into email body (required field)",
+    "email_empty_email": "Please fill in your email (required field)",
+    "email_empty_name": "Please fill in your name (required field)",
+    "email_fail": "Email failed to send, please contact kay.jan@hotmail.com directly",
+    "email_fail_all": "Some email failed to send to participants, please contact kay.jan@hotmail.com directly",
+    "email_sent_feedback": "Feedback received! Thank you",
+    "email_sent_suggestion": "Suggestion received! Thank you",
+    "email_sent_all": "Results emailed successfully to all participants!",
+    "wrong_format_demo": "File is not in expected format. Please download the demo worksheet and follow the format "
+    "accordingly",
+    "wrong_format_json": "Please upload a valid JSON file. Data is not in the correct format",
+    "wrong_file_type": "File type not supported. Please upload another file",
 }
 
 
@@ -51,14 +55,17 @@ def print_callback(print_function):
     Returns:
         (function)
     """
+
     def decorator(func):
         def wrapper(*args, **kw):
             if print_function:
-                print(f'==== Function called: {func.__name__}')
+                print(f"==== Function called: {func.__name__}")
                 print(f"Triggered by {dash.callback_context.triggered[0]['prop_id']}")
             result = func(*args, **kw)
             return result
+
         return wrapper
+
     return decorator
 
 
@@ -71,52 +78,61 @@ def violin_plot():
         (dcc.Graph)
     """
     np.random.seed(1)
-    points = (np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200) +
-              (np.arange(12) + 2 * np.random.random(12))[:, None])
+    points = (
+        np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200)
+        + (np.arange(12) + 2 * np.random.random(12))[:, None]
+    )
     points2 = np.array(
-        [np.concatenate((point, [points.min(), points.max()])) for point in points])
-    colors = n_colors('rgb(32, 32, 41)',
-                      'rgb(190, 155, 137)', 12, colortype='rgb')
+        [np.concatenate((point, [points.min(), points.max()])) for point in points]
+    )
+    colors = n_colors("rgb(32, 32, 41)", "rgb(190, 155, 137)", 12, colortype="rgb")
     data = []
     for data_line, color in zip(points2, colors):
         trace = go.Violin(
             x=data_line,
             line_color=color,
-            side='positive',
+            side="positive",
             width=3,
             points=False,
-            hoverinfo='skip'
+            hoverinfo="skip",
         )
         data.append(trace)
     layout = dict(
-        title='u t i l s . p y',
+        title="u t i l s . p y",
         xaxis={
-            'showgrid': False,
-            'zeroline': False,
-            'visible': False,
-            'fixedrange': True,
+            "showgrid": False,
+            "zeroline": False,
+            "visible": False,
+            "fixedrange": True,
         },
         yaxis={
-            'showgrid': False,
-            'zeroline': False,
-            'visible': False,
-            'fixedrange': True,
+            "showgrid": False,
+            "zeroline": False,
+            "visible": False,
+            "fixedrange": True,
         },
         showlegend=False,
-        margin=dict(l=0, r=0, t=80, b=0)
+        margin=dict(l=0, r=0, t=80, b=0),
     )
     return dcc.Graph(
         figure=dict(data=data, layout=layout),
-        id='violin-plot',
+        id="violin-plot",
         config={
-            'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
-                                       'autoScale2d', 'resetScale2d', 'toggleSpikelines',
-                                       'hoverClosestCartesian', 'hoverCompareCartesian'],
+            "modeBarButtonsToRemove": [
+                "zoom2d",
+                "pan2d",
+                "select2d",
+                "lasso2d",
+                "zoomIn2d",
+                "zoomOut2d",
+                "autoScale2d",
+                "resetScale2d",
+                "toggleSpikelines",
+                "hoverClosestCartesian",
+                "hoverCompareCartesian",
+            ],
         },
-        style={
-            'margin-top': '15vh',
-            'height': '60vh'
-        }
+        style={"margin-top": "15vh", "height": "60vh"},
     )
 
 
@@ -131,14 +147,10 @@ def dcc_loading(children, dark_bg=True):
         (dcc.Loading)
     """
     if dark_bg:
-        color = 'white'
+        color = "white"
     else:
-        color = '#202029'
-    return dcc.Loading(
-        children,
-        type='circle',
-        color=color
-    )
+        color = "#202029"
+    return dcc.Loading(children, type="circle", color=color)
 
 
 def table_css():
@@ -152,30 +164,23 @@ def table_css():
         - (dict): Style for table
         - (list): CSS component
     """
-    style_header = {
-        'fontWeight': 'bold',
-        'textAlign': 'left'
-    }
+    style_header = {"fontWeight": "bold", "textAlign": "left"}
     style_cell = {
-        'background-color': 'transparent',
-        'color': 'white',
-        'font-family': 'Source Sans Pro',
-        'font-size': 13,
-        'textAlign': 'left'
+        "background-color": "transparent",
+        "color": "white",
+        "font-family": "Source Sans Pro",
+        "font-size": 13,
+        "textAlign": "left",
     }
-    style_table = {
-        'overflowX': 'auto'
-    }
+    style_table = {"overflowX": "auto"}
     css = [
+        {"selector": "tr:hover", "rule": "background-color: black; color: white"},
         {
-            'selector': 'tr:hover',
-            'rule': 'background-color: black; color: white'
-        }, {
-            'selector': 'td.cell--selected *, td.focused *',
-            'rule': 'background-color: black !important;'
-                    'color: white !important;'
-                    'text-align: left;'
-        }
+            "selector": "td.cell--selected *, td.focused *",
+            "rule": "background-color: black !important;"
+            "color: white !important;"
+            "text-align: left;",
+        },
     ]
     return style_header, style_cell, style_table, css
 
@@ -189,7 +194,7 @@ def get_worksheet(contents):
     Returns:
         (list): list of worksheet names
     """
-    content_type, content_string = contents.split(',')
+    content_type, content_string = contents.split(",")
     decoded = base64.b64decode(content_string)
     xls = pd.ExcelFile(io.BytesIO(decoded))
     return xls.sheet_names
@@ -206,23 +211,23 @@ def parse_data(contents, filename, worksheet=None):
     Returns:
         (pandas DataFrame)
     """
-    content_type, content_string = contents.split(',')
+    content_type, content_string = contents.split(",")
     decoded = base64.b64decode(content_string)
     df = None
     try:
-        if 'csv' in filename:
-            file = io.StringIO(decoded.decode('utf-8'))
+        if "csv" in filename:
+            file = io.StringIO(decoded.decode("utf-8"))
             df = pd.read_csv(file)
-        elif 'xls' in filename:
+        elif "xls" in filename:
             if worksheet is not None:
                 xls = pd.ExcelFile(io.BytesIO(decoded))
                 df = pd.read_excel(xls, worksheet)
             else:
                 df = pd.read_excel(io.BytesIO(decoded))
-        elif 'json' in filename:
+        elif "json" in filename:
             df = decoded
         else:
-            raise Exception('File format not supported')
+            raise Exception("File format not supported")
     except Exception as e:
         print(e)
     return df
@@ -240,13 +245,13 @@ def generate_datatable(df, max_rows=3):
     """
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
-        columns=[{'name': col, 'id': col} for col in df.columns],
-        data=df.to_dict('records')[:max_rows],
+        columns=[{"name": col, "id": col} for col in df.columns],
+        data=df.to_dict("records")[:max_rows],
         style_as_list_view=True,
         style_header=style_header,
         style_cell=style_cell,
         style_table=style_table,
-        css=css
+        css=css,
     )
 
 
@@ -260,24 +265,38 @@ def get_summary_statistics(df, cols):
     Returns:
         (dash_table.DataTable)
     """
-    param_name = ['Number of values', 'Mean', 'Std. Dev',
-                  'Min, 0%', '25%', 'Median, 50%', '75%', 'Max, 100%']
+    param_name = [
+        "Number of values",
+        "Mean",
+        "Std. Dev",
+        "Min, 0%",
+        "25%",
+        "Median, 50%",
+        "75%",
+        "Max, 100%",
+    ]
     style_header, style_cell, style_table, css = table_css()
     return dash_table.DataTable(
-        columns=[
-            {'name': 'Parameter', 'id': 'Parameter'}
-        ] + [
-            {'name': col, 'id': col} for col in cols
+        columns=[{"name": "Parameter", "id": "Parameter"}]
+        + [{"name": col, "id": col} for col in cols],
+        data=[
+            reduce(
+                lambda a, b: dict(a, **b),
+                [
+                    {
+                        "Parameter": param_name[idx],
+                        col: np.round(df[col].describe()[idx], 2),
+                    }
+                    for col in cols
+                ],
+            )
+            for idx in range(len(param_name))
         ],
-        data=[reduce(lambda a, b: dict(a, **b), [{
-            'Parameter': param_name[idx],
-            col: np.round(df[col].describe()[idx], 2)
-        } for col in cols]) for idx in range(len(param_name))],
         style_as_list_view=True,
         style_header=style_header,
         style_cell=style_cell,
         style_table=style_table,
-        css=css
+        css=css,
     )
 
 
@@ -290,7 +309,7 @@ def encode_df(df):
     Returns:
         (str)
     """
-    df_ser = df.to_json(orient='split', date_format='iso')
+    df_ser = df.to_json(orient="split", date_format="iso")
     return df_ser
 
 
@@ -303,7 +322,7 @@ def decode_df(df_ser):
     Returns:
         (pandas DataFrame)
     """
-    df = pd.read_json(df_ser, orient='split')
+    df = pd.read_json(df_ser, orient="split")
     df.columns = df.columns.astype(str)
     return df
 
@@ -354,25 +373,25 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
     sample_table = []
     if dash.callback_context.triggered and contents is not None:
         # Check file type
-        if 'xls' not in filename and 'csv' not in filename:
-            sample_table = [
-                html.P(return_message['wrong_file_type'])]
+        if "xls" not in filename and "csv" not in filename:
+            sample_table = [html.P(return_message["wrong_file_type"])]
 
         # Get worksheet options
-        if 'xls' in filename:
+        if "xls" in filename:
             worksheet_list = get_worksheet(contents)
             if len(worksheet_list) > 1:
-                worksheet_options = [{'label': ws, 'value': ws}
-                                     for ws in worksheet_list]
+                worksheet_options = [
+                    {"label": ws, "value": ws} for ws in worksheet_list
+                ]
 
         # Update worksheet options display style
         if len(worksheet_options):
-            style['display'] = 'flex'
+            style["display"] = "flex"
         else:
-            style['display'] = 'none'
+            style["display"] = "none"
 
         # Read uploaded contents
-        if 'worksheet' in ctx:
+        if "worksheet" in ctx:
             df = parse_data(contents, filename, worksheet)
         else:
             df = parse_data(contents, filename)
@@ -380,9 +399,9 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
         if type(df) == pd.DataFrame:
             df.columns = df.columns.astype(str)
             sample_table = [
-                html.P('Sample of uploaded data:', style={'margin': 0}),
+                html.P("Sample of uploaded data:", style={"margin": 0}),
                 generate_datatable(df),
-                html.P(f'Number of rows: {len(df)}', style={'margin': 0})
+                html.P(f"Number of rows: {len(df)}", style={"margin": 0}),
             ]
             records = dict(df=encode_df(df))
             return worksheet_options, style, sample_table, records
@@ -400,22 +419,22 @@ def result_download_button(app, df):
         (html.Form)
     """
     df_ser = encode_df(df)
-    return html.Form([
-        dcc.Input(
-            value=df_ser,
-            name='result',
-            type='text',
-            style={'display': 'none'}),
-        html.Button([
-            html.Img(src=app.get_asset_url('download.svg')),
-            html.Span('Download results')
+    return html.Form(
+        [
+            dcc.Input(
+                value=df_ser, name="result", type="text", style={"display": "none"}
+            ),
+            html.Button(
+                [
+                    html.Img(src=app.get_asset_url("download.svg")),
+                    html.Span("Download results"),
+                ],
+                type="submit",
+                className="div-with-image div-with-image-left small-image",
+            ),
         ],
-            type='submit',
-            className='div-with-image div-with-image-left small-image'
-        )
-    ],
-        method='POST',
-        action='/download_df/'
+        method="POST",
+        action="/download_df/",
     )
 
 
@@ -429,27 +448,25 @@ def result_download_text(input_text):
     Returns:
         (html.Form)
     """
-    return html.Form([
-        html.Button([
-            input_text
+    return html.Form(
+        [
+            html.Button(
+                [input_text],
+                style={
+                    "height": "5px",
+                    "margin": 0,
+                    "padding": 0,
+                    "font-size": "1em",
+                    "font-weight": "bold",
+                    "letter-spacing": "normal",
+                    "text-transform": "none",
+                },
+                type="submit",
+            )
         ],
-            style={
-                'height': '5px',
-                'margin': 0,
-                'padding': 0,
-                'font-size': '1em',
-                'font-weight': 'bold',
-                'letter-spacing': 'normal',
-                'text-transform': 'none'
-            },
-            type='submit',
-        )
-    ],
-        style={
-          'display': 'inline-block'
-        },
-        method='POST',
-        action='/download_demo/'
+        style={"display": "inline-block"},
+        method="POST",
+        action="/download_demo/",
     )
 
 
@@ -462,14 +479,16 @@ def valid_email(email):
     Returns:
         (bool)
     """
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if (re.fullmatch(regex, email)):
+    regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+    if re.fullmatch(regex, email):
         return True
     else:
         return False
 
 
-def send_email(email_body, subject='Email from Herokuapp', recipient='e0503512@u.nus.edu'):
+def send_email(
+    email_body, subject="Email from Herokuapp", recipient="e0503512@u.nus.edu"
+):
     """Helper function to send email
 
     Args:
@@ -481,18 +500,18 @@ def send_email(email_body, subject='Email from Herokuapp', recipient='e0503512@u
         (bool)
     """
     try:
-        SENDGRID_API_KEY = ENV['SENDGRID_API_KEY']
+        SENDGRID_API_KEY = ENV["SENDGRID_API_KEY"]
     except NameError:
         try:
-            SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+            SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
         except KeyError:
-            print('No SENDGRID_API_KEY found')
+            print("No SENDGRID_API_KEY found")
     try:
         my_sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
-        from_email = Email('kay.jan@hotmail.com')  # verified sender
+        from_email = Email("kay.jan@hotmail.com")  # verified sender
         to_email = To(recipient)
         subject = subject
-        content = Content('text/plain', email_body)
+        content = Content("text/plain", email_body)
         mail = Mail(from_email, to_email, subject, content)
         mail_json = mail.get()
         response = my_sg.client.mail.send.post(request_body=mail_json)

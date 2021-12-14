@@ -2,12 +2,17 @@ import dash_html_components as html
 import numpy as np
 import pandas as pd
 
-from components.helper import return_message, generate_datatable, valid_email, send_email
+from components.helper import (
+    return_message,
+    generate_datatable,
+    valid_email,
+    send_email,
+)
 
 
 class Santa:
-    """The Santa object contains functions used for Secret Santa tab
-    """
+    """The Santa object contains functions used for Secret Santa tab"""
+
     @staticmethod
     def process_result(df, n_groups, email_flag, hide_flag, style):
         """
@@ -29,7 +34,7 @@ class Santa:
         """
         # Initialize return variables
         result = []
-        output = [html.H5('Result'), html.Br()]
+        output = [html.H5("Result"), html.Br()]
 
         # Get first column (people), shuffle and split
         people = list(df[df.columns[0]].dropna().values)
@@ -40,20 +45,28 @@ class Santa:
 
         # Assertion for number of participants
         if len(people) <= 1:
-            result = ['Error: Too little participants, please increase number of participants']
+            result = [
+                "Error: Too little participants, please increase number of participants"
+            ]
         elif 2 * n_groups > len(people):
-            result = [f'Error: Too many groups specified for {len(people)} people, please reduce number of groups']
+            result = [
+                f"Error: Too many groups specified for {len(people)} people, please reduce number of groups"
+            ]
 
         # Assertion for email
         if email_flag:
             if len(people) != len(emails):
-                result = ['Error: Number of participants and number of emails do not match']
+                result = [
+                    "Error: Number of participants and number of emails do not match"
+                ]
             n_valid_email = np.sum(valid_email(email) for email in emails)
             if len(people) != n_valid_email:
-                result = ['Error: Some emails are not valid, please enter valid emails']
+                result = ["Error: Some emails are not valid, please enter valid emails"]
         else:
             if hide_flag:
-                result = ['Error: Results will not be displayed or emailed to participants, are you sure?']
+                result = [
+                    "Error: Results will not be displayed or emailed to participants, are you sure?"
+                ]
 
         if not result:
             style = {}
@@ -74,7 +87,9 @@ class Santa:
                     for m in range(len(other_cols)):
                         participant_list.append(np.random.choice(other_cols_values[m]))
                     list_of_list.append(participant_list)
-            output_df = pd.DataFrame(list_of_list, columns=['Group', 'Person', 'Partner'] + other_cols)
+            output_df = pd.DataFrame(
+                list_of_list, columns=["Group", "Person", "Partner"] + other_cols
+            )
 
             if not hide_flag:
                 output.append(generate_datatable(output_df, max_rows=len(output_df)))
@@ -83,9 +98,9 @@ class Santa:
                 email_dict = dict(zip(people, emails))
                 status_code = Santa().email_results(output_df, email_dict)
                 if status_code:
-                    reply = return_message['email_sent_all']
+                    reply = return_message["email_sent_all"]
                 else:
-                    reply = return_message['email_fail_all']
+                    reply = return_message["email_fail_all"]
                 output.append(html.P(reply))
 
         return result, output, style
@@ -105,12 +120,14 @@ class Santa:
         status_code_all = True
         for row_idx, row in output_df.iterrows():
             person = row.Person
-            row = row.drop('Person')
-            email_body = 'Here are your results for Secret Santa\n\n'
+            row = row.drop("Person")
+            email_body = "Here are your results for Secret Santa\n\n"
             email_body += "\n".join([f"{k}: {v}" for k, v in row.to_dict().items()])
-            email_body += '\n\nThank you for using kayjan.herokuapp.com\n' \
-                          'Disclaimer: This is an automated email. Please do not reply.'
-            subject = f'Secret Santa Sorting Results for {person}'
+            email_body += (
+                "\n\nThank you for using kayjan.herokuapp.com\n"
+                "Disclaimer: This is an automated email. Please do not reply."
+            )
+            subject = f"Secret Santa Sorting Results for {person}"
             recipient = email_dict[person]
             status_code = send_email(email_body, subject=subject, recipient=recipient)
             if not status_code:
