@@ -11,10 +11,11 @@ from components.chat import ChatAnalyzer
 from components.helper import print_callback, get_summary_statistics, decode_df, decode_dict, encode_dict, \
     update_when_upload, result_download_button, parse_data, valid_email, send_email
 from components.mbti import MBTI
+from components.santa import Santa
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
 from layouts import app_1, app_2, about_me_tab, trip_tab, change_tab, changes_tab, mbti_tab, chat_tab, wnrs_tab, \
-    image_edit_tab, contact_tab
+    image_edit_tab, contact_tab, app_santa, santa_tab
 
 
 def register_callbacks(app, print_function):
@@ -32,6 +33,8 @@ def register_callbacks(app, print_function):
         """
         if pathname == '/':
             return app_1()
+        elif pathname == '/santa':
+            return app_santa()
         else:
             return app_2(pathname)
 
@@ -998,6 +1001,66 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
+    @app.callback(Output('intermediate-santa-result', 'data'),
+                  [Input('upload-santa', 'contents')],
+                  [State('upload-santa', 'filename')])
+    @print_callback(print_function)
+    def update_santa_upload(contents, filename):
+        """Update santa interface when file is uploaded
+
+        Args:
+            contents (str): contents of data uploaded, triggers callback
+            filename (str): filename of data uploaded
+
+        Returns:
+            (dict): intermediate data stored in dcc.Store
+        """
+        _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
+        return records
+
+    @app.callback([Output('santa-result', 'children'),
+                   Output('santa-output', 'children'),
+                   Output('santa-output', 'style')],
+                  [Input('button-santa-ok', 'n_clicks')],
+                  [State('intermediate-santa-result', 'data'),
+                   State('input-santa-group', 'value'),
+                   State('checklist-santa-email', 'value'),
+                   State('checklist-santa-display', 'value'),
+                   State('santa-output', 'style')])
+    @print_callback(print_function)
+    def update_santa_result(trigger, records, n_groups, email_flag, hide_flag, style):
+        """Update and display secret santa results
+
+        Args:
+            trigger: trigger on button click
+            records (dict): intermediate data stored in dcc.Store
+            n_groups (int): number of groups
+            email_flag (str): option whether to email results to recipients
+            hide_flag (str): option whether to display output results
+            style (dict): current style of results div
+
+        Returns:
+            3-element tuple
+
+            - (list): div result of secret santa upload result
+            - (list): updated content of output div
+            - (dict): updated style of results div
+        """
+        result = []
+        output = []
+        fig = {}
+        if trigger:
+            if 'df' in records:
+                df = decode_df(records['df'])
+                if df.columns[0] == 'Name' and df.columns[1] == 'Email (Optional)':
+                    result, output, style = Santa().process_result(df, n_groups, email_flag, hide_flag, style)
+                else:
+                    result = ['File is not in expected format. Please download the demo worksheet and follow the '
+                              'format accordingly']
+            elif 'df' not in records:
+                result = ['Please upload a file']
+        return result, output, style
+
     @app.callback([Output('input-contact-name', 'value'),
                    Output('input-contact-email', 'value'),
                    Output('input-contact-content', 'value'),
@@ -1070,6 +1133,8 @@ def register_callbacks(app, print_function):
             return image_edit_tab(app)
         elif tab == 'tab-contact':
             return contact_tab()
+        elif tab == 'tab-santa':
+            return santa_tab(app)
         else:
             return current_content
 
@@ -1094,6 +1159,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Image Editing'
             } else if (tab_value === 'tab-contact') {
                 document.title = 'Contact Me'
+            } else if (tab_value === 'tab-santa') {
+                document.title = 'Secret Santa'
             }
         }
         """,
