@@ -397,7 +397,7 @@ def result_download_button(app, df):
     )
 
 
-def result_download_text(df, input_text):
+def result_download_text(input_text):
     """Download text for processed data or results
 
     Args:
@@ -407,14 +407,7 @@ def result_download_text(df, input_text):
     Returns:
         (html.Form)
     """
-    df_ser = encode_df(df)
     return html.Form([
-        dcc.Input(
-            value=df_ser,
-            name='demo',
-            type='text',
-            style={'display': 'none'}
-        ),
         html.Button([
             input_text
         ],
