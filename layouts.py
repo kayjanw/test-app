@@ -251,7 +251,7 @@ def trip_tab(app):
                     dark_bg=True
                 )
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
@@ -396,7 +396,7 @@ def change_tab(app):
                     dark_bg=True
                 )
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
@@ -509,7 +509,7 @@ def changes_tab(app):
                     storage_type='memory'
                 ),
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
@@ -546,7 +546,7 @@ def changes_tab(app):
                     '3. Ensure all column identifier values are unique, if not it will be replaced with running numbers'
                 ])
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-medium'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-medium'
             ),
             # Bottom item
             html.Div([
@@ -556,7 +556,7 @@ def changes_tab(app):
                         style={
                             'display': 'none',
                         },
-                        className='custom-dark-div custom-div-left div-with-image div-with-image-left small-image image-dark-bg'
+                        className='custom-div-dark custom-div-left div-with-image div-with-image-left small-image image-dark-bg'
                     ),
                     dark_bg=False
                 ),
@@ -660,7 +660,7 @@ def mbti_tab():
                 ),
                 html.Button('OK', id='button-mbti-ok')
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small-medium'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium'
             ),
             # Right item
             html.Div([
@@ -725,7 +725,7 @@ def chat_tab(app):
                     storage_type='memory'
                 ),
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small-medium'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium'
             ),
             # Right item
             html.Div([
@@ -789,7 +789,7 @@ def wnrs_tab(app):
             html.P('Have fun!', style={'margin-top': '20px'}, className='p-bold'),
         ],
             id='div-wnrs-instruction',
-            className='custom-dark-div image-dark-bg',
+            className='custom-div-dark image-dark-bg',
             style={
                 'display': 'none',
                 'width': '90%'
@@ -822,7 +822,7 @@ def wnrs_tab(app):
             html.P(id='wnrs-suggestion-reply')
         ],
             id='div-wnrs-suggestion',
-            className='custom-dark-div image-dark-bg',
+            className='custom-div-dark image-dark-bg',
             style={
                 'display': 'none',
                 'width': '90%'
@@ -1174,7 +1174,7 @@ def wnrs_tab(app):
             ]),
         ],
             id='div-wnrs-selection',
-            className='custom-dark-div image-dark-bg',
+            className='custom-div-dark image-dark-bg',
             style={
                 'display': 'none',
                 'width': '90%'
@@ -1335,7 +1335,7 @@ def image_edit_tab(app):
                     id='div-image-output'
                 )
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-large-full'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-large-full'
             ),
             # Right item
             html.Div([
@@ -1410,7 +1410,7 @@ def sample_tab():
             html.Div([
                 # html.P('Left component',),
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div([
@@ -1489,8 +1489,8 @@ def santa_tab(app):
             ' and fill in the values. Do not change items in red.'
         ]),
         html.P('Step 2: Upload completed worksheet'),
-        html.P('Step 3: Specify the number of groups to split participants into, if results should be emailed to '
-               'participants or hidden'),
+        html.P('Step 3: Specify the number of groups to split participants into, if individual results should be '
+               'emailed to participants separately or if all results should be hidden on webpage'),
         html.P('Step 4: Click "OK" button to generate the results!'),
         html.Div([
             # Left item
@@ -1524,7 +1524,7 @@ def santa_tab(app):
                             id='checklist-santa-email',
                             options=[
                                 {
-                                    'label': 'Email results to recipients',
+                                    'label': 'Email individual results to recipients separately',
                                     'value': 'email'
                                 }
                             ],
@@ -1547,9 +1547,7 @@ def santa_tab(app):
                             }
                         ),
                     ]),
-                ],
-                    className='custom-div-flex'
-                ),
+                ]),
                 html.Button('OK', id='button-santa-ok'),
                 dcc.Store(
                     id='intermediate-santa-result',
@@ -1562,7 +1560,7 @@ def santa_tab(app):
                     dark_bg=True
                 )
             ],
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-small'
             ),
             # Right item
             html.Div(
@@ -1570,7 +1568,7 @@ def santa_tab(app):
                 style={
                     'display': 'none'
                 },
-                className='custom-dark-div custom-div-left custom-div-space-above custom-div-medium'
+                className='custom-div-dark custom-div-left custom-div-space-above custom-div-medium'
             ),
         ],
             className='custom-container'
