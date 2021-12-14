@@ -42,7 +42,7 @@ class Santa:
         if len(people) <= 1:
             result = ['Error: Too little participants, please increase number of participants']
         elif 2 * n_groups > len(people):
-            result = ['Error: Too many groups specified for {len(people)} people, please reduce number of groups']
+            result = [f'Error: Too many groups specified for {len(people)} people, please reduce number of groups']
 
         # Assertion for email
         if email_flag:
