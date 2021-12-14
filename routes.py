@@ -43,11 +43,11 @@ def register_routes(app):
             worksheet.write(f'A{idx + 2}', f'Person {idx + 1}')
         worksheet.write('B1', 'Email (Optional)', bold_red)
         colour_list = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Black']
-        worksheet.write('C1', 'Criteria Colour', bold)
+        worksheet.write('C1', 'Gift Criteria: Colour', bold)
         for idx in range(len(colour_list)):
             worksheet.write(f'C{idx + 2}', colour_list[idx])
         colour_texture = ['Shiny', 'Round', 'Smooth']
-        worksheet.write('D1', 'Criteria Texture', bold)
+        worksheet.write('D1', 'Gift Criteria: Texture', bold)
         for idx in range(len(colour_texture)):
             worksheet.write(f'D{idx + 2}', colour_texture[idx])
 
