@@ -7,6 +7,7 @@ Changelog
 ========== =====================================================
 Date       Changes
 ========== =====================================================
+2021-12-14 Added Santa tab
 2021-08-31 Added Contact Me tab, enable email function
 2021-08-12 Added WNRS tab
 2021-07-24 Added tensorflow models in MBTI Personality Test tab
