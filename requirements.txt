@@ -134,6 +134,7 @@ tifffile==2020.6.3
 
 #For autopep8
 autopep8==1.5.3
+black==21.12b0
 pycodestyle==2.6.0
 toml==0.10.1
 
