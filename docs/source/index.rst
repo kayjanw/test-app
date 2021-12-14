@@ -38,6 +38,7 @@ Code Documentation
    components/chat
    components/helper
    components/mbti
+   components/santa
    components/trip-planner
    components/wnrs
 
@@ -52,6 +53,9 @@ Code Documentation
 
 :doc:`components/mbti`
     List of functions for MBTI Personality Test tab
+
+:doc:`components/santa`
+    List of functions for Santa tab
 
 :doc:`components/trip-planner`
     List of functions for Trip Planner tab
