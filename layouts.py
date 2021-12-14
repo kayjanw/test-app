@@ -7,7 +7,7 @@ import dash_table
 
 from dash_canvas import DashCanvas
 
-from components.helper import violin_plot, dcc_loading, table_css, encode_dict
+from components.helper import violin_plot, dcc_loading, table_css, encode_dict, result_download_text
 from components.wnrs import WNRS
 
 
@@ -1417,6 +1417,162 @@ def sample_tab():
                 # html.P('Right component')
             ],
                 className='custom-div-center custom-div-large'
+            ),
+        ],
+            className='custom-container'
+        ),
+    ])
+
+# Santa page
+
+
+def sidebar_dropdown_santa():
+    return html.Div(
+        dcc.Tabs(
+            id='tabs-parent',
+            value=None,
+            vertical=True,
+            parent_className='custom-tabs-parent',
+            className='custom-tabs',
+            children=[
+                dcc.Tab(label='About Me', value='tab-aboutme', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Others', value='', className='custom-tab-disabled',
+                        disabled=True),
+                dcc.Tab(label="Secret Santa Generator", value='tab-santa', className='custom-tab-sub',
+                        selected_className='custom-tab-selected'),
+                dcc.Tab(label='Contact Me', value='tab-contact', className='custom-tab',
+                        selected_className='custom-tab-selected'),
+            ],
+            colors={
+                'background': '#202029'
+            },
+            persistence=True,
+            persistence_type='session'
+        )
+    )
+
+
+def app_santa():
+    return html.Div([
+        # Top contents
+        html.Div(banner(), id='banner'),
+
+        # Left contents
+        html.Div([
+            sidebar_header(),
+            sidebar_dropdown_santa()
+        ],
+            id='sidebar',
+        ),
+
+        # Right contents
+        html.Div(
+            dcc_loading(
+                violin_plot(),
+                dark_bg=False
+            ),
+            id='tab-content'
+        )
+    ])
+
+
+def santa_tab(app):
+    import pandas as pd
+    df = pd.read_excel('data/demo.xlsx')
+    return html.Div([
+        content_header('Secret Santa', 'Generate random matches and groups'),
+        html.P('Users can perform random matching of people with other specified criterias and/or split participants '
+               'into groups.'),
+        html.Br(),
+        html.P([
+            'Step 1: Download demo worksheet ',
+            result_download_text(df, 'here'),
+            ' and fill in the values. Do not change items in red.'
+        ]),
+        html.P('Step 2: Upload completed worksheet'),
+        html.P('Step 3: Specify the number of groups to split participants into, if results should be emailed to '
+               'participants or hidden'),
+        html.P('Step 4: Click "OK" button to generate the results!'),
+        html.Div([
+            # Left item
+            html.Div([
+                dcc.Upload([
+                    html.Img(src=app.get_asset_url('upload.svg')),
+                    html.Span('Drag and drop file here, or click to upload')
+                ],
+                    id='upload-santa',
+                    multiple=False,
+                    className='div-with-image div-with-image-left small-image image-dark-bg'
+                ),
+                html.Div([
+                    html.P('Select number of groups:'),
+                    html.P([
+                        dcc.Input(
+                            id='input-santa-group',
+                            type='number',
+                            value=1,
+                            style={
+                                'width': '100%',
+                            }
+                        ),
+                    ]),
+                ],
+                    className='custom-div-flex'
+                ),
+                html.Div([
+                    html.P([
+                        dcc.Checklist(
+                            id='checklist-santa-email',
+                            options=[
+                                {
+                                    'label': 'Email results to recipients',
+                                    'value': 'email'
+                                }
+                            ],
+                            style={
+                                'width': '100%',
+                            }
+                        ),
+                    ]),
+                    html.P([
+                        dcc.Checklist(
+                            id='checklist-santa-display',
+                            options=[
+                                {
+                                    'label': 'Hide results',
+                                    'value': 'hide'
+                                }
+                            ],
+                            style={
+                                'width': '100%',
+                            }
+                        ),
+                    ]),
+                ],
+                    className='custom-div-flex'
+                ),
+                html.Button('OK', id='button-santa-ok'),
+                dcc.Store(
+                    id='intermediate-santa-result',
+                    storage_type='memory'
+                ),
+                dcc_loading(
+                    html.Div(
+                        id='santa-result'
+                    ),
+                    dark_bg=True
+                )
+            ],
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-small'
+            ),
+            # Right item
+            html.Div(
+                id='santa-output',
+                style={
+                    'display': 'none'
+                },
+                className='custom-dark-div custom-div-left custom-div-space-above custom-div-medium'
             ),
         ],
             className='custom-container'
