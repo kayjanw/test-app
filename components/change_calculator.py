@@ -1,6 +1,7 @@
-import dash_html_components as html
 import numpy as np
 import plotly.graph_objects as go
+
+from dash import html
 
 
 class ChangeCalculator:
