@@ -39,6 +39,7 @@ Code Documentation
    components/event-planner
    components/helper
    components/mbti
+   components/rng
    components/trip-planner
    components/wnrs
 
