@@ -1,9 +1,8 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
 import json
 import traceback
 
+from dash import dcc, html
 from dash.dependencies import Input, Output, State
 
 from components.change_calculator import ChangeCalculator
@@ -11,34 +10,39 @@ from components.chat import ChatAnalyzer
 from components.helper import (
     return_message,
     print_callback,
+    violin_plot,
+    dcc_loading,
+    parse_data,
     get_summary_statistics,
     decode_df,
-    decode_dict,
     encode_dict,
+    decode_dict,
     update_when_upload,
     result_download_button,
-    parse_data,
     valid_email,
     send_email,
 )
 from components.mbti import MBTI
-from components.santa import Santa
+from components.event_planner import EventPlanner
+from components.rng import RandomGenerator
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
 from layouts import (
+    main_layout,
     app_1,
     app_2,
+    app_event,
     about_me_tab,
-    trip_tab,
     change_tab,
     changes_tab,
-    mbti_tab,
     chat_tab,
+    trip_tab,
+    mbti_tab,
+    event_tab,
+    rng_tab,
     wnrs_tab,
-    image_edit_tab,
     contact_tab,
-    app_santa,
-    santa_tab,
+    image_edit_tab,
 )
 
 
@@ -56,8 +60,8 @@ def register_callbacks(app, print_function):
         """
         if pathname == "/":
             return app_1()
-        elif pathname == "/santa":
-            return app_santa()
+        elif pathname == "/event":
+            return app_event()
         else:
             return app_2(pathname)
 
@@ -107,88 +111,6 @@ def register_callbacks(app, print_function):
                 style_banner = {"margin-left": "0"}
                 style_contents = {"margin-left": "0", "position": "absolute"}
         return style_sidebar, style_banner, style_contents
-
-    @app.callback([Output("table-trip-landmark", "data"),
-                   Output("table-trip-landmark", "style_table"),
-                   Output("input-trip-landmark", "value")],
-                  [Input("map-trip", "click_lat_lng"),
-                   Input("button-trip-remove", "n_clicks"),
-                   Input("button-trip-reset", "n_clicks")],
-                  [State("input-trip-landmark", "value"),
-                   State("table-trip-landmark", "data")])
-    @print_callback(print_function)
-    def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
-        """Update trip table
-
-        Args:
-            e (tuple): trigger on map click
-            trigger_remove: trigger on button click
-            trigger_reset: trigger on button click
-            landmark (str): name of landmark to be added
-            data (list): data of table that displays landmarks information
-
-        Returns:
-            3-element tuple
-
-            - (list): updated data of table that displays landmarks information
-            - (dict): style of table that displays landmarks information
-            - (str): reset name of next landmark to be added
-        """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-        if ctx == "button-trip-remove":
-            data = TripPlanner().remove_last_point_on_table(data)
-        elif ctx == "button-trip-reset":
-            data = []
-        else:
-            if e is not None:
-                lat, lon = e
-                data = TripPlanner().add_new_point_on_table(lat, lon, landmark, data)
-        style_table = TripPlanner().get_style_table(data)
-        return data, style_table, ""
-
-    @app.callback(Output("map-trip", "children"),
-                  [Input("table-trip-landmark", "data")],
-                  [State("map-trip", "children")])
-    @print_callback(print_function)
-    def update_trip_map(data, children):
-        """Update trip map to include landmark location pin
-
-        Args:
-            data (list): data of table that displays landmarks information, triggers callback
-            children (list): current map children
-
-        Returns:
-            (list): updated map children
-        """
-        children = TripPlanner().get_map_from_table(data, children)
-        return children
-
-    @app.callback(Output("trip-result", "children"),
-                  [Input("button-trip-ok", "n_clicks"),
-                   Input("button-trip-reset", "n_clicks")],
-                  [State("table-trip-landmark", "data")])
-    @print_callback(print_function)
-    def update_trip_results(trigger_ok, trigger_reset, data):
-        """Update and display trip results
-
-        Args:
-            trigger_ok: trigger on button click
-            trigger_reset: trigger on button click
-            data (list): data of table that displays landmarks information
-
-        Returns:
-            (str/list)
-        """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-        result = ""
-        if ctx == "button-trip-ok":
-            try:
-                result = TripPlanner().optimiser_pipeline(data)
-            except IndexError:
-                result = TripPlanner().optimiser_pipeline(data)
-        elif ctx == "button-trip-reset":
-            pass
-        return result
 
     @app.callback([Output("dropdown-change-worksheet", "options"),
                    Output("change-select-worksheet", "style"),
@@ -466,63 +388,6 @@ def register_callbacks(app, print_function):
             figure["data"][trace_index]["opacity"] = 1
         return figure
 
-    @app.callback(Output("text-mbti-words", "children"),
-                  [Input("input-mbti", "value")])
-    @print_callback(print_function)
-    def update_mbti_words(input_text):
-        """Update number of input words in vocabulary
-
-        Args:
-            input_text (str): input text
-
-        Returns:
-            (str)
-        """
-        try:
-            n_words = MBTI().get_num_words(input_text)
-            return f"{n_words} word(s) in vocabulary"
-        except Exception as e:
-            return f"Error loading number of word(s), error message: {e}"
-
-    @app.callback([Output("graph-mbti", "figure"),
-                   Output("graph-mbti", "style"),
-                   Output("mbti-results", "children")],
-                  [Input("button-mbti-ok", "n_clicks")],
-                  [State("input-mbti", "value"),
-                   State("graph-mbti", "style")])
-    @print_callback(print_function)
-    def update_mbti_result(trigger, input_text, style):
-        """Update results of mbti personality results and graph
-
-        Args:
-            trigger: Trigger on button click
-            input_text (str): input text
-            style (dict): style of graphical result of mbti model
-
-        Returns:
-            3-element tuple
-
-            - (dict): graphical result of mbti model
-            - (dict): updated style of graphical result of mbti model
-            - (list): result of mbti model
-        """
-        plot = {}
-        style["display"] = "none"
-        personality_details = []
-        if trigger:
-            try:
-                personality, predictions = MBTI().test_pipeline(input_text)
-                plot = MBTI().get_bar_plot(predictions)
-                personality_details = MBTI().get_personality_details(personality)
-                style["display"] = "block"
-                style["height"] = 400
-            except Exception as e:
-                personality_details = [
-                    f"Error loading results, error message: {e}. Please try again."
-                ]
-                print(traceback.print_exc())
-        return plot, style, personality_details
-
     # @app.callback(Output('text-chat-loading', 'children'),
     #               [Input('upload-chat', 'contents')])
     # def update_chat_upload_loading(contents):
@@ -574,7 +439,7 @@ def register_callbacks(app, print_function):
         """Update and display chat analyzer results
 
         Args:
-            trigger: Trigger on button click
+            trigger: trigger on button click
             contents (str): intermediate data stored in dcc.Store
 
         Returns:
@@ -598,6 +463,318 @@ def register_callbacks(app, print_function):
                 fig2 = chat.get_time_series_day_plot()
         return result, fig1, fig2
 
+    @app.callback([Output("table-trip-landmark", "data"),
+                   Output("table-trip-landmark", "style_table"),
+                   Output("input-trip-landmark", "value")],
+                  [Input("map-trip", "click_lat_lng"),
+                   Input("button-trip-remove", "n_clicks"),
+                   Input("button-trip-reset", "n_clicks")],
+                  [State("input-trip-landmark", "value"),
+                   State("table-trip-landmark", "data")])
+    @print_callback(print_function)
+    def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
+        """Update trip table
+
+        Args:
+            e (tuple): trigger on map click
+            trigger_remove: trigger on button click
+            trigger_reset: trigger on button click
+            landmark (str): name of landmark to be added
+            data (list): data of table that displays landmarks information
+
+        Returns:
+            3-element tuple
+
+            - (list): updated data of table that displays landmarks information
+            - (dict): style of table that displays landmarks information
+            - (str): reset name of next landmark to be added
+        """
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        if ctx == "button-trip-remove":
+            data = TripPlanner().remove_last_point_on_table(data)
+        elif ctx == "button-trip-reset":
+            data = []
+        else:
+            if e is not None:
+                lat, lon = e
+                data = TripPlanner().add_new_point_on_table(lat, lon, landmark, data)
+        style_table = TripPlanner().get_style_table(data)
+        return data, style_table, ""
+
+    @app.callback(Output("map-trip", "children"),
+                  [Input("table-trip-landmark", "data")],
+                  [State("map-trip", "children")])
+    @print_callback(print_function)
+    def update_trip_map(data, children):
+        """Update trip map to include landmark location pin
+
+        Args:
+            data (list): data of table that displays landmarks information, triggers callback
+            children (list): current map children
+
+        Returns:
+            (list): updated map children
+        """
+        children = TripPlanner().get_map_from_table(data, children)
+        return children
+
+    @app.callback(Output("trip-result", "children"),
+                  [Input("button-trip-ok", "n_clicks"),
+                   Input("button-trip-reset", "n_clicks")],
+                  [State("table-trip-landmark", "data")])
+    @print_callback(print_function)
+    def update_trip_results(trigger_ok, trigger_reset, data):
+        """Update and display trip results
+
+        Args:
+            trigger_ok: trigger on button click
+            trigger_reset: trigger on button click
+            data (list): data of table that displays landmarks information
+
+        Returns:
+            (str/list)
+        """
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+        result = ""
+        if ctx == "button-trip-ok":
+            try:
+                result = TripPlanner().optimiser_pipeline(data)
+            except IndexError:
+                result = TripPlanner().optimiser_pipeline(data)
+        elif ctx == "button-trip-reset":
+            pass
+        return result
+
+    @app.callback(Output("text-mbti-words", "children"),
+                  [Input("input-mbti", "value")])
+    @print_callback(print_function)
+    def update_mbti_words(input_text):
+        """Update number of input words in vocabulary
+
+        Args:
+            input_text (str): input text
+
+        Returns:
+            (str)
+        """
+        try:
+            n_words = MBTI().get_num_words(input_text)
+            return f"{n_words} word(s) in vocabulary"
+        except Exception as e:
+            return f"Error loading number of word(s), error message: {e}"
+
+    @app.callback([Output("graph-mbti", "figure"),
+                   Output("graph-mbti", "style"),
+                   Output("mbti-results", "children")],
+                  [Input("button-mbti-ok", "n_clicks")],
+                  [State("input-mbti", "value"),
+                   State("graph-mbti", "style")])
+    @print_callback(print_function)
+    def update_mbti_result(trigger, input_text, style):
+        """Update results of mbti personality results and graph
+
+        Args:
+            trigger: trigger on button click
+            input_text (str): input text
+            style (dict): style of graphical result of mbti model
+
+        Returns:
+            3-element tuple
+
+            - (dict): graphical result of mbti model
+            - (dict): updated style of graphical result of mbti model
+            - (list): result of mbti model
+        """
+        plot = {}
+        style["display"] = "none"
+        personality_details = []
+        if trigger:
+            try:
+                personality, predictions = MBTI().test_pipeline(input_text)
+                plot = MBTI().get_bar_plot(predictions)
+                personality_details = MBTI().get_personality_details(personality)
+                style["display"] = "block"
+                style["height"] = 400
+            except Exception as e:
+                personality_details = [
+                    f"Error loading results, error message: {e}. Please try again."
+                ]
+                print(traceback.print_exc())
+        return plot, style, personality_details
+
+    @app.callback([Output("text-event-confirm", "children"),
+                   Output("intermediate-event-result", "data")],
+                  [Input("upload-event", "contents")],
+                  [State("upload-event", "filename")])
+    @print_callback(print_function)
+    def update_event_upload(contents, filename):
+        """Update event planner interface when file is uploaded
+
+        Args:
+            contents (str): contents of data uploaded, triggers callback
+            filename (str): filename of data uploaded
+
+        Returns:
+            2-element tuple
+
+            - (list): message of upload status
+            - (str): intermediate data stored in dcc.Store
+        """
+        upload_message = ""
+        storage = {}
+        if dash.callback_context.triggered:
+            _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
+            if "df" in records:
+                df = decode_df(records["df"])
+                if df.columns[0] == "Name" and df.columns[1] == "Email (Optional)":
+                    storage = records
+                    upload_message = [return_message["file_uploaded"]]
+                else:
+                    upload_message = [return_message["wrong_format_demo"]]
+            elif "df" not in records:
+                upload_message = [return_message["wrong_file_type"]]
+        return upload_message, storage
+
+    @app.callback([Output("event-result", "children"),
+                   Output("event-output", "children"),
+                   Output("event-output", "style")],
+                  [Input("button-event-ok", "n_clicks")],
+                  [State("intermediate-event-result", "data"),
+                   State("input-event-group", "value"),
+                   State("checklist-event-pair", "value"),
+                   State("radio-event-criteria", "value"),
+                   State("checklist-event-email", "value"),
+                   State("checklist-event-display", "value"),
+                   State("event-output", "style")])
+    @print_callback(print_function)
+    def update_event_result(trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style):
+        """Update and display event planner results
+
+        Args:
+            trigger: trigger on button click
+            records (dict): intermediate data stored in dcc.Store
+            n_groups (int): number of groups
+            pair_flag (str): option whether to pair participants up
+            criteria_level (str): whether criteria is on individual or group level
+            email_flag (str): option whether to email results to recipients
+            hide_flag (str): option whether to display output results
+            style (dict): current style of results div
+
+        Returns:
+            3-element tuple
+
+            - (list): div result of event planner upload result
+            - (list): updated content of output div
+            - (dict): updated style of results div
+        """
+        result = []
+        output = []
+        if trigger:
+            if "df" in records:
+                df = decode_df(records["df"])
+                result, output, style = EventPlanner().process_result(
+                    df, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
+                )
+            else:
+                result = [return_message["file_not_uploaded"]]
+        return result, output, style
+
+    @app.callback([Output("div-rng-item", "style"),
+                   Output("div-rng-group", "style"),
+                   Output("button-rng-item-ok", "style"),
+                   Output("button-rng-group-ok", "style")],
+                  [Input("button-rng-item-ok", "n_clicks"),
+                   Input("button-rng-group-ok", "n_clicks")],
+                  [State("div-rng-item", "style"),
+                   State("div-rng-group", "style"),
+                   State("button-rng-item-ok", "style"),
+                   State("button-rng-group-ok", "style")])
+    @print_callback(print_function)
+    def update_rng_button_style(trigger_item, trigger_group, item_style, group_style, item_button_style,
+        group_button_style
+    ):
+        """Update style of Random Generator button
+
+        Args:
+            trigger_item: trigger on button click
+            trigger_group: trigger on button click
+            item_style (dict): current style of item div
+            group_style (dict): current style of group div
+            item_button_style(dict): current style of item button
+            group_button_style (dict): current style of group button
+
+        Returns:
+            (dict): updated style of item and group button
+        """
+        if dash.callback_context.triggered:
+            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+            show_style = {"display": "flex"}
+            hide_style = {"display": "none"}
+            show_button_style = {"background-color": "#BE9B89"}
+            hide_button_style = {"background-color": "#F0E3DF"}
+            if not item_button_style:
+                item_button_style = {}
+            if not group_button_style:
+                group_button_style = {}
+            if ctx == "button-rng-item-ok":
+                item_style.update(show_style)
+                item_button_style.update(show_button_style)
+                group_style.update(hide_style)
+                group_button_style.update(hide_button_style)
+            elif ctx == "button-rng-group-ok":
+                item_style.update(hide_style)
+                item_button_style.update(hide_button_style)
+                group_style.update(show_style)
+                group_button_style.update(show_button_style)
+        return item_style, group_style, item_button_style, group_button_style
+
+    @app.callback([Output("rng-result", "children"),
+                   Output("rng-output", "children"),
+                   Output("rng-output", "style")],
+                  [Input("button-rng-ok", "n_clicks")],
+                  [State("input-rng", "value"),
+                   State("input-rng-item", "value"),
+                   State("input-rng-group", "value"),
+                   State("div-rng-item", "style"),
+                   State("div-rng-group", "style"),
+                   State("rng-output", "style")])
+    @print_callback(print_function)
+    def update_event_result(trigger, text, n_items, n_groups, item_style, group_style, style):
+        """Update and display event planner results
+
+        Args:
+            trigger: trigger on button click
+            text (str): input text
+            n_items (int): number of items
+            n_groups (int): number of groups
+            item_style (dict): current style of item div
+            group_style (dict): current style of group div
+            style (dict): current style of results div
+
+        Returns:
+            3-element tuple
+
+            - (list): div result of event planner upload result
+            - (list): updated content of output div
+            - (dict): updated style of results div
+        """
+        result = []
+        output = []
+        style = {"display": "none"}
+        if trigger:
+            task = None
+            if item_style["display"] == "flex":
+                task = "item"
+            elif group_style["display"] == "flex":
+                task = "group"
+            if text and task:
+                result, output, style = RandomGenerator().process_result(text, n_items, n_groups, task, style)
+            elif not text:
+                result = [return_message["input_empty"]]
+            elif not task:
+                result = [return_message["rng_task_empty"]]
+        return result, output, style
+
     @app.callback([Output("div-wnrs-selection", "style"),
                    Output("div-wnrs-instruction", "style"),
                    Output("div-wnrs-suggestion", "style"),
@@ -614,29 +791,24 @@ def register_callbacks(app, print_function):
                    State("button-wnrs-instruction-ok", "style"),
                    State("button-wnrs-suggestion-ok", "style")])
     @print_callback(print_function)
-    def update_wnrs_deck_style(
-        trigger_selection,
-        trigger_instruction,
-        trigger_suggestion,
-        selection_style,
-        instruction_style,
-        suggestion_style,
-        selection_button_style,
-        instruction_button_style,
-        suggestion_button_style,
+    def update_wnrs_deck_style(trigger_selection, trigger_instruction, trigger_suggestion, selection_style,
+        instruction_style, suggestion_style, selection_button_style, instruction_button_style, suggestion_button_style,
     ):
         """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
-            trigger_selection: Trigger on button click
-            trigger_suggestion: Trigger on button click
-            selection_style (dict): Current style of card selection div
-            suggestion_style (dict): Current style of card suggestion div
-            selection_button_style(dict): Current style of card selection button
-            suggestion_button_style (dict): Current style of card suggestion button
+            trigger_selection: trigger on button click
+            trigger_instruction: trigger on button click
+            trigger_suggestion: trigger on button click
+            selection_style (dict): current style of card selection div
+            instruction_style (dict): current style of instruction div
+            suggestion_style (dict): current style of card suggestion div
+            selection_button_style(dict): current style of card selection button
+            instruction_button_style (dict): current style of instruction button
+            suggestion_button_style (dict): current style of card suggestion button
 
         Returns:
-            (dict): Updated style of card selection and card suggestion div
+            (dict): updated style of card selection, instruction and card suggestion div and button
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -697,12 +869,12 @@ def register_callbacks(app, print_function):
         """Send email for WNRS card suggestion
 
         Args:
-            trigger: Trigger on button click
-            card_prompt (str): Input for card prompt
-            additional_info (str): Input for additional information
+            trigger: trigger on button click
+            card_prompt (str): input for card prompt
+            additional_info (str): input for additional information
 
         Returns:
-            (str): Feedback for email sent
+            (str): feedback for email sent
         """
         reply = ""
         if dash.callback_context.triggered:
@@ -727,11 +899,11 @@ def register_callbacks(app, print_function):
             """Update style of selected WNRS decks (button colour indication)
 
             Args:
-                trigger: Trigger on button click
-                current_style (dict): Current style of button
+                trigger: trigger on button click
+                current_style (dict): current style of button
 
             Returns:
-                (dict): Updated style of button
+                (dict): updated style of button
             """
             if dash.callback_context.triggered:
                 if current_style is None:
@@ -781,10 +953,10 @@ def register_callbacks(app, print_function):
         """Update list of decks selected
 
         Args:
-            *args (dict): Current style of all buttons
+            *args (dict): current style of all buttons
 
         Returns:
-            (dict): Updated style of all buttons
+            (dict): updated style of all buttons
         """
         data = {}
         list_of_deck = []
@@ -830,21 +1002,21 @@ def register_callbacks(app, print_function):
         """Update underlying data, card content and style
 
         Args:
-            trigger_back: Trigger on button click
-            trigger_next: Trigger on button click
-            trigger_back2: Trigger on button click
-            trigger_next2: Trigger on button click
-            trigger_shuffle: Trigger on button click
-            data (dict): Data of WNRS object
+            trigger_back: trigger on button click
+            trigger_next: trigger on button click
+            trigger_back2: trigger on button click
+            trigger_next2: trigger on button click
+            trigger_shuffle: trigger on button click
+            data (dict): data of WNRS object
             contents (str): contents of data uploaded, triggers callback
             filename (str): filename of data uploaded
-            data2_ser (str): Serialized data of WNRS object
-            card_prompt (str/list): Current prompt on card
-            current_style (dict): Current style of card
-            text_back (str): Current text of words for back button
-            text_next (str): Current text of words for next button
-            button_back (dict): Current opacity for back button
-            button_next (dict): Current opacity for next button
+            data2_ser (str): serialized data of WNRS object
+            card_prompt (str/list): current prompt on card
+            current_style (dict): current style of card
+            text_back (str): current text of words for back button
+            text_next (str): current text of words for next button
+            button_back (dict): current opacity for back button
+            button_next (dict): current opacity for next button
 
         Returns:
             (str, str, str, dict, str, str, str, dict, dict)
@@ -912,6 +1084,46 @@ def register_callbacks(app, print_function):
         data_new2 = encode_dict(data_new)
         return [data_new2, *card_prompt, card_deck, card_counter, current_style, text_back, text_next, button_back,
             button_next]
+
+    @app.callback([Output("input-contact-name", "value"),
+                   Output("input-contact-email", "value"),
+                   Output("input-contact-content", "value"),
+                   Output("contact-reply", "children")],
+                  [Input("button-contact-ok", "n_clicks")],
+                  [State("input-contact-name", "value"),
+                   State("input-contact-email", "value"),
+                   State("input-contact-content", "value")])
+    @print_callback(print_function)
+    def update_contact_send_email(trigger, contact_name, contact_email, contact_content):
+        """Send email for contact information
+
+        Args:
+            trigger: trigger on button click
+            contact_name (str): input for contact name
+            contact_email (str): input for contact email
+            contact_content (str): input for email body
+
+        Returns:
+            (str): feedback for email sent
+        """
+        reply = ""
+        if dash.callback_context.triggered:
+            if contact_name is None or contact_name.strip() == "":
+                reply = return_message["email_empty_name"]
+            elif contact_email is None or contact_email.strip() == "":
+                reply = return_message["email_empty_email"]
+            elif not valid_email(contact_email):
+                reply = return_message["email_email_valid"]
+            elif contact_content is None or contact_content.strip() == "":
+                reply = return_message["email_empty_body"]
+            else:
+                status_code = send_email(f"Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}")
+                if status_code:
+                    contact_content = ""
+                    reply = return_message["email_sent_feedback"]
+                else:
+                    reply = return_message["email_fail"]
+        return contact_name, contact_email, contact_content, reply
 
     @app.callback(Output("image-canvas", "image_content"),
                   [Input("upload-image", "contents")])
@@ -1043,135 +1255,25 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
-    @app.callback([Output("text-santa-confirm", "children"),
-                   Output("intermediate-santa-result", "data")],
-                  [Input("upload-santa", "contents")],
-                  [State("upload-santa", "filename")])
-    @print_callback(print_function)
-    def update_santa_upload(contents, filename):
-        """Update santa interface when file is uploaded
-
-        Args:
-            contents (str): contents of data uploaded, triggers callback
-            filename (str): filename of data uploaded
-
-        Returns:
-            2-element tuple
-
-            - (list): message of upload status
-            - (str): intermediate data stored in dcc.Store
-        """
-        upload_message = ""
-        storage = {}
-        if dash.callback_context.triggered:
-            _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
-            if "df" in records:
-                df = decode_df(records["df"])
-                if df.columns[0] == "Name" and df.columns[1] == "Email (Optional)":
-                    storage = records
-                    upload_message = [return_message["file_uploaded"]]
-                else:
-                    upload_message = [return_message["wrong_format_demo"]]
-            elif "df" not in records:
-                upload_message = [return_message["wrong_file_type"]]
-        return upload_message, storage
-
-    @app.callback([Output("santa-result", "children"),
-                   Output("santa-output", "children"),
-                   Output("santa-output", "style")],
-                  [Input("button-santa-ok", "n_clicks")],
-                  [State("intermediate-santa-result", "data"),
-                   State("input-santa-group", "value"),
-                   State("checklist-santa-email", "value"),
-                   State("checklist-santa-display", "value"),
-                   State("santa-output", "style")])
-    @print_callback(print_function)
-    def update_santa_result(trigger, records, n_groups, email_flag, hide_flag, style):
-        """Update and display secret santa results
-
-        Args:
-            trigger: trigger on button click
-            records (dict): intermediate data stored in dcc.Store
-            n_groups (int): number of groups
-            email_flag (str): option whether to email results to recipients
-            hide_flag (str): option whether to display output results
-            style (dict): current style of results div
-
-        Returns:
-            3-element tuple
-
-            - (list): div result of secret santa upload result
-            - (list): updated content of output div
-            - (dict): updated style of results div
-        """
-        result = []
-        output = []
-        if trigger:
-            if "df" in records:
-                df = decode_df(records["df"])
-                result, output, style = Santa().process_result(
-                    df, n_groups, email_flag, hide_flag, style
-                )
-            else:
-                result = ["Please upload a file"]
-        return result, output, style
-
-    @app.callback([Output("input-contact-name", "value"),
-                   Output("input-contact-email", "value"),
-                   Output("input-contact-content", "value"),
-                   Output("contact-reply", "children")],
-                  [Input("button-contact-ok", "n_clicks")],
-                  [State("input-contact-name", "value"),
-                   State("input-contact-email", "value"),
-                   State("input-contact-content", "value")])
-    @print_callback(print_function)
-    def update_contact_send_email(
-        trigger, contact_name, contact_email, contact_content
-    ):
-        """Send email for contact information
-
-        Args:
-            trigger: Trigger on button click
-            contact_name (str): Input for contact name
-            contact_email (str): Input for contact email
-            contact_content (str): Input for email body
-
-        Returns:
-            (str): Feedback for email sent
-        """
-        reply = ""
-        if dash.callback_context.triggered:
-            if contact_name is None or contact_name.strip() == "":
-                reply = return_message["email_empty_name"]
-            elif contact_email is None or contact_email.strip() == "":
-                reply = return_message["email_empty_email"]
-            elif not valid_email(contact_email):
-                reply = return_message["email_email_valid"]
-            elif contact_content is None or contact_content.strip() == "":
-                reply = return_message["email_empty_body"]
-            else:
-                status_code = send_email(f"Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}")
-                if status_code:
-                    contact_content = ""
-                    reply = return_message["email_sent_feedback"]
-                else:
-                    reply = return_message["email_fail"]
-        return contact_name, contact_email, contact_content, reply
-
     @app.callback(Output("tab-content", "children"),
                   [Input("tabs-parent", "value")],
-                  [State("tab-content", "children")])
+                  [State("tabs-parent", "children"),
+                   State("tab-content", "children")])
     @print_callback(print_function)
-    def update_output(tab, current_content):
+    def update_output(tab, children, current_content):
         """Update content when tab changes
 
         Args:
             tab: trigger on tab change
+            children (list): list of available tab contents
             current_content (html.Div): current tab content
 
         Returns:
             (html.Div)
         """
+        available_tabs = [children[idx]["props"]["value"] for idx in range(len(children))]
+        if tab not in available_tabs:
+            return dcc_loading(violin_plot(), dark_bg=False)
         if tab == "tab-aboutme":
             return about_me_tab(app)
         elif tab == "tab-change":
@@ -1184,14 +1286,18 @@ def register_callbacks(app, print_function):
             return trip_tab(app)
         elif tab == "tab-mbti":
             return mbti_tab()
-        elif tab == "tab-wnrs":
-            return wnrs_tab(app)
         elif tab == "tab-image":
             return image_edit_tab(app)
         elif tab == "tab-contact":
             return contact_tab()
-        elif tab == "tab-santa":
-            return santa_tab(app)
+        elif tab == "tab-others":
+            return dcc.Location(pathname="/event", id="some_id")
+        elif tab == "tab-event":
+            return event_tab(app)
+        elif tab == "tab-rng":
+            return rng_tab()
+        elif tab == "tab-wnrs":
+            return wnrs_tab(app)
         else:
             return current_content
 
@@ -1210,14 +1316,16 @@ def register_callbacks(app, print_function):
                 document.title = 'Trip Planner'
             } else if (tab_value === 'tab-mbti') {
                 document.title = 'MBTI Personality Test'
+            } else if (tab_value === 'tab-event') {
+                document.title = 'Event Planner'
+            } else if (tab_value === 'tab-rng') {
+                document.title = 'Random Generator'
             } else if (tab_value === 'tab-wnrs') {
                 document.title = 'WNRS Card Game'
-            } else if (tab_value === 'tab-image') {
-                document.title = 'Image Editing'
             } else if (tab_value === 'tab-contact') {
                 document.title = 'Contact Me'
-            } else if (tab_value === 'tab-santa') {
-                document.title = 'Secret Santa'
+            } else if (tab_value === 'tab-image') {
+                document.title = 'Image Editing'
             }
         }
         """,
