@@ -36,9 +36,9 @@ Code Documentation
 
    components/change-calculator
    components/chat
+   components/event-planner
    components/helper
    components/mbti
-   components/santa
    components/trip-planner
    components/wnrs
 
@@ -48,14 +48,17 @@ Code Documentation
 :doc:`components/chat`
     List of functions for Chat Analyzer tab
 
+:doc:`components/event-planner`
+    List of functions for Event Planner tab
+
 :doc:`components/helper`
     List of helper functions
 
 :doc:`components/mbti`
     List of functions for MBTI Personality Test tab
 
-:doc:`components/santa`
-    List of functions for Santa tab
+:doc:`components/rng`
+    List of functions for Random Generator tab
 
 :doc:`components/trip-planner`
     List of functions for Trip Planner tab
