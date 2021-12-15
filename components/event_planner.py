@@ -1,6 +1,7 @@
-import dash_html_components as html
 import numpy as np
 import pandas as pd
+
+from dash import html
 
 from components.helper import (
     return_message,
@@ -10,17 +11,19 @@ from components.helper import (
 )
 
 
-class Santa:
+class EventPlanner:
     """The Santa object contains functions used for Secret Santa tab"""
 
     @staticmethod
-    def process_result(df, n_groups, email_flag, hide_flag, style):
+    def process_result(df, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style):
         """
         Processing for secret santa, shuffling and splitting participants
 
         Args:
             df (pandas DataFrame): input DataFrame
             n_groups (int): number of groups
+            pair_flag (str): option whether to pair participants up
+            criteria_level (str): whether criteria is on individual or group level
             email_flag (str): option whether to email results to recipients
             hide_flag (str): option whether to display output results
             style (dict): current style of results div
@@ -28,15 +31,15 @@ class Santa:
         Returns:
             3-element tuple
 
-            - (list): div result of secret santa upload result
-            - (list): updated content of output div
-            - (dict): updated style of results div
+            - (list): div result of result div
+            - (list): div result of output div
+            - (dict): updated style of output div
         """
         # Initialize return variables
         result = []
         output = [html.H5("Result"), html.Br()]
 
-        # Get first column (people), shuffle and split
+        # Get list of people and emails, shuffle and split
         people = list(df[df.columns[0]].dropna().values)
         people_copy = people.copy()
         emails = list(df[df.columns[1]].dropna().values)
@@ -68,35 +71,44 @@ class Santa:
                     "Error: Results will not be displayed or emailed to participants, are you sure?"
                 ]
 
+        # If no error
         if not result:
             style = {}
 
             # Shuffle and split into groups, then shuffle within group
             np.random.shuffle(people_copy)
             list_of_array = np.array_split(people_copy, n_groups)
-            list_of_list = []
+            output_df = pd.DataFrame()
             for idx, group in enumerate(list_of_array):
-                group_copy = group.copy()
-                shuffle = True
-                while shuffle:
-                    np.random.shuffle(group_copy)
-                    if np.sum(group == group_copy) == 0:
-                        shuffle = False
-                for n in range(len(group)):
-                    participant_list = [idx, group[n], group_copy[n]]
-                    for m in range(len(other_cols)):
-                        participant_list.append(np.random.choice(other_cols_values[m]))
-                    list_of_list.append(participant_list)
-            output_df = pd.DataFrame(
-                list_of_list, columns=["Group", "Person", "Partner"] + other_cols
-            )
+                # If criteria is individual or group level
+                if criteria_level == "group":
+                    criteria_list = EventPlanner().get_criteria_list(other_cols_values)
+                else:
+                    criteria_list = [EventPlanner().get_criteria_list(other_cols_values) for _ in range(len(group))]
+                # If participants need to pair with each other
+                if pair_flag:
+                    group_copy = group.copy()
+                    shuffle = True
+                    while shuffle:
+                        np.random.shuffle(group_copy)
+                        if np.sum(group == group_copy) == 0:
+                            shuffle = False
+                    tmp_df = pd.DataFrame(dict({"Group": idx + 1, "Person": group, "Partner": group_copy},
+                                               **dict(zip(other_cols, np.array(criteria_list).T))))
+                else:
+                    tmp_df = pd.DataFrame(dict({"Group": idx + 1, "Person": group},
+                                               **dict(zip(other_cols, np.array(criteria_list).T))))
+                if len(output_df):
+                    output_df = output_df.append(tmp_df)
+                else:
+                    output_df = tmp_df.copy()
 
             if not hide_flag:
                 output.append(generate_datatable(output_df, max_rows=len(output_df)))
                 output.append(html.Br())
             if email_flag:
                 email_dict = dict(zip(people, emails))
-                status_code = Santa().email_results(output_df, email_dict)
+                status_code = EventPlanner().email_results(output_df, email_dict)
                 if status_code:
                     reply = return_message["email_sent_all"]
                 else:
@@ -104,6 +116,13 @@ class Santa:
                 output.append(html.P(reply))
 
         return result, output, style
+
+    @staticmethod
+    def get_criteria_list(other_cols_values):
+        criteria_list = []
+        for m in range(len(other_cols_values)):
+            criteria_list.append(np.random.choice(other_cols_values[m]))
+        return criteria_list
 
     @staticmethod
     def email_results(output_df, email_dict):
