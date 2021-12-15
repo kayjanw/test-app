@@ -1,4 +1,3 @@
-import dash_html_components as html
 import pandas as pd
 import numpy as np
 import pickle
@@ -7,6 +6,7 @@ import os
 import re
 import scipy
 
+from dash import html
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
 from nltk.corpus import stopwords, wordnet

@@ -3,9 +3,6 @@
 
 import base64
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
 import io
 import json
 import numpy as np
@@ -15,6 +12,7 @@ import plotly.graph_objects as go
 import re
 import sendgrid
 
+from dash import dash_table, dcc, html
 from functools import reduce
 from plotly.colors import n_colors
 from sendgrid.helpers.mail import Mail, Email, To, Content
@@ -39,6 +37,8 @@ return_message = {
     "email_sent_feedback": "Feedback received! Thank you",
     "email_sent_suggestion": "Suggestion received! Thank you",
     "email_sent_all": "Results emailed successfully to all participants!",
+    "input_empty": "Please fill in text input",
+    "rng_task_empty": "Please select a task",
     "wrong_format_demo": "File is not in expected format. Please download the demo worksheet and follow the format "
     "accordingly",
     "wrong_format_json": "Please upload a valid JSON file. Data is not in the correct format",
@@ -459,6 +459,7 @@ def result_download_text(input_text):
                     "font-size": "1em",
                     "font-weight": "bold",
                     "letter-spacing": "normal",
+                    "text-decoration": "underline",
                     "text-transform": "none",
                 },
                 type="submit",

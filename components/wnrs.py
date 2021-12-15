@@ -1,8 +1,8 @@
-import dash_html_components as html
 import pandas as pd
 import random
 import re
 
+from dash import html
 from functools import reduce
 
 
