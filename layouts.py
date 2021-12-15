@@ -1,10 +1,8 @@
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
 import dash_daq as daq
-import dash_html_components as html
 import dash_leaflet as dl
-import dash_table
 
+from dash import dash_table, dcc, html
 from dash_canvas import DashCanvas
 
 from components.helper import (
@@ -31,13 +29,13 @@ def banner():
     return html.Div(
         [
             html.Button("☰", id="button-sidebar"),
-            html.Div(html.H1("KJ Wong"))
+            html.Div(html.H1(dcc.Link("KJ Wong", href="/")))
         ]
     )
 
 
 def sidebar_header():
-    return html.Div(html.H1("KJ Wong"))
+    return html.Div(html.H1(dcc.Link("KJ Wong", href="/")))
 
 
 def sidebar_dropdown():
@@ -58,14 +56,36 @@ def sidebar_dropdown():
                 dcc.Tab(label="Trip Planner", value="tab-trip", className="custom-tab-sub", selected_className="custom-tab-selected"),
                 dcc.Tab(label="Prediction", value="", className="custom-tab-disabled", disabled=True),
                 dcc.Tab(label="MBTI Personality Test", value="tab-mbti", className="custom-tab-sub", selected_className="custom-tab-selected"),
-                dcc.Tab(label="Others", value="", className="custom-tab-disabled", disabled=True),
-                dcc.Tab(label="We're Not Really Strangers", value="tab-wnrs", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                dcc.Tab(label="Go to events!", value="tab-others", className="custom-tab"),
                 dcc.Tab(label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                 # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
             ],
             colors={"background": "#202029"},
             persistence=True,
-            persistence_type="session",
+            persistence_type="memory",
+        )
+    )
+
+
+def sidebar_dropdown_event():
+    return html.Div(
+        dcc.Tabs(
+            id="tabs-parent",
+            value=None,
+            vertical=True,
+            parent_className="custom-tabs-parent",
+            className="custom-tabs",
+            children=[
+                dcc.Tab(label="About Me", value="tab-aboutme", className="custom-tab", selected_className="custom-tab-selected"),
+                dcc.Tab(label="Fun Things", value="", className="custom-tab-disabled", disabled=True),
+                dcc.Tab(label="Event Planner", value="tab-event", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                dcc.Tab(label="Random Generator", value="tab-rng", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                dcc.Tab(label="We're Not Really Strangers", value="tab-wnrs", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                dcc.Tab( label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
+            ],
+            colors={"background": "#202029"},
+            persistence=True,
+            persistence_type="memory",
         )
     )
 
@@ -106,17 +126,40 @@ def app_2(pathname):
             html.Div(
                 [
                     content_header("Nice try", "Sadly this page does not exist"),
-                    html.P(
-                        [
-                            f"What were you hoping for in {pathname} page?",
-                            html.Br(),
-                            "Click ",
-                            html.A("here", href="/"),
-                            " to return to home page",
-                        ]
-                    ),
+                    html.Div([
+                        html.P(
+                            [
+                                f"What were you hoping for in {pathname} page?",
+                                html.Br(),
+                                "Click ",
+                                html.A("here", href="/"),
+                                " to return to home page",
+                            ]
+                        ),
+                    ],
+                        className="custom-div-instruction"
+                    )
                 ],
                 id="tab-content")
+        ]
+    )
+
+
+def app_event():
+    return html.Div(
+        [
+            # Top contents
+            html.Div(banner(), id="banner"),
+            # Left contents
+            html.Div(
+                [
+                    sidebar_header(),
+                    sidebar_dropdown_event()
+                ],
+                id="sidebar",
+            ),
+            # Right contents
+            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
         ]
     )
 
@@ -135,149 +178,57 @@ def about_me_tab(app):
     return html.Div(
         [
             content_header("About me"),
-            html.P("Just someone trying to apply what I learn, and believes coding should make our lives easier"),
-            html.Div(
-                [
-                    html.Img(src=app.get_asset_url("data-analytics.svg")),
-                    html.P("Data Analytics", className="p-short p-bold"),
-                    html.P(": Using uploaded data, visualize results graphically", className="p-short"),
-                ],
-                className="custom-div-space-below",
-            ),
-            html.Div(
-                [
-                    html.Img(src=app.get_asset_url("optimization.svg")),
-                    html.P("Optimization", className="p-short p-bold"),
-                    html.P(": Solve computationally expensive math problems", className="p-short"),
-                ],
-                className="custom-div-space-below",
-            ),
-            html.Div(
-                [
-                    html.Img(src=app.get_asset_url("prediction.svg")),
-                    html.P("Prediction", className="p-short p-bold"),
-                    html.P(": Use machine learning methods to churn out predictions", className="p-short"),
-                ],
-                className="custom-div-space-below",
-            ),
-            html.Br(),
-            html.Br(),
-            html.P(
-                [
-                    "Check out my ",
-                    html.A("linkedin", href="https://www.linkedin.com/in/kayjan/", target="_blank"),
-                    " / ",
-                    html.A("formal website", href="http://kayjan.github.io/", target="_blank"),
-                ]
-            ),
-            html.P(
-                "Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!"
-            ),
-            html.P(
-                [
-                    "This website is made with Dash, deployed using Gunicorn and hosted on Heroku, "
-                    "view code documentation on Sphinx ",
-                    html.A("here", href="http://kayjan.readthedocs.io", target="_blank"),
-                ]
-            ),
+            html.Div([
+                html.P("Just someone trying to apply what I learn, and believes coding should make our lives easier"),
+                html.Div(
+                    [
+                        html.Img(src=app.get_asset_url("data-analytics.svg")),
+                        html.P("Data Analytics", className="p-short p-bold"),
+                        html.P(": Using uploaded data, visualize results graphically", className="p-short"),
+                    ],
+                    className="custom-div-space-below",
+                ),
+                html.Div(
+                    [
+                        html.Img(src=app.get_asset_url("optimization.svg")),
+                        html.P("Optimization", className="p-short p-bold"),
+                        html.P(": Solve computationally expensive math problems", className="p-short"),
+                    ],
+                    className="custom-div-space-below",
+                ),
+                html.Div(
+                    [
+                        html.Img(src=app.get_asset_url("prediction.svg")),
+                        html.P("Prediction", className="p-short p-bold"),
+                        html.P(": Use machine learning methods to churn out predictions", className="p-short"),
+                    ],
+                    className="custom-div-space-below",
+                ),
+                html.Br(),
+                html.Br(),
+                html.P(
+                    [
+                        "Check out my ",
+                        html.A("linkedin", href="https://www.linkedin.com/in/kayjan/", target="_blank"),
+                        " / ",
+                        html.A("formal website", href="http://kayjan.github.io/", target="_blank"),
+                    ]
+                ),
+                html.P(
+                    "Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!"
+                ),
+                html.P(
+                    [
+                        "This website is made with Dash, deployed using Gunicorn and hosted on Heroku, "
+                        "view code documentation on Sphinx ",
+                        html.A("here", href="http://kayjan.readthedocs.io", target="_blank"),
+                    ]
+                )
+            ],
+                className="custom-div-instruction"
+            )
         ],
         className="div-with-image div-with-image-left medium-image",
-    )
-
-
-def get_trip_table():
-    """Return the table that displays landmarks information
-
-    Returns:
-        (dash_table.DataTable)
-    """
-    style_header, style_cell, style_table, css = table_css()
-    return dash_table.DataTable(
-        id="table-trip-landmark",
-        columns=[
-            dict(name="Landmark", id="Landmark", editable=True),
-            dict(name="Street", id="Street"),
-            dict(name="lat", id="lat"),
-            dict(name="lon", id="lon"),
-        ],
-        data=[],
-        style_as_list_view=True,
-        style_header=style_header,
-        style_cell_conditional=[
-            {"if": {"column_id": c}, "display": "none"} for c in ["lat", "lon"]
-        ],
-        style_cell=style_cell,
-        css=css,
-    )
-
-
-def trip_tab(app):
-    return html.Div(
-        [
-            content_header("Trip Planner", "Optimize your route"),
-            html.P(
-                "Users can fill in multiple destinations and an optimal route based on distance will be calculated, "
-                "starting and ending from the first destination specified. This is also known as the Travelling "
-                "Salesman Problem"
-            ),
-            html.Br(),
-            html.P("Step 1: Fill in the landmark name (optional)"),
-            html.P("Step 2: Click the point on map corresponding to the landmark name"),
-            html.P("Step 3: Repeat steps 1 and 2 until all destinations have been entered"),
-            html.P("Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name"),
-            html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
-            html.Div(
-                [
-                    # Left item
-                    html.Div(
-                        [
-                            html.Div(
-                                [
-                                    html.P("Name of landmark:"),
-                                    dcc.Input(
-                                        id="input-trip-landmark",
-                                        type="text",
-                                        placeholder="i.e. Home, Work",
-                                        style={"width": "50%"},
-                                    ),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            get_trip_table(),
-                            html.Button("Remove last landmark", id="button-trip-remove"),
-                            html.Button("Reset all landmarks", id="button-trip-reset"),
-                            html.Br(),
-                            html.Button("OK", id="button-trip-ok"),
-                            dcc_loading(html.Div(id="trip-result"), dark_bg=True),
-                        ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
-                    ),
-                    # Right item
-                    html.Div(
-                        [
-                            html.P(
-                                [
-                                    html.Img(src=app.get_asset_url("info.svg")),
-                                    html.Span("Scroll to zoom, drag to move"),
-                                ],
-                                className="div-with-image div-with-image-left small-image",
-                            ),
-                            dl.Map(
-                                id="map-trip",
-                                style={
-                                    "height": "400px",
-                                },
-                                center=[1.3521, 103.8198],
-                                zoom=11,
-                                children=[dl.TileLayer()],
-                            ),
-                        ],
-                        className="custom-div-center custom-div-large",
-                    ),
-                ],
-                className="custom-container",
-            ),
-        ]
     )
 
 
@@ -285,17 +236,22 @@ def change_tab(app):
     return html.Div(
         [
             content_header("Change Calculator", "Compare changes over two periods"),
-            html.P(
-                "Users can view summary statistics and plot a scatterplot with marginal histograms of past values "
-                "(x axis) against present values (y axis). Users also have the option to download the processed results "
-                "with change value into an excel file"
+            html.Div([
+                html.P(
+                    "Users can view summary statistics and plot a scatterplot with marginal histograms of past values "
+                    "(x axis) against present values (y axis). Users also have the option to download the processed results "
+                    "with change value into an excel file"
+                ),
+                html.Br(),
+                html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
+                       "sample of file will be displayed once upload is successful"),
+                html.P("Step 2: Specify the columns for past values (x axis) and present values (y axis)"),
+                html.P("Step 3: Specify the maximum possible value for each column to normalize the column values "
+                       "(optional)"),
+                html.P('Step 4: Click "OK" button to generate the results!'),
+            ],
+                className="custom-div-instruction"
             ),
-            html.Br(),
-            html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)"),
-            html.P("Step 2: Specify the columns for past values (x axis) and present values (y axis)"),
-            html.P("Step 3: Specify the maximum possible value for each column to normalize the column values "
-                   "(optional)"),
-            html.P('Step 4: Click "OK" button to generate the results!'),
             html.Div(
                 [
                     # Left item
@@ -446,13 +402,20 @@ def changes_tab(app):
     return html.Div(
         [
             content_header("Change Calculator 2", "Compare changes over multiple periods"),
-            html.P("Users can view summary statistics in table and box plot, and changes over time on a line plot. "
-                   "Just minor changes from the other change tab (haha)"),
-            html.Br(),
-            html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported)"),
-            html.P("Step 2: Specify column identifier in dropdown option, and columns to compare in the table"),
-            html.P("Step 3: Specify the maximum possible value for each column to normalize the column values (optional)"),
-            html.P('Step 4: Click "OK" button to generate the results!'),
+            html.Div([
+                html.P("Users can view summary statistics in table and box plot, and changes over time on a line plot. "
+                       "Just minor changes from the other change tab (haha)"),
+                html.Br(),
+                html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
+                       "sample of file will be displayed once upload is successful"),
+                html.P("Step 2: Specify column identifier in dropdown option, and columns to compare in the table"),
+                html.P(
+                    "Step 3: Specify the maximum possible value for each column to normalize the column values "
+                    "(optional)"),
+                html.P('Step 4: Click "OK" button to generate the results!'),
+            ],
+                className="custom-div-instruction"
+            ),
             html.Div(
                 [
                     # Left item
@@ -560,86 +523,252 @@ def changes_tab(app):
     )
 
 
+def chat_tab(app):
+    return html.Div(
+        [
+            content_header("Chat Analyzer", "View your messaging pattern"),
+            html.Div([
+                html.P(
+                    "Users can find out their telegram messaging diagnostics such as number of messages sent, number of "
+                    "stickers sent, average message length etc. based on their Telegram chat data. Confidentiality is "
+                    "guaranteed as long as this webpage is loaded on HTTPS"
+                ),
+                html.Br(),
+                html.P("Step 1: Export chat data in JSON format using Telegram Desktop"),
+                html.P("Step 2: Upload the exported telegram file (.json format), a message will appear to indicate if "
+                       "file is uploaded successfully"),
+                html.P('Step 3: Click "OK" button to generate the results!')
+            ],
+                className="custom-div-instruction"
+            ),
+            html.Div(
+                [
+                    # Left item
+                    html.Div(
+                        [
+                            dcc.Upload(
+                                [
+                                    html.Img(src=app.get_asset_url("upload.svg")),
+                                    html.Span("Drag and drop file here, or click to upload"),
+                                ],
+                                id="upload-chat",
+                                multiple=False,
+                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                            ),
+                            html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
+                            html.Button("OK", id="button-chat-ok"),
+                            html.P(id="chat-result"),
+                            dcc.Store(id="intermediate-chat-result", storage_type="memory"),
+                        ],
+                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
+                    ),
+                    # Right item
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.Img(src=app.get_asset_url("info.svg")),
+                                    html.Span("Mouseover for information, highlight to zoom, double click to reset view"),
+                                    dcc_loading(dcc.Graph(id="graph-chat-result-day"), dark_bg=False,),
+                                ],
+                                className="div-with-image div-with-image-left small-image",
+                            ),
+                        ],
+                        className="custom-div-center custom-div-half",
+                    ),
+                    # Bottom item
+                    html.Div(dcc.Graph(id="graph-chat-result-hour")),
+                ],
+                className="custom-container",
+            ),
+        ]
+    )
+
+
+def get_trip_table():
+    """Return the table that displays landmarks information
+
+    Returns:
+        (dash_table.DataTable)
+    """
+    style_header, style_cell, style_table, css = table_css()
+    return dash_table.DataTable(
+        id="table-trip-landmark",
+        columns=[
+            dict(name="Landmark", id="Landmark", editable=True),
+            dict(name="Street", id="Street"),
+            dict(name="lat", id="lat"),
+            dict(name="lon", id="lon"),
+        ],
+        data=[],
+        style_as_list_view=True,
+        style_header=style_header,
+        style_cell_conditional=[
+            {"if": {"column_id": c}, "display": "none"} for c in ["lat", "lon"]
+        ],
+        style_cell=style_cell,
+        css=css,
+    )
+
+
+def trip_tab(app):
+    return html.Div(
+        [
+            content_header("Trip Planner", "Optimize your route"),
+            html.Div([
+                html.P(
+                    "Users can fill in multiple destinations and an optimal route based on distance will be calculated, "
+                    "starting and ending from the first destination specified. This is also known as the Travelling "
+                    "Salesman Problem"
+                ),
+                html.Br(),
+                html.P("Step 1: Fill in the landmark name (optional)"),
+                html.P("Step 2: Click the point on map corresponding to the landmark name"),
+                html.P("Step 3: Repeat steps 1 and 2 until all destinations have been entered"),
+                html.P("Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name"),
+                html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
+            ],
+                className="custom-div-instruction"
+            ),
+            html.Div(
+                [
+                    # Left item
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.P("Name of landmark:"),
+                                    dcc.Input(
+                                        id="input-trip-landmark",
+                                        type="text",
+                                        placeholder="i.e. Home, Work",
+                                        style={"width": "50%"},
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            get_trip_table(),
+                            html.Button("Remove last landmark", id="button-trip-remove"),
+                            html.Button("Reset all landmarks", id="button-trip-reset"),
+                            html.Br(),
+                            html.Button("OK", id="button-trip-ok"),
+                            dcc_loading(html.Div(id="trip-result"), dark_bg=True),
+                        ],
+                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                    ),
+                    # Right item
+                    html.Div(
+                        [
+                            html.P(
+                                [
+                                    html.Img(src=app.get_asset_url("info.svg")),
+                                    html.Span("Scroll to zoom, drag to move"),
+                                ],
+                                className="div-with-image div-with-image-left small-image",
+                            ),
+                            dl.Map(
+                                id="map-trip",
+                                style={
+                                    "height": "400px",
+                                },
+                                center=[1.3521, 103.8198],
+                                zoom=11,
+                                children=[dl.TileLayer()],
+                            ),
+                        ],
+                        className="custom-div-center custom-div-large",
+                    ),
+                ],
+                className="custom-container",
+            ),
+        ]
+    )
+
+
 def mbti_tab():
     return html.Div(
         [
             content_header("MBTI Personality Test", "Predict MBTI with writing style"),
-            html.P(
-                "Users can find out their MBTI personality based on comparing their writing content, specifically their "
-                "choice and phrasing of words, to other users in an existing database of over 8000 people"
+            html.Div([
+                html.P(
+                    "Users can find out their MBTI personality based on comparing their writing content, specifically their "
+                    "choice and phrasing of words, to other users in an existing database of over 8000 people"
+                ),
+                html.Details(
+                    [
+                        html.Summary(
+                            "Click here for more details about the data, processing and modelling steps"
+                        ),
+                        dcc.Markdown(
+                            """
+                    ###### Input Distribution
+                    > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
+                    has distribution
+                    > - 77% introvert (vs. 23% extrovert)
+                    > - 86% intuition (vs. 14% sensing)
+                    > - 54% feeling (vs. 46% thinking)
+                    > - 60% perceiving (vs. 40% judging)
+            
+                    ###### Processing
+                    > Processing of training data involves
+                    > - Making the words lowercase (so don't worry about your casing)
+                    > - Removing URLs `http://` and usernames `@username`
+                    > - Removing digits and punctuations
+                    > - Remove any mention of MBTI types or the word `mbti`
+                    > - Lemmatization of words
+            
+                    ###### Modelling (v1)
+                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                    fashion
+            
+                    > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
+            
+                    > The model used is LightGBM model and 4 different models are trained for each personality trait
+            
+                    > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
+                    > is used with stratified cross validation to handle imbalanced data
+            
+                    > Each model, after hyperparameter tuning, is then scored on the held out testing data
+            
+                    ###### Modelling (v2)
+                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                    fashion
+            
+                    > Training data has a vocabulary size of **1600 words** with word embedding dimension of 64
+            
+                    > The model used is tensorflow neural network model and 4 different models are trained for each
+                    > personality trait
+            
+                    > Each model, after training for several epochs, is then scored on the held out testing data
+            
+                    ###### Results
+                    > To interpret the results, accuracy is probability of being correct,
+                    > and balanced accuracy is raw accuracy where each sample is weighted according to the inverse 
+                    > prevalence of its true class, which avoids inflated performance estimates on imbalanced data
+                    > * i.e. 70% accuracy means model is correct 70% of the time
+                    > * i.e. If model is able to correctly classify actual majority case 70% of the time, and
+                    > correctly classify actual minority case 30% of the time, it achieves a balanced accuracy of 50%
+            
+                    > The results are
+                    > * Introversion-Extroversion Model has Accuracy: 64.1% and Balanced Accuracy: 63.4%
+                    > * Intuition-Sensing Model has Accuracy: 68.1% and Balanced Accuracy: 64.1%
+                    > * Thinking-Feeling Model has Accuracy: 75.6% and Balanced Accuracy: 75.7%
+                    > * Judging-Perceiving Model has Accuracy: 65.1% and Balanced Accuracy: 64.2%
+                    > * Please do not take the results too seriously
+                    """
+                        ),
+                    ],
+                    title="Expand for details",
+                ),
+                html.Br(),
+                html.P(
+                    "Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of "
+                    "yourself)"
+                ),
+                html.P('Step 2: Click "OK" button to generate the results!'),
+            ],
+                className="custom-div-instruction"
             ),
-            html.Details(
-                [
-                    html.Summary(
-                        "Click here for more details about the data, processing and modelling steps"
-                    ),
-                    dcc.Markdown(
-                        """
-                ###### Input Distribution
-                > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
-                has distribution
-                > - 77% introvert (vs. 23% extrovert)
-                > - 86% intuition (vs. 14% sensing)
-                > - 54% feeling (vs. 46% thinking)
-                > - 60% perceiving (vs. 40% judging)
-
-                ###### Processing
-                > Processing of training data involves
-                > - Making the words lowercase (so don't worry about your casing)
-                > - Removing URLs `http://` and usernames `@username`
-                > - Removing digits and punctuations
-                > - Remove any mention of MBTI types or the word `mbti`
-                > - Lemmatization of words
-
-                ###### Modelling (v1)
-                > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
-                fashion
-
-                > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
-
-                > The model used is LightGBM model and 4 different models are trained for each personality trait
-
-                > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
-                > is used with stratified cross validation to handle imbalanced data
-
-                > Each model, after hyperparameter tuning, is then scored on the held out testing data
-
-                ###### Modelling (v2)
-                > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
-                fashion
-
-                > Training data has a vocabulary size of **1600 words** with word embedding dimension of 64
-
-                > The model used is tensorflow neural network model and 4 different models are trained for each
-                > personality trait
-
-                > Each model, after training for several epochs, is then scored on the held out testing data
-
-                ###### Results
-                > To interpret the results, accuracy is probability of being correct,
-                > and balanced accuracy is raw accuracy where each sample is weighted according to the inverse 
-                > prevalence of its true class, which avoids inflated performance estimates on imbalanced data
-                > * i.e. 70% accuracy means model is correct 70% of the time
-                > * i.e. If model is able to correctly classify actual majority case 70% of the time, and
-                > correctly classify actual minority case 30% of the time, it achieves a balanced accuracy of 50%
-
-                > The results are
-                > * Introversion-Extroversion Model has Accuracy: 64.1% and Balanced Accuracy: 63.4%
-                > * Intuition-Sensing Model has Accuracy: 68.1% and Balanced Accuracy: 64.1%
-                > * Thinking-Feeling Model has Accuracy: 75.6% and Balanced Accuracy: 75.7%
-                > * Judging-Perceiving Model has Accuracy: 65.1% and Balanced Accuracy: 64.2%
-                > * Please do not take the results too seriously
-                """
-                    ),
-                ],
-                title="Expand for details",
-            ),
-            html.Br(),
-            html.P(
-                "Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of "
-                "yourself)"
-            ),
-            html.P('Step 2: Click "OK" button to generate the results!'),
             html.Div(
                 [
                     # Left item
@@ -692,19 +821,57 @@ def mbti_tab():
     )
 
 
-def chat_tab(app):
+def event_tab(app):
     return html.Div(
         [
-            content_header("Chat Analyzer", "View your messaging pattern"),
-            html.P(
-                "Users can find out their telegram messaging diagnostics such as number of messages sent, number of "
-                "stickers sent, average message length etc. based on their Telegram chat data. Confidentiality is "
-                "guaranteed as long as this webpage is loaded on HTTPS"
+            content_header("Event Planner", "Generate random matches and groups"),
+            html.Div(
+                [
+                    html.P(
+                        "Users can perform random matching of people with customized criterias and/or split "
+                        "participants into groups. Criteria can be customized to be individual-level or group-level "
+                        "and results can be toggled to show/hide from web-page or emailed to participants separately. "
+                        "Usage include"
+                    ),
+                    html.P(
+                        [
+                            "• ",
+                            html.P("Team Activity", className="p-short p-bold"),
+                            ": Split team into multiple groups and specify criteria for activity such as location!"
+                        ],
+                        style={
+                            "padding-left": "20px"
+                        }
+                    ),
+                    html.P(
+                        [
+                            "• ",
+                            html.P("Secret Santa", className="p-short p-bold"),
+                            ": Organize gift exchange and specify criteria for gift such as colour or texture of gift!"
+                        ],
+                        style={
+                            "padding-left": "20px"
+                        }
+                    ),
+                    html.Br(),
+                    html.P(
+                        [
+                            "Step 1: Download demo worksheet ",
+                            result_download_text("here"),
+                            " and fill in the values. Do not change items in ",
+                            html.P("red", style={"color": "red"}, className="p-short p-bold")
+                        ]
+                    ),
+                    html.P(
+                        "Step 2: Upload completed worksheet, a message will appear to indicate if file is uploaded "
+                        "successfully"),
+                    html.P(
+                        "Step 3: Specify number of groups to split participants into and other options accordingly"
+                    ),
+                    html.P('Step 4: Click "OK" button to generate the results!'),
+                ],
+                className="custom-div-instruction"
             ),
-            html.Br(),
-            html.P("Step 1: Export chat data in JSON format using Telegram Desktop"),
-            html.P("Step 2: Upload the exported telegram file (.json format)"),
-            html.P('Step 3: Click "OK" button to generate the results!'),
             html.Div(
                 [
                     # Left item
@@ -713,35 +880,232 @@ def chat_tab(app):
                             dcc.Upload(
                                 [
                                     html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
+                                    html.Span(
+                                        "Drag and drop file here, or click to upload"
+                                    ),
                                 ],
-                                id="upload-chat",
+                                id="upload-event",
                                 multiple=False,
                                 className="div-with-image div-with-image-left small-image image-dark-bg",
                             ),
-                            html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
-                            html.Button("OK", id="button-chat-ok"),
-                            html.P(id="chat-result"),
-                            dcc.Store(id="intermediate-chat-result", storage_type="memory"),
+                            html.P(id="text-event-confirm"),
+                            html.Div(
+                                [
+                                    html.P("Select number of groups:"),
+                                    html.P(
+                                        [
+                                            dcc.Input(
+                                                id="input-event-group",
+                                                type="number",
+                                                value=1,
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            ),
+                                        ]
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-pair",
+                                                options=[
+                                                    {
+                                                        "label": "Pair participants up (i.e. for gift exchange)",
+                                                        "value": "pair",
+                                                    }
+                                                ],
+                                                value=["pair"],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    ),
+                                    html.P(
+                                        [
+                                            "Criteria should unique to",
+                                            dcc.RadioItems(
+                                                id="radio-event-criteria",
+                                                options=[
+                                                    {
+                                                        "label": "individual",
+                                                        "value": "individual",
+                                                    },
+                                                    {
+                                                        "label": "group",
+                                                        "value": "group",
+                                                    }
+                                                ],
+                                                value="individual",
+                                                style={
+                                                    "display": "flex"
+                                                }
+                                            )
+                                        ],
+                                        className="custom-div-flex"
+                                    ),
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-email",
+                                                options=[
+                                                    {
+                                                        "label": "Email individual results to recipients separately",
+                                                        "value": "email",
+                                                    }
+                                                ],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    ),
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-display",
+                                                options=[
+                                                    {
+                                                        "label": "Hide results",
+                                                        "value": "hide",
+                                                    }
+                                                ],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    )
+                                ]
+                            ),
+                            html.Br(),
+                            html.Button("OK", id="button-event-ok"),
+                            dcc.Store(
+                                id="intermediate-event-result", storage_type="memory"
+                            ),
+                            dcc_loading(html.P(id="event-result"), dark_bg=True),
+                        ],
+                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                    ),
+                    # Right item
+                    html.Div(
+                        id="event-output",
+                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-medium",
+                        style={"display": "none"},
+                    ),
+                ],
+                className="custom-container",
+            ),
+        ]
+    )
+
+
+def rng_tab():
+    return html.Div(
+        [
+            content_header("Random Generator", "Generate random selection or groups"),
+            html.Div(
+                [
+                    html.P("Users can perform random selection of items or grouping of items"),
+                    html.Br(),
+                    html.P("Step 1: Fill in the text box with items"),
+                    html.P("Step 2: Specify the type of task accordingly"),
+                    html.P('Step 3: Click "OK" button to generate the results!'),
+                ],
+                className="custom-div-instruction"
+            ),
+            html.Div(
+                [
+                    # Left item
+                    html.Div(
+                        [
+                            html.P("Item List:", className="p-bold"),
+                            dcc.Textarea(
+                                id="input-rng",
+                                value="",
+                                placeholder="Item A\nItem B\nItem C\nItem D",
+                            ),
+                            html.P(
+                                [
+                                    "Task:"
+                                ],
+                                className="p-bold",
+                                style={
+                                    "margin-top": "20px",
+                                    "margin-bottom": 0,
+                                }
+                            ),
+                            html.Div(
+                                [
+                                    html.Button("Select N items", id="button-rng-item-ok"),
+                                    html.Div([
+                                        html.P("Number of items:"),
+                                        dcc.Input(
+                                            id="input-rng-item",
+                                            type="number",
+                                            value=1,
+                                            style={
+                                                "width": "40%",
+                                            },
+                                        ),
+                                    ],
+                                        id="div-rng-item",
+                                        className="custom-div-flex",
+                                        style={
+                                            "display": "none",
+                                            "margin": 0,
+                                        }
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                                style={
+                                    "margin-bottom": 0
+                                }
+                            ),
+                            html.Div(
+                                [
+                                    html.Button("Split into N groups", id="button-rng-group-ok"),
+                                    html.Div([
+                                        html.P("Number of groups:"),
+                                        dcc.Input(
+                                            id="input-rng-group",
+                                            type="number",
+                                            value=2,
+                                            style={
+                                                "width": "40%",
+                                            },
+                                        )
+                                    ],
+                                        id="div-rng-group",
+                                        className="custom-div-flex",
+                                        style={
+                                            "display": "none",
+                                            "margin": 0,
+                                        }
+                                    )
+                                ],
+                                className="custom-div-flex",
+                                style={
+                                    "margin-bottom": 0
+                                }
+                            ),
+                            html.Br(),
+                            html.Button("OK", id="button-rng-ok"),
+                            dcc_loading(html.P(id="rng-result"), dark_bg=True),
                         ],
                         className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
                     ),
                     # Right item
                     html.Div(
-                        [
-                            html.Div(
-                                [
-                                    html.Img(src=app.get_asset_url("info.svg")),
-                                    html.Span("Mouseover for information, highlight to zoom, double click to reset view"),
-                                    dcc_loading(dcc.Graph(id="graph-chat-result-day"), dark_bg=False,),
-                                ],
-                                className="div-with-image div-with-image-left small-image",
-                            ),
-                        ],
-                        className="custom-div-center custom-div-half",
+                        id="rng-output",
+                        style={"display": "none"},
+                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
                     ),
-                    # Bottom item
-                    html.Div(dcc.Graph(id="graph-chat-result-hour")),
                 ],
                 className="custom-container",
             ),
@@ -779,18 +1143,18 @@ def wnrs_tab(app):
             html.Br(),
             html.Div(
                 [
-                    html.P("How to Play (2-6 players)", style={"margin-top": "20px"}, className="p-bold"),
+                    html.P("How to Play (2-6 players)", style={"margin-top": "20px"}, className="p-short p-bold"),
                     html.P("The game is played on a single device. Sit in a circle with device in middle of all players. "
                            "Select the decks you want to play with and the levels. Players take turn to answer questions shown "
                            "on the screen and tap on the right side of card to proceed to next question."),
-                    html.P("Wildcards", style={"margin-top": "20px"}, className="p-bold"),
+                    html.P("Wildcards", style={"margin-top": "20px"}, className="p-short p-bold"),
                     html.P("If you're presented with a wildcard you must complete the instructions otherwise stated. "
                            "These cards can appear at any moment during the game!"),
-                    html.P("Save your progress!", style={"margin-top": "20px"}, className="p-bold"),
+                    html.P("Save your progress!", style={"margin-top": "20px"}, className="p-short p-bold"),
                     html.P("Couldn't manage to go through all the cards in one session? Save your progress by clicking on the "
                            "'Save progress' button at the bottom of the page and load the game next time to pick up exactly "
                            "where you left off."),
-                    html.P("Have fun!", style={"margin-top": "20px"}, className="p-bold"),
+                    html.P("Have fun!", style={"margin-top": "20px"}, className="p-short p-bold"),
                 ],
                 id="div-wnrs-instruction",
                 className="custom-div-dark image-dark-bg",
@@ -1196,7 +1560,7 @@ def wnrs_tab(app):
                 [
                     html.Div(
                         [
-                            dbc.Jumbotron(
+                            html.Div(
                                 [
                                     html.Div(
                                         [
@@ -1212,7 +1576,6 @@ def wnrs_tab(app):
                                         },
                                     )
                                 ],
-                                fluid=True,
                                 id="wnrs-card",
                             ),
                             html.Button(id="button-wnrs2-back"),
@@ -1270,28 +1633,32 @@ def contact_tab():
     return html.Div(
         [
             content_header("Contact Me"),
-            html.P("If you have any questions, feedback or suggestions, please feel free to drop me an email."),
-            dcc.Input(
-                id="input-contact-name",
-                type="text",
-                placeholder="Name",
-                style={"width": "70%", "margin-bottom": "5px"},
-            ),
-            dcc.Input(
-                id="input-contact-email",
-                type="text",
-                placeholder="Email Address",
-                style={"width": "70%", "margin-bottom": "5px"},
-            ),
-            dcc.Textarea(
-                id="input-contact-content",
-                value="",
-                placeholder="Email body",
-                style={"width": "70%", "margin-bottom": "5px"},
-            ),
-            html.Br(),
-            html.Button("Send", id="button-contact-ok"),
-            html.P(id="contact-reply"),
+            html.Div([
+                html.P("If you have any questions, feedback or suggestions, please feel free to drop me an email."),
+                dcc.Input(
+                    id="input-contact-name",
+                    type="text",
+                    placeholder="Name",
+                    style={"width": "70%", "margin-bottom": "5px"},
+                ),
+                dcc.Input(
+                    id="input-contact-email",
+                    type="text",
+                    placeholder="Email Address",
+                    style={"width": "70%", "margin-bottom": "5px"},
+                ),
+                dcc.Textarea(
+                    id="input-contact-content",
+                    value="",
+                    placeholder="Email body",
+                    style={"width": "70%", "margin-bottom": "5px"},
+                ),
+                html.Br(),
+                html.Button("Send", id="button-contact-ok"),
+                html.P(id="contact-reply"),
+            ],
+                className="custom-div-instruction"
+            )
         ]
     )
 
@@ -1300,10 +1667,14 @@ def image_edit_tab(app):
     return html.Div(
         [
             content_header("Image Editing", "Draw on images"),
-            html.P("Users can edit images directly by drawing on them, or just draw on a blank canvas!"),
-            html.Br(),
-            html.P("Step 1: Upload an image (optional)"),
-            html.P("Step 2: Start drawing!"),
+            html.Div([
+                html.P("Users can edit images directly by drawing on them, or just draw on a blank canvas!"),
+                html.Br(),
+                html.P("Step 1: Upload an image (optional)"),
+                html.P("Step 2: Start drawing!"),
+            ],
+                className="custom-div-instruction"
+            ),
             html.Div(
                 [
                     # Left item
@@ -1403,7 +1774,11 @@ def keyboard_tab():
     return html.Div(
         [
             content_header("Keyboard", "Play music on the flyyyyy"),
-            html.P("Ideally, users can play the keyboard here. Im still figuring out how to make it work."),
+            html.Div([
+                html.P("Ideally, users can play the keyboard here. Im still figuring out how to make it work."),
+            ],
+                className="custom-div-instruction"
+            ),
             # html.Button('C note', id='button_music')
         ]
     )
@@ -1413,10 +1788,14 @@ def sample_tab():
     return html.Div(
         [
             content_header("Header", "Subheader"),
-            html.P("Description"),
-            html.Br(),
-            html.P("Step 1: "),
-            html.P("Step 2: "),
+            html.Div([
+                html.P("Description"),
+                html.Br(),
+                html.P("Step 1: "),
+                html.P("Step 2: "),
+            ],
+                className="custom-div-instruction"
+            ),
             html.Div(
                 [
                     # Left item
@@ -1432,181 +1811,6 @@ def sample_tab():
                             # html.P('Right component')
                         ],
                         className="custom-div-center custom-div-large",
-                    ),
-                ],
-                className="custom-container",
-            ),
-        ]
-    )
-
-
-# Santa page
-
-
-def sidebar_dropdown_santa():
-    return html.Div(
-        dcc.Tabs(
-            id="tabs-parent",
-            value=None,
-            vertical=True,
-            parent_className="custom-tabs-parent",
-            className="custom-tabs",
-            children=[
-                dcc.Tab(
-                    label="About Me",
-                    value="tab-aboutme",
-                    className="custom-tab",
-                    selected_className="custom-tab-selected",
-                ),
-                dcc.Tab(
-                    label="Others",
-                    value="",
-                    className="custom-tab-disabled",
-                    disabled=True,
-                ),
-                dcc.Tab(
-                    label="Secret Santa Generator",
-                    value="tab-santa",
-                    className="custom-tab-sub",
-                    selected_className="custom-tab-selected",
-                ),
-                dcc.Tab(
-                    label="Contact Me",
-                    value="tab-contact",
-                    className="custom-tab",
-                    selected_className="custom-tab-selected",
-                ),
-            ],
-            colors={"background": "#202029"},
-            persistence=True,
-            persistence_type="session",
-        )
-    )
-
-
-def app_santa():
-    return html.Div(
-        [
-            # Top contents
-            html.Div(banner(), id="banner"),
-            # Left contents
-            html.Div(
-                [sidebar_header(), sidebar_dropdown_santa()],
-                id="sidebar",
-            ),
-            # Right contents
-            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
-        ]
-    )
-
-
-def santa_tab(app):
-    return html.Div(
-        [
-            content_header("Secret Santa", "Generate random matches and groups"),
-            html.P(
-                "Users can perform random matching of people with other specified criterias and/or split participants "
-                "into groups."
-            ),
-            html.Br(),
-            html.P(
-                [
-                    "Step 1: Download demo worksheet ",
-                    result_download_text("here"),
-                    " and fill in the values. Do not change items in red.",
-                ]
-            ),
-            html.P("Step 2: Upload completed worksheet"),
-            html.P(
-                "Step 3: Specify the number of groups to split participants into, if individual results should be "
-                "emailed to participants separately or if all results should be hidden on webpage"
-            ),
-            html.P('Step 4: Click "OK" button to generate the results!'),
-            html.Div(
-                [
-                    # Left item
-                    html.Div(
-                        [
-                            dcc.Upload(
-                                [
-                                    html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span(
-                                        "Drag and drop file here, or click to upload"
-                                    ),
-                                ],
-                                id="upload-santa",
-                                multiple=False,
-                                className="div-with-image div-with-image-left small-image image-dark-bg",
-                            ),
-                            html.Div(
-                                [
-                                    html.P("Select number of groups:"),
-                                    html.P(
-                                        [
-                                            dcc.Input(
-                                                id="input-santa-group",
-                                                type="number",
-                                                value=1,
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            ),
-                                        ]
-                                    ),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            html.Div(
-                                [
-                                    html.P(
-                                        [
-                                            dcc.Checklist(
-                                                id="checklist-santa-email",
-                                                options=[
-                                                    {
-                                                        "label": "Email individual results to recipients separately",
-                                                        "value": "email",
-                                                    }
-                                                ],
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            ),
-                                        ]
-                                    ),
-                                    html.P(
-                                        [
-                                            dcc.Checklist(
-                                                id="checklist-santa-display",
-                                                options=[
-                                                    {
-                                                        "label": "Hide results",
-                                                        "value": "hide",
-                                                    }
-                                                ],
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            ),
-                                        ]
-                                    ),
-                                ]
-                            ),
-                            html.P(id="text-santa-confirm", className="p-short"),
-                            html.Br(),
-                            html.Button("OK", id="button-santa-ok"),
-                            dcc.Store(
-                                id="intermediate-santa-result", storage_type="memory"
-                            ),
-                            dcc_loading(html.P(id="santa-result"), dark_bg=True),
-                        ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
-                    ),
-                    # Right item
-                    html.Div(
-                        id="santa-output",
-                        style={"display": "none"},
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-medium",
                     ),
                 ],
                 className="custom-container",
