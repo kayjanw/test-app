@@ -374,6 +374,10 @@ div[id$="-result"] {
     width: 62%
 }
 
+.custom-div-instruction {
+    width: 85%
+}
+
 .custom-div-full {
     width: 100%;
 }
@@ -449,6 +453,11 @@ div[id$="-result"] {
     text-align: center;
 }
 
+#banner a, #sidebar a {
+    color: #BE9B89;
+    text-decoration: none;
+}
+
 #banner button, #banner button:hover, #banner button:focus {
     height: 8vh;
     width: 10vw;
@@ -521,7 +530,7 @@ div[id$="-result"] {
 
 /* Custom id (tabs content)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-#input-mbti {
+#input-mbti, #input-rng {
     width: 100%;
     height: 300px;
     resize: vertical;
