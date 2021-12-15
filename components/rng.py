@@ -35,7 +35,8 @@ class RandomGenerator:
         # Assertion for number of items
         if task == "item":
             if len(list_items) < n_items:
-                result = [f"Error: Too little items to select {n_items} items, please increase number of items"]
+                result = [f"Error: Too little items to select {n_items} items, please increase number of items or "
+                          f"decrease number of groups"]
         elif task == "group":
             if len(list_items) < n_groups:
                 result = [f"Error: Too little items to split into {n_groups} groups, please increase number of items"]
