@@ -1,5 +1,5 @@
-Secret Santa
+Event Planner
 --------------------------
 
-.. autoclass:: components.santa.Santa
+.. autoclass:: components.event_planner.EventPlanner
    :members:
