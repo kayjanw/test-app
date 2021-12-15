@@ -693,7 +693,7 @@ def register_callbacks(app, print_function):
     def update_rng_button_style(trigger_item, trigger_group, item_style, group_style, item_button_style,
         group_button_style
     ):
-        """Update style of Random Generator button
+        """Update style of random generator button
 
         Args:
             trigger_item: trigger on button click
@@ -739,8 +739,8 @@ def register_callbacks(app, print_function):
                    State("div-rng-group", "style"),
                    State("rng-output", "style")])
     @print_callback(print_function)
-    def update_event_result(trigger, text, n_items, n_groups, item_style, group_style, style):
-        """Update and display event planner results
+    def update_rng_result(trigger, text, n_items, n_groups, item_style, group_style, style):
+        """Update and display random generator results
 
         Args:
             trigger: trigger on button click
