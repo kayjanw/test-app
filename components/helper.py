@@ -200,7 +200,7 @@ def get_worksheet(contents):
     return xls.sheet_names
 
 
-def parse_data(contents, filename, worksheet=None):
+def parse_data(contents, filename, worksheet=None, **kwargs):
     """Reads uploaded data into DataFrame
 
     Args:
@@ -217,13 +217,13 @@ def parse_data(contents, filename, worksheet=None):
     try:
         if "csv" in filename:
             file = io.StringIO(decoded.decode("utf-8"))
-            df = pd.read_csv(file)
+            df = pd.read_csv(file, **kwargs)
         elif "xls" in filename:
             if worksheet is not None:
-                xls = pd.ExcelFile(io.BytesIO(decoded))
+                xls = pd.ExcelFile(io.BytesIO(decoded), **kwargs)
                 df = pd.read_excel(xls, worksheet)
             else:
-                df = pd.read_excel(io.BytesIO(decoded))
+                df = pd.read_excel(io.BytesIO(decoded), **kwargs)
         elif "json" in filename:
             df = decoded
         else:
@@ -351,7 +351,7 @@ def decode_dict(d_ser):
     return json.loads(d_ser)
 
 
-def update_when_upload(contents, worksheet, filename, style, ctx):
+def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
     """Reads uploaded data into DataFrame and return dash application objects
 
     Args:
@@ -392,9 +392,9 @@ def update_when_upload(contents, worksheet, filename, style, ctx):
 
         # Read uploaded contents
         if "worksheet" in ctx:
-            df = parse_data(contents, filename, worksheet)
+            df = parse_data(contents, filename, worksheet, **kwargs)
         else:
-            df = parse_data(contents, filename)
+            df = parse_data(contents, filename, **kwargs)
 
         if type(df) == pd.DataFrame:
             df.columns = df.columns.astype(str)
@@ -522,3 +522,71 @@ def send_email(
             return False
     except Exception:
         return False
+
+
+def get_excel_from_df(df):
+    """Create excel from DataFrame
+
+    Args:
+        df (pandas DataFrame): input DataFrame
+
+    Returns:
+        (BytesIO)
+    """
+    buf = io.BytesIO()
+    excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
+    df.to_excel(excel_writer, sheet_name="Sheet1", index=False)
+    excel_writer.save()
+    excel_data = buf.getvalue()
+    buf.seek(0)
+    return buf
+
+
+def get_excel_demo():
+    """Create demo excel for Event Planner tab
+
+    Returns:
+        (BytesIO)
+    """
+    buf = io.BytesIO()
+    excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
+    pd.DataFrame().to_excel(excel_writer, sheet_name="Sheet1", index=False)
+
+    # Add items
+    worksheet = excel_writer.sheets["Sheet1"]
+    workbook = excel_writer.book
+    bold_red = workbook.add_format({"bold": True, "font_color": "red"})
+    bold = workbook.add_format({"bold": True})
+    worksheet.write("A1", "Event:", bold_red)
+    worksheet.write("B1", "Secret Santa")
+    start_row = 3
+    worksheet.write(f"A{start_row}", "Name", bold_red)
+    for idx in range(5):
+        worksheet.write(f"A{idx + start_row + 1}", f"Person {idx + 1}")
+    worksheet.write(f"B{start_row}", "Email (Optional)", bold_red)
+    colour_list = ["Red", "Orange", "Yellow", "Green", "Blue", "Black"]
+    worksheet.write(f"C{start_row}", "Gift Criteria: Colour", bold)
+    for idx in range(len(colour_list)):
+        worksheet.write(f"C{idx + start_row + 1}", colour_list[idx])
+    colour_texture = ["Shiny", "Round", "Smooth"]
+    worksheet.write(f"D{start_row}", "Gift Criteria: Texture", bold)
+    for idx in range(len(colour_texture)):
+        worksheet.write(f"D{idx + start_row + 1}", colour_texture[idx])
+
+    excel_writer.save()
+    excel_data = buf.getvalue()
+    buf.seek(0)
+    return buf
+
+
+def create_json_from_dict(d):
+    """Create JSON from dictionary
+
+    Args:
+        d (dict): input dictionary
+
+    Returns:
+        (BytesIO)
+    """
+    buf = io.BytesIO(json.dumps(d).encode())
+    return buf

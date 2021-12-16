@@ -9,7 +9,7 @@ class RandomGenerator:
     @staticmethod
     def process_result(text, n_items, n_groups, task, style):
         """
-        Processing for secret santa, shuffling and splitting participants
+        Processing for random generator, selecting or splitting items
 
         Args:
             text (text): input text
@@ -31,6 +31,7 @@ class RandomGenerator:
 
         # Get list of items
         list_items = text.split("\n")
+        np.random.shuffle(list_items)
 
         # Assertion for number of items
         if task == "item":
