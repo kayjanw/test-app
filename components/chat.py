@@ -271,17 +271,22 @@ class ChatAnalyzer:
         Returns:
             (html.Img) or None
         """
-        wc_diagram = self.compute_word_cloud(text_df, max_words)
+        image = html.Img()
+        try:
+            wc_diagram = self.compute_word_cloud(text_df, max_words)
+            def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+                return "hsl(0, 0%%, %d%%)" % np.random.randint(0, 60)
 
-        def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
-            return "hsl(0, 0%%, %d%%)" % np.random.randint(0, 60)
+            if plotly:
+                fig, axs = plt.subplots(1, 1, figsize=(10, 5), squeeze=False)
+                axs = axs.ravel()
+                axs[0].imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+                axs[0].axis("off")
+                axs[0].set_title("Word Cloud of Messages")
+                image = create_fig_from_diagram(fig, "wordcloud")
+            else:
+               plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+        except ValueError:
+            pass
 
-        if plotly:
-            fig, axs = plt.subplots(1, 1, figsize=(10, 5), squeeze=False)
-            axs = axs.ravel()
-            axs[0].imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
-            axs[0].axis("off")
-            axs[0].set_title("Word Cloud of Messages")
-            return create_fig_from_diagram(fig, "wordcloud")
-        else:
-            plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+        return image
