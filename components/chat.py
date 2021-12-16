@@ -68,8 +68,12 @@ class ChatAnalyzer:
         message_df = self.df[(self.df["type"] == "message")]
         call_df = self.df[self.df["type"] == "service"]
 
-        text_df = message_df[message_df["media_type"].isnull() & message_df["photo"].isnull()]
-        photo_df = message_df[message_df["media_type"].isnull() & ~message_df["photo"].isnull()]
+        text_df = message_df[
+            message_df["media_type"].isnull() & message_df["photo"].isnull()
+        ]
+        photo_df = message_df[
+            message_df["media_type"].isnull() & ~message_df["photo"].isnull()
+        ]
         video_df = message_df[message_df["media_type"] == "video_file"]
         voice_message_df = message_df[message_df["media_type"] == "voice_message"]
         video_message_df = message_df[message_df["media_type"] == "video_message"]
@@ -242,10 +246,10 @@ class ChatAnalyzer:
         Args:
             text_df (pandas DataFrame): text message data
             max_words (int): maximum words to consider in word cloud
-            plotly (bool): whether html.Img or plt should be returned, defaults to html.Img
+            plotly (bool): whether image should be returned to console, defaults to True (hidden from console)
 
         Returns:
-            (html.Img) or None
+            (html.Img)
         """
         image = html.Img()
         try:
@@ -258,22 +262,34 @@ class ChatAnalyzer:
                 token_pattern="[A-Za-z]+(?=\\s+)",
             )
             document = model.fit_transform(text_df["text"])
-            word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
-            wc2 = wc(max_words=max_words, background_color="white", height=500, width=1000)
+            word_freq = dict(
+                zip(model.vocabulary_, np.mean(document.toarray(), axis=0))
+            )
+            wc2 = wc(
+                max_words=max_words, background_color="white", height=500, width=1000
+            )
             wc_diagram = wc2.generate_from_frequencies(word_freq)
 
-            def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+            def grey_color_func(
+                word, font_size, position, orientation, random_state=None, **kwargs
+            ):
                 return "hsl(0, 0%%, %d%%)" % np.random.randint(0, 60)
 
             if plotly:
                 fig, axs = plt.subplots(1, 1, figsize=(10, 5), squeeze=False)
                 axs = axs.ravel()
-                axs[0].imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+                axs[0].imshow(
+                    wc_diagram.recolor(color_func=grey_color_func, random_state=3),
+                    interpolation="bilinear",
+                )
                 axs[0].axis("off")
                 axs[0].set_title("Word Cloud of Messages")
                 image = create_fig_from_diagram(fig, "wordcloud")
             else:
-                plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+                plt.imshow(
+                    wc_diagram.recolor(color_func=grey_color_func, random_state=3),
+                    interpolation="bilinear",
+                )
         except ValueError:
             pass
 
