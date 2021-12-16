@@ -8,8 +8,7 @@ class RandomGenerator:
 
     @staticmethod
     def process_result(text, n_items, n_groups, task, style):
-        """
-        Processing for random generator, selecting or splitting items
+        """Processing for random generator, selecting or splitting items
 
         Args:
             text (text): input text
@@ -36,11 +35,15 @@ class RandomGenerator:
         # Assertion for number of items
         if task == "item":
             if len(list_items) < n_items:
-                result = [f"Error: Too little items to select {n_items} items, please increase number of items or "
-                          f"decrease number of groups"]
+                result = [
+                    f"Error: Too little items to select {n_items} items, please increase number of items or "
+                    f"decrease number of groups"
+                ]
         elif task == "group":
             if len(list_items) < n_groups:
-                result = [f"Error: Too little items to split into {n_groups} groups, please increase number of items"]
+                result = [
+                    f"Error: Too little items to split into {n_groups} groups, please increase number of items"
+                ]
 
         # If no error
         if not result:
@@ -49,7 +52,10 @@ class RandomGenerator:
             # Perform task accordingly
             if task == "item":
                 selection = list(np.random.choice(list_items, n_items, replace=False))
-                output_tmp = [html.P("Item(s) selected:", className="p-short p-bold"), html.Br()]
+                output_tmp = [
+                    html.P("Item(s) selected:", className="p-short p-bold"),
+                    html.Br(),
+                ]
                 for idx in range(len(selection)):
                     selection.insert((idx * 2) + 1, html.Br())
                 output_tmp += selection
@@ -59,7 +65,10 @@ class RandomGenerator:
                 for group_idx, group in enumerate(list_of_array):
                     for idx in range(len(group)):
                         group.insert((idx * 2) + 1, html.Br())
-                    output_tmp += [html.Br(), html.P(f"Group {group_idx + 1}", className="p-bold")] + group
+                    output_tmp += [
+                        html.Br(),
+                        html.P(f"Group {group_idx + 1}", className="p-bold"),
+                    ] + group
             output.append(html.P(output_tmp))
 
         return result, output, style

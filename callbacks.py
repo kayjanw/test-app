@@ -29,7 +29,6 @@ from components.rng import RandomGenerator
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
 from layouts import (
-    main_layout,
     app_1,
     app_2,
     app_event,

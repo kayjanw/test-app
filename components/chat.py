@@ -108,7 +108,7 @@ class ChatAnalyzer:
         """Get distribution of messages by time sent (grouped on daily level)
 
         Returns:
-            (pandas DataFrame): Data with columns (sender, hour, counts)
+            (pandas DataFrame): data with columns (sender, hour, counts)
         """
         hour_df = self.message_df.groupby(["from", "hour"]).size().reset_index()
         hour_df.columns = ["sender", "hour", "counts"]
@@ -118,7 +118,7 @@ class ChatAnalyzer:
         """Get distribution of messages by day
 
         Returns:
-            (pandas DataFrame): Data with columns (sender, day, counts)
+            (pandas DataFrame): data with columns (sender, day, counts)
         """
         day_df = self.message_df.groupby(["from", "day"]).size().reset_index()
         day_df.columns = ["sender", "day", "counts"]
