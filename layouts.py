@@ -508,7 +508,7 @@ def changes_tab(app):
                                     },
                                     className="custom-div-dark custom-div-left div-with-image div-with-image-left small-image image-dark-bg",
                                 ),
-                                dark_bg=False,
+                                dark_bg=False
                             ),
                             html.P(
                                 id="graph-changes-result",
@@ -529,9 +529,8 @@ def chat_tab(app):
             content_header("Chat Analyzer", "View your messaging pattern"),
             html.Div([
                 html.P(
-                    "Users can find out their telegram messaging diagnostics such as number of messages sent, number of "
-                    "stickers sent, average message length etc. based on their Telegram chat data. Confidentiality is "
-                    "guaranteed as long as this webpage is loaded on HTTPS"
+                    "Users can find out their telegram messaging statistics and generate word cloud based on their "
+                    "Telegram chat data. Confidentiality is guaranteed as long as this webpage is loaded on HTTPS"
                 ),
                 html.Br(),
                 html.P("Step 1: Export chat data in JSON format using Telegram Desktop"),
@@ -569,7 +568,7 @@ def chat_tab(app):
                                 [
                                     html.Img(src=app.get_asset_url("info.svg")),
                                     html.Span("Mouseover for information, highlight to zoom, double click to reset view"),
-                                    dcc_loading(dcc.Graph(id="graph-chat-result-day"), dark_bg=False,),
+                                    dcc_loading(dcc.Graph(id="graph-chat-result-day"), dark_bg=False),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -577,7 +576,16 @@ def chat_tab(app):
                         className="custom-div-center custom-div-half",
                     ),
                     # Bottom item
-                    html.Div(dcc.Graph(id="graph-chat-result-hour")),
+                    html.Div(
+                        [
+                            dcc.Graph(id="graph-chat-result-hour"),
+                            html.Div(id="chat-result-wordcloud")
+                        ],
+                        className="custom-div-center",
+                        style={
+                            "display": "block"
+                        }
+                    ),
                 ],
                 className="custom-container",
             ),
@@ -809,7 +817,7 @@ def mbti_tab():
                                     },
                                     style={"display": "none", "height": "100%"},
                                 ),
-                                dark_bg=False,
+                                dark_bg=False
                             ),
                         ],
                         className="custom-div-center custom-div-half",
