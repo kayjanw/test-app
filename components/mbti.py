@@ -44,6 +44,11 @@ class MBTI:
             path_save_data (str): location and name of saved data
             path_vect (str): location and file name of saved vectorizer
             path_models (str): location and file name of saved models
+            use_tf (bool): for modelling, whether to use tensorflow model
+            n_words (int): for modelling, used in tensorflow model
+            n_padding (int): for modelling, used in tensorflow model
+            embedding_dim (int): for modelling, used in tensorflow model
+            threshold (float): for modelling, used in tensorflow model
             non_sw (list): list of stop words to exclude
         """
         self.mbti_cols = ["EI", "SN", "TF", "JP"]
