@@ -77,19 +77,24 @@ class EventPlanner:
         if not result:
             style = {}
 
-            # Shuffle and split into groups, then shuffle within group
+            # Shuffle and split into groups
             np.random.shuffle(people_copy)
             list_of_array = np.array_split(people_copy, n_groups)
+
+            # Criteria: if criteria is individual or group level
+            if criteria_level == "group":
+                criteria_list_tmp = EventPlanner().get_criteria_list(other_cols_values, n=n_groups)
+                criteria_list = []
+                for idx, group in enumerate(list_of_array):
+                    criteria_list.append(np.vstack([list(np.array(criteria_list_tmp)[:, idx])] * len(group)))
+                criteria_list = np.vstack(criteria_list).T
+            else:
+                criteria_list = EventPlanner().get_criteria_list(other_cols_values, n=len(people))
+            criteria_df = pd.DataFrame(dict(zip(other_cols, criteria_list)))
+
+            # Matching: shuffle within group
             output_df = pd.DataFrame()
             for idx, group in enumerate(list_of_array):
-                # If criteria is individual or group level
-                if criteria_level == "group":
-                    criteria_list = EventPlanner().get_criteria_list(other_cols_values)
-                else:
-                    criteria_list = [
-                        EventPlanner().get_criteria_list(other_cols_values)
-                        for _ in range(len(group))
-                    ]
                 # If participants need to pair with each other
                 if pair_flag:
                     group_copy = group.copy()
@@ -98,23 +103,16 @@ class EventPlanner:
                         np.random.shuffle(group_copy)
                         if np.sum(group == group_copy) == 0:
                             shuffle = False
-                    tmp_df = pd.DataFrame(
-                        dict(
-                            {"Group": idx + 1, "Person": group, "Partner": group_copy},
-                            **dict(zip(other_cols, np.array(criteria_list).T)),
-                        )
-                    )
+                    tmp_df = pd.DataFrame({"Group": idx + 1, "Person": group, "Partner": group_copy})
                 else:
-                    tmp_df = pd.DataFrame(
-                        dict(
-                            {"Group": idx + 1, "Person": group},
-                            **dict(zip(other_cols, np.array(criteria_list).T)),
-                        )
-                    )
+                    tmp_df = pd.DataFrame({"Group": idx + 1, "Person": group})
                 if len(output_df):
                     output_df = output_df.append(tmp_df)
                 else:
                     output_df = tmp_df.copy()
+
+            # Join criteria results with matching results
+            output_df = output_df.reset_index(drop=True).join(criteria_df)
 
             if not hide_flag:
                 output.append(generate_datatable(output_df, max_rows=len(output_df)))
@@ -131,18 +129,24 @@ class EventPlanner:
         return result, output, style
 
     @staticmethod
-    def get_criteria_list(other_cols_values):
+    def get_criteria_list(other_cols_values, n):
         """Create list of criteria selection for every criteria column
 
         Args:
             other_cols_values (list): list of criteria columns
+            n (int): number of criterias to generate
 
         Returns:
             (list): list of criteria selection that is randomly selected
         """
         criteria_list = []
         for m in range(len(other_cols_values)):
-            criteria_list.append(np.random.choice(other_cols_values[m]))
+            criteria = other_cols_values[m]
+            np.random.shuffle(criteria)
+            if n <= len(criteria):
+                criteria_list.append(criteria[:n])
+            else:
+                criteria_list.append(criteria + list(np.random.choice(criteria, n - len(criteria))))
         return criteria_list
 
     @staticmethod
