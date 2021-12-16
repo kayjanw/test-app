@@ -256,7 +256,7 @@ class ChatAnalyzer:
         )
         document = model.fit_transform(text_df["text"])
         word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
-        wc2 = wc(max_words=max_words, background_color="white", color_func=None)
+        wc2 = wc(max_words=max_words, background_color="white", height=500, width=1000)
         wc_diagram = wc2.generate_from_frequencies(word_freq)
         return wc_diagram
 
@@ -280,6 +280,7 @@ class ChatAnalyzer:
             fig, axs = plt.subplots(1, 1, figsize=(10, 5), squeeze=False)
             axs = axs.ravel()
             axs[0].imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+            axs[0].axis("off")
             axs[0].set_title("Word Cloud of Messages")
             return create_fig_from_diagram(fig, "wordcloud")
         else:
