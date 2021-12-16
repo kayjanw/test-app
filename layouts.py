@@ -578,8 +578,8 @@ def chat_tab(app):
                     # Bottom item
                     html.Div(
                         [
+                            html.Div(id="chat-result-wordcloud"),
                             dcc.Graph(id="graph-chat-result-hour"),
-                            html.Div(id="chat-result-wordcloud")
                         ],
                         className="custom-div-center",
                         style={
