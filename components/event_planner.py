@@ -12,15 +12,16 @@ from components.helper import (
 
 
 class EventPlanner:
-    """The Santa object contains functions used for Secret Santa tab"""
+    """The EventPlanner object contains functions used for Event Planner tab"""
 
     @staticmethod
-    def process_result(df, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style):
+    def process_result(df, event, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style):
         """
-        Processing for secret santa, shuffling and splitting participants
+        Processing for event planner, shuffling and splitting participants
 
         Args:
             df (pandas DataFrame): input DataFrame
+            event (str): name of event
             n_groups (int): number of groups
             pair_flag (str): option whether to pair participants up
             criteria_level (str): whether criteria is on individual or group level
@@ -37,7 +38,7 @@ class EventPlanner:
         """
         # Initialize return variables
         result = []
-        output = [html.H5("Result"), html.Br()]
+        output = [html.H5(f"Result for {event}"), html.Br()]
 
         # Get list of people and emails, shuffle and split
         people = list(df[df.columns[0]].dropna().values)
@@ -58,13 +59,11 @@ class EventPlanner:
 
         # Assertion for email
         if email_flag:
-            if len(people) != len(emails):
-                result = [
-                    "Error: Number of participants and number of emails do not match"
-                ]
             n_valid_email = np.sum(valid_email(email) for email in emails)
             if len(people) != n_valid_email:
                 result = ["Error: Some emails are not valid, please enter valid emails"]
+            if len(people) != len(emails):
+                result = ["Error: Number of participants and number of emails do not match"]
         else:
             if hide_flag:
                 result = [
@@ -108,7 +107,7 @@ class EventPlanner:
                 output.append(html.Br())
             if email_flag:
                 email_dict = dict(zip(people, emails))
-                status_code = EventPlanner().email_results(output_df, email_dict)
+                status_code = EventPlanner().email_results(output_df, email_dict, event)
                 if status_code:
                     reply = return_message["email_sent_all"]
                 else:
@@ -125,13 +124,14 @@ class EventPlanner:
         return criteria_list
 
     @staticmethod
-    def email_results(output_df, email_dict):
+    def email_results(output_df, email_dict, event):
         """
         Function to send email to participants
 
         Args:
             output_df (pandas DataFrame): output DataFrame from process_result
             email_dict (dict): dictionary mapping participants to email address
+            event (str): event for email subject and body
 
         Returns:
             (bool) Status code of email sending
@@ -140,13 +140,13 @@ class EventPlanner:
         for row_idx, row in output_df.iterrows():
             person = row.Person
             row = row.drop("Person")
-            email_body = "Here are your results for Secret Santa\n\n"
+            email_body = f"Here are your results for {event}\n\n"
             email_body += "\n".join([f"{k}: {v}" for k, v in row.to_dict().items()])
             email_body += (
                 "\n\nThank you for using kayjan.herokuapp.com\n"
                 "Disclaimer: This is an automated email. Please do not reply."
             )
-            subject = f"Secret Santa Sorting Results for {person}"
+            subject = f"{event} Results for {person}"
             recipient = email_dict[person]
             status_code = send_email(email_body, subject=subject, recipient=recipient)
             if not status_code:
