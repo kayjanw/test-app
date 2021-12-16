@@ -433,7 +433,8 @@ def register_callbacks(app, print_function):
 
     @app.callback([Output("chat-result", "children"),
                    Output("graph-chat-result-day", "figure"),
-                   Output("graph-chat-result-hour", "figure")],
+                   Output("graph-chat-result-hour", "figure"),
+                   Output("chat-result-wordcloud", "children")],
                   [Input("button-chat-ok", "n_clicks")],
                   [State("intermediate-chat-result", "data")])
     @print_callback(print_function)
@@ -454,6 +455,7 @@ def register_callbacks(app, print_function):
         result = []
         fig1 = {}
         fig2 = {}
+        fig3 = []
         if trigger:
             if not contents:
                 result = [return_message["file_not_uploaded"]]
@@ -464,7 +466,8 @@ def register_callbacks(app, print_function):
                 result = chat.get_message_info_by_sender(processed_df)
                 fig1 = chat.get_time_series_hour_plot(text_df)
                 fig2 = chat.get_time_series_day_plot(text_df)
-        return result, fig1, fig2
+                fig3 = chat.get_word_cloud(text_df)
+        return result, fig1, fig2, fig3
 
     @app.callback([Output("table-trip-landmark", "data"),
                    Output("table-trip-landmark", "style_table"),
