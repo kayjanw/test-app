@@ -94,19 +94,19 @@ class ChatAnalyzer:
         )
         list_of_df = [
             (sticker_df, ["Sticker Count"]),
+            (gif_df, ["Gif Count"]),
             (call_df, ["Call Count"]),
             (photo_df, ["Photo Count"]),
             (video_df, ["Video Count"]),
             (voice_message_df, ["Voice Message Count"]),
             (video_message_df, ["Video Message Count"]),
-            (gif_df, ["Gif Count"]),
         ]
         for df_small, col in list_of_df:
             if len(df_small):
                 df_small_tmp = df_small.groupby("from").agg({"from": "count"})
                 df_small_tmp.columns = col
                 processed_df = processed_df.join(df_small_tmp, on="from")
-        processed_df = processed_df.reset_index().rename(columns={"from": "Sender"})
+        processed_df = processed_df.T.reset_index().rename(columns={"index": ""})
 
         return processed_df, text_df
 
