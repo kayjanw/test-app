@@ -478,7 +478,7 @@ def valid_email(email):
         email (str): email address
 
     Returns:
-        (bool)
+        (bool) indicator if email is valid
     """
     regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     if re.fullmatch(regex, email):
@@ -498,7 +498,7 @@ def send_email(
         recipient (str): email recipient to receive email
 
     Returns:
-        (bool)
+        (bool) indicator if email is sent
     """
     try:
         SENDGRID_API_KEY = ENV["SENDGRID_API_KEY"]

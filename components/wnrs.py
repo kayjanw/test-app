@@ -89,7 +89,7 @@ class WNRS:
         """Initialize playing cards and index from list of deck for game play
 
         Args:
-            list_of_deck (list): List of all selected games to play
+            list_of_deck (list): list of all selected games to play
         """
         assert list_of_deck, "Please select at least one deck to start with"
         cards = self.get_all_cards()
@@ -106,7 +106,7 @@ class WNRS:
         """Initialize new game
 
         Args:
-            list_of_deck (list): List of all selected games to play
+            list_of_deck (list): list of all selected games to play
         """
         if list_of_deck is None:
             list_of_deck = ["Main Deck 1"]
@@ -119,9 +119,9 @@ class WNRS:
         """Load existing game from deck selection
 
         Args:
-            list_of_deck (list): List of all selected games to play
-            pointer (int): Current pointer of card
-            index (list): Order of cards to play
+            list_of_deck (list): list of all selected games to play
+            pointer (int): current pointer of card
+            index (list): order of cards to play
         """
         self.get_all_playable_cards(list_of_deck)
         self.pointer = pointer
@@ -131,7 +131,7 @@ class WNRS:
         """Load existing game from dictionary
 
         Args:
-            game_dict (dict): Dictionary of existing game, called with WNRS().__dict__
+            game_dict (dict): dictionary of existing game, called with WNRS().__dict__
         """
         self.playing_cards = game_dict["playing_cards"]
         self.pointer = game_dict["pointer"]
@@ -141,7 +141,7 @@ class WNRS:
         """Get next card
 
         Returns:
-            (str, list, dict, str): Card deck, prompt, style, counter
+            (str, list, dict, str): card deck, prompt, style, counter
         """
         if self.pointer < len(self.index) - 1:
             self.pointer += 1
@@ -151,7 +151,7 @@ class WNRS:
         """Get previous card
 
         Returns:
-            (str, list, dict, str): Card deck, prompt, style, counter
+            (str, list, dict, str): card deck, prompt, style, counter
         """
         if self.pointer > 0:
             self.pointer -= 1
@@ -161,7 +161,7 @@ class WNRS:
         """Get current card
 
         Returns:
-            (list, list, dict, str): Card deck, prompt, style, counter
+            (list, list, dict, str): card deck, prompt, style, counter
         """
         color_map = {
             "B1": ("#000000", "#FFFFFF"),  # black card white font (race edition)
@@ -254,7 +254,7 @@ class WNRS:
         """Shuffle remaining cards, return next card
 
         Returns:
-            (str, list, dict, str): Card deck, prompt, style, counter
+            (str, list, dict, str): card deck, prompt, style, counter
         """
         past_index = self.index[: self.pointer + 1].copy()
         remaining_index = self.index[self.pointer + 1:].copy()
