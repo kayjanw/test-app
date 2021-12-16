@@ -425,6 +425,8 @@ def register_callbacks(app, print_function):
                     chat = ChatAnalyzer(data=data)
                     upload_message = [f"Chat uploaded: {chat.chat_name}"]
                     storage = contents
+                except AssertionError as e:
+                    upload_message = [f"Error: {e}"]
                 except KeyError:
                     upload_message = [return_message["wrong_format_json"]]
         return upload_message, storage
@@ -458,9 +460,10 @@ def register_callbacks(app, print_function):
             else:
                 data = parse_data(contents, "json")
                 chat = ChatAnalyzer(data=data)
-                result = chat.get_message_info_by_sender()
-                fig1 = chat.get_time_series_hour_plot()
-                fig2 = chat.get_time_series_day_plot()
+                processed_df, text_df = chat.process_chat()
+                result = chat.get_message_info_by_sender(processed_df)
+                fig1 = chat.get_time_series_hour_plot(text_df)
+                fig2 = chat.get_time_series_day_plot(text_df)
         return result, fig1, fig2
 
     @app.callback([Output("table-trip-landmark", "data"),
