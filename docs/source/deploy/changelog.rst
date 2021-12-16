@@ -7,6 +7,7 @@ Changelog
 ========== =====================================================
 Date       Changes
 ========== =====================================================
+2021-12-16 Added Word Cloud to Chat Analyzer tab
 2021-12-15 Added Random Generator tab
 2021-12-14 Added Event Planner tab, made app multi-page
 2021-08-31 Added Contact Me tab, enable email function

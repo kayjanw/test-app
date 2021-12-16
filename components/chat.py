@@ -8,7 +8,9 @@ from dash import html
 from sklearn.feature_extraction.text import CountVectorizer
 from wordcloud import WordCloud as wc
 
-from components.helper import generate_datatable
+from components.helper import generate_datatable, create_fig_from_diagram
+
+pd.options.mode.chained_assignment = None
 
 
 class ChatAnalyzer:
@@ -233,7 +235,7 @@ class ChatAnalyzer:
         return dict(data=data, layout=layout)
 
     @staticmethod
-    def get_word_cloud(text_df, max_words=100):
+    def compute_word_cloud(text_df, max_words):
         """Get figure for plot
         Save word cloud image to be displayed
 
@@ -256,4 +258,29 @@ class ChatAnalyzer:
         word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
         wc2 = wc(max_words=max_words, background_color="white", color_func=None)
         wc_diagram = wc2.generate_from_frequencies(word_freq)
-        plt.imshow(wc_diagram, interpolation="bilinear")
+        return wc_diagram
+
+    def get_word_cloud(self, text_df, max_words=100, plotly=True):
+        """Get figure for plot
+        Save word cloud image to be displayed, plotly
+
+        Args:
+            text_df (pandas DataFrame): text message data
+            max_words (int): maximum words to consider in word cloud
+
+        Returns:
+            (html.Img) or None
+        """
+        wc_diagram = self.compute_word_cloud(text_df, max_words)
+
+        def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+            return "hsl(0, 0%%, %d%%)" % np.random.randint(0, 60)
+
+        if plotly:
+            fig, axs = plt.subplots(1, 1, figsize=(10, 5), squeeze=False)
+            axs = axs.ravel()
+            axs[0].imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+            axs[0].set_title("Word Cloud of Messages")
+            return create_fig_from_diagram(fig, "wordcloud")
+        else:
+            plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")

@@ -5,6 +5,7 @@ import base64
 import dash
 import io
 import json
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
@@ -590,3 +591,25 @@ def create_json_from_dict(d):
     """
     buf = io.BytesIO(json.dumps(d).encode())
     return buf
+
+
+def create_fig_from_diagram(diagram, id, close_all=True):
+    """Create html.Img from diagram
+
+    Args:
+        diagram: input diagram
+        id (str): id of html.Img object
+        close_all (bool): whether to close image
+
+    Returns:
+        (html.Img)
+    """
+    out_img = io.BytesIO()
+    diagram.savefig(out_img, format="png", transparent=True)
+    if close_all:
+        diagram.clf()
+        plt.close("all")
+    out_img.seek(0)  # rewind file
+    encoded = base64.b64encode(out_img.read()).decode("ascii").replace("\n", "")
+    content = f"data:image/png;base64,{encoded}"
+    return html.Img(id=id, src=content)
