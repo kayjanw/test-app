@@ -235,45 +235,33 @@ class ChatAnalyzer:
         return dict(data=data, layout=layout)
 
     @staticmethod
-    def compute_word_cloud(text_df, max_words):
+    def get_word_cloud(text_df, max_words=100, plotly=True):
         """Get figure for plot
-        Save word cloud image to be displayed
+        Adds plotly.graph_objects charts for word cloud plot
 
         Args:
             text_df (pandas DataFrame): text message data
             max_words (int): maximum words to consider in word cloud
-
-        Returns:
-            (html.Img)
-        """
-        model = CountVectorizer(
-            ngram_range=(1, 2),
-            max_df=0.01,
-            min_df=1,
-            max_features=max_words,
-            stop_words="english",
-            token_pattern="[A-Za-z]+(?=\\s+)",
-        )
-        document = model.fit_transform(text_df["text"])
-        word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
-        wc2 = wc(max_words=max_words, background_color="white", height=500, width=1000)
-        wc_diagram = wc2.generate_from_frequencies(word_freq)
-        return wc_diagram
-
-    def get_word_cloud(self, text_df, max_words=100, plotly=True):
-        """Get figure for plot
-        Save word cloud image to be displayed, plotly
-
-        Args:
-            text_df (pandas DataFrame): text message data
-            max_words (int): maximum words to consider in word cloud
+            plotly (bool): whether html.Img or plt should be returned, defaults to html.Img
 
         Returns:
             (html.Img) or None
         """
         image = html.Img()
         try:
-            wc_diagram = self.compute_word_cloud(text_df, max_words)
+            model = CountVectorizer(
+                ngram_range=(1, 2),
+                max_df=0.01,
+                min_df=1,
+                max_features=max_words,
+                stop_words="english",
+                token_pattern="[A-Za-z]+(?=\\s+)",
+            )
+            document = model.fit_transform(text_df["text"])
+            word_freq = dict(zip(model.vocabulary_, np.mean(document.toarray(), axis=0)))
+            wc2 = wc(max_words=max_words, background_color="white", height=500, width=1000)
+            wc_diagram = wc2.generate_from_frequencies(word_freq)
+
             def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
                 return "hsl(0, 0%%, %d%%)" % np.random.randint(0, 60)
 
@@ -285,7 +273,7 @@ class ChatAnalyzer:
                 axs[0].set_title("Word Cloud of Messages")
                 image = create_fig_from_diagram(fig, "wordcloud")
             else:
-               plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
+                plt.imshow(wc_diagram.recolor(color_func=grey_color_func, random_state=3), interpolation="bilinear")
         except ValueError:
             pass
 
