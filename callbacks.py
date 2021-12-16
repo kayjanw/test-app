@@ -14,6 +14,7 @@ from components.helper import (
     dcc_loading,
     parse_data,
     get_summary_statistics,
+    encode_df,
     decode_df,
     encode_dict,
     decode_dict,
@@ -623,15 +624,17 @@ def register_callbacks(app, print_function):
         upload_message = ""
         storage = {}
         if dash.callback_context.triggered:
-            _, _, _, records = update_when_upload(contents, "Sheet1", filename, {}, "")
+            _, _, _, records = update_when_upload(contents, "", filename, {}, "")
             if "df" in records:
                 df = decode_df(records["df"])
-                if df.columns[0] == "Name" and df.columns[1] == "Email (Optional)":
-                    storage = records
+                if df.columns[0] == "Event:" and df.iloc[1, 0] == "Name" and df.iloc[1, 1] == "Email (Optional)":
+                    event = df.columns[1]
+                    df = df.iloc[2:, :].rename(columns=df.iloc[1])
+                    storage = dict(df=encode_df(df), event=event)
                     upload_message = [return_message["file_uploaded"]]
                 else:
                     upload_message = [return_message["wrong_format_demo"]]
-            elif "df" not in records:
+            else:
                 upload_message = [return_message["wrong_file_type"]]
         return upload_message, storage
 
@@ -644,10 +647,9 @@ def register_callbacks(app, print_function):
                    State("checklist-event-pair", "value"),
                    State("radio-event-criteria", "value"),
                    State("checklist-event-email", "value"),
-                   State("checklist-event-display", "value"),
-                   State("event-output", "style")])
+                   State("checklist-event-display", "value")])
     @print_callback(print_function)
-    def update_event_result(trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style):
+    def update_event_result(trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag):
         """Update and display event planner results
 
         Args:
@@ -658,7 +660,6 @@ def register_callbacks(app, print_function):
             criteria_level (str): whether criteria is on individual or group level
             email_flag (str): option whether to email results to recipients
             hide_flag (str): option whether to display output results
-            style (dict): current style of results div
 
         Returns:
             3-element tuple
@@ -669,11 +670,13 @@ def register_callbacks(app, print_function):
         """
         result = []
         output = []
+        style = {"display": "none"}
         if trigger:
             if "df" in records:
                 df = decode_df(records["df"])
+                event = records["event"]
                 result, output, style = EventPlanner().process_result(
-                    df, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
+                    df, event, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
                 )
             else:
                 result = [return_message["file_not_uploaded"]]

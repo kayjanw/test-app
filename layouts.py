@@ -898,6 +898,7 @@ def event_tab(app):
                                                 id="input-event-group",
                                                 type="number",
                                                 value=1,
+                                                min=1,
                                                 style={
                                                     "width": "100%",
                                                 },
@@ -1049,6 +1050,7 @@ def rng_tab():
                                             id="input-rng-item",
                                             type="number",
                                             value=1,
+                                            min=1,
                                             style={
                                                 "width": "40%",
                                             },
@@ -1076,6 +1078,7 @@ def rng_tab():
                                             id="input-rng-group",
                                             type="number",
                                             value=2,
+                                            min=2,
                                             style={
                                                 "width": "40%",
                                             },
