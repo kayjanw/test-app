@@ -22,6 +22,18 @@ Deep blue #202029
 Dark pink #BE9B89
 Light pink #F0E3DF
 Pinkish grey #D6CAC7
+
+Order of div
+custom-container
+custom-div-instruction/custom-div-instruction2
+custom-div-small / custom-div-large / custom-div-full / custom-div-small-medium
+custom-div-space-above
+custom-div-left / custom-div-center
+custom-div-dark / custom-div-white
+div-with-image
+div-with-image-left
+small-image
+image-dark-bg
 */
 
 
@@ -169,6 +181,15 @@ button[disabled] {
     pointer-events: none;
 }
 
+.button-dark {
+    background-color: #202029;
+    color: white;
+}
+
+.button-dark:hover {
+    color: white;
+}
+
 [id$="-ok"] {
     background-color: #F0E3DF;
     box-shadow: 1px 1px 2px #BE9B89;
@@ -308,13 +329,9 @@ button[disabled] {
     filter: invert();
 }
 
-div[id$="-result"] {
-    margin-top: 20px;
-    padding-bottom: 30px;
-}
-
 .custom-container {
-    margin-top: 10px;
+    width: -webkit-fill-available;
+    margin-top: 30px;
     margin-bottom: 50px;
 }
 
@@ -322,8 +339,12 @@ div[id$="-result"] {
     border-radius: 10px;
     background-color: #202029;
     color: white;
-    margin: 2%;
+    margin: 0% 2%;
     padding: 2%;
+}
+
+.custom-div-white {
+    padding: 0% 2%;
 }
 
 .custom-div-left {
@@ -338,12 +359,29 @@ div[id$="-result"] {
     vertical-align: top;
 }
 
+.custom-div-flex {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.custom-div-flex p {
+    margin: 0px 5px 0px 0px;
+    padding: 0;
+}
+
 .custom-div-space-above {
     margin-top: 40px;
 }
 
 .custom-div-space-below {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.custom-div-space-left {
+    padding-left: 20px;
 }
 
 .custom-div-smaller {
@@ -371,32 +409,21 @@ div[id$="-result"] {
 }
 
 .custom-div-large-full {
-    width: 62%
+    width: 62%;
 }
 
 .custom-div-instruction {
-    width: 85%
+    width: 60%;
+    padding-right: 2%
+}
+
+.custom-div-instruction2 {
+    width: 32%;
+    margin: 0;
 }
 
 .custom-div-full {
     width: 100%;
-}
-
-.custom-div-flex {
-    display: flex;
-    vertical-align: middle;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.custom-div-flex p {
-    margin: 0px 5px 0px 0px;
-    padding: 0;
-}
-
-.custom-div-space-below {
-    margin-bottom: 5px;
 }
 
 .p-short {
@@ -487,7 +514,6 @@ div[id$="-result"] {
     display: inline-block;
     padding-left: 1.5vw;
     padding-right: 1.5vw;
-    overflow: hidden;
 }
 
 #violin-plot .js-plotly-plot .plotly .cursor-pointer,
@@ -532,7 +558,7 @@ div[id$="-result"] {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 #input-mbti, #input-rng {
     width: 100%;
-    height: 300px;
+    height: 100px;
     resize: vertical;
 }
 

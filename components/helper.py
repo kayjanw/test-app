@@ -40,6 +40,7 @@ return_message = {
     "email_sent_all": "Results emailed successfully to all participants!",
     "input_empty": "Please fill in text input",
     "rng_task_empty": "Please select a task",
+    "scroll_down": "Please scroll down for results",
     "wrong_format_demo": "File is not in expected format. Please download the demo worksheet and follow the format "
     "accordingly",
     "wrong_format_json": "Please upload a valid JSON file. Data is not in the correct format",
@@ -154,8 +155,11 @@ def dcc_loading(children, dark_bg=True):
     return dcc.Loading(children, type="circle", color=color)
 
 
-def table_css():
+def table_css(dark=True):
     """Gets default dash_table CSS components
+
+    Args:
+        dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
         4-element tuple
@@ -165,21 +169,28 @@ def table_css():
         - (dict): Style for table
         - (list): CSS component
     """
+    if dark:
+        background_color = "black"
+        color = "white"
+    else:
+        background_color = "white"
+        color = "black"
+
     style_header = {"fontWeight": "bold", "textAlign": "left"}
     style_cell = {
         "background-color": "transparent",
-        "color": "white",
+        "color": color,
         "font-family": "Source Sans Pro",
         "font-size": 13,
         "textAlign": "left",
     }
     style_table = {"overflowX": "auto"}
     css = [
-        {"selector": "tr:hover", "rule": "background-color: black; color: white"},
+        {"selector": "tr:hover", "rule": f"background-color: {background_color}; color: {color}"},
         {
             "selector": "td.cell--selected *, td.focused *",
-            "rule": "background-color: black !important;"
-            "color: white !important;"
+            "rule": f"background-color: {background_color} !important;"
+            f"color: {color} !important;"
             "text-align: left;",
         },
     ]
@@ -234,17 +245,18 @@ def parse_data(contents, filename, worksheet=None, **kwargs):
     return df
 
 
-def generate_datatable(df, max_rows=3):
+def generate_datatable(df, max_rows=3, dark=True):
     """Generate table from pandas DataFrame
 
     Args:
         df (pandas DataFrame): input DataFrame
         max_rows (int): maximum number of rows to show
+        dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
         (dash_table.DataTable)
     """
-    style_header, style_cell, style_table, css = table_css()
+    style_header, style_cell, style_table, css = table_css(dark=dark)
     return dash_table.DataTable(
         columns=[{"name": col, "id": col} for col in df.columns],
         data=df.to_dict("records")[:max_rows],
@@ -256,12 +268,13 @@ def generate_datatable(df, max_rows=3):
     )
 
 
-def get_summary_statistics(df, cols):
+def get_summary_statistics(df, cols, dark=True):
     """Generate table of summary statistics for DataFrame for list of columns
 
     Args:
         df (pandas DataFrame): input DataFrame
         cols (list): column(s) to get summary statistic for
+        dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
         (dash_table.DataTable)
@@ -276,7 +289,7 @@ def get_summary_statistics(df, cols):
         "75%",
         "Max, 100%",
     ]
-    style_header, style_cell, style_table, css = table_css()
+    style_header, style_cell, style_table, css = table_css(dark=dark)
     return dash_table.DataTable(
         columns=[{"name": "Parameter", "id": "Parameter"}]
         + [{"name": col, "id": col} for col in cols],
@@ -409,16 +422,21 @@ def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
     return worksheet_options, style, sample_table, {}
 
 
-def result_download_button(app, df):
+def result_download_button(app, df, dark=True):
     """Download button for processed data or results
 
     Args:
         app (app): get app properties
         df (pandas DataFrame): input DataFrame, to be downloaded by user
+        dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
         (html.Form)
     """
+    if dark:
+        class_name = "button-dark image-dark-bg"
+    else:
+        class_name = ""
     df_ser = encode_df(df)
     return html.Form(
         [
@@ -431,7 +449,7 @@ def result_download_button(app, df):
                     html.Span("Download results"),
                 ],
                 type="submit",
-                className="div-with-image div-with-image-left small-image",
+                className=f"div-with-image div-with-image-left small-image {class_name}",
             ),
         ],
         method="POST",
@@ -452,9 +470,11 @@ def result_download_text(input_text):
     return html.Form(
         [
             html.Button(
-                [input_text],
+                [
+                    html.Span(input_text)
+                ],
                 style={
-                    "height": "5px",
+                    "line-height": "38px",
                     "margin": 0,
                     "padding": 0,
                     "font-size": "1em",

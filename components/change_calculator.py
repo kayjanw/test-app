@@ -211,27 +211,13 @@ class ChangeCalculator:
             cols (list): list of column(s) for results summary
 
         Returns:
-            2-element tuple
-
-            - (list): instructions for interacting with figure
-            - (dict): graphical result of change calculator 2
+            (dict): graphical result of change calculator 2
         """
         color = [
             "hsl(" + str(h) + ",50%,70%)"
             for h in np.linspace(0, 270, max(len(cols), 7))
         ]
         trace = []
-        instructions = [
-            html.Br(),
-            html.Img(src=app.get_asset_url("info.svg")),
-            html.Span(
-                [
-                    "Hover over box to see more information, Single click on legend to hide entry, Double click "
-                    "on legend to highlight entry"
-                ],
-                style={"text-align": "center"},
-            ),
-        ]
         for idx, col in enumerate(cols):
             trace.append(
                 go.Box(
@@ -254,7 +240,7 @@ class ChangeCalculator:
             ),
             font=dict(family="Source Sans Pro", color="white"),
         )
-        return instructions, dict(data=trace, layout=layout)
+        return dict(data=trace, layout=layout)
 
     @staticmethod
     def get_line_plot(app, df2):
