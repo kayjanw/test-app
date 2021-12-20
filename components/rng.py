@@ -29,7 +29,7 @@ class RandomGenerator:
         output = [html.H5("Result"), html.Br()]
 
         # Get list of items
-        list_items = text.split("\n")
+        list_items = [item for item in text.split("\n") if item]
         np.random.shuffle(list_items)
 
         # Assertion for number of items
