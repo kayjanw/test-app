@@ -215,17 +215,18 @@ def about_me_tab(app):
                     ]
                 ),
                 html.P(
-                    "Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs encountered!"
+                    "Feel free to write in for any UI/UX suggestion, functionality idea, new use case or bugs "
+                    "encountered!"
                 ),
                 html.P(
                     [
-                        "This website is made with Dash, deployed using Gunicorn and hosted on Heroku, "
-                        "view code documentation on Sphinx ",
+                        "This website is made with Dash, deployed using Gunicorn and hosted on Heroku, view code "
+                        "documentation on Sphinx ",
                         html.A("here", href="http://kayjan.readthedocs.io", target="_blank"),
                     ]
                 )
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             )
         ],
         className="div-with-image div-with-image-left medium-image",
@@ -236,140 +237,161 @@ def change_tab(app):
     return html.Div(
         [
             content_header("Change Calculator", "Compare changes over two periods"),
-            html.Div([
-                html.P(
-                    "Users can view summary statistics and plot a scatterplot with marginal histograms of past values "
-                    "(x axis) against present values (y axis). Users also have the option to download the processed results "
-                    "with change value into an excel file"
-                ),
-                html.Br(),
-                html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
-                       "sample of file will be displayed once upload is successful"),
-                html.P("Step 2: Specify the columns for past values (x axis) and present values (y axis)"),
-                html.P("Step 3: Specify the maximum possible value for each column to normalize the column values "
-                       "(optional)"),
-                html.P('Step 4: Click "OK" button to generate the results!'),
-            ],
-                className="custom-div-instruction"
+            html.Div(
+                [
+                    html.P(
+                        "Users can view summary statistics and plot a scatterplot with marginal histograms of past "
+                        "values (x axis) against present values (y axis). Users also have the option to download "
+                        "processed results with change value into an excel file"
+                    ),
+                    html.Br(),
+                    html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
+                           "sample of file will be displayed once upload is successful"),
+                    html.P("Step 2: Specify columns for past values (x axis) and present values (y axis)"),
+                    html.P("Step 3: Specify maximum possible value for each column to normalize column values "
+                           "(optional)"),
+                    html.P('Step 4: Click "OK" button to generate results!'),
+                ],
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [
-                    # Left item
-                    html.Div(
+                    dcc.Upload(
                         [
-                            dcc.Upload(
-                                [
-                                    html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
-                                ],
-                                id="upload-change",
-                                multiple=False,
-                                className="div-with-image div-with-image-left small-image image-dark-bg",
-                            ),
-                            html.Div(
-                                [
-                                    html.P("Select worksheet:"),
-                                    html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-change-worksheet",
-                                                placeholder="Select worksheet",
-                                                clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
-                                            ),
-                                        ],
-                                        style={"width": "40%"},
-                                    ),
-                                ],
-                                id="change-select-worksheet",
-                                className="custom-div-flex",
-                                style={"display": "none"},
-                            ),
-                            html.Div(
-                                id="change-sample-data",
-                                className="custom-div-space-below",
-                            ),
-                            html.Div(
-                                [
-                                    html.P("Select x-axis:"),
-                                    html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-change-x",
-                                                placeholder="Select column",
-                                                clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
-                                            ),
-                                        ],
-                                        style={"width": "35%"},
-                                    ),
-                                    html.P("out of"),
-                                    dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            html.Div(
-                                [
-                                    html.P("Select y-axis:"),
-                                    html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-change-y",
-                                                placeholder="Select column",
-                                                clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
-                                            ),
-                                        ],
-                                        style={"width": "35%"},
-                                    ),
-                                    html.P("out of"),
-                                    dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            html.Button("OK", id="button-change-ok"),
-                            dcc.Store(id="intermediate-change-result", storage_type="memory"),
-                            dcc_loading(html.Div(id="change-result"), dark_bg=True),
+                            html.Img(src=app.get_asset_url("upload.svg")),
+                            html.Span("Drag and drop file here, or click to upload"),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                        id="upload-change",
+                        multiple=False,
+                        className="div-with-image div-with-image-left small-image image-dark-bg",
                     ),
-                    # Right item
                     html.Div(
                         [
-                            html.Img(src=app.get_asset_url("info.svg")),
-                            html.Span("Mouseover for information, highlight to zoom, double click to reset view"),
-                            html.Div(dcc.Graph(id="graph-change-result")),
+                            html.P("Select worksheet:"),
+                            html.P(
+                                [
+                                    dcc.Dropdown(
+                                        id="dropdown-change-worksheet",
+                                        placeholder="Select worksheet",
+                                        clearable=False,
+                                        style={
+                                            "width": "100%",
+                                            "color": "black",
+                                        },
+                                    ),
+                                ],
+                                style={"width": "40%"},
+                            ),
+                        ],
+                        id="change-select-worksheet",
+                        className="custom-div-flex",
+                        style={"display": "none"},
+                    ),
+                    html.Div(
+                        id="change-sample-data",
+                        className="custom-div-space-below",
+                    ),
+                    html.Div(
+                        [
+                            html.P("Select x-axis:"),
+                            html.P(
+                                [
+                                    dcc.Dropdown(
+                                        id="dropdown-change-x",
+                                        placeholder="Select column",
+                                        clearable=False,
+                                        style={
+                                            "width": "100%",
+                                            "color": "black",
+                                        },
+                                    ),
+                                ],
+                                style={"width": "35%"},
+                            ),
+                            html.P("out of"),
+                            dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
+                        ],
+                        className="custom-div-flex",
+                    ),
+                    html.Div(
+                        [
+                            html.P("Select y-axis:"),
+                            html.P(
+                                [
+                                    dcc.Dropdown(
+                                        id="dropdown-change-y",
+                                        placeholder="Select column",
+                                        clearable=False,
+                                        style={
+                                            "width": "100%",
+                                            "color": "black",
+                                        },
+                                    ),
+                                ],
+                                style={"width": "35%"},
+                            ),
+                            html.P("out of"),
+                            dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
+                        ],
+                        className="custom-div-flex",
+                    ),
+                    html.Button("OK", id="button-change-ok"),
+                    dcc.Store(id="intermediate-change-result", storage_type="memory"),
+                    dcc_loading(html.P(id="change-result-error"), dark_bg=True),
+                ],
+                className="custom-div-instruction2 custom-div-left custom-div-dark",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        id="change-result",
+                        className="custom-div-small custom-div-left custom-div-white image-dark-bg"
+                    ),
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.Img(src=app.get_asset_url("info.svg")),
+                                    html.Span(
+                                        "Mouseover for information, highlight to zoom, double click to reset view"),
+                                    html.Span(dcc.Graph(id="graph-change-result"), style={"width": "80%"}),
+                                ],
+                                className="custom-div-center div-with-image div-with-image-left small-image",
+                            ),
                             html.Div(
                                 [
                                     html.P("Footnote:"),
-                                    html.P("1. Computation ignores rows where either x or y value is not in numerical format"),
-                                    html.P("2. Points will be very close to each other (but not overlapping) if two rows have "
-                                           "identical x and y values, it is recommended to zoom or download the results file"),
+                                    html.P(
+                                        "1. Computation ignores rows where either x or y value is not in numerical "
+                                        "format"),
+                                    html.P(
+                                        "2. Points will be very close to each other (but not overlapping) if two rows "
+                                        "have identical x and y values, it is recommended to zoom or download the "
+                                        "results file"),
                                     html.P("3. Interpreting the scatterplot above:"),
-                                    html.P("• Points above the line represent positive change", style={"margin-left": "10px"}),
-                                    html.P("• Distance from the line represent magnitude of change", style={"margin-left": "10px"}),
+                                    html.P("• Points above the line represent positive change",
+                                           style={"margin-left": "10px"}),
+                                    html.P("• Distance from the line represent magnitude of change",
+                                           style={"margin-left": "10px"}),
                                     html.P("4. Interpreting the histogram above:"),
-                                    html.P("• Histogram shows the distribution of values for x and y axis respectively", style={"margin-left": "10px"}),
+                                    html.P("• Histogram shows the distribution of values for x and y axis respectively",
+                                           style={"margin-left": "10px"}),
                                     html.P("5. Interpreting the summary statistics on the left:"),
-                                    html.P("• If median is higher than mean: data is skewed to the left; there is a long tail of low "
-                                           "scores pulling the mean down", style={"margin-left": "10px"}),
+                                    html.P(
+                                        "• If median is higher than mean: data is skewed to the left; there is a long "
+                                        "tail of low scores pulling the mean down", style={"margin-left": "10px"}),
                                 ],
-                                style={"margin-left": "20px", "text-align": "left"},
+                                className="custom-div-space-left",
                             ),
                         ],
-                        className="custom-div-center custom-div-large div-with-image div-with-image-left small-image",
+                        className="custom-div-large custom-div-left custom-div-white"
                     ),
                 ],
+                id="div-change-result",
                 className="custom-container",
+                style={
+                    "display": "none"
+                }
             ),
         ]
     )
@@ -410,114 +432,116 @@ def changes_tab(app):
                        "sample of file will be displayed once upload is successful"),
                 html.P("Step 2: Specify column identifier in dropdown option, and columns to compare in the table"),
                 html.P(
-                    "Step 3: Specify the maximum possible value for each column to normalize the column values "
+                    "Step 3: Specify maximum possible value for each column to normalize the column values "
                     "(optional)"),
-                html.P('Step 4: Click "OK" button to generate the results!'),
+                html.P('Step 4: Click "OK" button to generate results!'),
+                html.Br(),
+                html.P("Footnote:"),
+                html.P("1. Computation ignores rows where any column comparison values are not in numerical format"),
+                html.P("2. Computation ignores rows where column identifier values are empty"),
+                html.P(
+                    "3. Ensure all column identifier values are unique, if not it will be replaced with running "
+                    "numbers"),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
-                    html.Div(
+                    dcc.Upload(
                         [
-                            dcc.Upload(
-                                [
-                                    html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
-                                ],
-                                id="upload-changes",
-                                multiple=False,
-                                className="div-with-image div-with-image-left small-image image-dark-bg",
-                            ),
-                            html.Div(
-                                [
-                                    html.P("Select worksheet:"),
-                                    html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-changes-worksheet",
-                                                placeholder="Select worksheet",
-                                                clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
-                                            ),
-                                        ],
-                                        style={"width": "40%"},
-                                    ),
-                                ],
-                                id="changes-select-worksheet",
-                                className="custom-div-flex",
-                                style={"display": "none"},
-                            ),
-                            html.Div(id="changes-sample-data"),
-                            dcc.Store(id="intermediate-changes-result", storage_type="memory"),
+                            html.Img(src=app.get_asset_url("upload.svg")),
+                            html.Span("Drag and drop file here, or click to upload"),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                        id="upload-changes",
+                        multiple=False,
+                        className="div-with-image div-with-image-left small-image image-dark-bg",
                     ),
-                    # Right item
                     html.Div(
                         [
-                            html.Div(
-                                [
-                                    html.P("Column identifier (i.e. Name):"),
-                                    html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-changes-identifier",
-                                                placeholder="Select column",
-                                                clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
-                                            ),
-                                        ],
-                                        style={"width": "35%"},
-                                    ),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            get_changes_table(),
-                            html.Button("Add rows", id="button-changes-add"),
-                            html.Button("OK", id="button-changes-ok"),
+                            html.P("Select worksheet:"),
                             html.P(
                                 [
-                                    "Footnote:",
-                                    html.Br(),
-                                    "1. Computation ignores rows where any column comparison values are not in numerical format",
-                                    html.Br(),
-                                    "2. Computation ignores rows where column identifier values are empty",
-                                    html.Br(),
-                                    "3. Ensure all column identifier values are unique, if not it will be replaced with running numbers",
-                                ]
+                                    dcc.Dropdown(
+                                        id="dropdown-changes-worksheet",
+                                        placeholder="Select worksheet",
+                                        clearable=False,
+                                        style={
+                                            "width": "100%",
+                                            "color": "black",
+                                        },
+                                    ),
+                                ],
+                                style={"width": "40%"},
                             ),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-medium",
+                        id="changes-select-worksheet",
+                        className="custom-div-flex",
+                        style={"display": "none"},
                     ),
-                    # Bottom item
+                    html.Div(id="changes-sample-data"),
+                    dcc.Store(id="intermediate-changes-result", storage_type="memory"),
                     html.Div(
                         [
-                            dcc_loading(
-                                html.P(
-                                    id="changes-result",
-                                    style={
-                                        "display": "none",
-                                    },
-                                    className="custom-div-dark custom-div-left div-with-image div-with-image-left small-image image-dark-bg",
-                                ),
-                                dark_bg=False
-                            ),
+                            html.P("Column identifier (i.e. Name):"),
                             html.P(
-                                id="graph-changes-result",
-                                className="custom-div-center custom-div-full div-with-image div-with-image-left small-image",
+                                [
+                                    dcc.Dropdown(
+                                        id="dropdown-changes-identifier",
+                                        placeholder="Select column",
+                                        clearable=False,
+                                        style={
+                                            "width": "100%",
+                                            "color": "black",
+                                        },
+                                    ),
+                                ],
+                                style={"width": "35%"},
                             ),
-                        ]
+                        ],
+                        className="custom-div-flex",
+                    ),
+                    get_changes_table(),
+                    html.Button("Add rows", id="button-changes-add"),
+                    html.Button("OK", id="button-changes-ok"),
+                    dcc_loading([html.P(id="changes-result-error")], dark_bg=True),
+                ],
+                className="custom-div-instruction2 custom-div-left custom-div-dark",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        [
+                            html.P(id="changes-result", className="custom-div-small custom-div-left custom-div-white"),
+                            html.Div(
+                                [
+                                    html.P(
+                                        [
+                                            html.Img(src=app.get_asset_url("info.svg")),
+                                            html.Span(
+                                                "Hover over box to see more information, Single click on legend to "
+                                                "hide entry, Double click on legend to highlight entry"
+                                            ),
+                                        ],
+                                        className="div-with-image div-with-image-left small-image image-dark-bg"
+                                    ),
+                                    dcc.Graph(id="graph-changes-boxplot")
+                                ],
+                                className="custom-div-large custom-div-center custom-div-white",
+                            ),
+                        ],
+                        className="custom-container custom-div-center custom-div-dark"
+                    ),
+                    html.P(
+                        id="graph-changes-result",
+                        className="custom-div-full custom-div-space-above custom-div-center "
+                                  "div-with-image div-with-image-left small-image",
                     ),
                 ],
+                id="div-changes-result",
                 className="custom-container",
+                style={
+                    "display": "none"
+                }
             ),
         ]
     )
@@ -534,60 +558,69 @@ def chat_tab(app):
                 ),
                 html.Br(),
                 html.P("Step 1: Export chat data in JSON format using Telegram Desktop"),
-                html.P("Step 2: Upload the exported telegram file (.json format), a message will appear to indicate if "
+                html.P("Step 2: Upload exported telegram file (.json format), a message will appear to indicate if "
                        "file is uploaded successfully"),
-                html.P('Step 3: Click "OK" button to generate the results!')
+                html.P('Step 3: Click "OK" button to generate results!')
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
-                    html.Div(
+                    dcc.Upload(
                         [
-                            dcc.Upload(
-                                [
-                                    html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
-                                ],
-                                id="upload-chat",
-                                multiple=False,
-                                className="div-with-image div-with-image-left small-image image-dark-bg",
-                            ),
-                            html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
-                            html.Button("OK", id="button-chat-ok"),
-                            html.P(id="chat-result"),
-                            dcc.Store(id="intermediate-chat-result", storage_type="memory"),
+                            html.Img(src=app.get_asset_url("upload.svg")),
+                            html.Span("Drag and drop file here, or click to upload"),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
+                        id="upload-chat",
+                        multiple=False,
+                        className="div-with-image div-with-image-left small-image image-dark-bg",
                     ),
-                    # Right item
+                    html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
+                    html.Button("OK", id="button-chat-ok"),
+                    dcc_loading([html.P(id="chat-result-error")], dark_bg=True),
+                    dcc.Store(id="intermediate-chat-result", storage_type="memory"),
+                ],
+                className="custom-div-instruction2 custom-div-left custom-div-dark"
+            ),
+            html.Div(
+                [
                     html.Div(
                         [
+                            html.P(id="chat-result", className="custom-div-small custom-div-left custom-div-white"),
                             html.Div(
                                 [
-                                    html.Img(src=app.get_asset_url("info.svg")),
-                                    html.Span("Mouseover for information, highlight to zoom, double click to reset view"),
-                                    dcc_loading(dcc.Graph(id="graph-chat-result-day"), dark_bg=False),
+                                    html.Div(
+                                        [
+                                            html.Img(src=app.get_asset_url("info.svg")),
+                                            html.Span(
+                                                "Mouseover for information, highlight to zoom, double click to reset "
+                                                "view"),
+                                            dcc.Graph(id="graph-chat-result-day"),
+                                        ],
+                                        className="div-with-image div-with-image-left small-image",
+                                    ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-large custom-div-center",
                             ),
                         ],
-                        className="custom-div-center custom-div-half",
+                        className="custom-container custom-div-center"
                     ),
-                    # Bottom item
                     html.Div(
                         [
                             html.Div(id="chat-result-wordcloud"),
                             dcc.Graph(id="graph-chat-result-hour"),
                         ],
-                        className="custom-div-center",
+                        className="custom-div-center custom-div-white",
                         style={
                             "display": "block"
                         }
                     ),
                 ],
+                id="div-chat-result",
                 className="custom-container",
+                style={
+                    "display": "none"
+                }
             ),
         ]
     )
@@ -625,22 +658,21 @@ def trip_tab(app):
             content_header("Trip Planner", "Optimize your route"),
             html.Div([
                 html.P(
-                    "Users can fill in multiple destinations and an optimal route based on distance will be calculated, "
-                    "starting and ending from the first destination specified. This is also known as the Travelling "
-                    "Salesman Problem"
+                    "Users can fill in multiple destinations and an optimal route based on distance will be "
+                    "calculated, starting and ending from the first destination specified. This is also known as the "
+                    "Travelling Salesman Problem"
                 ),
                 html.Br(),
-                html.P("Step 1: Fill in the landmark name (optional)"),
-                html.P("Step 2: Click the point on map corresponding to the landmark name"),
+                html.P("Step 1: Fill in landmark name (optional)"),
+                html.P("Step 2: Click point on map corresponding to landmark name"),
                 html.P("Step 3: Repeat steps 1 and 2 until all destinations have been entered"),
                 html.P("Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name"),
-                html.P('Step 5: Click "OK" button to generate the shortest and fastest route!'),
+                html.P('Step 5: Click "OK" button to generate shortest and fastest route!'),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
                     html.Div(
                         [
                             html.Div(
@@ -662,9 +694,8 @@ def trip_tab(app):
                             html.Button("OK", id="button-trip-ok"),
                             dcc_loading(html.Div(id="trip-result"), dark_bg=True),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                        className="custom-div-small custom-div-left custom-div-dark",
                     ),
-                    # Right item
                     html.Div(
                         [
                             html.P(
@@ -684,7 +715,7 @@ def trip_tab(app):
                                 children=[dl.TileLayer()],
                             ),
                         ],
-                        className="custom-div-center custom-div-large",
+                        className="custom-div-large custom-div-center",
                     ),
                 ],
                 className="custom-container",
@@ -699,8 +730,8 @@ def mbti_tab():
             content_header("MBTI Personality Test", "Predict MBTI with writing style"),
             html.Div([
                 html.P(
-                    "Users can find out their MBTI personality based on comparing their writing content, specifically their "
-                    "choice and phrasing of words, to other users in an existing database of over 8000 people"
+                    "Users can find out their MBTI personality based on comparing their writing content, specifically "
+                    "their choice and phrasing of words, to other users in an existing database of over 8000 people"
                 ),
                 html.Details(
                     [
@@ -773,50 +804,50 @@ def mbti_tab():
                     "Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of "
                     "yourself)"
                 ),
-                html.P('Step 2: Click "OK" button to generate the results!'),
+                html.P('Step 2: Click "OK" button to generate results!'),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
                     html.Div(
                         [
                             dcc.Textarea(
                                 id="input-mbti",
                                 value="",
-                                placeholder="Put in your text here, preferably more than 50 words and try not to use words that "
-                                "are too common or too complex!",
+                                placeholder="Put in your text here, preferably more than 50 words and try not to use "
+                                            "words that are too common or too complex!",
                             ),
                             html.Div([html.P(id="text-mbti-words")], style={"float": "right"}),
                             html.Button("OK", id="button-mbti-ok"),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
+                        className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
-                    # Right item
                     html.Div(
                         [
-                            html.Div(id="mbti-results", className="custom-div-space-above"),
+                            html.Div(id="mbti-results", className="custom-div-center"),
                             dcc_loading(
-                                dcc.Graph(
-                                    id="graph-mbti",
-                                    config={
-                                        "modeBarButtonsToRemove": [
-                                            "zoom2d",
-                                            "pan2d",
-                                            "select2d",
-                                            "lasso2d",
-                                            "zoomIn2d",
-                                            "zoomOut2d",
-                                            "autoScale2d",
-                                            "resetScale2d",
-                                            "toggleSpikelines",
-                                            "hoverClosestCartesian",
-                                            "hoverCompareCartesian",
-                                        ],
-                                    },
-                                    style={"display": "none", "height": "100%"},
-                                ),
+                                [
+                                    dcc.Graph(
+                                        id="graph-mbti",
+                                        config={
+                                            "modeBarButtonsToRemove": [
+                                                "zoom2d",
+                                                "pan2d",
+                                                "select2d",
+                                                "lasso2d",
+                                                "zoomIn2d",
+                                                "zoomOut2d",
+                                                "autoScale2d",
+                                                "resetScale2d",
+                                                "toggleSpikelines",
+                                                "hoverClosestCartesian",
+                                                "hoverCompareCartesian",
+                                            ],
+                                        },
+                                        style={"display": "none", "height": "100%"},
+                                    )
+                                ],
                                 dark_bg=False
                             ),
                         ],
@@ -876,140 +907,132 @@ def event_tab(app):
                     html.P(
                         "Step 3: Specify number of groups to split participants into and other options accordingly"
                     ),
-                    html.P('Step 4: Click "OK" button to generate the results!'),
+                    html.P('Step 4: Click "OK" button to generate results!'),
                 ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
+                    dcc.Upload(
+                        [
+                            html.Img(src=app.get_asset_url("upload.svg")),
+                            html.Span(
+                                "Drag and drop file here, or click to upload"
+                            ),
+                        ],
+                        id="upload-event",
+                        multiple=False,
+                        className="div-with-image div-with-image-left small-image image-dark-bg",
+                    ),
+                    html.P(id="text-event-confirm"),
                     html.Div(
                         [
-                            dcc.Upload(
+                            html.P("Select number of groups:"),
+                            html.P(
                                 [
-                                    html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span(
-                                        "Drag and drop file here, or click to upload"
+                                    dcc.Input(
+                                        id="input-event-group",
+                                        type="number",
+                                        value=1,
+                                        min=1,
+                                        style={
+                                            "width": "100%",
+                                        },
                                     ),
-                                ],
-                                id="upload-event",
-                                multiple=False,
-                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                                ]
                             ),
-                            html.P(id="text-event-confirm"),
-                            html.Div(
+                        ],
+                        className="custom-div-flex",
+                    ),
+                    html.Div(
+                        [
+                            html.P(
                                 [
-                                    html.P("Select number of groups:"),
-                                    html.P(
-                                        [
-                                            dcc.Input(
-                                                id="input-event-group",
-                                                type="number",
-                                                value=1,
-                                                min=1,
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            ),
-                                        ]
-                                    ),
-                                ],
-                                className="custom-div-flex",
-                            ),
-                            html.Div(
-                                [
-                                    html.P(
-                                        [
-                                            dcc.Checklist(
-                                                id="checklist-event-pair",
-                                                options=[
-                                                    {
-                                                        "label": "Pair participants up (i.e. for gift exchange)",
-                                                        "value": "pair",
-                                                    }
-                                                ],
-                                                value=["pair"],
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            )
-                                        ]
-                                    ),
-                                    html.P(
-                                        [
-                                            "Criteria should unique to",
-                                            dcc.RadioItems(
-                                                id="radio-event-criteria",
-                                                options=[
-                                                    {
-                                                        "label": "individual",
-                                                        "value": "individual",
-                                                    },
-                                                    {
-                                                        "label": "group",
-                                                        "value": "group",
-                                                    }
-                                                ],
-                                                value="individual",
-                                                style={
-                                                    "display": "flex"
-                                                }
-                                            )
+                                    dcc.Checklist(
+                                        id="checklist-event-pair",
+                                        options=[
+                                            {
+                                                "label": "Pair participants up (i.e. for gift exchange)",
+                                                "value": "pair",
+                                            }
                                         ],
-                                        className="custom-div-flex"
-                                    ),
-                                    html.P(
-                                        [
-                                            dcc.Checklist(
-                                                id="checklist-event-email",
-                                                options=[
-                                                    {
-                                                        "label": "Email individual results to recipients separately",
-                                                        "value": "email",
-                                                    }
-                                                ],
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            )
-                                        ]
-                                    ),
-                                    html.P(
-                                        [
-                                            dcc.Checklist(
-                                                id="checklist-event-display",
-                                                options=[
-                                                    {
-                                                        "label": "Hide results",
-                                                        "value": "hide",
-                                                    }
-                                                ],
-                                                style={
-                                                    "width": "100%",
-                                                },
-                                            )
-                                        ]
+                                        value=["pair"],
+                                        style={
+                                            "width": "100%",
+                                        },
                                     )
                                 ]
                             ),
-                            html.Br(),
-                            html.Button("OK", id="button-event-ok"),
-                            dcc.Store(
-                                id="intermediate-event-result", storage_type="memory"
+                            html.P(
+                                [
+                                    "Criteria should unique to",
+                                    dcc.RadioItems(
+                                        id="radio-event-criteria",
+                                        options=[
+                                            {
+                                                "label": "individual",
+                                                "value": "individual",
+                                            },
+                                            {
+                                                "label": "group",
+                                                "value": "group",
+                                            }
+                                        ],
+                                        value="individual",
+                                        style={
+                                            "display": "flex"
+                                        }
+                                    )
+                                ],
+                                className="custom-div-flex"
                             ),
-                            dcc_loading(html.P(id="event-result"), dark_bg=True),
-                        ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                            html.P(
+                                [
+                                    dcc.Checklist(
+                                        id="checklist-event-email",
+                                        options=[
+                                            {
+                                                "label": "Email individual results to recipients separately",
+                                                "value": "email",
+                                            }
+                                        ],
+                                        style={
+                                            "width": "100%",
+                                        },
+                                    )
+                                ]
+                            ),
+                            html.P(
+                                [
+                                    dcc.Checklist(
+                                        id="checklist-event-display",
+                                        options=[
+                                            {
+                                                "label": "Hide results",
+                                                "value": "hide",
+                                            }
+                                        ],
+                                        style={
+                                            "width": "100%",
+                                        },
+                                    )
+                                ]
+                            )
+                        ]
                     ),
-                    # Right item
-                    html.Div(
-                        id="event-output",
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-medium",
+                    html.Br(),
+                    html.Button("OK", id="button-event-ok"),
+                    dcc.Store(
+                        id="intermediate-event-result", storage_type="memory"
+                    ),
+                    dcc_loading([html.P(id="event-result-error")], dark_bg=True),
+                    html.P(
+                        id="div-event-result",
                         style={"display": "none"},
                     ),
                 ],
-                className="custom-container",
-            ),
+                className="custom-div-instruction2 custom-div-left custom-div-dark"
+            )
         ]
     )
 
@@ -1023,14 +1046,13 @@ def rng_tab():
                     html.P("Users can perform random selection of items or grouping of items"),
                     html.Br(),
                     html.P("Step 1: Fill in the text box with items"),
-                    html.P("Step 2: Specify the type of task accordingly"),
-                    html.P('Step 3: Click "OK" button to generate the results!'),
+                    html.P("Step 2: Specify type of task accordingly"),
+                    html.P('Step 3: Click "OK" button to generate results!'),
                 ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
-                    # Left item
                     html.Div(
                         [
                             html.P("Item List:", className="p-bold"),
@@ -1107,15 +1129,14 @@ def rng_tab():
                             ),
                             html.Br(),
                             html.Button("OK", id="button-rng-ok"),
-                            dcc_loading(html.P(id="rng-result"), dark_bg=True),
+                            dcc_loading([html.P(id="rng-result-error")], dark_bg=True),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
+                        className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
-                    # Right item
                     html.Div(
-                        id="rng-output",
+                        id="div-rng-result",
                         style={"display": "none"},
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small-medium",
+                        className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
                 className="custom-container",
@@ -1155,16 +1176,17 @@ def wnrs_tab(app):
             html.Div(
                 [
                     html.P("How to Play (2-6 players)", style={"margin-top": "20px"}, className="p-short p-bold"),
-                    html.P("The game is played on a single device. Sit in a circle with device in middle of all players. "
-                           "Select the decks you want to play with and the levels. Players take turn to answer questions shown "
-                           "on the screen and tap on the right side of card to proceed to next question."),
+                    html.P("The game is played on a single device. Sit in a circle with device in middle of all "
+                           "players. Select the decks you want to play with and the levels. Players take turn to "
+                           "answer questions shown on the screen and tap on the right side of card to proceed to next "
+                           "question."),
                     html.P("Wildcards", style={"margin-top": "20px"}, className="p-short p-bold"),
                     html.P("If you're presented with a wildcard you must complete the instructions otherwise stated. "
                            "These cards can appear at any moment during the game!"),
                     html.P("Save your progress!", style={"margin-top": "20px"}, className="p-short p-bold"),
-                    html.P("Couldn't manage to go through all the cards in one session? Save your progress by clicking on the "
-                           "'Save progress' button at the bottom of the page and load the game next time to pick up exactly "
-                           "where you left off."),
+                    html.P("Couldn't manage to go through all the cards in one session? Save your progress by clicking "
+                           "on the 'Save progress' button at the bottom of the page and load the game next time to "
+                           "pick up exactly where you left off."),
                     html.P("Have fun!", style={"margin-top": "20px"}, className="p-short p-bold"),
                 ],
                 id="div-wnrs-instruction",
@@ -1186,8 +1208,8 @@ def wnrs_tab(app):
                     dcc.Textarea(
                         id="input-wnrs-suggestion2",
                         value="",
-                        placeholder="(Optional) Additional comments or feedback, include your contact details if you expect "
-                        "a reply!",
+                        placeholder="(Optional) Additional comments or feedback, include your contact details if you "
+                                    "expect a reply!",
                         style={"width": "70%"},
                     ),
                     html.Br(),
@@ -1271,7 +1293,8 @@ def wnrs_tab(app):
                             ),
                             html.Div(
                                 [
-                                    html.Span(["Cann Edition", html.Sup("Drinking", className="blinker")], className="span-short"),
+                                    html.Span(["Cann Edition", html.Sup("Drinking", className="blinker")],
+                                              className="span-short"),
                                     html.Img(src=app.get_asset_url("info.svg"), id="cann-help"),
                                     dbc.Tooltip(
                                         wnrs_information["Crossover"]["Cann Edition"]["description"],
@@ -1287,7 +1310,8 @@ def wnrs_tab(app):
                             ),
                             html.Div(
                                 [
-                                    html.Span(["Valentino Edition", html.Sup("Reflection", className="blinker")],className="span-short"),
+                                    html.Span(["Valentino Edition", html.Sup("Reflection", className="blinker")],
+                                              className="span-short"),
                                     html.Img(src=app.get_asset_url("info.svg"), id="valentino-help"),
                                     dbc.Tooltip(
                                         wnrs_information["Crossover"]["Valentino Edition"]["description"],
@@ -1428,7 +1452,8 @@ def wnrs_tab(app):
                             ),
                             html.Div(
                                 [
-                                    html.Span(["Existential Crisis Edition", html.Sup("Mine", className="blinker")], className="span-short"),
+                                    html.Span(["Existential Crisis Edition", html.Sup("Mine", className="blinker")],
+                                              className="span-short"),
                                     html.Img(src=app.get_asset_url("info.svg"), id="crisis-help"),
                                     dbc.Tooltip(
                                         wnrs_information["Single-Player"]["Existential Crisis Edition"]["description"],
@@ -1578,7 +1603,11 @@ def wnrs_tab(app):
                                             html.P(id="wnrs-prompt"),
                                             html.P(id="wnrs-reminder-text"),
                                             html.P(id="wnrs-reminder"),
-                                            html.P(["We're Not Really Strangers", html.Br(), html.Br()], id="wnrs-deck"),
+                                            html.P(
+                                                [
+                                                    "We're Not Really Strangers", html.Br(), html.Br()
+                                                ],
+                                                id="wnrs-deck"),
                                         ],
                                         style={
                                             "position": "relative",
@@ -1668,7 +1697,7 @@ def contact_tab():
                 html.Button("Send", id="button-contact-ok"),
                 html.P(id="contact-reply"),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             )
         ]
     )
@@ -1684,7 +1713,7 @@ def image_edit_tab(app):
                 html.P("Step 1: Upload an image (optional)"),
                 html.P("Step 2: Start drawing!"),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             html.Div(
                 [
@@ -1736,7 +1765,7 @@ def image_edit_tab(app):
                                 id="div-image-output",
                             ),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-large-full",
+                        className="custom-div-large-full custom-div-left custom-div-dark",
                     ),
                     # Right item
                     html.Div(
@@ -1770,7 +1799,7 @@ def image_edit_tab(app):
                                 style={"border": "none", "overflow": "hidden"},
                             ),
                         ],
-                        className="custom-div-center custom-div-space-above custom-div-smaller",
+                        className="custom-div-smaller custom-div-center",
                     ),
                     # Bottom item
                     html.Div(id="image-result"),
@@ -1788,7 +1817,7 @@ def keyboard_tab():
             html.Div([
                 html.P("Ideally, users can play the keyboard here. Im still figuring out how to make it work."),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
             ),
             # html.Button('C note', id='button_music')
         ]
@@ -1805,7 +1834,13 @@ def sample_tab():
                 html.P("Step 1: "),
                 html.P("Step 2: "),
             ],
-                className="custom-div-instruction"
+                className="custom-div-instruction custom-div-left"
+            ),
+            html.Div(
+                [
+                    # html.P('Left component',),
+                ],
+                className="custom-div-instruction2 custom-div-left custom-div-dark"
             ),
             html.Div(
                 [
@@ -1814,14 +1849,14 @@ def sample_tab():
                         [
                             # html.P('Left component',),
                         ],
-                        className="custom-div-dark custom-div-left custom-div-space-above custom-div-small",
+                        className="custom-div-small custom-div-left custom-div-dark",
                     ),
                     # Right item
                     html.Div(
                         [
                             # html.P('Right component')
                         ],
-                        className="custom-div-center custom-div-large",
+                        className="custom-div-large custom-div-center",
                     ),
                 ],
                 className="custom-container",

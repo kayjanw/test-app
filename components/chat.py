@@ -117,23 +117,6 @@ class ChatAnalyzer:
         return processed_df, text_df
 
     @staticmethod
-    def get_message_info_by_sender(processed_df):
-        """Generate table of statistics of chat
-
-        Args:
-            processed_df (pandas DataFrame): statistics of chat
-
-        Returns:
-            (list)
-        """
-        # Generate table for UI
-        message_info_table = generate_datatable(
-            processed_df, max_rows=len(processed_df)
-        )
-        results = [html.P("Chat Breakdown"), message_info_table]
-        return results
-
-    @staticmethod
     def get_distribution_of_messages_by_hour(text_df):
         """Get distribution of messages by time sent (grouped on daily level)
 

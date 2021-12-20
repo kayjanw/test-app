@@ -13,6 +13,7 @@ from components.helper import (
     violin_plot,
     dcc_loading,
     parse_data,
+    generate_datatable,
     get_summary_statistics,
     encode_df,
     decode_df,
@@ -47,6 +48,12 @@ from layouts import (
 
 
 def register_callbacks(app, print_function):
+    inline_style = {"display": "inline-block"}
+    flex_style = {"display": "flex"}
+    hide_style = {"display": "none"}
+    show_button_style = {"background-color": "#BE9B89"}
+    hide_button_style = {"background-color": "#F0E3DF"}
+
     @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
     @print_callback(print_function)
     def display_page(pathname):
@@ -193,7 +200,9 @@ def register_callbacks(app, print_function):
             y_value = None
         return x_value, y_value
 
-    @app.callback([Output("change-result", "children"),
+    @app.callback([Output("change-result-error", "children"),
+                   Output("div-change-result", "style"),
+                   Output("change-result", "children"),
                    Output("graph-change-result", "figure")],
                   [Input("button-change-ok", "n_clicks")],
                   [State("intermediate-change-result", "data"),
@@ -214,27 +223,37 @@ def register_callbacks(app, print_function):
             y_max (int): maximum value for y-axis, could be None or empty string
 
         Returns:
-            2-element tuple
+            4-element tuple
 
+            - (list): div result of change calculator error (if any)
+            - (dict): updated style of change calculator div
             - (list): div result of change calculator
             - (dict): graphical result of change calculator
         """
+        result_error = []
+        style = hide_style
         result = []
         fig = {}
         if trigger:
             if "df" in records and x_col is not None and y_col is not None and x_col != y_col:
+                result_error = [return_message["scroll_down"]]
+                style = inline_style
                 df = decode_df(records["df"])
                 df = ChangeCalculator().compute_change(df, x_col, x_max, y_col, y_max)
-                result_table = get_summary_statistics(df, [x_col, y_col])
-                result = [result_table, result_download_button(app, df)]
+                result_table = get_summary_statistics(df, [x_col, y_col], dark=False)
+                result = [
+                    html.H5("Summary Statistics"),
+                    result_table,
+                    result_download_button(app, df)
+                ]
                 fig = ChangeCalculator().get_scatter_plot(df, x_col, y_col)
             elif "df" not in records:
-                result = [return_message["file_not_uploaded"]]
+                result_error = [return_message["file_not_uploaded"]]
             elif x_col is None or y_col is None:
-                result = [return_message["change_axis"]]
+                result_error = [return_message["change_axis"]]
             elif x_col == y_col:
-                result = [return_message["change_columns"]]
-        return result, fig
+                result_error = [return_message["change_columns"]]
+        return result_error, style, result, fig
 
     @app.callback([Output("dropdown-changes-worksheet", "options"),
                    Output("changes-select-worksheet", "style"),
@@ -305,8 +324,10 @@ def register_callbacks(app, print_function):
             data.append(dict(column="", max=""))
         return data
 
-    @app.callback([Output("changes-result", "children"),
-                   Output("changes-result", "style"),
+    @app.callback([Output("changes-result-error", "children"),
+                   Output("div-changes-result", "style"),
+                   Output("changes-result", "children"),
+                   Output("graph-changes-boxplot", "figure"),
                    Output("graph-changes-result", "children")],
                   [Input("button-changes-ok", "n_clicks")],
                   [State("intermediate-changes-result", "data"),
@@ -323,17 +344,19 @@ def register_callbacks(app, print_function):
             data (list): data of table that stores comparison column information
 
         Returns:
-            3-element tuple
+            4-element tuple
 
+            - (list): div result of change calculator 2 error (if any)
             - (list): div result of change calculator 2
             - (dict): style of div result of change calculator 2
             - (dict): graphical result of change calculator 2
         """
-        summary = []
-        style = {"display": "none"}
+        result_error = []
+        style = hide_style
+        result = []
+        fig_box = {}
         graph = []
         if trigger:
-            style = {"display": "block"}
             list_of_tuples = [
                 (row["column"], row["max"])
                 for row in data
@@ -342,6 +365,8 @@ def register_callbacks(app, print_function):
             ]
             cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
             if "df" in records and len(list_of_tuples):
+                result_error = [return_message["scroll_down"]]
+                style = inline_style
                 df = decode_df(records["df"])
                 df = ChangeCalculator().compute_changes(
                     df, col_identifier, list_of_tuples
@@ -349,25 +374,24 @@ def register_callbacks(app, print_function):
                 if len(df):
                     df2 = ChangeCalculator().transpose_dataframe(df, col_identifier, cols)
                     result_table = get_summary_statistics(df, cols)
-                    instructions_box, fig_box = ChangeCalculator().get_box_plot(app, df, cols)
+                    fig_box = ChangeCalculator().get_box_plot(app, df, cols)
                     instructions_line, fig_line = ChangeCalculator().get_line_plot(app, df2)
-                    summary = (
-                        ["Summary statistics:", result_table]
-                        + instructions_box
-                        + [dcc.Graph(figure=fig_box)]
-                    )
-                    graph = instructions_line + [dcc.Graph(figure=fig_line, id="changes-result-graph")]
+                    result = [
+                        html.H5("Summary Statistics"),
+                        result_table
+                    ]
+                    graph = instructions_line + [dcc.Graph(figure=fig_line, id="graph-changes-line")]
                 elif not len(df):
-                    summary = [return_message["change_numeric"]]
+                    result_error = [return_message["change_numeric"]]
             elif "df" not in records:
-                summary = [return_message["file_not_uploaded"]]
+                result_error = [return_message["file_not_uploaded"]]
             elif not len(list_of_tuples):
-                summary = [return_message["change_columns_empty"]]
-        return summary, style, graph
+                result_error = [return_message["change_columns_empty"]]
+        return result_error, style, result, fig_box, graph
 
-    @app.callback(Output("changes-result-graph", "figure"),
-                  [Input("changes-result-graph", "hoverData")],
-                  [State("changes-result-graph", "figure")])
+    @app.callback(Output("graph-changes-line", "figure"),
+                  [Input("graph-changes-line", "hoverData")],
+                  [State("graph-changes-line", "figure")])
     @print_callback(print_function)
     def update_changes_hover(hover_data, figure):
         """Update layout of plotly graph on hover
@@ -431,7 +455,9 @@ def register_callbacks(app, print_function):
                     upload_message = [return_message["wrong_format_json"]]
         return upload_message, storage
 
-    @app.callback([Output("chat-result", "children"),
+    @app.callback([Output("chat-result-error", "children"),
+                   Output("div-chat-result", "style"),
+                   Output("chat-result", "children"),
                    Output("graph-chat-result-day", "figure"),
                    Output("graph-chat-result-hour", "figure"),
                    Output("chat-result-wordcloud", "children")],
@@ -446,28 +472,38 @@ def register_callbacks(app, print_function):
             contents (str): intermediate data stored in dcc.Store
 
         Returns:
-            3-element tuple
+            6-element tuple
 
-            - (list): chat analyzer result
+            - (list): div result of chat analyzer error (if any)
+            - (dict): updated style of chat analyzer div
+            - (list): div result of chat analyzer
             - (dict): graphical result 1 of chat analyzer
             - (dict): graphical result 2 of chat analyzer
+            - (list): graphical result 3 of chat analyzer
         """
+        result_error = []
+        style = hide_style
         result = []
         fig1 = {}
         fig2 = {}
         fig3 = []
         if trigger:
             if not contents:
-                result = [return_message["file_not_uploaded"]]
+                result_error = [return_message["file_not_uploaded"]]
             else:
+                style = inline_style
                 data = parse_data(contents, "json")
                 chat = ChatAnalyzer(data=data)
                 processed_df, text_df = chat.process_chat()
-                result = chat.get_message_info_by_sender(processed_df)
+                message_info_table = generate_datatable(processed_df, max_rows=len(processed_df), dark=False)
+                result = [
+                    html.H5("Chat Breakdown"),
+                    message_info_table
+                ]
                 fig1 = chat.get_time_series_hour_plot(text_df)
                 fig2 = chat.get_time_series_day_plot(text_df)
                 fig3 = chat.get_word_cloud(text_df)
-        return result, fig1, fig2, fig3
+        return result_error, style, result, fig1, fig2, fig3
 
     @app.callback([Output("table-trip-landmark", "data"),
                    Output("table-trip-landmark", "style_table"),
@@ -643,9 +679,9 @@ def register_callbacks(app, print_function):
                 upload_message = [return_message["wrong_file_type"]]
         return upload_message, storage
 
-    @app.callback([Output("event-result", "children"),
-                   Output("event-output", "children"),
-                   Output("event-output", "style")],
+    @app.callback([Output("event-result-error", "children"),
+                   Output("div-event-result", "style"),
+                   Output("div-event-result", "children")],
                   [Input("button-event-ok", "n_clicks")],
                   [State("intermediate-event-result", "data"),
                    State("input-event-group", "value"),
@@ -669,23 +705,23 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (list): div result of event planner upload result
-            - (list): updated content of output div
-            - (dict): updated style of results div
+            - (list): div result of event planner error (if any)
+            - (dict): updated style of event planner div
+            - (list): div result of event planner
         """
+        result_error = []
+        style = hide_style
         result = []
-        output = []
-        style = {"display": "none"}
         if trigger:
             if "df" in records:
                 df = decode_df(records["df"])
                 event = records["event"]
-                result, output, style = EventPlanner().process_result(
+                result_error, result, style = EventPlanner().process_result(
                     df, event, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
                 )
             else:
-                result = [return_message["file_not_uploaded"]]
-        return result, output, style
+                result_error = [return_message["file_not_uploaded"]]
+        return result_error, style, result
 
     @app.callback([Output("div-rng-item", "style"),
                    Output("div-rng-group", "style"),
@@ -716,36 +752,32 @@ def register_callbacks(app, print_function):
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-            show_style = {"display": "flex"}
-            hide_style = {"display": "none"}
-            show_button_style = {"background-color": "#BE9B89"}
-            hide_button_style = {"background-color": "#F0E3DF"}
             if not item_button_style:
                 item_button_style = {}
             if not group_button_style:
                 group_button_style = {}
             if ctx == "button-rng-item-ok":
-                item_style.update(show_style)
+                item_style.update(flex_style)
                 item_button_style.update(show_button_style)
                 group_style.update(hide_style)
                 group_button_style.update(hide_button_style)
             elif ctx == "button-rng-group-ok":
                 item_style.update(hide_style)
                 item_button_style.update(hide_button_style)
-                group_style.update(show_style)
+                group_style.update(flex_style)
                 group_button_style.update(show_button_style)
         return item_style, group_style, item_button_style, group_button_style
 
-    @app.callback([Output("rng-result", "children"),
-                   Output("rng-output", "children"),
-                   Output("rng-output", "style")],
+    @app.callback([Output("rng-result-error", "children"),
+                   Output("div-rng-result", "style"),
+                   Output("div-rng-result", "children")],
                   [Input("button-rng-ok", "n_clicks")],
                   [State("input-rng", "value"),
                    State("input-rng-item", "value"),
                    State("input-rng-group", "value"),
                    State("div-rng-item", "style"),
                    State("div-rng-group", "style"),
-                   State("rng-output", "style")])
+                   State("div-rng-result", "style")])
     @print_callback(print_function)
     def update_rng_result(trigger, text, n_items, n_groups, item_style, group_style, style):
         """Update and display random generator results
@@ -762,13 +794,13 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (list): div result of event planner upload result
-            - (list): updated content of output div
-            - (dict): updated style of results div
+            - (list): div result of random generator error (if any)
+            - (dict): updated style of random generator div
+            - (list): div result of random generator
         """
+        result_error = []
+        style = hide_style
         result = []
-        output = []
-        style = {"display": "none"}
         if trigger:
             task = None
             if item_style["display"] == "flex":
@@ -776,12 +808,12 @@ def register_callbacks(app, print_function):
             elif group_style["display"] == "flex":
                 task = "group"
             if text and task:
-                result, output, style = RandomGenerator().process_result(text, n_items, n_groups, task, style)
+                result_error, result, style = RandomGenerator().process_result(text, n_items, n_groups, task, style)
             elif not text:
-                result = [return_message["input_empty"]]
+                result_error = [return_message["input_empty"]]
             elif not task:
-                result = [return_message["rng_task_empty"]]
-        return result, output, style
+                result_error = [return_message["rng_task_empty"]]
+        return result_error, style, result
 
     @app.callback([Output("div-wnrs-selection", "style"),
                    Output("div-wnrs-instruction", "style"),
@@ -820,10 +852,6 @@ def register_callbacks(app, print_function):
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-            show_style = {"display": "inline-block"}
-            hide_style = {"display": "none"}
-            show_button_style = {"background-color": "#BE9B89"}
-            hide_button_style = {"background-color": "#F0E3DF"}
             if not selection_button_style:
                 selection_button_style = {}
             if not instruction_button_style:
@@ -835,7 +863,7 @@ def register_callbacks(app, print_function):
                     selection_style.update(hide_style)
                     selection_button_style.update(hide_button_style)
                 else:
-                    selection_style.update(show_style)
+                    selection_style.update(inline_style)
                     selection_button_style.update(show_button_style)
                 instruction_style.update(hide_style)
                 instruction_button_style.update(hide_button_style)
@@ -846,7 +874,7 @@ def register_callbacks(app, print_function):
                     instruction_style.update(hide_style)
                     instruction_button_style.update(hide_button_style)
                 else:
-                    instruction_style.update(show_style)
+                    instruction_style.update(inline_style)
                     instruction_button_style.update(show_button_style)
                 selection_style.update(hide_style)
                 selection_button_style.update(hide_button_style)
@@ -857,7 +885,7 @@ def register_callbacks(app, print_function):
                     suggestion_style.update(hide_style)
                     suggestion_button_style.update(hide_button_style)
                 else:
-                    suggestion_style.update(show_style)
+                    suggestion_style.update(inline_style)
                     suggestion_button_style.update(show_button_style)
                 selection_style.update(hide_style)
                 selection_button_style.update(hide_button_style)

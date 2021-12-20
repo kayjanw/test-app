@@ -426,6 +426,7 @@ class TripPlanner:
             duration_hour = int(np.floor(duration / 3600))
             duration_min = int(np.floor((duration % 3600) / 60))
             answer = [
+                html.H5("Shortest Path"),
                 html.P(
                     f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"
                 ),
