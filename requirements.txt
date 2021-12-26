@@ -69,7 +69,7 @@ zope.interface==5.1.0
 #Email
 python-http-client==3.3.2
 sendgrid==6.8.1
-starkbank-ecdsa==1.1.1
+starkbank-ecdsa==2.0.1
 
 #MBTI (tensorflow)
 #astunparse==1.6.3
