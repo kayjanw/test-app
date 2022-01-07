@@ -8,7 +8,7 @@ from dash import html
 from sklearn.feature_extraction.text import CountVectorizer
 from wordcloud import WordCloud as wc
 
-from components.helper import generate_datatable, create_fig_from_diagram
+from components.helper import create_fig_from_diagram
 
 pd.options.mode.chained_assignment = None
 
