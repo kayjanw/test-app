@@ -27,10 +27,9 @@ try:
 except ModuleNotFoundError:
     pass
 
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
+# import nltk
+# nltk.download('punkt')
+# nltk.download('wordnet')
 
 
 class MBTI:
