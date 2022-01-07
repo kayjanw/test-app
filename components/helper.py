@@ -59,11 +59,11 @@ def print_callback(print_function):
     """
 
     def decorator(func):
-        def wrapper(*args, **kw):
+        def wrapper(*args, **kwargs):
             if print_function:
                 print(f"==== Function called: {func.__name__}")
                 print(f"Triggered by {dash.callback_context.triggered[0]['prop_id']}")
-            result = func(*args, **kw)
+            result = func(*args, **kwargs)
             return result
 
         return wrapper
