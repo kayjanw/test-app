@@ -26,5 +26,5 @@ RUN chgrp -R 0 /test-app \
     && pip install -r requirements.txt
 EXPOSE $PORT
 
-RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
+RUN python3 -c "import nltk; nltk.data.path.append('/test-app/nltk_data/'); nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
 CMD gunicorn app:server --bind 0.0.0.0:$PORT --workers 2 --worker-class gevent --preload
