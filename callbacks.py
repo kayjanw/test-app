@@ -360,8 +360,7 @@ def register_callbacks(app, print_function):
             list_of_tuples = [
                 (row["column"], row["max"])
                 for row in data
-                if row["column"] is not ""
-                if row["column"] is not None
+                if row["column"]
             ]
             cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
             if "df" in records and len(list_of_tuples):
