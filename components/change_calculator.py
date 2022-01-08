@@ -61,7 +61,7 @@ class ChangeCalculator:
             (pandas DataFrame)
         """
         # Convert to float, normalize if necessary
-        if col_max is not None and col_max is not "":
+        if col_max:
             df[col] = df[col].astype(float) / col_max * 100
             df[col] = np.round(df[col], 2)
         else:
@@ -196,7 +196,7 @@ class ChangeCalculator:
             (pandas DataFrame)
         """
         df2 = df[cols].transpose()
-        if col_identifier is not "" and col_identifier is not None:
+        if col_identifier:
             df2.columns = df[col_identifier]
         return df2
 
