@@ -2,3 +2,7 @@ __pycache__
 *.pyc
 env/
 db.sqlite3
+
+docs/
+sample_data/
+*.log
