@@ -127,20 +127,26 @@ h1, h2, h3, h4, h5, h6, p, span, details, li, textarea {
 }
 
 h1 {
-  font-family: Playfair Display;
-  font-size: 45px;
-  color: #BE9B89;
+    font-family: Playfair Display;
+    font-size: 45px;
+    color: #BE9B89;
 }
 
 /* Subtitle */
 h3 {
-  color: #BE9B89;
+    color: #BE9B89;
 }
 
 h4 {
-  -webkit-text-fill-color: white;
-  -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: #BE9B89;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: #BE9B89;
+}
+
+h6 {
+    color: #BE9B89;
+    font-size: 12px;
+    line-height: 0;
 }
 
 /* Links
@@ -450,9 +456,15 @@ button[disabled] {
 }
 
 @keyframes blinking {
-  50% {
-    opacity: 50%;
-  }
+    50% {
+        opacity: 50%;
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
 }
 
 /* Custom id
