@@ -138,11 +138,11 @@ scikit-image==0.17.2
 tifffile==2020.6.3
 
 #For autopep8
-#autopep8==1.5.3
+#autopep8==1.6.0
 #black==21.12b0
 #mypy-extensions==0.4.3
-#pycodestyle==2.6.0
-#toml==0.10.1
+#pycodestyle==2.8.0
+#toml==0.10.2
 
 #For git conda
 #menuinst==1.4.16

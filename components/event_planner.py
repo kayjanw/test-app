@@ -86,7 +86,8 @@ class EventPlanner:
                 criteria_list_tmp = EventPlanner().get_criteria_list(other_cols_values, n=n_groups)
                 criteria_list = []
                 for idx, group in enumerate(list_of_array):
-                    criteria_list.append(np.vstack([list(np.array(criteria_list_tmp)[:, idx])] * len(group)))
+                    criteria_list.append(
+                        np.vstack([list(np.array(criteria_list_tmp)[:, idx])] * len(group)))
                 criteria_list = np.vstack(criteria_list).T
             else:
                 criteria_list = EventPlanner().get_criteria_list(other_cols_values, n=len(people))
@@ -103,7 +104,8 @@ class EventPlanner:
                         np.random.shuffle(group_copy)
                         if np.sum(group == group_copy) == 0:
                             shuffle = False
-                    tmp_df = pd.DataFrame({"Group": idx + 1, "Person": group, "Partner": group_copy})
+                    tmp_df = pd.DataFrame(
+                        {"Group": idx + 1, "Person": group, "Partner": group_copy})
                 else:
                     tmp_df = pd.DataFrame({"Group": idx + 1, "Person": group})
                 if len(output_df):
@@ -146,7 +148,8 @@ class EventPlanner:
             if n <= len(criteria):
                 criteria_list.append(criteria[:n])
             else:
-                criteria_list.append(criteria + list(np.random.choice(criteria, n - len(criteria))))
+                criteria_list.append(
+                    criteria + list(np.random.choice(criteria, n - len(criteria))))
         return criteria_list
 
     @staticmethod
