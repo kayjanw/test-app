@@ -227,8 +227,8 @@ def about_me_tab(app):
                 ),
                 html.P(
                     [
-                        "This website is made with Dash, deployed using Gunicorn and hosted on Heroku, view code "
-                        "documentation on Sphinx ",
+                        "This website is made with Dash, deployed using Gunicorn with Docker and hosted on Heroku, "
+                        "view code documentation on Sphinx ",
                         html.A("here", href="http://kayjan.readthedocs.io", target="_blank"),
                     ]
                 )
