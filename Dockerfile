@@ -27,5 +27,5 @@ RUN chgrp -R 0 /test-app \
 EXPOSE $PORT
 
 RUN python3 -c "import nltk; nltk.data.path.append('/test-app/nltk_data/'); nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
-COPY ./root/nltk_data /test-app/nltk_data
+COPY /root/nltk_data /test-app/nltk_data
 CMD gunicorn app:server --bind 0.0.0.0:$PORT --workers 2 --worker-class gevent --preload
