@@ -165,7 +165,8 @@ class WNRS:
         """
         color_map = {
             "B1": ("#000000", "#FFFFFF"),  # black card white font (race edition)
-            "B2": ("#FAFAEE", "#000000"),  # white card black font (race, bumble, voting, own it edition)
+            # white card black font (race, bumble, voting, own it edition)
+            "B2": ("#FAFAEE", "#000000"),
             "Bl": ("#4598BA", "#000000"),  # blue card black font (bumble edition)
             "Br1": ("#4D1015", "#FFFFFF"),  # brown card white font (valentino edition)
             "Br2": ("#FAFAEE", "#4D1015"),  # white card brown font (valentino edition)
