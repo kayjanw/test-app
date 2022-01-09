@@ -33,6 +33,7 @@ There are many other ways to structure your codes, but I find this implementatio
   │   ├── source
   │   ├── make.bat
   │   └── Makefile
+  ├── tests
   ├── app.py
   ├── callbacks.py
   ├── layouts.py
