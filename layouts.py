@@ -219,6 +219,8 @@ def about_me_tab(app):
                         html.A("linkedin", href="https://www.linkedin.com/in/kayjan/", target="_blank"),
                         " / ",
                         html.A("formal website", href="http://kayjan.github.io/", target="_blank"),
+                        ". I write on Medium too! Follow me ",
+                        html.A("here", href="https://kayjanwong.medium.com/", target="_blank"),
                     ]
                 ),
                 html.P(
