@@ -189,9 +189,9 @@ def about_me_tab(app):
                 html.P(
                     [
                         "Just someone who loves coding, and believes coding should make our lives easier. ",
-                        "If you like this, "
+                        "If you like this, ",
                         html.A("buy me a coffee", href="https://www.buymeacoffee.com/kayjan", target="_blank"),
-                        "!"
+                        "!",
                     ]
                 ),
                 html.Div(
