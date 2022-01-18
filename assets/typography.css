@@ -144,7 +144,7 @@ h4 {
 }
 
 h6 {
-    color: #BE9B89;
+    display: inline-block;
     font-size: 12px;
     line-height: 0;
 }
@@ -463,8 +463,20 @@ button[disabled] {
 
 .footer {
     position: absolute;
-    bottom: 2px;
-    right: 5px;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 0 5px 0 0;
+    border: 0;
+    margin: 0;
+    background-color: #202029;
+    color: #BE9B89;
+    text-align: right;
+    z-index: 9999;
+}
+
+.footer a {
+    color: #BE9B89;
 }
 
 /* Custom id

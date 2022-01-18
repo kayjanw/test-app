@@ -22,6 +22,14 @@ def main_layout():
             dcc.Location(id="url", refresh=False),
             html.Div(id="page-content"),
             html.Div(id="blank-output"),
+            html.P(
+                [
+                    "If you like this, ",
+                    html.A("buy me a coffee ☕ ", href="https://www.buymeacoffee.com/kayjan", target="_blank"),
+                    "! ",
+                    html.H6(f"(v{__version__})"),
+                ],
+                className="footer"),
         ]
     )
 
@@ -65,8 +73,7 @@ def sidebar_dropdown():
                 colors={"background": "#202029"},
                 persistence=True,
                 persistence_type="memory",
-            ),
-            html.Div(html.H6(f"v{__version__}"), className="footer")
+            )
         ]
     )
 
@@ -91,8 +98,7 @@ def sidebar_dropdown_event():
                 colors={"background": "#202029"},
                 persistence=True,
                 persistence_type="memory",
-            ),
-            html.Div(html.H6(f"v{__version__}"), className="footer")
+            )
         ]
     )
 
@@ -186,14 +192,7 @@ def about_me_tab(app):
         [
             content_header("About me"),
             html.Div([
-                html.P(
-                    [
-                        "Just someone who loves coding, and believes coding should make our lives easier. ",
-                        "If you like this, ",
-                        html.A("buy me a coffee ☕️", href="https://www.buymeacoffee.com/kayjan", target="_blank"),
-                        "!",
-                    ]
-                ),
+                html.P("Just someone who loves coding, and believes coding should make our lives easier."),
                 html.Div(
                     [
                         html.Img(src=app.get_asset_url("data-analytics.svg")),
