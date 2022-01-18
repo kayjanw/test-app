@@ -286,14 +286,14 @@ button[disabled] {
     margin: 0;
     top: 0;
     height: 100%;
-    width: 100%;
+    width: 80%;
     background-color: rgb(190, 0, 28);
     opacity: 50%;
     border: 8px dashed black;
 }
 
 .div-with-invisible-button button[id$="-back"] {
-    left: -50%;
+    left: -30%;
 }
 
 .div-with-invisible-button button[id$="-next"] {
@@ -535,9 +535,10 @@ button[disabled] {
 }
 
 #tab-content {
-    height: 95vh;
+    display: inline-block;
     padding-left: 1.5vw;
     padding-right: 1.5vw;
+    padding-bottom: 20px;
 }
 
 #violin-plot .js-plotly-plot .plotly .cursor-pointer,
