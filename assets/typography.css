@@ -286,14 +286,14 @@ button[disabled] {
     margin: 0;
     top: 0;
     height: 100%;
-    width: 80%;
+    width: 70%;
     background-color: rgb(190, 0, 28);
     opacity: 50%;
     border: 8px dashed black;
 }
 
 .div-with-invisible-button button[id$="-back"] {
-    left: -30%;
+    left: -20%;
 }
 
 .div-with-invisible-button button[id$="-next"] {
