@@ -18,6 +18,10 @@ meta_tags = [
         "Automate repetitive data analysis tasks and perform predictions and optimizations",
     },
     {
+        "property": "viewport",
+        "content": "width=device-width, initial-scale=1"
+    },
+    {
         "property": "og:type",
         "content": "website"
     },
