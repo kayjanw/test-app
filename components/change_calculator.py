@@ -16,7 +16,7 @@ class ChangeCalculator:
             col (str/list): column(s) to remove non-integer values from
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         # Handle string values
         if isinstance(col, str):
@@ -39,7 +39,7 @@ class ChangeCalculator:
             col (str/list): column(s) to remove null values from
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         # Handle string values
         if isinstance(col, str):
@@ -58,7 +58,7 @@ class ChangeCalculator:
             col_max (int): maximum value for column, could be None or empty string
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         # Convert to float, normalize if necessary
         if col_max:
@@ -82,7 +82,7 @@ class ChangeCalculator:
             y_max (int): maximum value for y-axis, could be None or empty string
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         df = df.copy()
         df = self.remove_string_values(df, [x_col, y_col])
@@ -104,7 +104,7 @@ class ChangeCalculator:
             y_col (str): column for x-axis
 
         Returns:
-            (dict)
+            dict
         """
         x_min, x_max = df[x_col].min(), df[x_col].max()
         y_min, y_max = df[y_col].min(), df[y_col].max()
@@ -173,7 +173,7 @@ class ChangeCalculator:
             list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         df = df.copy()
         for col, col_max in list_of_tuples:
@@ -193,7 +193,7 @@ class ChangeCalculator:
             cols (list): column names, which will be the new DataFrame index
 
         Returns:
-            (pandas DataFrame)
+            pandas DataFrame
         """
         df2 = df[cols].transpose()
         if col_identifier:
@@ -211,7 +211,7 @@ class ChangeCalculator:
             cols (list): list of column(s) for results summary
 
         Returns:
-            (dict): graphical result of change calculator 2
+            dict: graphical result of change calculator 2
         """
         color = [
             "hsl(" + str(h) + ",50%,70%)"
@@ -254,8 +254,8 @@ class ChangeCalculator:
         Returns:
             2-element tuple
 
-            - (list): instructions for interacting with figure
-            - (dict): graphical result of change calculator 2
+            - list: instructions for interacting with figure
+            - dict: graphical result of change calculator 2
         """
         trace = []
         instructions = [
@@ -317,8 +317,8 @@ class ChangeCalculator:
         Returns:
             2-element tuple
 
-            - (list): instructions for interacting with figure
-            - (dict): graphical result of change calculator 2
+            - list: instructions for interacting with figure
+            - dict: graphical result of change calculator 2
         """
         cols = [row[0] for row in list_of_tuples]
         trace = go.Parcoords(

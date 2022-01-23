@@ -61,8 +61,10 @@ class ChatAnalyzer:
         """Process chat to get statistics and intermediate message data
 
         Returns:
-            process_text (pandas DataFrame): statistics of chat
-            text_df (pandas DataFrame): text message data
+        2-element tuple
+
+        - process_text (pandas DataFrame): statistics of chat
+        - text_df (pandas DataFrame): text message data
         """
         # Filtering
         message_df = self.df[(self.df["type"] == "message")]
@@ -124,7 +126,7 @@ class ChatAnalyzer:
             text_df (pandas DataFrame): text message data
 
         Returns:
-            (pandas DataFrame): data with columns (sender, hour, counts)
+            pandas DataFrame: data with columns (sender, hour, counts)
         """
         hour_df = text_df.groupby(["from", "hour"]).size().reset_index()
         hour_df.columns = ["sender", "hour", "counts"]
@@ -139,7 +141,7 @@ class ChatAnalyzer:
             text_df (pandas DataFrame): text message data
 
         Returns:
-            (pandas DataFrame): data with columns (sender, day, counts)
+            pandas DataFrame: data with columns (sender, day, counts)
         """
         day_df = text_df.groupby(["from", "day"]).size().reset_index()
         day_df.columns = ["sender", "day", "counts"]
@@ -153,7 +155,7 @@ class ChatAnalyzer:
             text_df (pandas DataFrame): all chat data where type is message
 
         Returns:
-            (dict)
+            dict
         """
         data = []
         hour_df = self.get_distribution_of_messages_by_hour(text_df)
@@ -184,7 +186,7 @@ class ChatAnalyzer:
             text_df (pandas DataFrame): text message data
 
         Returns:
-            (dict)
+            dict
         """
         data = []
         day_df = self.get_distribution_of_messages_by_day(text_df)
@@ -232,7 +234,7 @@ class ChatAnalyzer:
             plotly (bool): whether image should be returned to console, defaults to True (hidden from console)
 
         Returns:
-            (html.Img)
+            html.Img
         """
         image = html.Img()
         try:

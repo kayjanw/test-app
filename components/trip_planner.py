@@ -35,7 +35,7 @@ class TripPlanner:
             data (list): data of landmark table
 
         Returns:
-            (list)
+            list
         """
         data = data[:-1]
         return data
@@ -50,7 +50,7 @@ class TripPlanner:
             lon (float): longitude information
 
         Returns:
-            (str)
+            str
         """
         url = f"https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={self.GOOGLE_API_KEY}"
         print(url)
@@ -73,7 +73,7 @@ class TripPlanner:
             data (list): data of landmark table
 
         Returns:
-            (list)
+            list
         """
         # Initialize landmark name if not provided
         if landmark is None or landmark == "":
@@ -109,7 +109,7 @@ class TripPlanner:
             data (list): data of landmark table
 
         Returns:
-            (dict)
+            dict
         """
         if len(data):
             style_table = {
@@ -130,7 +130,7 @@ class TripPlanner:
             children (list): current map children
 
         Returns:
-            (list): updated map children
+            list: updated map children
         """
         children = [children[0]] + [
             dl.Marker(
@@ -157,8 +157,8 @@ class TripPlanner:
         Returns:
             2-element tuple
 
-            - (numpy.ndarray): distance matrix
-            - (numpy.ndarray): duration matrix
+            - numpy.ndarray: distance matrix
+            - numpy.ndarray: duration matrix
         """
         n = len(data)
         distance_matrix = np.zeros((n, n))
@@ -198,7 +198,7 @@ class TripPlanner:
             distance_matrix (numpy.ndarray): inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            list: contains tuple of routes
         """
         import pyomo.environ as pyEnv
         import pyutilib.subprocess.GlobalData
@@ -279,7 +279,7 @@ class TripPlanner:
             distance_matrix (numpy.ndarray): inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            list: contains tuple of routes
         """
         idx = 0
         visited_landmarks = [idx]
@@ -308,7 +308,7 @@ class TripPlanner:
             landmark (int): new landmark to visit
 
         Returns:
-            (list of list)
+            list of list
         """
         permutation = []
         for idx in range(1, len(routes_list) + 1):
@@ -325,7 +325,7 @@ class TripPlanner:
             routes_list (list): existing routes
 
         Returns:
-            (list of tuple)
+            list of tuple
         """
         return [
             (routes_list[idx], routes_list[idx + 1])
@@ -341,7 +341,7 @@ class TripPlanner:
             distance_matrix (numpy.ndarray): inter-distance between locations
 
         Returns:
-            (float)
+            float
         """
         distance_km = np.round(
             np.sum([distance_matrix[route] for route in routes]) / 1000, 2
@@ -355,7 +355,7 @@ class TripPlanner:
             distance_matrix (numpy.ndarray): inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            list: contains tuple of routes
         """
         idx = 0
         idx_next = distance_matrix[0][1:].argmin() + 1
@@ -399,7 +399,7 @@ class TripPlanner:
             data (list): data of landmark table
 
         Returns:
-            (str/list)
+            str/list
         """
         if len(data) < 2:
             return html.P("Please input more landmarks")

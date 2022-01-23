@@ -63,7 +63,7 @@ def register_callbacks(app, print_function):
             pathname (str): url path
 
         Returns:
-            (html.Div)
+            html.Div
         """
         if pathname == "/":
             return app_1()
@@ -94,9 +94,9 @@ def register_callbacks(app, print_function):
         Returns:
         3-element tuple
 
-        - (dict): updated style of sidebar
-        - (dict): updated style of banner
-        - (dict): updated style of tab content
+        - dict: updated style of sidebar
+        - dict: updated style of banner
+        - dict: updated style of tab content
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         if ctx == "button-sidebar":
@@ -140,10 +140,10 @@ def register_callbacks(app, print_function):
         Returns:
             4-element tuple
 
-            - (list): list of worksheets options
-            - (dict): updated style of worksheet selector dropdown
-            - (dash_table.DataTable/list): sample of uploaded data
-            - (dict): intermediate data stored in dcc.Store
+            - list: list of worksheets options
+            - dict: updated style of worksheet selector dropdown
+            - dash_table.DataTable/list: sample of uploaded data
+            - dict: intermediate data stored in dcc.Store
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
@@ -161,8 +161,8 @@ def register_callbacks(app, print_function):
         Returns:
             2-element tuple
 
-            - (list): column selector dropdown options for x-axis
-            - (list): column selector dropdown options for y-axis
+            - list: column selector dropdown options for x-axis
+            - list: column selector dropdown options for y-axis
         """
         if "df" in records:
             df = decode_df(records["df"])
@@ -189,8 +189,8 @@ def register_callbacks(app, print_function):
         Returns:
             2-element tuple
 
-            - (str): updated column selector dropdown value for x-axis
-            - (str): updated column selector dropdown value for y-axis
+            - str: updated column selector dropdown value for x-axis
+            - str: updated column selector dropdown value for y-axis
         """
         x_options_list = [opt["label"] for opt in x_options]
         y_options_list = [opt["label"] for opt in y_options]
@@ -225,10 +225,10 @@ def register_callbacks(app, print_function):
         Returns:
             4-element tuple
 
-            - (list): div result of change calculator error (if any)
-            - (dict): updated style of change calculator div
-            - (list): div result of change calculator
-            - (dict): graphical result of change calculator
+            - list: div result of change calculator error (if any)
+            - dict: updated style of change calculator div
+            - list: div result of change calculator
+            - dict: graphical result of change calculator
         """
         result_error = []
         style = hide_style
@@ -276,10 +276,10 @@ def register_callbacks(app, print_function):
         Returns:
             4-element tuple
 
-            - (list): list of worksheets options
-            - (dict): updated style of worksheet selector dropdown
-            - (dash_table.DataTable/list): sample of uploaded data
-            - (dict): intermediate data stored in dcc.Store
+            - list: list of worksheets options
+            - dict: updated style of worksheet selector dropdown
+            - dash_table.DataTable/list: sample of uploaded data
+            - dict: intermediate data stored in dcc.Store
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
@@ -297,8 +297,8 @@ def register_callbacks(app, print_function):
         Returns:
             2-element tuple
 
-            - (list): column selector dropdown options for table
-            - (list): column selector dropdown options for column indicators
+            - list: column selector dropdown options for table
+            - list: column selector dropdown options for column indicators
         """
         if "df" in records:
             df = decode_df(records["df"])
@@ -318,7 +318,7 @@ def register_callbacks(app, print_function):
             data (list): data of table that stores comparison column information
 
         Returns:
-            (list): updated data of table that stores comparison column information
+            list: updated data of table that stores comparison column information
         """
         if trigger:
             data.append(dict(column="", max=""))
@@ -346,10 +346,10 @@ def register_callbacks(app, print_function):
         Returns:
             4-element tuple
 
-            - (list): div result of change calculator 2 error (if any)
-            - (list): div result of change calculator 2
-            - (dict): style of div result of change calculator 2
-            - (dict): graphical result of change calculator 2
+            - list: div result of change calculator 2 error (if any)
+            - list: div result of change calculator 2
+            - dict: style of div result of change calculator 2
+            - dict: graphical result of change calculator 2
         """
         result_error = []
         style = hide_style
@@ -400,7 +400,7 @@ def register_callbacks(app, print_function):
             figure (dict): figure for plot
 
         Returns:
-            (dict): updated figure for plot
+            dict: updated figure for plot
         """
         for trace in figure["data"]:
             trace["line"]["width"] = 1
@@ -434,8 +434,8 @@ def register_callbacks(app, print_function):
         Returns:
             2-element tuple
 
-            - (list): message of upload status
-            - (str): intermediate data stored in dcc.Store
+            - list: message of upload status
+            - str: intermediate data stored in dcc.Store
         """
         upload_message = ""
         storage = {}
@@ -473,12 +473,12 @@ def register_callbacks(app, print_function):
         Returns:
             6-element tuple
 
-            - (list): div result of chat analyzer error (if any)
-            - (dict): updated style of chat analyzer div
-            - (list): div result of chat analyzer
-            - (dict): graphical result 1 of chat analyzer
-            - (dict): graphical result 2 of chat analyzer
-            - (list): graphical result 3 of chat analyzer
+            - list: div result of chat analyzer error (if any)
+            - dict: updated style of chat analyzer div
+            - list: div result of chat analyzer
+            - dict: graphical result 1 of chat analyzer
+            - dict: graphical result 2 of chat analyzer
+            - list: graphical result 3 of chat analyzer
         """
         result_error = []
         style = hide_style
@@ -526,9 +526,9 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (list): updated data of table that displays landmarks information
-            - (dict): style of table that displays landmarks information
-            - (str): reset name of next landmark to be added
+            - list: updated data of table that displays landmarks information
+            - dict: style of table that displays landmarks information
+            - str: reset name of next landmark to be added
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         if ctx == "button-trip-remove":
@@ -554,7 +554,7 @@ def register_callbacks(app, print_function):
             children (list): current map children
 
         Returns:
-            (list): updated map children
+            list: updated map children
         """
         children = TripPlanner().get_map_from_table(data, children)
         return children
@@ -573,7 +573,7 @@ def register_callbacks(app, print_function):
             data (list): data of table that displays landmarks information
 
         Returns:
-            (str/list)
+            str/list
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         result = ""
@@ -596,7 +596,7 @@ def register_callbacks(app, print_function):
             input_text (str): input text
 
         Returns:
-            (str)
+            str
         """
         try:
             n_words = MBTI().get_num_words(input_text)
@@ -622,9 +622,9 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (dict): graphical result of mbti model
-            - (dict): updated style of graphical result of mbti model
-            - (list): result of mbti model
+            - dict: graphical result of mbti model
+            - dict: updated style of graphical result of mbti model
+            - list: result of mbti model
         """
         plot = {}
         style["display"] = "none"
@@ -658,8 +658,8 @@ def register_callbacks(app, print_function):
         Returns:
             2-element tuple
 
-            - (list): message of upload status
-            - (str): intermediate data stored in dcc.Store
+            - list: message of upload status
+            - str: intermediate data stored in dcc.Store
         """
         upload_message = ""
         storage = {}
@@ -704,9 +704,9 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (list): div result of event planner error (if any)
-            - (dict): updated style of event planner div
-            - (list): div result of event planner
+            - list: div result of event planner error (if any)
+            - dict: updated style of event planner div
+            - list: div result of event planner
         """
         result_error = []
         style = hide_style
@@ -747,7 +747,7 @@ def register_callbacks(app, print_function):
             group_button_style (dict): current style of group button
 
         Returns:
-            (dict): updated style of item and group button
+            dict: updated style of item and group button
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -793,9 +793,9 @@ def register_callbacks(app, print_function):
         Returns:
             3-element tuple
 
-            - (list): div result of random generator error (if any)
-            - (dict): updated style of random generator div
-            - (list): div result of random generator
+            - list: div result of random generator error (if any)
+            - dict: updated style of random generator div
+            - list: div result of random generator
         """
         result_error = []
         style = hide_style
@@ -847,7 +847,7 @@ def register_callbacks(app, print_function):
             suggestion_button_style (dict): current style of card suggestion button
 
         Returns:
-            (dict): updated style of card selection, instruction and card suggestion div and button
+            dict: updated style of card selection, instruction and card suggestion div and button
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
@@ -909,7 +909,7 @@ def register_callbacks(app, print_function):
             additional_info (str): input for additional information
 
         Returns:
-            (str): feedback for email sent
+            str: feedback for email sent
         """
         reply = ""
         if dash.callback_context.triggered:
@@ -938,7 +938,7 @@ def register_callbacks(app, print_function):
                 current_style (dict): current style of button
 
             Returns:
-                (dict): updated style of button
+                dict: updated style of button
             """
             if dash.callback_context.triggered:
                 if current_style is None:
@@ -991,7 +991,7 @@ def register_callbacks(app, print_function):
             *args (dict): current style of all buttons
 
         Returns:
-            (dict): updated style of all buttons
+            dict: updated style of all buttons
         """
         data = {}
         list_of_deck = []
@@ -1054,7 +1054,7 @@ def register_callbacks(app, print_function):
             button_next (dict): current opacity for next button
 
         Returns:
-            (str, str, str, dict, str, str, str, dict, dict)
+            str, str, str, dict, str, str, str, dict, dict
         """
         card_prompt, card_deck, card_counter, data_new = [card_prompt, "", ""], "", "", {}
         next_card = 0
@@ -1139,7 +1139,7 @@ def register_callbacks(app, print_function):
             contact_content (str): input for email body
 
         Returns:
-            (str): feedback for email sent
+            str: feedback for email sent
         """
         reply = ""
         if dash.callback_context.triggered:
@@ -1170,7 +1170,7 @@ def register_callbacks(app, print_function):
             contents: contents of data uploaded, triggers callback
 
         Returns:
-            (str): contents of data uploaded
+            str: contents of data uploaded
         """
         if dash.callback_context.triggered:
             contents_type, _ = contents.split(";")
@@ -1187,7 +1187,7 @@ def register_callbacks(app, print_function):
             n_clicks: trigger on button click
 
         Returns:
-            (str)
+            str
         """
         strings = ['{"objects":[ ]}', '{"objects":[]}']
         if n_clicks:
@@ -1208,7 +1208,7 @@ def register_callbacks(app, print_function):
             value: value of brush size
 
         Returns:
-            (int): updated value of brush size
+            int: updated value of brush size
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         if ctx == "button-image-minus":
@@ -1227,7 +1227,7 @@ def register_callbacks(app, print_function):
             value: input value of brush size
 
         Returns:
-            (int): updated value of brush size
+            int: updated value of brush size
         """
         return value
 
@@ -1241,7 +1241,7 @@ def register_callbacks(app, print_function):
             value: input value of brush colour
 
         Returns:
-            (str): updated value of brush colour
+            str: updated value of brush colour
         """
         if isinstance(value, dict):
             return value["hex"]
@@ -1257,7 +1257,7 @@ def register_callbacks(app, print_function):
     #         string: json data of canvas
     #
     #     Returns:
-    #         (list)
+    #         list
     #     """
     #     import numpy as np
     #     from skimage import color, io, filters, measure
@@ -1304,7 +1304,7 @@ def register_callbacks(app, print_function):
             current_content (html.Div): current tab content
 
         Returns:
-            (html.Div)
+            html.Div
         """
         available_tabs = [children[idx]["props"]["value"] for idx in range(len(children))]
         if tab not in available_tabs:
