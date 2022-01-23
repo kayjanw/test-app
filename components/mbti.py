@@ -131,7 +131,7 @@ class MBTI:
             lemma: Lemmatizer (defaults to nltk WordNetLemmatizer)
 
         Returns:
-            (str): processed text
+            str: processed text
         """
         # Split sentences
         text = re.sub("\|\|\|", " ", text)
@@ -173,7 +173,7 @@ class MBTI:
             a) Reads in saved data
 
         Returns:
-            (pandas DataFrame): processed data
+            pandas DataFrame: processed data
         """
         if not os.path.isfile(self.path_save_data):
             print("Read and save data file")
@@ -247,7 +247,7 @@ class MBTI:
         """Load and return saved vectorizer
 
         Returns:
-            (sklearn CountVectorizer)
+            sklearn CountVectorizer
         """
         # vect = pd.read_pickle(path_vect)
         vocabulary = pd.read_pickle(self.path_vect)
@@ -275,7 +275,7 @@ class MBTI:
             params (dict): specifies parameters for tokenizer, defaults to None
 
         Returns:
-            (keras Tokenizer)
+            keras Tokenizer
         """
         if params is None:
             params = dict(
@@ -290,7 +290,7 @@ class MBTI:
         """Load and return saved tokenizer
 
         Returns:
-            (keras Tokenizer)
+            keras Tokenizer
         """
         tokenizer = pd.read_pickle(self.path_tokenizer)
         return tokenizer
@@ -321,7 +321,7 @@ class MBTI:
             path_model (str): location and file name of saved model
 
         Returns:
-            (model)
+            model
         """
         scale_pos_weight1 = len(y_train_series) / sum(y_train_series)
         scale_pos_weight2 = (len(y_train_series) - sum(y_train_series)) / sum(
@@ -357,7 +357,7 @@ class MBTI:
             path_model (str): location and file name of saved model
 
         Returns:
-            (model)
+            model
         """
         EI_model = {
             "learning_rate": 0.1,
@@ -417,7 +417,7 @@ class MBTI:
             path_model (str): location and file name of saved model
 
         Returns:
-            (model)
+            model
         """
         model = tf.keras.Sequential(
             [
@@ -444,7 +444,7 @@ class MBTI:
             path_model (str): location and file name of saved model
 
         Returns:
-            (model)
+            model
         """
         model = tf.keras.models.load_model(path_model)
         return model
@@ -554,7 +554,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            (scipy csr_matrix): vectorized input_text
+            scipy csr_matrix: vectorized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -572,7 +572,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            (numpy ndarray): tokenized input_text
+            numpy ndarray: tokenized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -626,7 +626,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            (int)
+            int
         """
         if not self.use_tf:
             vector_input = self.vectorize_new_input(input_text)
@@ -646,7 +646,7 @@ class MBTI:
             predictions (list): list of model prediction probabilities
 
         Returns:
-            (dict)
+            dict
         """
         y_data = [
             "Introversion-Extroversion",
@@ -731,7 +731,7 @@ class MBTI:
             personality (str): MBTI personality results, to retrieve detailed results
 
         Returns:
-            (list)
+            list
         """
         mbti_dict = {
             "INTJ": {

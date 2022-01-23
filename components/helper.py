@@ -55,7 +55,7 @@ def print_callback(print_function):
         print_function (bool): indicates whether to print callback
 
     Returns:
-        (function)
+        function
     """
 
     def decorator(func):
@@ -77,7 +77,7 @@ def violin_plot():
     Adds plotly.graph_objects charts for violin plot at initial loading page
 
     Returns:
-        (dcc.Graph)
+        dcc.Graph
     """
     np.random.seed(1)
     points = (
@@ -146,7 +146,7 @@ def dcc_loading(children, dark_bg=True):
         dark_bg (bool): indicates whether loading icon is on dark background
 
     Returns:
-        (dcc.Loading)
+        dcc.Loading
     """
     if dark_bg:
         color = "white"
@@ -164,10 +164,10 @@ def table_css(dark=True):
     Returns:
         4-element tuple
 
-        - (dict): Style for table header
-        - (dict): Style for table cell
-        - (dict): Style for table
-        - (list): CSS component
+        - dict: Style for table header
+        - dict: Style for table cell
+        - dict: Style for table
+        - list: CSS component
     """
     if dark:
         background_color = "black"
@@ -204,7 +204,7 @@ def get_worksheet(contents):
         contents (str): contents of data uploaded
 
     Returns:
-        (list): list of worksheet names
+        list: list of worksheet names
     """
     content_type, content_string = contents.split(",")
     decoded = base64.b64decode(content_string)
@@ -254,7 +254,7 @@ def generate_datatable(df, max_rows=3, dark=True):
         dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
-        (dash_table.DataTable)
+        dash_table.DataTable
     """
     style_header, style_cell, style_table, css = table_css(dark=dark)
     return dash_table.DataTable(
@@ -277,7 +277,7 @@ def get_summary_statistics(df, cols, dark=True):
         dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
-        (dash_table.DataTable)
+        dash_table.DataTable
     """
     param_name = [
         "Number of values",
@@ -321,7 +321,7 @@ def encode_df(df):
         df (pandas DataFrame): input DataFrame
 
     Returns:
-        (str)
+        str
     """
     df_ser = df.to_json(orient="split", date_format="iso")
     return df_ser
@@ -348,7 +348,7 @@ def encode_dict(d):
         d (dict): input dictionary
 
     Returns:
-        (str)
+        str
     """
     return json.dumps(d)
 
@@ -378,10 +378,10 @@ def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
     Returns:
         4-element tuple
 
-        - (list): list of worksheets options
-        - (dict): updated style of worksheet selector dropdown
-        - (dash_table.DataTable/list): sample of uploaded data
-        - (dict): intermediate data stored in dcc.Store
+        - list: list of worksheets options
+        - dict: updated style of worksheet selector dropdown
+        - dash_table.DataTable/list: sample of uploaded data
+        - dict: intermediate data stored in dcc.Store
     """
     worksheet_options = []
     sample_table = []
@@ -431,7 +431,7 @@ def result_download_button(app, df, dark=True):
         dark (bool): if table is loaded in dark background, defaults to True
 
     Returns:
-        (html.Form)
+        html.Form
     """
     if dark:
         class_name = "button-dark image-dark-bg"
@@ -465,7 +465,7 @@ def result_download_text(input_text):
         input_text (str): text to display
 
     Returns:
-        (html.Form)
+        html.Form
     """
     return html.Form(
         [
@@ -499,7 +499,7 @@ def valid_email(email):
         email (str): email address
 
     Returns:
-        (bool) indicator if email is valid
+        bool: indicator if email is valid
     """
     regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     if re.fullmatch(regex, email):
@@ -519,7 +519,7 @@ def send_email(
         recipient (str): email recipient to receive email
 
     Returns:
-        (bool) indicator if email is sent
+        bool: indicator if email is sent
     """
     try:
         SENDGRID_API_KEY = ENV["SENDGRID_API_KEY"]
@@ -552,7 +552,7 @@ def get_excel_from_df(df):
         df (pandas DataFrame): input DataFrame
 
     Returns:
-        (BytesIO)
+        io.BytesIO
     """
     buf = io.BytesIO()
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
@@ -567,7 +567,7 @@ def get_excel_demo():
     """Create demo excel for Event Planner tab
 
     Returns:
-        (BytesIO)
+        io.BytesIO
     """
     buf = io.BytesIO()
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
@@ -607,7 +607,7 @@ def create_json_from_dict(d):
         d (dict): input dictionary
 
     Returns:
-        (BytesIO)
+        io.BytesIO
     """
     buf = io.BytesIO(json.dumps(d).encode())
     return buf
@@ -622,7 +622,7 @@ def create_fig_from_diagram(diagram, id, close_all=True):
         close_all (bool): whether to close image
 
     Returns:
-        (html.Img)
+        html.Img
     """
     out_img = io.BytesIO()
     diagram.savefig(out_img, format="png", transparent=True)
