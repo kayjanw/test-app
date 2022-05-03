@@ -1191,7 +1191,7 @@ def wnrs_tab(app):
             html.Br(),
             html.Div(
                 [
-                    html.P("How to Play (2-6 players)", style={"margin-top": "20px"}, className="p-short p-bold"),
+                    html.P("How to Play (2-6 players)", className="p-short p-bold"),
                     html.P("The game is played on a single device. Sit in a circle with device in middle of all "
                            "players. Select the decks you want to play with and the levels. Players take turn to "
                            "answer questions shown on the screen and tap on the right side of card to proceed to next "
@@ -1207,13 +1207,12 @@ def wnrs_tab(app):
                 ],
                 id="div-wnrs-instruction",
                 className="custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%"},
+                style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
                 [
                     html.P(
                         "You can contribute too! Suggest prompts that you would like to see in the game",
-                        style={"margin-top": "20px"},
                     ),
                     dcc.Input(
                         id="input-wnrs-suggestion",
@@ -1234,13 +1233,13 @@ def wnrs_tab(app):
                 ],
                 id="div-wnrs-suggestion",
                 className="custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%"},
+                style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
                 [
                     html.Div(
                         [
-                            html.P("Main Deck", style={"margin-top": "20px"}),
+                            html.P("Main Deck"),
                             html.Div(
                                 [
                                     html.Span("Main Deck", className="span-short"),
@@ -1606,7 +1605,7 @@ def wnrs_tab(app):
                 ],
                 id="div-wnrs-selection",
                 className="custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%"},
+                style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
                 [
