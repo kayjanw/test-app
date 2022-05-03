@@ -132,7 +132,7 @@ imageio==2.8.0
 kiwisolver==1.2.0
 matplotlib==3.3.4
 networkx==2.4
-Pillow==9.0.0
+Pillow==9.0.1
 PyWavelets==1.1.1
 scikit-image==0.17.2
 tifffile==2020.6.3
