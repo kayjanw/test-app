@@ -55,7 +55,8 @@ class EventPlanner:
             ]
         elif 2 * n_groups > len(people):
             result = [
-                f"Error: Too many groups specified for {len(people)} people, please reduce number of groups"
+                f"Error: Too many groups specified for {len(people)} people, "
+                f"please reduce number of groups"
             ]
 
         # Assertion for email
@@ -105,9 +106,9 @@ class EventPlanner:
                         if np.sum(group == group_copy) == 0:
                             shuffle = False
                     tmp_df = pd.DataFrame(
-                        {"Group": idx + 1, "Person": group, "Partner": group_copy})
+                        {"Group": [idx + 1] * len(group), "Person": group, "Partner": group_copy})
                 else:
-                    tmp_df = pd.DataFrame({"Group": idx + 1, "Person": group})
+                    tmp_df = pd.DataFrame({"Group": [idx + 1] * len(group), "Person": group})
                 if len(output_df):
                     output_df = output_df.append(tmp_df)
                 else:

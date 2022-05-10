@@ -231,7 +231,8 @@ class ChatAnalyzer:
         Args:
             text_df (pandas DataFrame): text message data
             max_words (int): maximum words to consider in word cloud
-            plotly (bool): whether image should be returned to console, defaults to True (hidden from console)
+            plotly (bool): whether image should be returned to console,
+                defaults to True (hidden from console)
 
         Returns:
             html.Img

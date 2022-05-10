@@ -5,7 +5,8 @@ from dash import html
 
 
 class ChangeCalculator:
-    """The ChangeCalculator object contains functions used for Change Calculator and Change Calculator 2 tab"""
+    """The ChangeCalculator object contains functions used for
+    Change Calculator and Change Calculator 2 tab"""
 
     @staticmethod
     def remove_string_values(df, col):
@@ -71,7 +72,8 @@ class ChangeCalculator:
     def compute_change(self, df, x_col, x_max, y_col, y_max):
         """Compute change between two periods
 
-        Performs removing non-integer values, removing null rows and conversion of values to float, then adds in 'Change'
+        Performs removing non-integer values, removing null rows and
+        conversion of values to float, then adds in 'Change'
         column as difference between y_col and x_col
 
         Args:
@@ -170,7 +172,8 @@ class ChangeCalculator:
         Args:
             df (pandas DataFrame): input DataFrame
             col_identifier (str): column for index
-            list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+            list_of_tuples (list): data from table that contains tuple of
+                column(s) and their maximum value(s)
 
         Returns:
             pandas DataFrame
@@ -262,8 +265,9 @@ class ChangeCalculator:
             html.Img(src=app.get_asset_url("info.svg")),
             html.Span(
                 [
-                    "Hover over line to see more information, Single click on legend to hide entry, Double click "
-                    "on legend to highlight entry"
+                    "Hover over line to see more information, "
+                    "Single click on legend to hide entry, "
+                    "Double click on legend to highlight entry"
                 ]
             ),
         ]
@@ -312,7 +316,8 @@ class ChangeCalculator:
         Args:
             df (pandas DataFrame): input DataFrame
             col_identifier (str): column for index
-            list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
+            list_of_tuples (list): data from table that contains
+                tuple of column(s) and their maximum value(s)
 
         Returns:
             2-element tuple
@@ -360,11 +365,13 @@ class ChangeCalculator:
             ),
         )
         instructions = [
-            "Drag along vertical axis line to select a subset of data (i.e. constrained selection), slide the "
-            "constrained selection to toggle the selected range",
+            "Drag along vertical axis line to select a subset of data "
+            "(i.e. constrained selection), slide the constrained selection "
+            "to toggle the selected range",
             html.Br(),
             "Click anywhere along the vertical axis line to remove constrained selection",
             html.Br(),
-            "Slide the axis label to toggle the width between vertical axis lines or even change the axis order",
+            "Slide the axis label to toggle the width between vertical axis lines "
+            "or even change the axis order",
         ]
         return instructions, dict(data=[trace], layout=layout)
