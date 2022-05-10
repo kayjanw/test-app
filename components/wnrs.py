@@ -112,7 +112,7 @@ class WNRS:
             list_of_deck = ["Main Deck 1"]
         self.get_all_playable_cards(list_of_deck)
         index = list(self.playing_cards["Deck"].keys())
-        random.shuffle(index)
+        index = self.shuffle(index)
         self.index = index
 
     def load_game(self, list_of_deck, pointer, index):
@@ -259,7 +259,24 @@ class WNRS:
         """
         past_index = self.index[: self.pointer + 1].copy()
         remaining_index = self.index[self.pointer + 1:].copy()
-        random.shuffle(remaining_index)
+        remaining_index = self.shuffle(remaining_index)
         new_index = [*past_index, *remaining_index]
         self.index = new_index
         return self.get_next_card()
+
+    def shuffle(self, index):
+        """Shuffle algorithm to preserve 'final' cards location
+
+        Args:
+            index (list): list of index to be shuffled
+
+        Returns:
+            index (list): shuffled index
+        """
+        index_final_cards = [k for k, v in self.playing_cards["Deck"].items() if v.endswith("Final")]
+        index_final_cards = list(set(index_final_cards).intersection(set(index)))
+        index_without_final = list(set(index) - set(index_final_cards))
+        random.shuffle(index_final_cards)
+        random.shuffle(index_without_final)
+        index = index_without_final + index_final_cards
+        return index

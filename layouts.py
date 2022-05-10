@@ -199,7 +199,7 @@ def about_me_tab(app):
                         html.P("Data Analytics", className="p-short p-bold"),
                         html.P(": Using uploaded data, visualize results graphically", className="p-short"),
                     ],
-                    className="custom-div-space-below",
+                    className="custom-div-small-space-below",
                 ),
                 html.Div(
                     [
@@ -207,7 +207,7 @@ def about_me_tab(app):
                         html.P("Optimization", className="p-short p-bold"),
                         html.P(": Solve computationally expensive math problems", className="p-short"),
                     ],
-                    className="custom-div-space-below",
+                    className="custom-div-small-space-below",
                 ),
                 html.Div(
                     [
@@ -215,7 +215,7 @@ def about_me_tab(app):
                         html.P("Prediction", className="p-short p-bold"),
                         html.P(": Use machine learning methods to churn out predictions", className="p-short"),
                     ],
-                    className="custom-div-space-below",
+                    className="custom-div-small-space-below",
                 ),
                 html.Br(),
                 html.Br(),
@@ -272,90 +272,95 @@ def change_tab(app):
             ),
             html.Div(
                 [
-                    dcc.Upload(
-                        [
-                            html.Img(src=app.get_asset_url("upload.svg")),
-                            html.Span("Drag and drop file here, or click to upload"),
-                        ],
-                        id="upload-change",
-                        multiple=False,
-                        className="div-with-image div-with-image-left small-image image-dark-bg",
-                    ),
                     html.Div(
                         [
-                            html.P("Select worksheet:"),
-                            html.P(
+                            dcc.Upload(
                                 [
-                                    dcc.Dropdown(
-                                        id="dropdown-change-worksheet",
-                                        placeholder="Select worksheet",
-                                        clearable=False,
-                                        style={
-                                            "width": "100%",
-                                            "color": "black",
-                                        },
+                                    html.Img(src=app.get_asset_url("upload.svg")),
+                                    html.Span("Drag and drop file here, or click to upload"),
+                                ],
+                                id="upload-change",
+                                multiple=False,
+                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Select worksheet:"),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-change-worksheet",
+                                                placeholder="Select worksheet",
+                                                clearable=False,
+                                                style={
+                                                    "width": "100%",
+                                                    "color": "black",
+                                                },
+                                            ),
+                                        ],
+                                        style={"width": "40%"},
                                     ),
                                 ],
-                                style={"width": "40%"},
+                                id="change-select-worksheet",
+                                className="custom-div-flex",
+                                style={"display": "none"},
                             ),
-                        ],
-                        id="change-select-worksheet",
-                        className="custom-div-flex",
-                        style={"display": "none"},
-                    ),
-                    html.Div(
-                        id="change-sample-data",
-                        className="custom-div-space-below",
-                    ),
-                    html.Div(
-                        [
-                            html.P("Select x-axis:"),
-                            html.P(
+                            html.Div(
+                                id="change-sample-data",
+                                className="custom-div-small-space-below",
+                            ),
+                            html.Div(
                                 [
-                                    dcc.Dropdown(
-                                        id="dropdown-change-x",
-                                        placeholder="Select column",
-                                        clearable=False,
-                                        style={
-                                            "width": "100%",
-                                            "color": "black",
-                                        },
+                                    html.P("Select x-axis:"),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-change-x",
+                                                placeholder="Select column",
+                                                clearable=False,
+                                                style={
+                                                    "width": "100%",
+                                                    "color": "black",
+                                                },
+                                            ),
+                                        ],
+                                        style={"width": "35%"},
                                     ),
+                                    html.P("out of"),
+                                    dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
                                 ],
-                                style={"width": "35%"},
+                                className="custom-div-flex",
                             ),
-                            html.P("out of"),
-                            dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
-                        ],
-                        className="custom-div-flex",
-                    ),
-                    html.Div(
-                        [
-                            html.P("Select y-axis:"),
-                            html.P(
+                            html.Div(
                                 [
-                                    dcc.Dropdown(
-                                        id="dropdown-change-y",
-                                        placeholder="Select column",
-                                        clearable=False,
-                                        style={
-                                            "width": "100%",
-                                            "color": "black",
-                                        },
+                                    html.P("Select y-axis:"),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-change-y",
+                                                placeholder="Select column",
+                                                clearable=False,
+                                                style={
+                                                    "width": "100%",
+                                                    "color": "black",
+                                                },
+                                            ),
+                                        ],
+                                        style={"width": "35%"},
                                     ),
+                                    html.P("out of"),
+                                    dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
                                 ],
-                                style={"width": "35%"},
+                                className="custom-div-flex",
                             ),
-                            html.P("out of"),
-                            dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
+                            html.Button("OK", id="button-change-ok"),
+                            dcc.Store(id="intermediate-change-result", storage_type="memory"),
+                            dcc_loading(html.P(id="change-result-error"), dark_bg=True),
                         ],
-                        className="custom-div-flex",
+                        className="custom-div-small custom-div-left custom-div-dark",
                     ),
-                    html.Button("OK", id="button-change-ok"),
-                    dcc.Store(id="intermediate-change-result", storage_type="memory"),
-                    dcc_loading(html.P(id="change-result-error"), dark_bg=True),
                 ],
-                className="custom-div-instruction2 custom-div-left custom-div-dark",
+                className="custom-container custom-div-space-above",
             ),
             html.Div(
                 [
@@ -404,7 +409,7 @@ def change_tab(app):
                     ),
                 ],
                 id="div-change-result",
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
                 style={
                     "display": "none"
                 }
@@ -463,65 +468,73 @@ def changes_tab(app):
             ),
             html.Div(
                 [
-                    dcc.Upload(
-                        [
-                            html.Img(src=app.get_asset_url("upload.svg")),
-                            html.Span("Drag and drop file here, or click to upload"),
-                        ],
-                        id="upload-changes",
-                        multiple=False,
-                        className="div-with-image div-with-image-left small-image image-dark-bg",
-                    ),
                     html.Div(
                         [
-                            html.P("Select worksheet:"),
-                            html.P(
+                            dcc.Upload(
                                 [
-                                    dcc.Dropdown(
-                                        id="dropdown-changes-worksheet",
-                                        placeholder="Select worksheet",
-                                        clearable=False,
-                                        style={
-                                            "width": "100%",
-                                            "color": "black",
-                                        },
+                                    html.Img(src=app.get_asset_url("upload.svg")),
+                                    html.Span("Drag and drop file here, or click to upload"),
+                                ],
+                                id="upload-changes",
+                                multiple=False,
+                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Select worksheet:"),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-changes-worksheet",
+                                                placeholder="Select worksheet",
+                                                clearable=False,
+                                                style={
+                                                    "width": "100%",
+                                                    "color": "black",
+                                                },
+                                            ),
+                                        ],
+                                        style={"width": "40%"},
                                     ),
                                 ],
-                                style={"width": "40%"},
+                                id="changes-select-worksheet",
+                                className="custom-div-flex",
+                                style={"display": "none"},
                             ),
-                        ],
-                        id="changes-select-worksheet",
-                        className="custom-div-flex",
-                        style={"display": "none"},
-                    ),
-                    html.Div(id="changes-sample-data"),
-                    dcc.Store(id="intermediate-changes-result", storage_type="memory"),
-                    html.Div(
-                        [
-                            html.P("Column identifier (i.e. Name):"),
-                            html.P(
+                            html.Div(
+                                id="changes-sample-data",
+                                className="custom-div-small-space-below"
+                            ),
+                            dcc.Store(id="intermediate-changes-result", storage_type="memory"),
+                            html.Div(
                                 [
-                                    dcc.Dropdown(
-                                        id="dropdown-changes-identifier",
-                                        placeholder="Select column",
-                                        clearable=False,
-                                        style={
-                                            "width": "100%",
-                                            "color": "black",
-                                        },
+                                    html.P("Column identifier (i.e. Name):"),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-changes-identifier",
+                                                placeholder="Select column",
+                                                clearable=False,
+                                                style={
+                                                    "width": "100%",
+                                                    "color": "black",
+                                                },
+                                            ),
+                                        ],
+                                        style={"width": "35%"},
                                     ),
                                 ],
-                                style={"width": "35%"},
+                                className="custom-div-flex",
                             ),
+                            get_changes_table(),
+                            html.Button("Add rows", id="button-changes-add"),
+                            html.Button("OK", id="button-changes-ok"),
+                            dcc_loading([html.P(id="changes-result-error")], dark_bg=True),
                         ],
-                        className="custom-div-flex",
+                        className="custom-div-small custom-div-left custom-div-dark",
                     ),
-                    get_changes_table(),
-                    html.Button("Add rows", id="button-changes-add"),
-                    html.Button("OK", id="button-changes-ok"),
-                    dcc_loading([html.P(id="changes-result-error")], dark_bg=True),
                 ],
-                className="custom-div-instruction2 custom-div-left custom-div-dark",
+                className="custom-container custom-div-space-above",
             ),
             html.Div(
                 [
@@ -554,7 +567,7 @@ def changes_tab(app):
                     ),
                 ],
                 id="div-changes-result",
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
                 style={
                     "display": "none"
                 }
@@ -582,21 +595,26 @@ def chat_tab(app):
             ),
             html.Div(
                 [
-                    dcc.Upload(
+                    html.Div(
                         [
-                            html.Img(src=app.get_asset_url("upload.svg")),
-                            html.Span("Drag and drop file here, or click to upload"),
+                            dcc.Upload(
+                                [
+                                    html.Img(src=app.get_asset_url("upload.svg")),
+                                    html.Span("Drag and drop file here, or click to upload"),
+                                ],
+                                id="upload-chat",
+                                multiple=False,
+                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                            ),
+                            html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
+                            html.Button("OK", id="button-chat-ok"),
+                            dcc_loading([html.P(id="chat-result-error")], dark_bg=True),
+                            dcc.Store(id="intermediate-chat-result", storage_type="memory"),
                         ],
-                        id="upload-chat",
-                        multiple=False,
-                        className="div-with-image div-with-image-left small-image image-dark-bg",
+                        className="custom-div-small custom-div-left custom-div-dark"
                     ),
-                    html.P([html.P(id="text-chat-confirm")], id="text-chat-loading"),
-                    html.Button("OK", id="button-chat-ok"),
-                    dcc_loading([html.P(id="chat-result-error")], dark_bg=True),
-                    dcc.Store(id="intermediate-chat-result", storage_type="memory"),
                 ],
-                className="custom-div-instruction2 custom-div-left custom-div-dark"
+                className="custom-container custom-div-space-above",
             ),
             html.Div(
                 [
@@ -633,7 +651,7 @@ def chat_tab(app):
                     ),
                 ],
                 id="div-chat-result",
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
                 style={
                     "display": "none"
                 }
@@ -734,7 +752,7 @@ def trip_tab(app):
                         className="custom-div-large custom-div-center",
                     ),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
         ]
     )
@@ -870,7 +888,7 @@ def mbti_tab():
                         className="custom-div-center custom-div-half",
                     ),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
         ]
     )
@@ -929,126 +947,132 @@ def event_tab(app):
             ),
             html.Div(
                 [
-                    dcc.Upload(
-                        [
-                            html.Img(src=app.get_asset_url("upload.svg")),
-                            html.Span(
-                                "Drag and drop file here, or click to upload"
-                            ),
-                        ],
-                        id="upload-event",
-                        multiple=False,
-                        className="div-with-image div-with-image-left small-image image-dark-bg",
-                    ),
-                    html.P(id="text-event-confirm"),
                     html.Div(
                         [
-                            html.P("Select number of groups:"),
-                            html.P(
+                            dcc.Upload(
                                 [
-                                    dcc.Input(
-                                        id="input-event-group",
-                                        type="number",
-                                        value=1,
-                                        min=1,
-                                        style={
-                                            "width": "100%",
-                                        },
+                                    html.Img(src=app.get_asset_url("upload.svg")),
+                                    html.Span(
+                                        "Drag and drop file here, or click to upload"
                                     ),
+                                ],
+                                id="upload-event",
+                                multiple=False,
+                                className="div-with-image div-with-image-left small-image image-dark-bg",
+                            ),
+                            html.P(id="text-event-confirm"),
+                            html.Div(
+                                [
+                                    html.P("Select number of groups:"),
+                                    html.P(
+                                        [
+                                            dcc.Input(
+                                                id="input-event-group",
+                                                type="number",
+                                                value=1,
+                                                min=1,
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            ),
+                                        ]
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-pair",
+                                                options=[
+                                                    {
+                                                        "label": "Pair participants up (i.e. for gift exchange)",
+                                                        "value": "pair",
+                                                    }
+                                                ],
+                                                value=["pair"],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    ),
+                                    html.P(
+                                        [
+                                            "Criteria should unique to",
+                                            dcc.RadioItems(
+                                                id="radio-event-criteria",
+                                                options=[
+                                                    {
+                                                        "label": "individual",
+                                                        "value": "individual",
+                                                    },
+                                                    {
+                                                        "label": "group",
+                                                        "value": "group",
+                                                    }
+                                                ],
+                                                value="individual",
+                                                style={
+                                                    "display": "flex"
+                                                }
+                                            )
+                                        ],
+                                        className="custom-div-flex"
+                                    ),
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-email",
+                                                options=[
+                                                    {
+                                                        "label": "Email individual results to recipients separately",
+                                                        "value": "email",
+                                                    }
+                                                ],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    ),
+                                    html.P(
+                                        [
+                                            dcc.Checklist(
+                                                id="checklist-event-display",
+                                                options=[
+                                                    {
+                                                        "label": "Hide results",
+                                                        "value": "hide",
+                                                    }
+                                                ],
+                                                style={
+                                                    "width": "100%",
+                                                },
+                                            )
+                                        ]
+                                    )
                                 ]
                             ),
+                            html.Br(),
+                            html.Button("OK", id="button-event-ok"),
+                            dcc.Store(
+                                id="intermediate-event-result", storage_type="memory"
+                            ),
+                            dcc_loading([html.P(id="event-result-error")], dark_bg=True),
                         ],
-                        className="custom-div-flex",
+                        className="custom-div-small-medium custom-div-left custom-div-dark"
                     ),
                     html.Div(
-                        [
-                            html.P(
-                                [
-                                    dcc.Checklist(
-                                        id="checklist-event-pair",
-                                        options=[
-                                            {
-                                                "label": "Pair participants up (i.e. for gift exchange)",
-                                                "value": "pair",
-                                            }
-                                        ],
-                                        value=["pair"],
-                                        style={
-                                            "width": "100%",
-                                        },
-                                    )
-                                ]
-                            ),
-                            html.P(
-                                [
-                                    "Criteria should unique to",
-                                    dcc.RadioItems(
-                                        id="radio-event-criteria",
-                                        options=[
-                                            {
-                                                "label": "individual",
-                                                "value": "individual",
-                                            },
-                                            {
-                                                "label": "group",
-                                                "value": "group",
-                                            }
-                                        ],
-                                        value="individual",
-                                        style={
-                                            "display": "flex"
-                                        }
-                                    )
-                                ],
-                                className="custom-div-flex"
-                            ),
-                            html.P(
-                                [
-                                    dcc.Checklist(
-                                        id="checklist-event-email",
-                                        options=[
-                                            {
-                                                "label": "Email individual results to recipients separately",
-                                                "value": "email",
-                                            }
-                                        ],
-                                        style={
-                                            "width": "100%",
-                                        },
-                                    )
-                                ]
-                            ),
-                            html.P(
-                                [
-                                    dcc.Checklist(
-                                        id="checklist-event-display",
-                                        options=[
-                                            {
-                                                "label": "Hide results",
-                                                "value": "hide",
-                                            }
-                                        ],
-                                        style={
-                                            "width": "100%",
-                                        },
-                                    )
-                                ]
-                            )
-                        ]
-                    ),
-                    html.Br(),
-                    html.Button("OK", id="button-event-ok"),
-                    dcc.Store(
-                        id="intermediate-event-result", storage_type="memory"
-                    ),
-                    dcc_loading([html.P(id="event-result-error")], dark_bg=True),
-                    html.P(
                         id="div-event-result",
                         style={"display": "none"},
+                        className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-div-instruction2 custom-div-left custom-div-dark"
-            )
+                className="custom-container custom-div-space-above custom-div-space-below",
+            ),
         ]
     )
 
@@ -1155,7 +1179,7 @@ def rng_tab():
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
         ]
     )
@@ -1673,7 +1697,7 @@ def wnrs_tab(app):
                         ]
                     ),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
                 style={
                     "text-align": "center",
                     "margin-bottom": 0,
@@ -1819,7 +1843,7 @@ def image_edit_tab(app):
                     # Bottom item
                     html.Div(id="image-result"),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
         ]
     )
@@ -1874,7 +1898,7 @@ def sample_tab():
                         className="custom-div-large custom-div-center",
                     ),
                 ],
-                className="custom-container",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
         ]
     )

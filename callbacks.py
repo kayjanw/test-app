@@ -720,7 +720,7 @@ def register_callbacks(app, print_function):
                 )
             else:
                 result_error = [return_message["file_not_uploaded"]]
-        return result_error, style, result
+        return html.P(result_error), style, result
 
     @app.callback([Output("div-rng-item", "style"),
                    Output("div-rng-group", "style"),
