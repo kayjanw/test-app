@@ -373,7 +373,7 @@ def register_callbacks(app, print_function):
                 if len(df):
                     df2 = ChangeCalculator().transpose_dataframe(df, col_identifier, cols)
                     result_table = get_summary_statistics(df, cols)
-                    fig_box = ChangeCalculator().get_box_plot(app, df, cols)
+                    fig_box = ChangeCalculator().get_box_plot(df, cols)
                     instructions_line, fig_line = ChangeCalculator().get_line_plot(app, df2)
                     result = [
                         html.H5("Summary Statistics"),

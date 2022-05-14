@@ -1,6 +1,12 @@
 from flask import request, send_file
 
-from components.helper import decode_df, decode_dict, get_excel_from_df, get_excel_demo, create_json_from_dict
+from components.helper import (
+    decode_df,
+    decode_dict,
+    get_excel_from_df,
+    get_excel_demo,
+    create_json_from_dict
+)
 
 
 def register_routes(app):

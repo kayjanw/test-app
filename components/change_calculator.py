@@ -25,8 +25,8 @@ class ChangeCalculator:
                 regex=True, to_replace=r"[^0-9.]", value=np.nan, inplace=True
             )
         elif isinstance(col, list):
-            for c in col:
-                df[c].replace(
+            for _col in col:
+                df[_col].replace(
                     regex=True, to_replace=r"[^0-9.]", value=np.nan, inplace=True
                 )
         return df
@@ -204,7 +204,7 @@ class ChangeCalculator:
         return df2
 
     @staticmethod
-    def get_box_plot(app, df, cols):
+    def get_box_plot(df, cols):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for box plot, visualizing summary statistics
@@ -275,7 +275,8 @@ class ChangeCalculator:
             df2.columns = range(len(df2.columns))
             instructions.append(html.Br())
             instructions.append(
-                "Note: Column identifier do not have unique entries, replaced legend with running numbers"
+                "Note: Column identifier do not have unique entries, "
+                "replaced legend with running numbers"
             )
         for col in df2.columns:
             trace.append(
