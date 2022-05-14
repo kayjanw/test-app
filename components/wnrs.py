@@ -273,7 +273,9 @@ class WNRS:
         Returns:
             index (list): shuffled index
         """
-        index_final_cards = [k for k, v in self.playing_cards["Deck"].items() if v.endswith("Final")]
+        index_final_cards = [
+            k for k, v in self.playing_cards["Deck"].items() if v.endswith("Final")
+        ]
         index_final_cards = list(set(index_final_cards).intersection(set(index)))
         index_without_final = list(set(index) - set(index_final_cards))
         random.shuffle(index_final_cards)

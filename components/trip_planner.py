@@ -52,7 +52,9 @@ class TripPlanner:
         Returns:
             str
         """
-        url = f"https://maps.googleapis.com/maps/api/geocode/json?address={lat},{lon}&key={self.GOOGLE_API_KEY}"
+        url = f"https://maps.googleapis.com/maps/api/geocode/json?" \
+              f"address={lat},{lon}" \
+              f"&key={self.GOOGLE_API_KEY}"
         print(url)
         try:
             page = requests.get(url).json()
@@ -167,8 +169,10 @@ class TripPlanner:
             for j in range(n):
                 if i != j:
                     url = (
-                        f"https://maps.googleapis.com/maps/api/distancematrix/json?&origins={data[i]['lat']},"
-                        f"{data[i]['lon']}&destinations={data[j]['lat']},{data[j]['lon']}&key={self.GOOGLE_API_KEY}"
+                        f"https://maps.googleapis.com/maps/api/distancematrix/json?"
+                        f"&origins={data[i]['lat']},{data[i]['lon']}"
+                        f"&destinations={data[j]['lat']},{data[j]['lon']}"
+                        f"&key={self.GOOGLE_API_KEY}"
                     )
                     try:
                         page = requests.get(url).json()
@@ -428,12 +432,14 @@ class TripPlanner:
             answer = [
                 html.H5("Shortest Path"),
                 html.P(
-                    f"Optimal route is {' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"
+                    f"Optimal route is "
+                    f"{' → '.join([landmarks[i] for i, j in routes])} → {landmarks[0]}"
                 ),
                 html.P(f"Distance: {distance_km} km"),
                 html.P(f"Duration: {duration_hour} hour(s), {duration_min} mins"),
                 html.P(
-                    "This assumes travel mode by driving, and actual duration may depend on traffic conditions"
+                    "This assumes travel mode by driving, "
+                    "and actual duration may depend on traffic conditions"
                 ),
             ]
         except Exception as e:

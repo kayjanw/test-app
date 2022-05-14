@@ -31,7 +31,9 @@ meta_tags = [
     },
     {
         "property": "og:description",
-        "content": "Automate repetitive data analysis tasks and perform predictions and optimizations",
+        "content":
+            "Automate repetitive data analysis tasks "
+            "and perform predictions and optimizations",
     },
     {
         "property": "og:image",
@@ -51,7 +53,9 @@ meta_tags = [
     },
     {
         "property": "twitter:description",
-        "content": "Automate repetitive data analysis tasks and perform predictions and optimizations",
+        "content":
+            "Automate repetitive data analysis tasks "
+            "and perform predictions and optimizations",
     },
     {
         "property": "twitter:image",

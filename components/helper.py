@@ -42,14 +42,16 @@ return_message = {
     "email_empty_email": "Please fill in your email (required field)",
     "email_empty_name": "Please fill in your name (required field)",
     "email_fail": "Email failed to send, please contact kay.jan@hotmail.com directly",
-    "email_fail_all": "Some email failed to send to participants, please contact kay.jan@hotmail.com directly",
+    "email_fail_all": "Some email failed to send to participants, "
+          "please contact kay.jan@hotmail.com directly",
     "email_sent_feedback": "Feedback received! Thank you",
     "email_sent_suggestion": "Suggestion received! Thank you",
     "email_sent_all": "Results emailed successfully to all participants!",
     "input_empty": "Please fill in text input",
     "rng_task_empty": "Please select a task",
     "scroll_down": "Please scroll down for results",
-    "wrong_format_demo": "File is not in expected format. Please download the demo worksheet and follow the format "
+    "wrong_format_demo": "File is not in expected format. "
+         "Please download the demo worksheet and follow the format "
     "accordingly",
     "wrong_format_json": "Please upload a valid JSON file. Data is not in the correct format",
     "wrong_file_type": "File type not supported. Please upload another file",
@@ -420,7 +422,7 @@ def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
         else:
             df = parse_data(contents, filename, **kwargs)
 
-        if type(df) == pd.DataFrame:
+        if isinstance(df, pd.DataFrame):
             df.columns = df.columns.astype(str)
             sample_table = [
                 html.P("Sample of uploaded data:", style={"margin": 0}),
@@ -514,8 +516,7 @@ def valid_email(email):
     regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     if re.fullmatch(regex, email):
         return True
-    else:
-        return False
+    return False
 
 
 def send_email(
