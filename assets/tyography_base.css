@@ -1,0 +1,93 @@
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+- Base Styles
+- Scrollbar
+- Typography
+- Links
+- Input
+- Button
+*/
+
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+body {
+    background-color: white;
+    color: black;
+}
+
+/* Scrollbar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #202029;
+}
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1, h2, h3, h4, h5, h6, p, span, details, li, textarea {
+    font-family: Source Sans Pro;
+}
+
+h1 {
+    font-family: Playfair Display;
+    font-size: 45px;
+    color: #BE9B89;
+}
+
+/* Subtitle */
+h3 {
+    color: #BE9B89;
+}
+
+h4 {
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: #BE9B89;
+}
+
+h6 {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 0;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+    color: black;
+}
+
+a:hover {
+    color: #BE9B89;
+}
+
+/* Input
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input {
+    background-color: white !important;
+    font-family: Source Sans Pro !important;
+}
+
+/* Button
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+button {
+    font-family: Source Sans Pro;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    color: #202029;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+button:disabled,
+button[disabled] {
+    background-color: #cccccc;
+    opacity: 0.6;
+    pointer-events: none;
+}

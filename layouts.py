@@ -17,6 +17,12 @@ from components.wnrs import WNRS
 from version import __version__
 
 
+style_change_dropdown = {"width": "100%", "color": "black"}
+style_event_checklist = {"width": "100%"}
+style_wnrs_text = {"margin-top": "20px"}
+style_contact_textarea = {"width": "70%", "margin-bottom": "5px"}
+
+
 def main_layout():
     return html.Div(
         [
@@ -293,10 +299,7 @@ def change_tab(app):
                                                 id="dropdown-change-worksheet",
                                                 placeholder="Select worksheet",
                                                 clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
+                                                style=style_change_dropdown,
                                             ),
                                         ],
                                         style={"width": "40%"},
@@ -319,10 +322,7 @@ def change_tab(app):
                                                 id="dropdown-change-x",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
+                                                style=style_change_dropdown,
                                             ),
                                         ],
                                         style={"width": "35%"},
@@ -341,10 +341,7 @@ def change_tab(app):
                                                 id="dropdown-change-y",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
+                                                style=style_change_dropdown,
                                             ),
                                         ],
                                         style={"width": "35%"},
@@ -489,10 +486,7 @@ def changes_tab(app):
                                                 id="dropdown-changes-worksheet",
                                                 placeholder="Select worksheet",
                                                 clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
+                                                style=style_change_dropdown,
                                             ),
                                         ],
                                         style={"width": "40%"},
@@ -516,10 +510,7 @@ def changes_tab(app):
                                                 id="dropdown-changes-identifier",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style={
-                                                    "width": "100%",
-                                                    "color": "black",
-                                                },
+                                                style=style_change_dropdown,
                                             ),
                                         ],
                                         style={"width": "35%"},
@@ -972,9 +963,7 @@ def event_tab(app):
                                                 type="number",
                                                 value=1,
                                                 min=1,
-                                                style={
-                                                    "width": "100%",
-                                                },
+                                                style=style_event_checklist,
                                             ),
                                         ]
                                     ),
@@ -994,9 +983,7 @@ def event_tab(app):
                                                     }
                                                 ],
                                                 value=["pair"],
-                                                style={
-                                                    "width": "100%",
-                                                },
+                                                style=style_event_checklist,
                                             )
                                         ]
                                     ),
@@ -1033,9 +1020,7 @@ def event_tab(app):
                                                         "value": "email",
                                                     }
                                                 ],
-                                                style={
-                                                    "width": "100%",
-                                                },
+                                                style=style_event_checklist,
                                             )
                                         ]
                                     ),
@@ -1049,9 +1034,7 @@ def event_tab(app):
                                                         "value": "hide",
                                                     }
                                                 ],
-                                                style={
-                                                    "width": "100%",
-                                                },
+                                                style=style_event_checklist,
                                             )
                                         ]
                                     )
@@ -1284,7 +1267,7 @@ def wnrs_tab(app):
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
-                            html.P("Crossover", style={"margin-top": "20px"}),
+                            html.P("Crossover", style=style_wnrs_text),
                             html.Div(
                                 [
                                     html.Span("Bumble x BFF Edition", className="span-short"),
@@ -1365,7 +1348,7 @@ def wnrs_tab(app):
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
-                            html.P("Expansion", style={"margin-top": "20px"}),
+                            html.P("Expansion", style=style_wnrs_text),
                             html.Div(
                                 [
                                     html.Span("Honest Dating Edition", className="span-short"),
@@ -1428,7 +1411,7 @@ def wnrs_tab(app):
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
-                            html.P("Online", style={"margin-top": "20px"}),
+                            html.P("Online", style=style_wnrs_text),
                             html.Div(
                                 [
                                     html.Span("Race and Privilege Edition", className="span-short"),
@@ -1476,7 +1459,7 @@ def wnrs_tab(app):
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
-                            html.P("Single-Player", style={"margin-top": "20px"}),
+                            html.P("Single-Player", style=style_wnrs_text),
                             html.Div(
                                 [
                                     html.Span("Breakup Edition", className="span-short"),
@@ -1569,7 +1552,7 @@ def wnrs_tab(app):
                                     "Gotmann Card Deck",
                                     html.Sup("improve relationship", className="blinker")
                                 ],
-                                style={"margin-top": "20px"},
+                                style=style_wnrs_text,
                             ),
                             html.Div(
                                 [
@@ -1721,19 +1704,19 @@ def contact_tab():
                     id="input-contact-name",
                     type="text",
                     placeholder="Name",
-                    style={"width": "70%", "margin-bottom": "5px"},
+                    style=style_contact_textarea,
                 ),
                 dcc.Input(
                     id="input-contact-email",
                     type="text",
                     placeholder="Email Address",
-                    style={"width": "70%", "margin-bottom": "5px"},
+                    style=style_contact_textarea,
                 ),
                 dcc.Textarea(
                     id="input-contact-content",
                     value="",
                     placeholder="Email body",
-                    style={"width": "70%", "margin-bottom": "5px"},
+                    style=style_contact_textarea,
                 ),
                 html.Br(),
                 html.Button("Send", id="button-contact-ok"),
