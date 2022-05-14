@@ -6,6 +6,7 @@ from dash import dash_table, dcc, html
 from dash_canvas import DashCanvas
 
 from components.helper import (
+    colour_palette,
     violin_plot,
     dcc_loading,
     table_css,
@@ -70,7 +71,7 @@ def sidebar_dropdown():
                     dcc.Tab(label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                     # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
                 ],
-                colors={"background": "#202029"},
+                colors={"background": colour_palette["deep_blue"]},
                 persistence=True,
                 persistence_type="memory",
             )
@@ -95,7 +96,7 @@ def sidebar_dropdown_event():
                     dcc.Tab(label="We're Not Really Strangers", value="tab-wnrs", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab( label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                 ],
-                colors={"background": "#202029"},
+                colors={"background": colour_palette["deep_blue"]},
                 persistence=True,
                 persistence_type="memory",
             )
@@ -1274,7 +1275,9 @@ def wnrs_tab(app):
                                         target="main-deck-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Main Deck 1", style={"background-color": "#BE9B89"}),
+                                    dbc.Button(
+                                        "Level 1", id="Main Deck 1",
+                                        style={"background-color": colour_palette["dark_pink"]}),
                                     dbc.Button("Level 2", id="Main Deck 2"),
                                     dbc.Button("Level 3", id="Main Deck 3"),
                                     dbc.Button("Final Card", id="Main Deck Final"),
