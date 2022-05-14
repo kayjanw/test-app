@@ -18,6 +18,15 @@ from plotly.colors import n_colors
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
+colour_palette = {
+    "grey": "#57555A",
+    "deep_blue": "#202029",
+    "dark_pink": "#BE9B89",
+    "light_pink": "#F0E3DF",
+    "pink_grey": "#D6CAC7",
+}
+
+
 return_message = {
     "card_not_filled": "Please fill in a card prompt (required field)",
     "card_not_select": "Please select a deck to start",
@@ -150,7 +159,7 @@ def dcc_loading(children, dark_bg=True):
     if dark_bg:
         color = "white"
     else:
-        color = "#202029"
+        color = colour_palette["deep_blue"]
     return dcc.Loading(children, type="circle", color=color)
 
 
@@ -264,6 +273,7 @@ def generate_datatable(df, max_rows=3, dark=True):
         style_cell=style_cell,
         style_table=style_table,
         css=css,
+        cell_selectable=False,
     )
 
 
@@ -310,6 +320,7 @@ def get_summary_statistics(df, cols, dark=True):
         style_cell=style_cell,
         style_table=style_table,
         css=css,
+        cell_selectable=False,
     )
 
 
