@@ -40,6 +40,7 @@ Code Documentation
    components/helper
    components/mbti
    components/rng
+   components/trade
    components/trip-planner
    components/wnrs
 
@@ -60,6 +61,9 @@ Code Documentation
 
 :doc:`components/rng`
     List of functions for Random Generator tab
+
+:doc:`components/trade`
+    List of functions for Live Trading tab
 
 :doc:`components/trip-planner`
     List of functions for Trip Planner tab

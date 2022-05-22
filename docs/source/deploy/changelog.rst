@@ -7,6 +7,7 @@ Changelog
 ========== =====================================================
 Date       Changes
 ========== =====================================================
+2022-05-23 Added Live Trading tab
 2022-01-09 Added versioning, deployed using Docker
 2021-12-16 Added Word Cloud to Chat Analyzer tab
 2021-12-15 Added Random Generator tab

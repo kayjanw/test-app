@@ -27,6 +27,7 @@ from components.helper import (
 from components.mbti import MBTI
 from components.event_planner import EventPlanner
 from components.rng import RandomGenerator
+from components.trade import Trade
 from components.trip_planner import TripPlanner
 from components.wnrs import WNRS
 from layouts import (
@@ -39,6 +40,7 @@ from layouts import (
     chat_tab,
     trip_tab,
     mbti_tab,
+    trade_tab,
     event_tab,
     rng_tab,
     wnrs_tab,
@@ -642,6 +644,40 @@ def register_callbacks(app, print_function):
                 ]
                 print(traceback.print_exc())
         return plot, style, personality_details
+
+    @app.callback([Output("trade-result", "children"),
+                   Output("graph-trade", "figure")],
+                  Input("interval-trade", "n_intervals"),
+                  [State("dropdown-trade-symbol", "value"),
+                   State("dropdown-trade-frequency", "value"),
+                   State("input-trade-candle", "value"),
+                   State("checkbox-trade-ind", "value"),
+                   State("radio-trade-forecast", "value")])
+    @print_callback(print_function)
+    def update_trade_graph(trigger, symbol, frequency, n_candle, indicators_ind, forecast_methods):
+        """Update trade candlestick chart
+
+        Args:
+            trigger: triggers callback
+            symbol (str): symbol to plot for
+            frequency (str): frequency of candlestick
+            n_candle (int): number of points on candlestick
+            indicators_ind (list): list of indicators to plot
+            forecast_methods (list): list of forecasting methods
+
+        Returns:
+            dict: graphical result of trade
+        """
+        error_message = ""
+        fig = {}
+        if symbol and frequency and n_candle:
+            try:
+                trade = Trade()
+                rates_data = trade.get_rates_data(symbol, frequency, n_candle)
+                fig = trade.get_candlestick_chart(symbol, n_candle, rates_data, indicators_ind, forecast_methods)
+            except Exception as e:
+                error_message = f"Error: {e}"
+        return error_message, fig
 
     @app.callback([Output("text-event-confirm", "children"),
                    Output("intermediate-event-result", "data")],
@@ -1321,6 +1357,8 @@ def register_callbacks(app, print_function):
             return trip_tab(app)
         elif tab == "tab-mbti":
             return mbti_tab()
+        elif tab == "tab-trade":
+            return trade_tab()
         elif tab == "tab-image":
             return image_edit_tab(app)
         elif tab == "tab-contact":
@@ -1351,6 +1389,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Trip Planner'
             } else if (tab_value === 'tab-mbti') {
                 document.title = 'MBTI Personality Test'
+            } else if (tab_value === 'tab-trade') {
+                document.title = 'Live Trading'
             } else if (tab_value === 'tab-event') {
                 document.title = 'Event Planner'
             } else if (tab_value === 'tab-rng') {

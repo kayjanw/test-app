@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
 RUN chgrp -R 0 /test-app \
     && chmod -R g=u /test-app \
     && pip install pip --upgrade \
-    && pip install -r requirements.txt
+    && pip install -U -r requirements.txt
 EXPOSE $PORT
 
 RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('omw-1.4')"

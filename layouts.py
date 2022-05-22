@@ -1,6 +1,7 @@
 import dash_bootstrap_components as dbc
 import dash_daq as daq
 import dash_leaflet as dl
+import datetime
 
 from dash import dash_table, dcc, html
 from dash_canvas import DashCanvas
@@ -13,14 +14,18 @@ from components.helper import (
     encode_dict,
     result_download_text,
 )
+from components.trade import Trade
 from components.wnrs import WNRS
 from version import __version__
 
 
-style_change_dropdown = {"width": "100%", "color": "black"}
-style_event_checklist = {"width": "100%"}
+style_dropdown = {"width": "100%", "color": "black"}
+style_p = {"width": "40%"}
+style_input = {"width": "35%"}
+style_checklist = {"width": "100%"}
 style_wnrs_text = {"margin-top": "20px"}
 style_contact_textarea = {"width": "70%", "margin-bottom": "5px"}
+style_hidden = {"display": "none"}
 
 
 def main_layout():
@@ -73,6 +78,7 @@ def sidebar_dropdown():
                     dcc.Tab(label="Trip Planner", value="tab-trip", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Prediction", value="", className="custom-tab-disabled", disabled=True),
                     dcc.Tab(label="MBTI Personality Test", value="tab-mbti", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                    dcc.Tab(label="Live Trading", value="tab-trade", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Go to events!", value="tab-others", className="custom-tab"),
                     dcc.Tab(label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                     # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
@@ -299,7 +305,7 @@ def change_tab(app):
                                                 id="dropdown-change-worksheet",
                                                 placeholder="Select worksheet",
                                                 clearable=False,
-                                                style=style_change_dropdown,
+                                                style=style_dropdown,
                                             ),
                                         ],
                                         style={"width": "40%"},
@@ -307,7 +313,7 @@ def change_tab(app):
                                 ],
                                 id="change-select-worksheet",
                                 className="custom-div-flex",
-                                style={"display": "none"},
+                                style=style_hidden,
                             ),
                             html.Div(
                                 id="change-sample-data",
@@ -322,10 +328,10 @@ def change_tab(app):
                                                 id="dropdown-change-x",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style=style_change_dropdown,
+                                                style=style_dropdown,
                                             ),
                                         ],
-                                        style={"width": "35%"},
+                                        style=style_input,
                                     ),
                                     html.P("out of"),
                                     dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
@@ -341,10 +347,10 @@ def change_tab(app):
                                                 id="dropdown-change-y",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style=style_change_dropdown,
+                                                style=style_dropdown,
                                             ),
                                         ],
-                                        style={"width": "35%"},
+                                        style=style_input,
                                     ),
                                     html.P("out of"),
                                     dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
@@ -408,9 +414,7 @@ def change_tab(app):
                 ],
                 id="div-change-result",
                 className="custom-container custom-div-space-above custom-div-space-below",
-                style={
-                    "display": "none"
-                }
+                style=style_hidden,
             ),
         ]
     )
@@ -486,7 +490,7 @@ def changes_tab(app):
                                                 id="dropdown-changes-worksheet",
                                                 placeholder="Select worksheet",
                                                 clearable=False,
-                                                style=style_change_dropdown,
+                                                style=style_dropdown,
                                             ),
                                         ],
                                         style={"width": "40%"},
@@ -494,7 +498,7 @@ def changes_tab(app):
                                 ],
                                 id="changes-select-worksheet",
                                 className="custom-div-flex",
-                                style={"display": "none"},
+                                style=style_hidden,
                             ),
                             html.Div(
                                 id="changes-sample-data",
@@ -510,10 +514,10 @@ def changes_tab(app):
                                                 id="dropdown-changes-identifier",
                                                 placeholder="Select column",
                                                 clearable=False,
-                                                style=style_change_dropdown,
+                                                style=style_dropdown,
                                             ),
                                         ],
-                                        style={"width": "35%"},
+                                        style=style_input,
                                     ),
                                 ],
                                 className="custom-div-flex",
@@ -560,9 +564,7 @@ def changes_tab(app):
                 ],
                 id="div-changes-result",
                 className="custom-container custom-div-space-above custom-div-space-below",
-                style={
-                    "display": "none"
-                }
+                style=style_hidden,
             ),
         ]
     )
@@ -644,9 +646,7 @@ def chat_tab(app):
                 ],
                 id="div-chat-result",
                 className="custom-container custom-div-space-above custom-div-space-below",
-                style={
-                    "display": "none"
-                }
+                style=style_hidden,
             ),
         ]
     )
@@ -886,6 +886,131 @@ def mbti_tab():
     )
 
 
+def trade_tab():
+    trade = Trade()
+    indicators = ["SMA10", "SMA50", "BOLL(Close,20)", "RSI(Close,14)", "MACD"]
+    indicators_desc = [
+        "Simple Moving Average for past 10 values, Lagging Indicator, highlights direction of trend",
+        "Simple Moving Average for past 50 values, Lagging Indicator, highlights direction of trend",
+        "Bollinger Bands for 20 periods, Momentum Indicator, measures volatility of market",
+        "Relative Strength Index, Momentum Indicator, measures magnitude of price changes",
+        "Moving Average Convergence Divergence, Momentum Indicator, measures change between fast and slow EMA"
+    ]
+    return html.Div(
+        [
+            content_header("Live Trading", "Candlestick + Technical Indicators + Forecast"),
+            html.Div([
+                html.P(
+                    "Users can select their preferred trade and view a candlestick chart, with statistical indicators "
+                    "and forecasts! Candlestick chart refreshes every 1 second."),
+                html.Br(),
+                html.P("Step 1: Select preferred symbol"),
+                html.P("Step 2: (Optional) Select preferred frequency of candlestick, number of candles to plot, "
+                       "and whether to show technical indicators or forecasts"),
+            ],
+                className="custom-div-instruction custom-div-left"
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.P("Symbol:", style=style_p),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-trade-symbol",
+                                                options=[{"label": s, "value": s} for s in trade.get_symbol_names()],
+                                                value=trade.get_symbol_names()[0],
+                                                clearable=False,
+                                                style=style_dropdown,
+                                            ),
+                                        ],
+                                        style=style_input,
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Frequency:", style=style_p),
+                                    html.P(
+                                        [
+                                            dcc.Dropdown(
+                                                id="dropdown-trade-frequency",
+                                                options=[{"label": t, "value": t} for t in trade.TIMEFRAME_DICT.keys()],
+                                                value=list(trade.TIMEFRAME_DICT.keys())[0],
+                                                clearable=False,
+                                                style=style_dropdown,
+                                            ),
+                                        ],
+                                        style=style_input,
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Number of Candles:", style=style_p),
+                                    dbc.Input(id="input-trade-candle", type="number", value=50, style=style_input),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Technical Indicators:", style=style_p),
+                                    dcc.Checklist(
+                                        id="checkbox-trade-ind",
+                                        options=[
+                                            {"label": ind, "value": ind}
+                                            for idx, ind in enumerate(indicators)
+                                        ],
+                                        value=[],
+                                    ),
+                                # ] + [
+                                #     dbc.Tooltip(
+                                #         indicators_desc[idx],
+                                #         target=indicators[idx],
+                                #         placement="right",
+                                #         className="tooltip"
+                                #     )
+                                #     for idx in range(len(indicators))
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.Div(
+                                [
+                                    html.P("Forecast:", style=style_p),
+                                    dcc.Checklist(
+                                        id="radio-trade-forecast",
+                                        options=[{"label": "Forecast (EWM(0.8))", "value": "EMA(0.8)"}],
+                                        value=[],
+                                    ),
+                                ],
+                                className="custom-div-flex",
+                            ),
+                            html.P(id="trade-result"),
+                        ],
+                        className="custom-div-smaller custom-div-left custom-div-dark",
+                    ),
+                    html.Div(
+                        [
+                            dcc.Interval(id='interval-trade', interval=1000),
+                            dcc.Graph(
+                                id="graph-trade",
+                                style={"height": "70vh"}
+                            ),
+                        ],
+                        className="custom-div-large-full custom-div-center",
+                    ),
+                ],
+                className="custom-container custom-div-space-above"
+            ),
+        ]
+    )
+
+
 def event_tab(app):
     return html.Div(
         [
@@ -963,7 +1088,7 @@ def event_tab(app):
                                                 type="number",
                                                 value=1,
                                                 min=1,
-                                                style=style_event_checklist,
+                                                style=style_checklist,
                                             ),
                                         ]
                                     ),
@@ -983,7 +1108,7 @@ def event_tab(app):
                                                     }
                                                 ],
                                                 value=["pair"],
-                                                style=style_event_checklist,
+                                                style=style_checklist,
                                             )
                                         ]
                                     ),
@@ -1020,7 +1145,7 @@ def event_tab(app):
                                                         "value": "email",
                                                     }
                                                 ],
-                                                style=style_event_checklist,
+                                                style=style_checklist,
                                             )
                                         ]
                                     ),
@@ -1034,7 +1159,7 @@ def event_tab(app):
                                                         "value": "hide",
                                                     }
                                                 ],
-                                                style=style_event_checklist,
+                                                style=style_checklist,
                                             )
                                         ]
                                     )
@@ -1051,7 +1176,7 @@ def event_tab(app):
                     ),
                     html.Div(
                         id="div-event-result",
-                        style={"display": "none"},
+                        style=style_hidden,
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
@@ -1159,7 +1284,7 @@ def rng_tab():
                     ),
                     html.Div(
                         id="div-rng-result",
-                        style={"display": "none"},
+                        style=style_hidden,
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
@@ -1654,8 +1779,8 @@ def wnrs_tab(app):
                     html.Div(
                         [
                             html.P(id="wnrs-counter"),
-                            html.Button("Previous", id="button-wnrs-back", style={"display": "none"}),
-                            html.Button("Next", id="button-wnrs-next", style={"display": "none"}),
+                            html.Button("Previous", id="button-wnrs-back", style=style_hidden),
+                            html.Button("Next", id="button-wnrs-next", style=style_hidden),
                             html.Button("Shuffle Remaining Cards", id="button-wnrs-shuffle-ok"),
                             html.Form(
                                 [
@@ -1663,7 +1788,7 @@ def wnrs_tab(app):
                                         value=encode_dict(data_default),
                                         name="result",
                                         type="text",
-                                        style={"display": "none"},
+                                        style=style_hidden,
                                         id="input-wnrs",
                                     ),
                                     html.Button(
