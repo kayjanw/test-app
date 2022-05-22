@@ -71,7 +71,7 @@ zope.event==4.4
 zope.interface==5.1.0
 
 #Trading
-MetaTrader5==5.0.37
+#MetaTrader5==5.0.37
 
 #Email
 python-http-client==3.3.2
