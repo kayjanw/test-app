@@ -1,4 +1,4 @@
-FROM solarkennedy/wine-x11-novnc-docker AS metatrader5
+FROM solarkennedy/wine-x11-novnc-docker
 FROM python:3.8-slim
 ARG port
 
@@ -6,14 +6,14 @@ USER root
 COPY . /test-app
 WORKDIR /test-app
 
-COPY --from=metatrader5 "MetaTrader 5" .
-COPY --from=metatrader5 ./supervisord.conf .
+ENV WINEPREFIX /root/prefix64
+ENV WINEARCH win64
+COPY --from=metatrader5 ["MetaTrader 5", "/root/prefix64/drive_c/Program Files/MetaTrader 5"]
+COPY --from=metatrader5 ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENV PORT=$port
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV WINEPREFIX /root/prefix64
-ENV WINEARCH win64
 
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
     && apt-get -y install curl \
