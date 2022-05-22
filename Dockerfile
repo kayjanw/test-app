@@ -6,8 +6,8 @@ USER root
 COPY . /test-app
 WORKDIR /test-app
 
-COPY --from=metatrader5 "MetaTrader 5" "/MetaTrader 5"
-COPY --from=metatrader5 ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY --from=metatrader5 "MetaTrader 5" .
+COPY --from=metatrader5 ./supervisord.conf .
 
 ENV PORT=$port
 ENV PYTHONDONTWRITEBYTECODE 1
