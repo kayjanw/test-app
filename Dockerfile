@@ -1,4 +1,4 @@
-FROM solarkennedy/wine-x11-novnc-docker
+FROM solarkennedy/wine-x11-novnc-docker AS metatrader5
 FROM python:3.8-slim
 ARG port
 
