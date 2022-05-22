@@ -19,16 +19,22 @@ Light pink #F0E3DF
 Pinkish grey #D6CAC7
 
 Order of div
-custom-container
-custom-div-instruction/custom-div-instruction2
-custom-div-small / custom-div-large / custom-div-full / custom-div-small-medium
-custom-div-space-above
-custom-div-left / custom-div-center
-custom-div-dark / custom-div-white
-div-with-image
-div-with-image-left
-small-image
+content-header
+div-with-image, div-with-image-left, div-with-image-right
+div-with-invisible-button
+small-image, medium-image
 image-dark-bg
+
+custom-container
+custom-div-dark, custom-div-white
+custom-div-left, custom-div-center, custom-div-flex
+custom-div-space-above, custom-div-space-below, custom-div-space-left
+custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
+custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
+
+p-short, p-bold
+blinker
+footer
 */
 
 
@@ -236,12 +242,12 @@ image-dark-bg
     text-align: left;
 }
 
-.medium-image Img {
-    height: 30px;
-}
-
 .small-image Img {
     height: 20px;
+}
+
+.medium-image Img {
+    height: 30px;
 }
 
 .image-dark-bg Img {
@@ -569,11 +575,16 @@ image-dark-bg
 
 /* Custom id (dropdown)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*
 #dropdown-change-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-change-x .VirtualizedSelectFocusedOption,
 #dropdown-change-y .VirtualizedSelectFocusedOption,
 #dropdown-changes-worksheet .VirtualizedSelectFocusedOption,
 #dropdown-changes-identifier .VirtualizedSelectFocusedOption {
+    background-color: #F0E3DF;
+}
+*/
+[id^="dropdown-"] .VirtualizedSelectFocusedOption {
     background-color: #F0E3DF;
 }
 
