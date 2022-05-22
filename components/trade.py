@@ -1,4 +1,8 @@
-import MetaTrader5 as mt5
+try:
+    import MetaTrader5 as mt5
+except ImportError:
+    pass
+
 import pandas as pd
 import plotly.graph_objects as go
 
