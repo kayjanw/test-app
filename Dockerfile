@@ -1,4 +1,3 @@
-FROM solarkennedy/wine-x11-novnc-docker AS metatrader5
 FROM python:3.8-slim
 ARG port
 
@@ -6,11 +5,8 @@ USER root
 COPY . /test-app
 WORKDIR /test-app
 
-ENV WINEPREFIX /root/prefix64
-ENV WINEARCH win64
-COPY --from=metatrader5 ["MetaTrader 5", "/root/prefix64/drive_c/Program Files/MetaTrader 5"]
-COPY --from=metatrader5 ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
+COPY data/MetaTrader5/MetaTrader5 /usr/local/lib/python3.8/site-packages/MetaTrader5
+COPY data/MetaTrader5/MetaTrader5-5.0.37.dist-info /usr/local/lib/python3.8/site-packages/MetaTrader5-5.0.37.dist-info
 ENV PORT=$port
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
