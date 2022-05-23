@@ -78,7 +78,7 @@ def sidebar_dropdown():
                     dcc.Tab(label="Trip Planner", value="tab-trip", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Prediction", value="", className="custom-tab-disabled", disabled=True),
                     dcc.Tab(label="MBTI Personality Test", value="tab-mbti", className="custom-tab-sub", selected_className="custom-tab-selected"),
-                    dcc.Tab(label="Live Trading", value="tab-trade", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                    # dcc.Tab(label="Live Trading", value="tab-trade", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Go to events!", value="tab-others", className="custom-tab"),
                     dcc.Tab(label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                     # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
