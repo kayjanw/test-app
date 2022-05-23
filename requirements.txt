@@ -71,8 +71,7 @@ zope.event==4.4
 zope.interface==5.1.0
 
 #Trading
-#MetaTrader5==5.0.37
-#Yahoo-ticker-downloader==3.0.1
+MetaTrader5==5.0.37; platform_system  == "Windows"
 yfinance==0.1.70
 
 #Email

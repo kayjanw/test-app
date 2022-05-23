@@ -1,5 +1,10 @@
+try:
+    import MetaTrader5 as mt5
+    USE_MT5 = True
+except ImportError:
+    USE_MT5 = False
+
 import datetime
-import MetaTrader5 as mt5
 import pandas as pd
 import plotly.graph_objects as go
 import yfinance as yf
@@ -139,7 +144,7 @@ def forecast_ewm(data, alpha=0.8):
 
 class Trade:
     """The Trade object contains functions used for Trade tab"""
-    def __init__(self, use_mt5=True):
+    def __init__(self, use_mt5=USE_MT5):
         """Initialize class attributes
 
         Args:
