@@ -72,6 +72,8 @@ zope.interface==5.1.0
 
 #Trading
 #MetaTrader5==5.0.37
+#Yahoo-ticker-downloader==3.0.1
+yfinance==0.1.70
 
 #Email
 python-http-client==3.3.2
