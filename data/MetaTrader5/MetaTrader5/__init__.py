@@ -253,88 +253,88 @@ RES_E_INTERNAL_FAIL_INIT            =-10003      # internal IPC initialization f
 RES_E_INTERNAL_FAIL_CONNECT         =-10004      # internal IPC no ipc
 RES_E_INTERNAL_FAIL_TIMEOUT         =-10005      # internal timeout
 
-# import C methods to our module
-from ._core import *
-
-# internal order send
-def _RawOrder(order_type, symbol, volume, price, comment=None, ticket=None):
-    order = {
-      "action":    TRADE_ACTION_DEAL,
-      "symbol":    symbol,
-      "volume":    volume,
-      "type":      order_type,
-      "price":     price,
-      "deviation": 10,
-    }
-    if comment is not None:
-        order["comment"] = comment
-    if ticket is not None:
-        order["position"] = ticket
-    return order_send(order)
-
-# Close all specific orders
-def Close(symbol, *, comment=None, ticket=None):
-    if ticket is not None:
-        positions = positions_get(ticket=ticket)
-    else:
-        positions = positions_get(symbol=symbol)
-
-    tried = 0
-    done = 0
-
-    for pos in positions:
-        # process only simple buy, sell
-        if pos.type == ORDER_TYPE_BUY or pos.type == ORDER_TYPE_SELL:
-            tried += 1
-            for tries in range(10):
-                info = symbol_info_tick(symbol)
-                if info is None:
-                    return None
-                if pos.type == ORDER_TYPE_BUY:
-                    r = _RawOrder(ORDER_TYPE_SELL, symbol, pos.volume, info.bid, comment, pos.ticket)
-                else:
-                    r = _RawOrder(ORDER_TYPE_BUY, symbol, pos.volume, info.ask, comment, pos.ticket)
-                # check results
-                if r is None:
-                    return None
-                if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
-                    if r.retcode == TRADE_RETCODE_DONE:
-                        done += 1
-                    break
-    
-    if done > 0:
-        if done == tried:
-            return True
-        else:
-            return "Partially"
-    return False
-
-# Buy order                
-def Buy(symbol, volume, price=None, *, comment=None, ticket=None):
-    # with direct call
-    if price is not None:
-        return _RawOrder(ORDER_TYPE_BUY, symbol, volume, price, comment, ticket)
-    # no price, we try several times with current price
-    for tries in range(10):
-        info = symbol_info_tick(symbol)
-        r = _RawOrder(ORDER_TYPE_BUY, symbol, volume, info.ask, comment, ticket)
-        if r is None:
-            return None
-        if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
-            break
-    return r
-
-# Sell order
-def Sell(symbol, volume, price=None, *, comment=None, ticket=None):
-    # with direct call
-    if price is not None:
-        return _RawOrder(ORDER_TYPE_SELL, symbol, volume, price, comment, ticket)
-    # no price, we try several times with current price
-    for tries in range(10):
-        info = symbol_info_tick(symbol)
-        r = _RawOrder(ORDER_TYPE_SELL, symbol, volume, info.bid, comment, ticket)
-        if r is None:
-            return None
-        if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
-            break
-    return r
+# # import C methods to our module
+# from ._core import *
+#
+# # internal order send
+# def _RawOrder(order_type, symbol, volume, price, comment=None, ticket=None):
+#     order = {
+#       "action":    TRADE_ACTION_DEAL,
+#       "symbol":    symbol,
+#       "volume":    volume,
+#       "type":      order_type,
+#       "price":     price,
+#       "deviation": 10,
+#     }
+#     if comment is not None:
+#         order["comment"] = comment
+#     if ticket is not None:
+#         order["position"] = ticket
+#     return order_send(order)
+#
+# # Close all specific orders
+# def Close(symbol, *, comment=None, ticket=None):
+#     if ticket is not None:
+#         positions = positions_get(ticket=ticket)
+#     else:
+#         positions = positions_get(symbol=symbol)
+#
+#     tried = 0
+#     done = 0
+#
+#     for pos in positions:
+#         # process only simple buy, sell
+#         if pos.type == ORDER_TYPE_BUY or pos.type == ORDER_TYPE_SELL:
+#             tried += 1
+#             for tries in range(10):
+#                 info = symbol_info_tick(symbol)
+#                 if info is None:
+#                     return None
+#                 if pos.type == ORDER_TYPE_BUY:
+#                     r = _RawOrder(ORDER_TYPE_SELL, symbol, pos.volume, info.bid, comment, pos.ticket)
+#                 else:
+#                     r = _RawOrder(ORDER_TYPE_BUY, symbol, pos.volume, info.ask, comment, pos.ticket)
+#                 # check results
+#                 if r is None:
+#                     return None
+#                 if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
+#                     if r.retcode == TRADE_RETCODE_DONE:
+#                         done += 1
+#                     break
+#
+#     if done > 0:
+#         if done == tried:
+#             return True
+#         else:
+#             return "Partially"
+#     return False
+#
+# # Buy order
+# def Buy(symbol, volume, price=None, *, comment=None, ticket=None):
+#     # with direct call
+#     if price is not None:
+#         return _RawOrder(ORDER_TYPE_BUY, symbol, volume, price, comment, ticket)
+#     # no price, we try several times with current price
+#     for tries in range(10):
+#         info = symbol_info_tick(symbol)
+#         r = _RawOrder(ORDER_TYPE_BUY, symbol, volume, info.ask, comment, ticket)
+#         if r is None:
+#             return None
+#         if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
+#             break
+#     return r
+#
+# # Sell order
+# def Sell(symbol, volume, price=None, *, comment=None, ticket=None):
+#     # with direct call
+#     if price is not None:
+#         return _RawOrder(ORDER_TYPE_SELL, symbol, volume, price, comment, ticket)
+#     # no price, we try several times with current price
+#     for tries in range(10):
+#         info = symbol_info_tick(symbol)
+#         r = _RawOrder(ORDER_TYPE_SELL, symbol, volume, info.bid, comment, ticket)
+#         if r is None:
+#             return None
+#         if r.retcode != TRADE_RETCODE_REQUOTE and r.retcode != TRADE_RETCODE_PRICE_OFF:
+#             break
+#     return r
