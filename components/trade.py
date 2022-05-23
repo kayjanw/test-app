@@ -1,9 +1,5 @@
-try:
-    import MetaTrader5 as mt5
-except ImportError:
-    pass
-
 import datetime
+import MetaTrader5 as mt5
 import pandas as pd
 import plotly.graph_objects as go
 import yfinance as yf
