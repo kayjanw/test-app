@@ -143,7 +143,7 @@ def forecast_ewm(data, alpha=0.8):
 
 class Trade:
     """The Trade object contains functions used for Trade tab"""
-    def __init__(self, use_mt5=False):
+    def __init__(self, use_mt5=True):
         """Initialize class attributes
 
         Args:
@@ -177,8 +177,7 @@ class Trade:
                 "1 month": mt5.TIMEFRAME_MN1,
             }
 
-    @staticmethod
-    def get_symbol_names():
+    def get_symbol_names(self):
         """Get symbol names
 
         Returns:
@@ -215,15 +214,14 @@ class Trade:
             rates_df[col_names[0]] = pd.to_datetime(rates_df[col_names[0]], unit="s")
         else:
             start_dt = (datetime.datetime.now() - relativedelta(years=1)).strptime("%Y-%m-%d")
-            rates_df = yf.Ticker.history(symbol, start=start_dt, interval=frequency).reset_index(drop=True)
+            rates_df = yf.Ticker(symbol).history(start=start_dt, interval=frequency).reset_index(drop=True)
             # Datetime, Open, High, Low, Close, Volume, Dividend, Stock Splits
             col_names = rates_df.columns
 
         self.col_names = col_names
         return rates_df
 
-    @staticmethod
-    def get_candlestick_chart(symbol, n_points, rates_df, indicators_ind, forecast_methods):
+    def get_candlestick_chart(self, symbol, n_points, rates_df, indicators_ind, forecast_methods):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
