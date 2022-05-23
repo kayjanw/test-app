@@ -3,9 +3,12 @@ try:
 except ImportError:
     pass
 
+import datetime
 import pandas as pd
 import plotly.graph_objects as go
+import yfinance as yf
 
+from dateutil.relativedelta import relativedelta
 from plotly.subplots import make_subplots
 
 
@@ -140,26 +143,51 @@ def forecast_ewm(data, alpha=0.8):
 
 class Trade:
     """The Trade object contains functions used for Trade tab"""
-    def __init__(self):
-        """Connect to MetaTrader5 Platform"""
+    def __init__(self, use_mt5=False):
+        """Initialize class attributes
+
+        Args:
+            use_mt5 (bool): whether to use MetaTrader5, defaults to False
+        """
+        self.use_mt5 = use_mt5
+        self.col_names = []
         self.TIMEFRAME_DICT = {
-            "1 min": mt5.TIMEFRAME_M1,
-            "5 min": mt5.TIMEFRAME_M5,
-            "15 min": mt5.TIMEFRAME_M15,
-            "30 min": mt5.TIMEFRAME_M30,
-            "1 hour": mt5.TIMEFRAME_H1,
-            "4 hours": mt5.TIMEFRAME_H4,
-            "1 day": mt5.TIMEFRAME_D1,
-            "1 week": mt5.TIMEFRAME_W1,
-            "1 month": mt5.TIMEFRAME_MN1,
+            "1 min": "1m",
+            "5 min": "5m",
+            "15 min": "15m",
+            "30 min": "30m",
+            "1 hour": "60m",
+            "1 day": "1d",
+            "1 week": "1wk",
+            "1 month": "1mo",
         }
-        assert mt5.initialize("data/MetaTrader5/terminal64.exe", portable=True), "Cannot initialize MetaTrader5"
+        if use_mt5:
+            # Connect to MetaTrader5 Platform
+            assert mt5.initialize("data/MetaTrader5/terminal64.exe", portable=True), "Cannot initialize MetaTrader5"
+
+            self.TIMEFRAME_DICT = {
+                "1 min": mt5.TIMEFRAME_M1,
+                "5 min": mt5.TIMEFRAME_M5,
+                "15 min": mt5.TIMEFRAME_M15,
+                "30 min": mt5.TIMEFRAME_M30,
+                "1 hour": mt5.TIMEFRAME_H1,
+                "4 hours": mt5.TIMEFRAME_H4,
+                "1 day": mt5.TIMEFRAME_D1,
+                "1 week": mt5.TIMEFRAME_W1,
+                "1 month": mt5.TIMEFRAME_MN1,
+            }
 
     @staticmethod
     def get_symbol_names():
-        """Get symbol names"""
-        symbols = mt5.symbols_get()
-        symbol_names = [symbol._asdict()["name"] for symbol in symbols]
+        """Get symbol names
+
+        Returns:
+            list
+        """
+        symbol_names = []
+        if self.use_mt5:
+            symbols = mt5.symbols_get()
+            symbol_names = [symbol._asdict()["name"] for symbol in symbols]
         return symbol_names
 
     def get_rates_data(self, symbol, timeframe, n_points):
@@ -173,14 +201,25 @@ class Trade:
         Returns:
             pandas DataFrame: result of rate data
         """
-        # n_points to be minimum of 100 to calculate technical indicators
-        n_candles = max(n_points, 100)
         frequency = self.TIMEFRAME_DICT[timeframe]
-        rates_arr = mt5.copy_rates_from_pos(symbol, frequency, 0, n_candles)
-        col_names = [col.replace("_", " ").capitalize() for col in rates_arr.dtype.fields.keys()]
-        rates_df = pd.DataFrame(rates_arr)
-        rates_df.columns = col_names
-        rates_df[col_names[0]] = pd.to_datetime(rates_df[col_names[0]], unit="s")
+
+        if self.use_mt5:
+            # n_points to be minimum of 100 to calculate technical indicators
+            n_candles = max(n_points, 100)
+            rates_arr = mt5.copy_rates_from_pos(symbol, frequency, 0, n_candles)
+
+            # Time, Open, High, Low, Close, Tick volume, Spread, Real volume
+            col_names = [col.replace("_", " ").capitalize() for col in rates_arr.dtype.fields.keys()]
+            rates_df = pd.DataFrame(rates_arr)
+            rates_df.columns = col_names
+            rates_df[col_names[0]] = pd.to_datetime(rates_df[col_names[0]], unit="s")
+        else:
+            start_dt = (datetime.datetime.now() - relativedelta(years=1)).strptime("%Y-%m-%d")
+            rates_df = yf.Ticker.history(symbol, start=start_dt, interval=frequency).reset_index(drop=True)
+            # Datetime, Open, High, Low, Close, Volume, Dividend, Stock Splits
+            col_names = rates_df.columns
+
+        self.col_names = col_names
         return rates_df
 
     @staticmethod
@@ -199,18 +238,20 @@ class Trade:
         Returns:
             dict: graphical result of trade
         """
-        col_names = rates_df.columns
+        col_names = self.col_names
+        assert len(self.col_names), "Rate data is not initialized"
+        col_time, col_open, col_high, col_low, col_close, _ = col_names
 
         # Candlestick
         data_top = []
         rates_df_points = rates_df.copy()[-n_points:]
         data_top.append(
             go.Candlestick(
-                x=rates_df_points[col_names[0]],
-                open=rates_df_points[col_names[1]],
-                high=rates_df_points[col_names[2]],
-                low=rates_df_points[col_names[3]],
-                close=rates_df_points[col_names[4]],
+                x=rates_df_points[col_time],
+                open=rates_df_points[col_open],
+                high=rates_df_points[col_high],
+                low=rates_df_points[col_low],
+                close=rates_df_points[col_close],
                 name="Candlestick",
                 text=["<br>".join([
                     f"{rates_df_points.columns[idx]}: {x[idx]}"
@@ -223,13 +264,13 @@ class Trade:
         for ind in forecast_methods:
             if ind == "EMA(0.8)":
                 ind_col = "Forecast EMA(0.8)"
-                pred = forecast_ewm(rates_df[col_names[4]], alpha=0.8)
+                pred = forecast_ewm(rates_df[col_close], alpha=0.8)
                 rates_df[ind_col] = None
                 rates_df.iloc[-1, -1] = pred
                 rates_df_points = rates_df.copy()[-n_points:]
                 data_top.append(
                     go.Scatter(
-                        x=rates_df_points[col_names[0]],
+                        x=rates_df_points[col_time],
                         y=rates_df_points[ind_col],
                         name=ind_col,
                         mode="markers",
@@ -240,16 +281,16 @@ class Trade:
                 )
 
         # Compute technical indicator
-        ind_df = rates_df.copy()[[col_names[0]]]
+        ind_df = rates_df.copy()[[col_time]]
         data_middle = []
         data_bottom = []
         for ind in indicators_ind:
             if ind == "SMA10":
-                ind_df[ind] = sma(rates_df[col_names[4]], 10)
+                ind_df[ind] = sma(rates_df[col_close], 10)
                 ind_df_points = ind_df[-n_points:]
                 data_top.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points[ind],
                         name=ind,
                         mode="lines",
@@ -258,11 +299,11 @@ class Trade:
                 )
 
             elif ind == "SMA50":
-                ind_df[ind] = sma(rates_df[col_names[4]], 50)
+                ind_df[ind] = sma(rates_df[col_close], 50)
                 ind_df_points = ind_df[-n_points:]
                 data_top.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points[ind],
                         name=ind,
                         mode="lines",
@@ -272,12 +313,12 @@ class Trade:
 
             elif ind == "BOLL(Close,20)":
                 ind_df["BOLU"], ind_df["BOLD"] = bol(
-                    rates_df[col_names[4]], rates_df[col_names[3]], rates_df[col_names[2]]
+                    rates_df[col_close], rates_df[col_low], rates_df[col_high]
                 )
                 ind_df_points = ind_df[-n_points:]
                 data_top.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points["BOLD"],
                         name="BOLL(Close,20)",
                         line=dict(color="rgba(255, 165, 0, 0)"),
@@ -287,7 +328,7 @@ class Trade:
                 )
                 data_top.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points["BOLU"],
                         name="BOLL(Close,20)",
                         line=dict(color="rgba(255, 165, 0, 0)"),
@@ -298,11 +339,11 @@ class Trade:
                 )
 
             elif ind == "RSI(Close,14)":
-                ind_df[ind] = rsi(rates_df[col_names[4]])
+                ind_df[ind] = rsi(rates_df[col_close])
                 ind_df_points = ind_df[-n_points:]
                 data_middle.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points[ind],
                         name=ind,
                         mode="lines",
@@ -310,11 +351,11 @@ class Trade:
                 )
 
             elif ind == "MACD":
-                ind_df["MACD(12,26)"], ind_df["MACD SIGNAL(9)"], ind_df["MACD - Signal"] = macd(rates_df[col_names[4]])
+                ind_df["MACD(12,26)"], ind_df["MACD SIGNAL(9)"], ind_df["MACD - Signal"] = macd(rates_df[col_close])
                 ind_df_points = ind_df[-n_points:]
                 data_bottom.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points["MACD(12,26)"],
                         name="MACD(12,26)",
                         mode="lines",
@@ -323,7 +364,7 @@ class Trade:
                 )
                 data_bottom.append(
                     go.Scatter(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points["MACD SIGNAL(9)"],
                         name="MACD SIGNAL(9)",
                         mode="lines",
@@ -332,7 +373,7 @@ class Trade:
                 )
                 data_bottom.append(
                     go.Bar(
-                        x=ind_df_points[col_names[0]],
+                        x=ind_df_points[col_time],
                         y=ind_df_points["MACD - Signal"],
                         name="MACD - Signal",
                         marker=dict(
@@ -342,9 +383,6 @@ class Trade:
                         ),
                     )
                 )
-
-        # TODO: refresh 2 seconds
-        # TODO: add forecast?
 
         layout_visible_grid = {"gridwidth": 1, "gridcolor": "lightgrey"}
         layout_visible_false = {"rangeslider_visible": False}
