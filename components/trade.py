@@ -240,7 +240,7 @@ class Trade:
         """
         col_names = self.col_names
         assert len(self.col_names), "Rate data is not initialized"
-        col_time, col_open, col_high, col_low, col_close, _ = col_names
+        col_time, col_open, col_high, col_low, col_close = col_names[:5]
 
         # Candlestick
         data_top = []
