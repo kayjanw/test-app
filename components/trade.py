@@ -45,7 +45,7 @@ def bol(data_close, data_low, data_high, periods=20, num_std=2):
         data_close (pandas Series): input pandas Series for closing price
         data_low (pandas Series): input pandas Series for low price
         data_high (pandas Series): input pandas Series for high price
-        periods (int): nuber of periods to smooth, defaults to 20
+        periods (int): number of periods to smooth, defaults to 20
         num_std (int): number of standard deviation, defaults to 2
 
     Returns:
