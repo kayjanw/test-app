@@ -106,6 +106,9 @@ def macd(data, fast=12, slow=26, signal=9):
 
     Args:
         data (pandas Series): input pandas Series
+        fast (int): number of period to calculate fast EMA, defaults to 12
+        slow (int): number of periods to calculate slow EMA, defaults to 26
+        signal (int): number of periods to calculate signal, defaults to 9
 
     Returns:
         (pandas Series, pandas Series, pandas Series): MACD, MACD SIGNAL, MACD - Signal
