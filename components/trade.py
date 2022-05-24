@@ -86,8 +86,8 @@ def rsi(data, periods=14, ema=True):
         ma_down = down.ewm(com=periods - 1, adjust=True, min_periods=periods).mean()
     else:
         # Use simple moving average
-        ma_up = up.rolling(window=periods, adjust=False).mean()
-        ma_down = down.rolling(window=periods, adjust=False).mean()
+        ma_up = up.rolling(window=periods).mean()
+        ma_down = down.rolling(window=periods).mean()
 
     _rsi = ma_up / ma_down
     _rsi = 100 - (100 / (1 + _rsi))
