@@ -102,7 +102,7 @@ def macd(data, fast=12, slow=26, signal=9):
     MACD measures the relationship between fast and slow EMA (typically 12-day and 26-day respectively).
     Signal/Trigger measures EMA of period shorter than shortest period used in calculating MACD (typically 9-day).
     Difference between MACD and Trigger represent current selling pressures, positive represent bullish trend
-    whereas negative indicate beaerish one
+    whereas negative indicate bearish one
 
     Args:
         data (pandas Series): input pandas Series
