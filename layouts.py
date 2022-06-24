@@ -815,10 +815,10 @@ def mbti_tab():
                     > correctly classify actual minority case 30% of the time, it achieves a balanced accuracy of 50%
             
                     > The results are
-                    > * Introversion-Extroversion Model has Accuracy: 64.1% and Balanced Accuracy: 63.4%
-                    > * Intuition-Sensing Model has Accuracy: 68.1% and Balanced Accuracy: 64.1%
-                    > * Thinking-Feeling Model has Accuracy: 75.6% and Balanced Accuracy: 75.7%
-                    > * Judging-Perceiving Model has Accuracy: 65.1% and Balanced Accuracy: 64.2%
+                    > * Introversion-Extroversion Model has Accuracy: 64.4% and Balanced Accuracy: 63.9%
+                    > * Intuition-Sensing Model has Accuracy: 65.2% and Balanced Accuracy: 64.4%
+                    > * Thinking-Feeling Model has Accuracy: 74.9% and Balanced Accuracy: 75.0%
+                    > * Judging-Perceiving Model has Accuracy: 65.4% and Balanced Accuracy: 64.4%
                     > * Please do not take the results too seriously
                     """
                         ),
