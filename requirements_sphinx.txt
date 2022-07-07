@@ -2,14 +2,12 @@
 alabaster==0.7.12
 autodocsumm==0.1.13
 Babel==2.9.1
-cffi==1.15.0
 colorama==0.4.3
 cryptography==37.0.2
 docutils==0.16
 imagesize==1.2.0
 packaging==20.3
 pockets==0.9.1
-pycparser==2.21
 Pygments==2.7.4
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
