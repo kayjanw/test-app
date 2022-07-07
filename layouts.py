@@ -1207,8 +1207,8 @@ def rng_tab():
                             html.P("Item List:", className="p-bold"),
                             dcc.Textarea(
                                 id="input-rng",
-                                value="",
-                                placeholder="Item A\nItem B\nItem C\nItem D",
+                                value="Item A\nItem B\nItem C\nItem D",
+                                placeholder="Insert item here",
                             ),
                             html.P(
                                 [
