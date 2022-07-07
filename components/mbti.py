@@ -240,7 +240,7 @@ class MBTI:
         model = CountVectorizer(**params)
         vect = model.fit(corpus)
         # pickle.dump(vect, open(path_vect, 'wb'))
-        pickle.dump(vect.get_feature_names_out(), open(self.path_vect, "wb"))
+        pickle.dump(vect.get_feature_names(), open(self.path_vect, "wb"))
         return vect
 
     def load_vectorizer(self):
@@ -365,19 +365,19 @@ class MBTI:
             "n_estimators": 200,
             "n_jobs": 8,
             "num_leaves": 50,
-            "scale_pos_weight": 4.342928660826033,
+            "scale_pos_weight": 4.34021263289556,
         }
         SN_model = {
-            "learning_rate": 0.2,
+            "learning_rate": 0.1,
             "max_depth": 3,
             "n_estimators": 50,
             "n_jobs": 8,
             "num_leaves": 50,
-            "scale_pos_weight": 7.251828631138976,
+            "scale_pos_weight": 6.244258872651357,
         }
         TF_model = {
-            "learning_rate": 0.2,
-            "max_depth": 3,
+            "learning_rate": 0.1,
+            "max_depth": 5,
             "n_estimators": 200,
             "n_jobs": 8,
             "num_leaves": 50,
@@ -386,10 +386,10 @@ class MBTI:
         JP_model = {
             "learning_rate": 0.1,
             "max_depth": 3,
-            "n_estimators": 200,
+            "n_estimators": 100,
             "n_jobs": 8,
             "num_leaves": 50,
-            "scale_pos_weight": 1.5263924281033856,
+            "scale_pos_weight": 1.5254730713245996,
         }
         model = pd.read_pickle(path_model)
         return model
@@ -484,7 +484,7 @@ class MBTI:
                 vect = self.save_vectorizer(X_train["posts_clean"])
             else:
                 vect = self.load_vectorizer()
-            print(f"Vocabulary size: {len(vect.get_feature_names_out())}")
+            print(f"Vocabulary size: {len(vect.get_feature_names())}")
             vector_train = self.transform_vectorizer(vect, X_train["posts_clean"])
             vector_test = self.transform_vectorizer(vect, X_test["posts_clean"])
 
