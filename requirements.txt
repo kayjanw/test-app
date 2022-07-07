@@ -4,7 +4,6 @@ astor==0.8.0
 certifi==2020.4.5.1
 chardet==3.0.4
 charset-normalizer==2.0.3
-click==7.1.2
 dash==2.0.0
 dash-bootstrap-components==1.0.2
 dash-core-components==2.0.0
@@ -19,23 +18,22 @@ gast==0.4.0
 gevent==20.6.0
 google-pasta==0.2.0
 greenlet==0.4.16
-grpcio==1.34.1
+grpcio==1.47.0
 gunicorn==20.0.4
-h5py==3.1.0
+h5py==3.7.0
 hmmlearn==0.2.3
 idna==2.9
-itsdangerous==1.1.0
 Jinja2==2.11.3
-joblib==0.14.1
+joblib>=1.0.0
 Keras-Applications==1.0.8
 keras-preprocessing==1.1.2
-lightgbm==2.3.1
+lightgbm==3.3.2
 Markdown==3.1.1
 MarkupSafe==1.1.1
 nltk==3.6.6
 nose==1.3.7
 numpy>=1.21.5
-pandas==1.0.3
+pandas==1.4.3
 pathspec==0.9.0
 platformdirs==2.4.0
 plotly==5.4.0
@@ -49,8 +47,8 @@ PyYAML==5.4
 regex==2021.8.3
 requests==2.26.0
 retrying==1.3.3
-scikit-learn==0.23.1
-scipy==1.4.1
+scikit-learn==1.1.1
+scipy==1.8.1
 six==1.15.0
 tenacity==8.0.1
 tensorboard==2.5.0
@@ -67,7 +65,7 @@ wordcloud==1.8.1
 wrapt==1.12.1
 xlrd==1.2.0
 XlsxWriter==1.2.8
-zope.event==4.4
+zope.event==4.5.0
 zope.interface==5.1.0
 
 #Trading
@@ -99,56 +97,13 @@ starkbank-ecdsa==2.0.1
 #typing_extensions==4.0.1
 #wheel==0.36.2
 
-#For sphinx documentation (26 packages)
-alabaster==0.7.12
-autodocsumm==0.1.13
-Babel==2.9.1
-cffi==1.14.0
-colorama==0.4.3
-cryptography==3.3.2
-docutils==0.16
-imagesize==1.2.0
-packaging==20.3
-pockets==0.9.1
-pycparser==2.20
-Pygments==2.7.4
-pyOpenSSL==19.1.0
-pyparsing==2.4.7
-PySocks==1.7.1
-snowballstemmer==2.0.0
-Sphinx==3.0.3
-sphinx-rtd-theme==0.4.3
-sphinxcontrib-applehelp==1.0.2
-sphinxcontrib-devhelp==1.0.2
-sphinxcontrib-htmlhelp==1.0.3
-sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-napoleon==0.7
-sphinxcontrib-qthelp==1.0.3
-sphinxcontrib-serializinghtml==1.1.4
-win-inet-pton==1.1.0
-
 #For Dash Canvas
 cycler==0.10.0
-dash_canvas-0.2.0rc1.tar.gz
+dash_canvas==0.1.0
 dash-daq==0.5.0
 decorator==4.4.2
-imageio==2.8.0
 kiwisolver==1.2.0
-matplotlib==3.3.4
-networkx==2.4
+matplotlib==3.5.2
 Pillow==9.0.1
 PyWavelets==1.1.1
-scikit-image==0.17.2
-tifffile==2020.6.3
-
-#For autopep8
-#autopep8==1.6.0
-#black==21.12b0
-#mypy-extensions==0.4.3
-#pycodestyle==2.8.0
-#pylint==2.13.8
-#toml==0.10.2
-
-#For git conda
-#menuinst==1.4.16
-#pywin32==227
+scikit-image==0.19.3
