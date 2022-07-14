@@ -79,7 +79,7 @@ footer
     }
     #sidebar {
         display: inline-block;
-        width: 15vw;
+        width: 16vw;
     }
     #sidebar h1 {
         font-size: 45px;
@@ -87,10 +87,10 @@ footer
     #tab-content {
         width: 80vw;
         margin-top: 0;
-        margin-left: 15vw;
+        margin-left: 16vw;
     }
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
-        font-size: 14px;
+        font-size: 13px;
     }
     #div-wnrs {
         height: 53vh;
@@ -174,7 +174,7 @@ footer
 /* Custom class / div
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .content-header {
-    margin-top: 10vh;
+    margin-top: 8vh;
 }
 
 .div-with-image Img {
