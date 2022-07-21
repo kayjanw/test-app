@@ -196,4 +196,5 @@ class TradeSocket:
             rates_df=rates_df,
             indicators_ind=indicators_ind,
             forecast_methods=forecast_methods,
+            col_names=rates_df.columns,
         )

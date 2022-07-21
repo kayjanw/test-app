@@ -674,7 +674,9 @@ def register_callbacks(app, print_function):
             try:
                 trade = Trade()
                 rates_data = trade.get_rates_data(symbol, frequency, n_candle)
-                fig = trade.get_candlestick_chart(symbol, n_candle, rates_data, indicators_ind, forecast_methods)
+                fig = trade.get_candlestick_chart(
+                    symbol, n_candle, rates_data, indicators_ind, forecast_methods, trade.col_names
+                )
             except Exception as e:
                 error_message = f"Error: {e}"
         return error_message, fig
