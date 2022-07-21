@@ -5,8 +5,8 @@ USER root
 COPY . /test-app
 WORKDIR /test-app
 
-COPY data/MetaTrader5/MetaTrader5 /usr/local/lib/python3.8/site-packages/MetaTrader5
-COPY data/MetaTrader5/MetaTrader5-5.0.37.dist-info /usr/local/lib/python3.8/site-packages/MetaTrader5-5.0.37.dist-info
+# COPY data/MetaTrader5/MetaTrader5 /usr/local/lib/python3.8/site-packages/MetaTrader5
+# COPY data/MetaTrader5/MetaTrader5-5.0.37.dist-info /usr/local/lib/python3.8/site-packages/MetaTrader5-5.0.37.dist-info
 ENV PORT=$port
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -19,7 +19,7 @@ RUN chgrp -R 0 /test-app \
     && chmod -R g=u /test-app \
     && pip install pip --upgrade \
     && pip install -U -r requirements.txt
-EXPOSE $PORT
+# EXPOSE $PORT
 
 RUN python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('omw-1.4')"
 RUN cp -r /root/nltk_data /usr/local/share/
