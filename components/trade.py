@@ -225,7 +225,8 @@ class Trade:
         self.col_names = col_names
         return rates_df
 
-    def get_candlestick_chart(self, symbol, n_points, rates_df, indicators_ind, forecast_methods):
+    def get_candlestick_chart(
+            self, symbol, n_points, rates_df, indicators_ind, forecast_methods, col_names):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
@@ -240,8 +241,7 @@ class Trade:
         Returns:
             dict: graphical result of trade
         """
-        col_names = self.col_names
-        assert len(self.col_names), "Rate data is not initialized"
+        assert len(col_names), "Rate data is not initialized"
         col_time, col_open, col_high, col_low, col_close = col_names[:5]
 
         # Candlestick
