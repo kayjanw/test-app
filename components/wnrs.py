@@ -47,7 +47,7 @@ class WNRS:
         """Get information (type, description, summary) of all card deck
 
         Returns:
-            dict
+            (dict)
         """
         return self.information
 
@@ -56,7 +56,7 @@ class WNRS:
         """Get all cards to retrieve playable cards
 
         Returns:
-            dict
+            (dict)
         """
         file = pd.ExcelFile("data/WNRS.xlsx")
         decks = file.sheet_names
@@ -141,7 +141,7 @@ class WNRS:
         """Get next card
 
         Returns:
-            str, list, dict, str: card deck, prompt, style, counter
+            (str, list, dict, str): card deck, prompt, style, counter
         """
         if self.pointer < len(self.index) - 1:
             self.pointer += 1
@@ -161,7 +161,7 @@ class WNRS:
         """Get current card
 
         Returns:
-            list, list, dict, str: card deck, prompt, style, counter
+            (list, list, dict, str): card deck, prompt, style, counter
         """
         color_map = {
             "B1": ("#000000", "#FFFFFF"),  # black card white font (race edition)
@@ -255,7 +255,7 @@ class WNRS:
         """Shuffle remaining cards, return next card
 
         Returns:
-            str, list, dict, str: card deck, prompt, style, counter
+            (str, list, dict, str): card deck, prompt, style, counter
         """
         past_index = self.index[: self.pointer + 1].copy()
         remaining_index = self.index[self.pointer + 1:].copy()

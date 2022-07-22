@@ -131,7 +131,7 @@ class MBTI:
             lemma: Lemmatizer (defaults to nltk WordNetLemmatizer)
 
         Returns:
-            str: processed text
+            (str): processed text
         """
         # Split sentences
         text = re.sub(r"\|\|\|", " ", text)
@@ -173,7 +173,7 @@ class MBTI:
             a) Reads in saved data
 
         Returns:
-            pandas DataFrame: processed data
+            (pd.DataFrame): processed data
         """
         if not os.path.isfile(self.path_save_data):
             print("Read and save data file")
@@ -199,18 +199,18 @@ class MBTI:
         """Splits data into training and testing data
 
         Args:
-            X (pandas DataFrame): processed input data
-            y (pandas DataFrame): processed output data
+            X (pd.DataFrame): processed input data
+            y (pd.DataFrame): processed output data
             test_size (float): proportion of test data, defaults to 0.2
             random_state (int): fixed seed, allows reproducible result, defaults to 0
 
         Returns:
             4-element tuple
 
-            - X_train (pandas DataFrame): training input
-            - X_test (pandas DataFrame): testing input
-            - y_train (pandas DataFrame): training output
-            - y_test (pandas DataFrame): testing output
+            - X_train (pd.DataFrame): training input
+            - X_test (pd.DataFrame): testing input
+            - y_train (pd.DataFrame): training output
+            - y_test (pd.DataFrame): testing output
         """
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state, stratify=y
@@ -221,11 +221,11 @@ class MBTI:
         """Fit, save and return vectorizer
 
         Args:
-            corpus (pandas Series): input text corpus (training input)
+            corpus (pd.Series): input text corpus (training input)
             params (dict): specifies parameters for vectorizer, defaults to None
 
         Returns:
-            (sklearn CountVectorizer)
+            (sklearn.CountVectorizer)
         """
         sw = [self.clean_text(word) for word in stopwords.words("english")]
         sw = list(set(sw) - set(self.non_sw))
@@ -247,7 +247,7 @@ class MBTI:
         """Load and return saved vectorizer
 
         Returns:
-            sklearn CountVectorizer
+            (sklearn.CountVectorizer)
         """
         # vect = pd.read_pickle(path_vect)
         vocabulary = pd.read_pickle(self.path_vect)
@@ -258,11 +258,11 @@ class MBTI:
         """Transform corpus with vectorizer
 
         Args:
-            vect (sklearn CountVectorizer): vectorizer to be used to transform text corpus
-            corpus (pandas Series): input text corpus
+            vect (sklearn.CountVectorizer): vectorizer to be used to transform text corpus
+            corpus (pd.Series): input text corpus
 
         Returns:
-            vector_corpus (scipy csr_matrix): vectorized text corpus
+            vector_corpus (scipy.csr_matrix): vectorized text corpus
         """
         vector_corpus = vect.transform(corpus).astype(np.float64)
         return vector_corpus
@@ -271,11 +271,11 @@ class MBTI:
         """Fit, save and return tokenizer
 
         Args:
-            corpus (pandas Series): input text corpus (training input)
+            corpus (pd.Series): input text corpus (training input)
             params (dict): specifies parameters for tokenizer, defaults to None
 
         Returns:
-            keras Tokenizer
+            (keras.Tokenizer)
         """
         if params is None:
             params = dict(
@@ -300,10 +300,10 @@ class MBTI:
 
         Args:
             tokenizer (keras Tokenizer): tokenizer to be used to transform text corpus
-            corpus (pandas Series): input text corpus
+            corpus (pd.Series): input text corpus
 
         Returns:
-            vector_corpus (numpy ndarray): tokenized text corpus
+            vector_corpus (np.ndarray): tokenized text corpus
         """
         corpus_sequences = tokenizer.texts_to_sequences(corpus)
         vector_corpus = pad_sequences(
@@ -316,8 +316,8 @@ class MBTI:
         """Train, save and return best model after grid search with stratified cross validation
 
         Args:
-            vector_train (scipy csr_matrix): vectorized training input
-            y_train_series (pandas Series): training output, one-column subset of y_train
+            vector_train (scipy.csr_matrix): vectorized training input
+            y_train_series (pd.Series): training output, one-column subset of y_train
             path_model (str): location and file name of saved model
 
         Returns:
@@ -400,10 +400,10 @@ class MBTI:
 
         Args:
             model (model): model to be used for prediction
-            vector_test (scipy csr_matrix): vectorized training input
+            vector_test (scipy.csr_matrix): vectorized training input
 
         Returns:
-            y_pred (numpy ndarray)
+            y_pred (np.ndarray)
         """
         y_pred = model.predict(vector_test)
         return y_pred
@@ -412,8 +412,8 @@ class MBTI:
         """Train, save and return tensorflow model
 
         Args:
-            vector_train (numpy ndarray): vectorized training input
-            y_train_series (pandas Series): training output, one-column subset of y_train
+            vector_train (np.ndarray): vectorized training input
+            y_train_series (pd.Series): training output, one-column subset of y_train
             path_model (str): location and file name of saved model
 
         Returns:
@@ -454,10 +454,10 @@ class MBTI:
 
         Args:
             model (model): model to be used for prediction
-            vector_test (numpy ndarray): vectorized training input
+            vector_test (np.ndarray): vectorized training input
 
         Returns:
-            y_pred (numpy ndarray)
+            y_pred (np.ndarray)
         """
         y_pred = model.predict(vector_test) > self.threshold
         return y_pred
@@ -554,7 +554,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            scipy csr_matrix: vectorized input_text
+            (scipy.csr_matrix): vectorized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -572,7 +572,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            numpy ndarray: tokenized input_text
+            (np.ndarray): tokenized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -626,7 +626,7 @@ class MBTI:
             input_text (str): input text
 
         Returns:
-            int
+            (int)
         """
         if not self.use_tf:
             vector_input = self.vectorize_new_input(input_text)
@@ -646,7 +646,7 @@ class MBTI:
             predictions (list): list of model prediction probabilities
 
         Returns:
-            dict
+            (dict)
         """
         y_data = [
             "Introversion-Extroversion",
@@ -731,7 +731,7 @@ class MBTI:
             personality (str): MBTI personality results, to retrieve detailed results
 
         Returns:
-            list
+            (list)
         """
         mbti_dict = {
             "INTJ": {

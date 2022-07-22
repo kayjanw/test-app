@@ -20,9 +20,9 @@ class RandomGenerator:
         Returns:
             3-element tuple
 
-            - list: div result of result div
-            - list: div result of output div
-            - dict: updated style of output div
+            - (list): div result of result div
+            - (list): div result of output div
+            - (dict): updated style of output div
         """
         # Initialize return variables
         result = []
