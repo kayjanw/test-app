@@ -507,6 +507,10 @@ footer
     margin-top: 20px;
 }
 
+#graph-trade .js-plotly-plot .plotly .cursor-pointer {
+    cursor: crosshair;
+}
+
 #wnrs-card {
     height: 100%;
     border-radius: 100px;
