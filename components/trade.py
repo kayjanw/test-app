@@ -1,5 +1,6 @@
 try:
     import MetaTrader5 as mt5
+
     USE_MT5 = True
 except ImportError:
     USE_MT5 = False
@@ -131,7 +132,11 @@ def macd(data, fast=12, slow=26, signal=9):
 
     # Calculate the difference between the MACD - Trigger for the Convergence/Divergence value
     _macd_h = _macd - _macd_s
-    return round(_macd, GRANULARITY), round(_macd_s, GRANULARITY), round(_macd_h, GRANULARITY)
+    return (
+        round(_macd, GRANULARITY),
+        round(_macd_s, GRANULARITY),
+        round(_macd_h, GRANULARITY),
+    )
 
 
 def forecast_ewm(data, alpha=0.8):
@@ -151,6 +156,7 @@ def forecast_ewm(data, alpha=0.8):
 
 class Trade:
     """The Trade object contains functions used for Trade tab"""
+
     def __init__(self, use_mt5=USE_MT5):
         """Initialize class attributes
 
@@ -171,7 +177,9 @@ class Trade:
         }
         if use_mt5:
             # Connect to MetaTrader5 Platform
-            assert mt5.initialize("data/MetaTrader5/terminal64.exe", portable=True), "Cannot initialize MetaTrader5"
+            assert mt5.initialize(
+                "data/MetaTrader5/terminal64.exe", portable=True
+            ), "Cannot initialize MetaTrader5"
 
             self.TIMEFRAME_DICT = {
                 "1 min": mt5.TIMEFRAME_M1,
@@ -216,13 +224,22 @@ class Trade:
             rates_arr = mt5.copy_rates_from_pos(symbol, frequency, 0, n_candles)
 
             # Time, Open, High, Low, Close, Tick volume, Spread, Real volume
-            col_names = [col.replace("_", " ").capitalize() for col in rates_arr.dtype.fields.keys()]
+            col_names = [
+                col.replace("_", " ").capitalize()
+                for col in rates_arr.dtype.fields.keys()
+            ]
             rates_df = pd.DataFrame(rates_arr)
             rates_df.columns = col_names
             rates_df[col_names[0]] = pd.to_datetime(rates_df[col_names[0]], unit="s")
         else:
-            start_dt = (datetime.datetime.now() - relativedelta(years=1)).strptime("%Y-%m-%d")
-            rates_df = yf.Ticker(symbol).history(start=start_dt, interval=frequency).reset_index(drop=True)
+            start_dt = (datetime.datetime.now() - relativedelta(years=1)).strptime(
+                "%Y-%m-%d"
+            )
+            rates_df = (
+                yf.Ticker(symbol)
+                .history(start=start_dt, interval=frequency)
+                .reset_index(drop=True)
+            )
             # Datetime, Open, High, Low, Close, Volume, Dividend, Stock Splits
             col_names = rates_df.columns
 
@@ -230,7 +247,9 @@ class Trade:
         return rates_df
 
     @staticmethod
-    def get_candlestick_chart(symbol, n_points, rates_df, indicators_ind, forecast_methods):
+    def get_candlestick_chart(
+        symbol, n_points, rates_df, indicators_ind, forecast_methods
+    ):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
@@ -260,9 +279,15 @@ class Trade:
                 low=rates_df_points[col_low],
                 close=rates_df_points[col_close],
                 name="Candlestick",
-                text=["<br>".join([
-                    f"{rates_df_points.columns[idx]}: {x[idx]}"
-                    for idx in range(len(rates_df_points.columns))]) for x in rates_df_points.values],
+                text=[
+                    "<br>".join(
+                        [
+                            f"{rates_df_points.columns[idx]}: {x[idx]}"
+                            for idx in range(len(rates_df_points.columns))
+                        ]
+                    )
+                    for x in rates_df_points.values
+                ],
                 hoverinfo="text",
             )
         )
@@ -280,9 +305,7 @@ class Trade:
                         y=rates_df_points[ind_col],
                         name=ind_col,
                         mode="markers",
-                        marker={
-                            "color": "black"
-                        },
+                        marker={"color": "black"},
                         hovertemplate="%{y}",
                     )
                 )
@@ -341,7 +364,7 @@ class Trade:
                         line=dict(color="rgba(255, 165, 0, 0)"),
                         hovertemplate="%{y}",
                         fill="tonexty",
-                        fillcolor="rgba(255, 165, 0, 0.5)"
+                        fillcolor="rgba(255, 165, 0, 0.5)",
                     )
                 )
 
@@ -358,8 +381,18 @@ class Trade:
                 )
 
             elif ind == "MACD":
-                ind_df["MACD(12,26)"], ind_df["MACD SIGNAL(9)"], ind_df["MACD - Signal"] = macd(rates_df[col_close])
-                dtick_macd = max(2, int((ind_df["MACD(12,26)"].max() - ind_df["MACD(12,26)"].min()) / 25) * 10)
+                (
+                    ind_df["MACD(12,26)"],
+                    ind_df["MACD SIGNAL(9)"],
+                    ind_df["MACD - Signal"],
+                ) = macd(rates_df[col_close])
+                dtick_macd = max(
+                    2,
+                    int(
+                        (ind_df["MACD(12,26)"].max() - ind_df["MACD(12,26)"].min()) / 25
+                    )
+                    * 10,
+                )
                 ind_df_points = ind_df[-n_points:]
                 data_bottom.append(
                     go.Scatter(
@@ -386,8 +419,11 @@ class Trade:
                         name="MACD - Signal",
                         marker=dict(
                             color=[
-                                "rgba(63, 195, 128, 1)" if x > 0 else "rgba(255, 100, 91, 1)" for x in
-                                ind_df_points["MACD - Signal"]]
+                                "rgba(63, 195, 128, 1)"
+                                if x > 0
+                                else "rgba(255, 100, 91, 1)"
+                                for x in ind_df_points["MACD - Signal"]
+                            ]
                         ),
                     )
                 )

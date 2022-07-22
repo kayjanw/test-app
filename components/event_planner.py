@@ -84,14 +84,21 @@ class EventPlanner:
 
             # Criteria: if criteria is individual or group level
             if criteria_level == "group":
-                criteria_list_tmp = EventPlanner().get_criteria_list(other_cols_values, n=n_groups)
+                criteria_list_tmp = EventPlanner().get_criteria_list(
+                    other_cols_values, n=n_groups
+                )
                 criteria_list = []
                 for idx, group in enumerate(list_of_array):
                     criteria_list.append(
-                        np.vstack([list(np.array(criteria_list_tmp)[:, idx])] * len(group)))
+                        np.vstack(
+                            [list(np.array(criteria_list_tmp)[:, idx])] * len(group)
+                        )
+                    )
                 criteria_list = np.vstack(criteria_list).T
             else:
-                criteria_list = EventPlanner().get_criteria_list(other_cols_values, n=len(people))
+                criteria_list = EventPlanner().get_criteria_list(
+                    other_cols_values, n=len(people)
+                )
             criteria_df = pd.DataFrame(dict(zip(other_cols, criteria_list)))
 
             # Matching: shuffle within group
@@ -106,9 +113,16 @@ class EventPlanner:
                         if np.sum(group == group_copy) == 0:
                             shuffle = False
                     tmp_df = pd.DataFrame(
-                        {"Group": [idx + 1] * len(group), "Person": group, "Partner": group_copy})
+                        {
+                            "Group": [idx + 1] * len(group),
+                            "Person": group,
+                            "Partner": group_copy,
+                        }
+                    )
                 else:
-                    tmp_df = pd.DataFrame({"Group": [idx + 1] * len(group), "Person": group})
+                    tmp_df = pd.DataFrame(
+                        {"Group": [idx + 1] * len(group), "Person": group}
+                    )
                 if len(output_df):
                     output_df = output_df.append(tmp_df)
                 else:
@@ -150,7 +164,8 @@ class EventPlanner:
                 criteria_list.append(criteria[:n])
             else:
                 criteria_list.append(
-                    criteria + list(np.random.choice(criteria, n - len(criteria))))
+                    criteria + list(np.random.choice(criteria, n - len(criteria)))
+                )
         return criteria_list
 
     @staticmethod

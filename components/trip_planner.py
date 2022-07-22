@@ -52,9 +52,11 @@ class TripPlanner:
         Returns:
             (str)
         """
-        url = f"https://maps.googleapis.com/maps/api/geocode/json?" \
-              f"address={lat},{lon}" \
-              f"&key={self.GOOGLE_API_KEY}"
+        url = (
+            f"https://maps.googleapis.com/maps/api/geocode/json?"
+            f"address={lat},{lon}"
+            f"&key={self.GOOGLE_API_KEY}"
+        )
         try:
             page = requests.get(url).json()
         except Exception as e:

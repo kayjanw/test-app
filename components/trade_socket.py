@@ -12,8 +12,7 @@ class TradeSocket:
     """The TradeSocket object contains functions used for Trade tab"""
 
     def __init__(self):
-        """Initialize class attributes
-        """
+        """Initialize class attributes"""
         # Parameters
         self.socket = "wss://ws-feed.pro.coinbase.com"
         self.api_url = "https://api.pro.coinbase.com"
@@ -131,7 +130,9 @@ class TradeSocket:
         )
         ws.run_forever()
 
-    def get_rates_data(self, symbol="BTC-USD", granularity="15 min", n_points=50, date_col="Datetime"):
+    def get_rates_data(
+        self, symbol="BTC-USD", granularity="15 min", n_points=50, date_col="Datetime"
+    ):
         """Compute rate data (time, open, high, low, close)
 
         Args:
@@ -156,15 +157,25 @@ class TradeSocket:
             df_historical = self.get_historical_data(symbol, granularity, end=end)
 
             if self.df_tick[date_col][0] in set(df_historical[date_col]):
-                df_new = df_historical[(df_historical["Datetime"] == self.df_tick["Datetime"].values[0])]
+                df_new = df_historical[
+                    (df_historical["Datetime"] == self.df_tick["Datetime"].values[0])
+                ]
                 # Replace close
-                df_historical.at[df_new.index.values[0], "Close"] = self.df_tick["price"].values[0]
+                df_historical.at[df_new.index.values[0], "Close"] = self.df_tick[
+                    "price"
+                ].values[0]
                 # Replace high
                 if self.df_tick["price"].values[0] > df_new["High"].values[0]:
-                    df_historical.at[df_new.index.values[0], "High"] = self.df_tick["price"].values[0]
+                    df_historical.at[df_new.index.values[0], "High"] = self.df_tick[
+                        "price"
+                    ].values[0]
                 # Replace low
-                if float(self.df_tick["price"].values[0]) < float(df_new["Low"].values[0]):
-                    df_historical.at[df_new.index.values[0], "Low"] = self.df_tick["price"].values[0]
+                if float(self.df_tick["price"].values[0]) < float(
+                    df_new["Low"].values[0]
+                ):
+                    df_historical.at[df_new.index.values[0], "Low"] = self.df_tick[
+                        "price"
+                    ].values[0]
             else:
                 df_new = pd.DataFrame(
                     columns=df_historical.columns,
@@ -181,11 +192,15 @@ class TradeSocket:
                 df_historical = pd.concat([df_historical, df_new])
 
         # Adjust to SG time
-        df_historical["Datetime"] = df_historical["Datetime"] + datetime.timedelta(hours=8)
+        df_historical["Datetime"] = df_historical["Datetime"] + datetime.timedelta(
+            hours=8
+        )
         return df_historical
 
     @staticmethod
-    def get_candlestick_chart(symbol, n_points, rates_df, indicators_ind, forecast_methods):
+    def get_candlestick_chart(
+        symbol, n_points, rates_df, indicators_ind, forecast_methods
+    ):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
