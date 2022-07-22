@@ -21,9 +21,7 @@ class TradeSocket:
             "1 min": (60, "1T"),
             "5 min": (300, "5T"),
             "15 min": (900, "15T"),
-            "30 min": (1800, "30T"),
             "1 hour": (3600, "1H"),
-            "4 hours": (14400, "4H"),
             "1 day": (86400, "1D"),
         }
         # Variables
