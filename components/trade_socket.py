@@ -123,9 +123,6 @@ class TradeSocket:
         Args:
             ticker (str): symbol to display
             granularity (str): granularity of candlestick chart
-
-        Returns:
-
         """
         ws = websocket.WebSocketApp(
             self.socket,
@@ -144,7 +141,7 @@ class TradeSocket:
             date_col (str): name of date column
 
         Returns:
-            (pandas DataFrame)
+            (pd.DataFrame)
         """
         historical_only = False
 
@@ -196,7 +193,7 @@ class TradeSocket:
         Args:
             symbol (str): symbol to plot for
             n_points (int): number of points on candlestick
-            rates_df (pandas DataFrame): rate data (time, open, high, low, close, tick volume, spread)
+            rates_df (pd.DataFrame): rate data (time, open, high, low, close, tick volume, spread)
             indicators_ind (list): list of indicators to plot
             forecast_methods (list): list of forecasting methods
 

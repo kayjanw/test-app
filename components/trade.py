@@ -27,11 +27,11 @@ def sma(data, window):
     SMA is a lagging indicator that smooths out price action and highlights direction of trend
 
     Args:
-        data (pandas Series): input pandas Series
+        data (pd.Series): input pandas Series
         window (int): number of historical periods to calculate SMA
 
     Returns:
-        (pandas Series)
+        (pd.Series)
     """
     _sma = data.rolling(window).mean()
     return round(_sma, GRANULARITY)
@@ -46,14 +46,14 @@ def bol(data_close, data_low, data_high, periods=20, num_std=2):
     very close (low volatility), this can be indication of potential future volatility, vice versa
 
     Args:
-        data_close (pandas Series): input pandas Series for closing price
-        data_low (pandas Series): input pandas Series for low price
-        data_high (pandas Series): input pandas Series for high price
+        data_close (pd.Series): input pandas Series for closing price
+        data_low (pd.Series): input pandas Series for low price
+        data_high (pd.Series): input pandas Series for high price
         periods (int): number of periods to smooth, defaults to 20
         num_std (int): number of standard deviation, defaults to 2
 
     Returns:
-        (pandas Series)
+        (pd.Series)
     """
     typical_price = (data_close + data_low + data_high) / 3
     typical_price_std = typical_price.rolling(periods).std(ddof=0)
@@ -71,12 +71,12 @@ def rsi(data, periods=14, ema=True):
     oversold conditions in the price of an asset. RSI measures price change in relation to recent price highs and lows
 
     Args:
-        data (pandas Series): input pandas Series
+        data (pd.Series): input pandas Series
         periods (int): number of periods to calculate RSI, defaults to 14
         ema (bool): indicator to use exponential moving average, defaults to True
 
     Returns:
-        (pandas Series)
+        (pd.Series)
     """
     close_delta = data.diff()
 
@@ -109,13 +109,13 @@ def macd(data, fast=12, slow=26, signal=9):
     whereas negative indicate bearish one
 
     Args:
-        data (pandas Series): input pandas Series
+        data (pd.Series): input pandas Series
         fast (int): number of period to calculate fast EMA, defaults to 12
         slow (int): number of periods to calculate slow EMA, defaults to 26
         signal (int): number of periods to calculate signal, defaults to 9
 
     Returns:
-        (pandas Series, pandas Series, pandas Series): MACD, MACD SIGNAL, MACD - Signal
+        (pd.Series, pd.Series, pd.Series): MACD, MACD SIGNAL, MACD - Signal
     """
     # Get the fast (12-day) EMA of the closing price
     k = data.ewm(span=fast, adjust=False, min_periods=12).mean()
@@ -139,11 +139,11 @@ def forecast_ewm(data, alpha=0.8):
     Forecasting with Exponential Weighted Moving Average
 
     Args:
-        data (pandas Series): input pandas Series
+        data (pd.Series): input pandas Series
         alpha (float): weight given to preceding EMA value
 
     Returns:
-        float
+        (float)
     """
     pred = data[:-1].ewm(alpha=alpha).mean().values[-1]
     return round(pred, GRANULARITY)
@@ -189,7 +189,7 @@ class Trade:
         """Get symbol names
 
         Returns:
-            list
+            (list)
         """
         symbol_names = []
         if self.use_mt5:
@@ -206,7 +206,7 @@ class Trade:
             n_points (int): number of points on candlestick
 
         Returns:
-            pandas DataFrame: result of rate data
+            (pd.DataFrame): result of rate data
         """
         frequency = self.TIMEFRAME_DICT[timeframe]
 
@@ -238,12 +238,12 @@ class Trade:
         Args:
             symbol (str): symbol to plot for
             n_points (int): number of points on candlestick
-            rates_df (pandas DataFrame): rate data (time, open, high, low, close, tick volume, spread)
+            rates_df (pd.DataFrame): rate data (time, open, high, low, close, tick volume, spread)
             indicators_ind (list): list of indicators to plot
             forecast_methods (list): list of forecasting methods
 
         Returns:
-            dict: graphical result of trade
+            (dict): graphical result of trade
         """
         assert len(rates_df.columns), "Rate data is not initialized"
         col_time, col_open, col_high, col_low, col_close = rates_df.columns[:5]

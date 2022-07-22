@@ -21,7 +21,7 @@ class EventPlanner:
         """Processing for event planner, shuffling and splitting participants
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             event (str): name of event, for result heading and email
             n_groups (int): number of groups
             pair_flag (str): option whether to pair participants up
@@ -33,9 +33,9 @@ class EventPlanner:
         Returns:
             3-element tuple
 
-            - list: div result of result div
-            - list: div result of output div
-            - dict: updated style of output div
+            - (list): div result of result div
+            - (list): div result of output div
+            - (dict): updated style of output div
         """
         # Initialize return variables
         result = []
@@ -140,7 +140,7 @@ class EventPlanner:
             n (int): number of criterias to generate
 
         Returns:
-            list: list of criteria selection that is randomly selected
+            (list): list of criteria selection that is randomly selected
         """
         criteria_list = []
         for m in range(len(other_cols_values)):
@@ -158,12 +158,12 @@ class EventPlanner:
         """Function to send email to participants
 
         Args:
-            output_df (pandas DataFrame): output DataFrame from process_result
+            output_df (pd.DataFrame): output DataFrame from process_result
             email_dict (dict): dictionary mapping participants to email address
             event (str): name of event, for result heading and email
 
         Returns:
-            bool indicator if email is sent
+            (bool): indicator if email is sent
         """
         status_code_all = True
         for row_idx, row in output_df.iterrows():

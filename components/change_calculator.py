@@ -13,11 +13,11 @@ class ChangeCalculator:
         """Remove non-integer values from column(s) in DataFrame
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col (str/list): column(s) to remove non-integer values from
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         # Handle string values
         if isinstance(col, str):
@@ -36,11 +36,11 @@ class ChangeCalculator:
         """Remove null values from column(s) in DataFrame
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col (str/list): column(s) to remove null values from
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         # Handle string values
         if isinstance(col, str):
@@ -54,12 +54,12 @@ class ChangeCalculator:
         """Convert values to float for column(s) in DataFrame, normalize column if necessary
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col (str): column to convert values to float
             col_max (int): maximum value for column, could be None or empty string
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         # Convert to float, normalize if necessary
         if col_max:
@@ -77,14 +77,14 @@ class ChangeCalculator:
         column as difference between y_col and x_col
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             x_col (str): column for x-axis
             x_max (int): maximum value for x-axis, could be None or empty string
             y_col (str): column for x-axis
             y_max (int): maximum value for y-axis, could be None or empty string
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         df = df.copy()
         df = self.remove_string_values(df, [x_col, y_col])
@@ -101,12 +101,12 @@ class ChangeCalculator:
         Adds plotly.graph_objects charts for violin plot, line plot and marginal histograms
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             x_col (str): column for x-axis
             y_col (str): column for x-axis
 
         Returns:
-            dict
+            (dict)
         """
         x_min, x_max = df[x_col].min(), df[x_col].max()
         y_min, y_max = df[y_col].min(), df[y_col].max()
@@ -170,13 +170,12 @@ class ChangeCalculator:
         Performs removing non-integer values, removing null rows and conversion of values to float
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col_identifier (str): column for index
-            list_of_tuples (list): data from table that contains tuple of
-                column(s) and their maximum value(s)
+            list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         df = df.copy()
         for col, col_max in list_of_tuples:
@@ -191,12 +190,12 @@ class ChangeCalculator:
         """Convert long DataFrame to wide DataFrame
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col_identifier (str): column for index, which will be the new DataFrame column names
             cols (list): column names, which will be the new DataFrame index
 
         Returns:
-            pandas DataFrame
+            (pd.DataFrame)
         """
         df2 = df[cols].transpose()
         if col_identifier:
@@ -210,11 +209,11 @@ class ChangeCalculator:
         Adds plotly.graph_objects charts for box plot, visualizing summary statistics
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             cols (list): list of column(s) for results summary
 
         Returns:
-            dict: graphical result of change calculator 2
+            (dict): graphical result of change calculator 2
         """
         color = [
             "hsl(" + str(h) + ",50%,70%)"
@@ -252,13 +251,13 @@ class ChangeCalculator:
         Adds plotly.graph_objects charts for line plot
 
         Args:
-            df2 (pandas DataFrame): input DataFrame
+            df2 (pd.DataFrame): input DataFrame
 
         Returns:
             2-element tuple
 
-            - list: instructions for interacting with figure
-            - dict: graphical result of change calculator 2
+            - (list): instructions for interacting with figure
+            - (dict): graphical result of change calculator 2
         """
         trace = []
         instructions = [
@@ -315,16 +314,15 @@ class ChangeCalculator:
         Adds plotly.graph_objects charts for parallel coordinate plot
 
         Args:
-            df (pandas DataFrame): input DataFrame
+            df (pd.DataFrame): input DataFrame
             col_identifier (str): column for index
-            list_of_tuples (list): data from table that contains
-                tuple of column(s) and their maximum value(s)
+            list_of_tuples (list): data from table that contains tuple of column(s) and their maximum value(s)
 
         Returns:
             2-element tuple
 
-            - list: instructions for interacting with figure
-            - dict: graphical result of change calculator 2
+            - (list): instructions for interacting with figure
+            - (dict): graphical result of change calculator 2
         """
         cols = [row[0] for row in list_of_tuples]
         trace = go.Parcoords(
