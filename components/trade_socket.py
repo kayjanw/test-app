@@ -11,16 +11,10 @@ from components.trade import Trade
 class TradeSocket:
     """The TradeSocket object contains functions used for Trade tab"""
 
-    def __init__(self, ticker="BTC-USD", granularity="15 min"):
+    def __init__(self):
         """Initialize class attributes
-
-        Args:
-            ticker (str): ticker to display
-            granularity (str): granularity of candlestick charts
         """
         # Parameters
-        self.ticker = ticker
-        self.granularity = granularity
         self.socket = "wss://ws-feed.pro.coinbase.com"
         self.api_url = "https://api.pro.coinbase.com"
         self.TIMEFRAME_DICT = {
@@ -33,7 +27,7 @@ class TradeSocket:
             "1 day": (86400, "1D"),
         }
         # Variables
-        self.tick_df = pd.DataFrame()
+        self.df_tick = pd.DataFrame()
 
     @staticmethod
     def get_symbol_names():
@@ -44,21 +38,26 @@ class TradeSocket:
         """
         symbol_names = [
             "BTC-USD",
-            "ETH-BTC",
-            "ETH-EUR",
+            # "ETH-BTC",
+            # "ETH-EUR",
             "ETH-USD",
         ]
         return symbol_names
 
-    def get_historical_data(self):
-        """Get historical data of stock ticker
+    def get_historical_data(self, ticker, granularity, end=None):
+        """Get historical data of stock symbol
+
+        Args:
+            ticker (str): symbol to display
+            granularity (str): granularity of candlestick chart
+            end (str): end datetime of historical data
 
         Returns:
             (pd.DataFrame)
         """
         _request = (
             self.api_url
-            + f"/products/{self.ticker}/candles?granularity={self.TIMEFRAME_DICT[self.granularity][0]}"
+            + f"/products/{ticker}/candles?end={end}&granularity={self.TIMEFRAME_DICT[granularity][0]}"
         )
         resp = requests.get(_request)
         assert (
@@ -68,133 +67,148 @@ class TradeSocket:
             resp.json(), columns=["Epoch", "Low", "High", "Open", "Close", "Volume"]
         )
         df_historical = df_historical.sort_values("Epoch")
-        df_historical["Datetime"] = pd.to_datetime(
-            df_historical["Epoch"], unit="s"
-        ) + datetime.timedelta(hours=8)
+        df_historical["Datetime"] = pd.to_datetime(df_historical["Epoch"], unit="s")
         return df_historical[["Datetime", "Open", "High", "Low", "Close"]]
 
-    def on_open(self, ws):
+    def on_open(self, ws, symbol):
         """Websocket callback object, called when opening websocket
 
         Args:
             ws (WebSocketApp): websocket object
+            symbol (str): symbol to display
         """
-        print("Connection opened")
         subscribe_msg = {
             "type": "subscribe",
-            "channels": [{"name": "matches", "product_ids": [self.ticker]}],
+            "channels": [{"name": "matches", "product_ids": [symbol]}],
         }
         ws.send(json.dumps(subscribe_msg))
 
-    def on_message(self, ws, message):
+    def on_message(self, ws, message, granularity):
         """Websocket callback object, called when received data
 
         Args:
             ws (WebSocketApp): websocket class object
             message (str): utf-8 data received from server
+            granularity (str): granularity of candlestick chart
 
         Returns:
             (pd.DataFrame)
         """
         current_tick = json.loads(message)
+
         # Create DataFrame
-        current_time_ds = dateutil.parser.parse(
-            current_tick["time"]
-        ) + datetime.timedelta(hours=8)
-        current_time_string = current_time_ds.strftime("%Y-%m-%d %H:%M:%S")
-        df_current_tick = pd.DataFrame(
+        tick_time_ds = dateutil.parser.parse(current_tick["time"])
+        tick_time_string = tick_time_ds.strftime("%Y-%m-%d %H:%M:%S")
+        df_tick = pd.DataFrame(
             columns=["Datetime", "market", "price"],
             data=[
                 [
-                    current_time_string,
+                    tick_time_string,
                     current_tick["product_id"],
                     current_tick["price"],
                 ]
             ],
         )
-        df_current_tick["Datetime"] = df_current_tick["Datetime"].astype(
-            "datetime64[ns]"
-        )
-        df_current_tick["price"] = df_current_tick["price"].astype("float64")
-        if len(self.tick_df):
-            ws.close()
-            self.tick_df = self.tick_df.concat(df_current_tick)
-        else:
-            self.tick_df = df_current_tick.copy()
-        self.tick_df["Datetime"] = self.tick_df["Datetime"].dt.floor(
-            freq=self.TIMEFRAME_DICT[self.granularity][1]
-        )
+        df_tick["Datetime"] = df_tick["Datetime"].astype("datetime64[ns]")
+        df_tick["price"] = df_tick["price"].astype("float64")
 
-    def run_socket(self):
+        # Get latest tick
+        self.df_tick = df_tick.copy()
+        self.df_tick["Datetime"] = self.df_tick["Datetime"].dt.floor(
+            freq=self.TIMEFRAME_DICT[granularity][1]
+        )
+        ws.close()
+
+    def run_socket(self, ticker, granularity):
+        """Connect to web socket
+
+        Args:
+            ticker (str): symbol to display
+            granularity (str): granularity of candlestick chart
+
+        Returns:
+
+        """
         ws = websocket.WebSocketApp(
             self.socket,
-            on_open=lambda ws: self.on_open(ws),
-            on_message=lambda ws, msg: self.on_message(ws, msg),
+            on_open=lambda ws: self.on_open(ws, ticker),
+            on_message=lambda ws, msg: self.on_message(ws, msg, granularity),
         )
         ws.run_forever()
 
-    def get_rates_data(self):
+    def get_rates_data(self, symbol="BTC-USD", granularity="15 min", n_points=50, date_col="Datetime"):
         """Compute rate data (time, open, high, low, close)
+
+        Args:
+            symbol (str): symbol to display
+            granularity (str): granularity of candlestick chart
+            n_points (int): number of points on candlestick
+            date_col (str): name of date column
 
         Returns:
             (pandas DataFrame)
         """
-        df_historical = self.get_historical_data()
-        self.run_socket()
-        if self.tick_df["Datetime"][0] in set(df_historical["Datetime"]):
-            df_new_candle = df_historical[
-                (df_historical["Datetime"] == self.tick_df["Datetime"].values[0])
-            ]
-            # Replace close
-            df_historical.at[df_new_candle.index.values[0], "Close"] = self.tick_df[
-                "price"
-            ].values[0]
-            # Replace high
-            if self.tick_df["price"].values[0] > df_new_candle["High"].values[0]:
-                df_historical.at[df_new_candle.index.values[0], "High"] = self.tick_df[
-                    "price"
-                ].values[0]
-            # Replace low
-            if float(self.tick_df["price"].values[0]) < float(
-                df_new_candle["Low"].values[0]
-            ):
-                df_historical.at[df_new_candle.index.values[0], "Low"] = self.tick_df[
-                    "price"
-                ].values[0]
+        historical_only = False
+
+        if historical_only:
+            # Get data
+            end = datetime.datetime.now().isoformat()
+            df_historical = self.get_historical_data(symbol, granularity, end=end)
         else:
-            df_new_candle = pd.DataFrame(
-                columns=df_historical.columns,
-                data=[
-                    [
-                        self.tick_df["Datetime"].values[0],
-                        self.tick_df["price"].values[0],
-                        self.tick_df["price"].values[0],
-                        self.tick_df["price"].values[0],
-                        self.tick_df["price"].values[0],
-                    ]
-                ],
-            )
-            df_historical = df_historical.concat(df_new_candle)
+            # Get data
+            self.run_socket(symbol, granularity)
+            end = self.df_tick[date_col].max().isoformat()
+            df_historical = self.get_historical_data(symbol, granularity, end=end)
+
+            if self.df_tick[date_col][0] in set(df_historical[date_col]):
+                df_new = df_historical[(df_historical["Datetime"] == self.df_tick["Datetime"].values[0])]
+                # Replace close
+                df_historical.at[df_new.index.values[0], "Close"] = self.df_tick["price"].values[0]
+                # Replace high
+                if self.df_tick["price"].values[0] > df_new["High"].values[0]:
+                    df_historical.at[df_new.index.values[0], "High"] = self.df_tick["price"].values[0]
+                # Replace low
+                if float(self.df_tick["price"].values[0]) < float(df_new["Low"].values[0]):
+                    df_historical.at[df_new.index.values[0], "Low"] = self.df_tick["price"].values[0]
+            else:
+                df_new = pd.DataFrame(
+                    columns=df_historical.columns,
+                    data=[
+                        [
+                            self.df_tick["Datetime"].values[0],
+                            self.df_tick["price"].values[0],
+                            self.df_tick["price"].values[0],
+                            self.df_tick["price"].values[0],
+                            self.df_tick["price"].values[0],
+                        ]
+                    ],
+                )
+                df_historical = pd.concat([df_historical, df_new])
+
+        # Adjust to SG time
+        df_historical["Datetime"] = df_historical["Datetime"] + datetime.timedelta(hours=8)
         return df_historical
 
-    def get_candlestick_chart(self, indicators_ind, forecast_methods):
+    @staticmethod
+    def get_candlestick_chart(symbol, n_points, rates_df, indicators_ind, forecast_methods):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
 
         Args:
+            symbol (str): symbol to plot for
+            n_points (int): number of points on candlestick
+            rates_df (pandas DataFrame): rate data (time, open, high, low, close, tick volume, spread)
             indicators_ind (list): list of indicators to plot
             forecast_methods (list): list of forecasting methods
 
         Returns:
             (dict): graphical result of trade
         """
-        rates_df = self.get_rates_data()
         return Trade().get_candlestick_chart(
-            symbol=self.ticker,
-            n_points=len(rates_df),
+            symbol=symbol,
+            n_points=n_points,
             rates_df=rates_df,
             indicators_ind=indicators_ind,
             forecast_methods=forecast_methods,
-            col_names=rates_df.columns,
         )
