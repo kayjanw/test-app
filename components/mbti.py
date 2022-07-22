@@ -745,7 +745,7 @@ class MBTI:
             "ENTJ": {
                 "summary": "Commander",
                 "details": "Bold, imaginative and strong-willed leaders, "
-                   "always finding a way - or making one",
+                "always finding a way - or making one",
             },
             "ENTP": {
                 "summary": "Debator",
@@ -766,17 +766,17 @@ class MBTI:
             "ENFP": {
                 "summary": "Campaigner",
                 "details": "Enthusiastic, creative and sociable free spirits, "
-                   "who can always find a reason to smile",
+                "who can always find a reason to smile",
             },
             "ISTJ": {
                 "summary": "Logistician",
                 "details": "Practical and fact-minded individuals, "
-                   "whose reliability cannot be doubted",
+                "whose reliability cannot be doubted",
             },
             "ISFJ": {
                 "summary": "Defender",
                 "details": "Very dedicated and warm protectors, "
-                   "always ready to defend their loved ones",
+                "always ready to defend their loved ones",
             },
             "ESTJ": {
                 "summary": "Executive",
@@ -785,7 +785,7 @@ class MBTI:
             "ESFJ": {
                 "summary": "Consul",
                 "details": "Extraordinarily caring, social and popular people, "
-                   "always eager to help",
+                "always eager to help",
             },
             "ISTP": {
                 "summary": "Virtuoso",
@@ -794,17 +794,17 @@ class MBTI:
             "ISFP": {
                 "summary": "Adventurer",
                 "details": "Flexible and charming artists, "
-                   "always ready to explore and experience something new",
+                "always ready to explore and experience something new",
             },
             "ESTP": {
                 "summary": "Entrepreneur",
                 "details": "Smart, energetic and very perceptive people, "
-                   "who truly enjoy living on the edge",
+                "who truly enjoy living on the edge",
             },
             "ESFP": {
                 "summary": "Entertainer",
                 "details": "Spontaneous, energetic and enthusiastic people - "
-                   "life is never boring around them",
+                "life is never boring around them",
             },
         }
         summary = f"Result: {personality} ({mbti_dict[personality]['summary']})"
