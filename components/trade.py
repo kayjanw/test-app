@@ -247,6 +247,7 @@ class Trade:
         """
         assert len(rates_df.columns), "Rate data is not initialized"
         col_time, col_open, col_high, col_low, col_close = rates_df.columns[:5]
+        dtick_macd = 10
 
         # Candlestick
         data_top = []
@@ -358,6 +359,7 @@ class Trade:
 
             elif ind == "MACD":
                 ind_df["MACD(12,26)"], ind_df["MACD SIGNAL(9)"], ind_df["MACD - Signal"] = macd(rates_df[col_close])
+                dtick_macd = max(2, int((ind_df["MACD(12,26)"].max() - ind_df["MACD(12,26)"].min()) / 25) * 10)
                 ind_df_points = ind_df[-n_points:]
                 data_bottom.append(
                     go.Scatter(
@@ -403,16 +405,15 @@ class Trade:
         }
 
         if len(data_middle) and len(data_bottom):
-            fig = make_subplots(
-                rows=3,
-                shared_xaxes=True,
-            )
+            fig = make_subplots(rows=3, shared_xaxes=True)
             for data in data_top:
                 fig.add_trace(data, row=1, col=1)
             for data in data_middle:
                 fig.add_trace(data, row=2, col=1)
+                fig.update_yaxes(tickmode="linear", dtick=20, row=2, col=1)
             for data in data_bottom:
                 fig.add_trace(data, row=3, col=1)
+                fig.update_yaxes(tickmode="linear", dtick=dtick_macd, row=3, col=1)
             fig.update_layout(layout)
             fig.update_layout(
                 {
@@ -425,16 +426,15 @@ class Trade:
                 }
             )
         elif len(data_middle) or len(data_bottom):
-            fig = make_subplots(
-                rows=2,
-                shared_xaxes=True,
-            )
+            fig = make_subplots(rows=2, shared_xaxes=True)
             for data in data_top:
                 fig.add_trace(data, row=1, col=1)
             for data in data_middle:
                 fig.add_trace(data, row=2, col=1)
+                fig.update_yaxes(tickmode="linear", dtick=20, row=2, col=1)
             for data in data_bottom:
                 fig.add_trace(data, row=2, col=1)
+                fig.update_yaxes(tickmode="linear", dtick=dtick_macd, row=2, col=1)
             fig.update_layout(layout)
             fig.update_layout(
                 {
