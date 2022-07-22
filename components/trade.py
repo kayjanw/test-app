@@ -262,7 +262,7 @@ class Trade:
                 text=["<br>".join([
                     f"{rates_df_points.columns[idx]}: {x[idx]}"
                     for idx in range(len(rates_df_points.columns))]) for x in rates_df_points.values],
-                hoverinfo="text"
+                hoverinfo="text",
             )
         )
 
@@ -271,8 +271,7 @@ class Trade:
             if ind == "EMA(0.8)":
                 ind_col = "Forecast EMA(0.8)"
                 pred = forecast_ewm(rates_df[col_close], alpha=0.8)
-                rates_df[ind_col] = None
-                rates_df.iloc[-1, -1] = pred
+                rates_df[ind_col] = [None] * (len(rates_df) - 1) + [pred]
                 rates_df_points = rates_df.copy()[-n_points:]
                 data_top.append(
                     go.Scatter(
@@ -283,6 +282,7 @@ class Trade:
                         marker={
                             "color": "black"
                         },
+                        hovertemplate="%{y}",
                     )
                 )
 

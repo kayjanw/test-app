@@ -507,7 +507,7 @@ footer
     margin-top: 20px;
 }
 
-#graph-trade .js-plotly-plot .plotly .cursor-pointer {
+#graph-trade .js-plotly-plot .plotly .cursor-ew-resize {
     cursor: crosshair;
 }
 
