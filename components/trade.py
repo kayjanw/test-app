@@ -4,10 +4,14 @@ try:
 except ImportError:
     USE_MT5 = False
 
+try:
+    import yfinance as yf
+except ImportError:
+    pass
+
 import datetime
 import pandas as pd
 import plotly.graph_objects as go
-import yfinance as yf
 
 from dateutil.relativedelta import relativedelta
 from plotly.subplots import make_subplots
@@ -225,8 +229,8 @@ class Trade:
         self.col_names = col_names
         return rates_df
 
-    def get_candlestick_chart(
-            self, symbol, n_points, rates_df, indicators_ind, forecast_methods, col_names):
+    @staticmethod
+    def get_candlestick_chart(symbol, n_points, rates_df, indicators_ind, forecast_methods):
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
@@ -241,8 +245,8 @@ class Trade:
         Returns:
             dict: graphical result of trade
         """
-        assert len(col_names), "Rate data is not initialized"
-        col_time, col_open, col_high, col_low, col_close = col_names[:5]
+        assert len(rates_df.columns), "Rate data is not initialized"
+        col_time, col_open, col_high, col_low, col_close = rates_df.columns[:5]
 
         # Candlestick
         data_top = []

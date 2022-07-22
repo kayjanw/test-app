@@ -5,8 +5,16 @@ import traceback
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 
-from components.change_calculator import ChangeCalculator
-from components.chat import ChatAnalyzer
+from components import (
+    ChangeCalculator,
+    ChatAnalyzer,
+    EventPlanner,
+    MBTI,
+    RandomGenerator,
+    TradeSocket,
+    TripPlanner,
+    WNRS,
+)
 from components.helper import (
     return_message,
     print_callback,
@@ -24,12 +32,6 @@ from components.helper import (
     valid_email,
     send_email,
 )
-from components.mbti import MBTI
-from components.event_planner import EventPlanner
-from components.rng import RandomGenerator
-from components.trade import Trade
-from components.trip_planner import TripPlanner
-from components.wnrs import WNRS
 from layouts import (
     app_1,
     app_2,
@@ -672,11 +674,9 @@ def register_callbacks(app, print_function):
         fig = {}
         if symbol and frequency and n_candle:
             try:
-                trade = Trade()
+                trade = TradeSocket()
                 rates_data = trade.get_rates_data(symbol, frequency, n_candle)
-                fig = trade.get_candlestick_chart(
-                    symbol, n_candle, rates_data, indicators_ind, forecast_methods, trade.col_names
-                )
+                fig = trade.get_candlestick_chart(symbol, n_candle, rates_data, indicators_ind, forecast_methods)
             except Exception as e:
                 error_message = f"Error: {e}"
         return error_message, fig

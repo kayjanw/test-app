@@ -1,7 +1,6 @@
 import dash_bootstrap_components as dbc
 import dash_daq as daq
 import dash_leaflet as dl
-import datetime
 
 from dash import dash_table, dcc, html
 from dash_canvas import DashCanvas
@@ -14,7 +13,7 @@ from components.helper import (
     encode_dict,
     result_download_text,
 )
-from components.trade import Trade
+from components.trade_socket import TradeSocket
 from components.wnrs import WNRS
 from version import __version__
 
@@ -78,7 +77,7 @@ def sidebar_dropdown():
                     dcc.Tab(label="Trip Planner", value="tab-trip", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Prediction", value="", className="custom-tab-disabled", disabled=True),
                     dcc.Tab(label="MBTI Personality Test", value="tab-mbti", className="custom-tab-sub", selected_className="custom-tab-selected"),
-                    # dcc.Tab(label="Live Trading", value="tab-trade", className="custom-tab-sub", selected_className="custom-tab-selected"),
+                    dcc.Tab(label="Live Trading", value="tab-trade", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Go to events!", value="tab-others", className="custom-tab"),
                     dcc.Tab(label="Contact Me", value="tab-contact", className="custom-tab", selected_className="custom-tab-selected"),
                     # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
@@ -895,7 +894,7 @@ def mbti_tab():
 
 
 def trade_tab():
-    trade = Trade()
+    trade = TradeSocket()
     indicators = ["SMA10", "SMA50", "BOLL(Close,20)", "RSI(Close,14)", "MACD"]
     indicators_desc = [
         "Simple Moving Average for past 10 values, Lagging Indicator, highlights direction of trend",
@@ -961,7 +960,14 @@ def trade_tab():
                             html.Div(
                                 [
                                     html.P("Number of Candles:", style=style_p),
-                                    dbc.Input(id="input-trade-candle", type="number", value=50, style=style_input),
+                                    dcc.Input(
+                                        id="input-trade-candle",
+                                        type="number",
+                                        value=50,
+                                        min=1,
+                                        max=300,
+                                        style=style_input
+                                    ),
                                 ],
                                 className="custom-div-flex",
                             ),
@@ -974,7 +980,7 @@ def trade_tab():
                                             {"label": ind, "value": ind}
                                             for idx, ind in enumerate(indicators)
                                         ],
-                                        value=[],
+                                        value=indicators[:2],
                                     ),
                                 # ] + [
                                 #     dbc.Tooltip(
@@ -1004,7 +1010,7 @@ def trade_tab():
                     ),
                     html.Div(
                         [
-                            dcc.Interval(id='interval-trade', interval=1000),
+                            dcc.Interval(id='interval-trade', interval=2000),
                             dcc.Graph(
                                 id="graph-trade",
                                 style={"height": "70vh"}
