@@ -23,6 +23,8 @@ class TradeSocket:
             "1 hour": (3600, "1H"),
             "1 day": (86400, "1D"),
         }
+        self.date_col = "Datetime"
+
         # Variables
         self.df_tick = pd.DataFrame()
 
@@ -64,8 +66,8 @@ class TradeSocket:
             resp.json(), columns=["Epoch", "Low", "High", "Open", "Close", "Volume"]
         )
         df_historical = df_historical.sort_values("Epoch")
-        df_historical["Datetime"] = pd.to_datetime(df_historical["Epoch"], unit="s")
-        return df_historical[["Datetime", "Open", "High", "Low", "Close"]]
+        df_historical[self.date_col] = pd.to_datetime(df_historical["Epoch"], unit="s")
+        return df_historical[[self.date_col, "Open", "High", "Low", "Close"]]
 
     def on_open(self, ws, symbol):
         """Websocket callback object, called when opening websocket
@@ -106,12 +108,12 @@ class TradeSocket:
                 ]
             ],
         )
-        df_tick["Datetime"] = df_tick["Datetime"].astype("datetime64[ns]")
+        df_tick[self.date_col] = df_tick["Datetime"].astype("datetime64[ns]")
         df_tick["price"] = df_tick["price"].astype("float64")
 
         # Get latest tick
         self.df_tick = df_tick.copy()
-        self.df_tick["Datetime"] = self.df_tick["Datetime"].dt.floor(
+        self.df_tick[self.date_col] = self.df_tick[self.date_col].dt.floor(
             freq=self.TIMEFRAME_DICT[granularity][1]
         )
         ws.close()
@@ -131,7 +133,7 @@ class TradeSocket:
         ws.run_forever()
 
     def get_rates_data(
-        self, symbol="BTC-USD", granularity="15 min", n_points=50, date_col="Datetime"
+        self, symbol, granularity, n_points
     ):
         """Compute rate data (time, open, high, low, close)
 
@@ -139,7 +141,6 @@ class TradeSocket:
             symbol (str): symbol to display
             granularity (str): granularity of candlestick chart
             n_points (int): number of points on candlestick
-            date_col (str): name of date column
 
         Returns:
             (pd.DataFrame)
@@ -153,12 +154,12 @@ class TradeSocket:
         else:
             # Get data
             self.run_socket(symbol, granularity)
-            end = self.df_tick[date_col].max().isoformat()
+            end = self.df_tick[self.date_col].max().isoformat()
             df_historical = self.get_historical_data(symbol, granularity, end=end)
 
-            if self.df_tick[date_col][0] in set(df_historical[date_col]):
+            if self.df_tick[self.date_col][0] in set(df_historical[self.date_col]):
                 df_new = df_historical[
-                    (df_historical["Datetime"] == self.df_tick["Datetime"].values[0])
+                    (df_historical[self.date_col] == self.df_tick[self.date_col].values[0])
                 ]
                 # Replace close
                 df_historical.at[df_new.index.values[0], "Close"] = self.df_tick[
@@ -181,7 +182,7 @@ class TradeSocket:
                     columns=df_historical.columns,
                     data=[
                         [
-                            self.df_tick["Datetime"].values[0],
+                            self.df_tick[self.date_col].values[0],
                             self.df_tick["price"].values[0],
                             self.df_tick["price"].values[0],
                             self.df_tick["price"].values[0],
@@ -192,7 +193,7 @@ class TradeSocket:
                 df_historical = pd.concat([df_historical, df_new])
 
         # Adjust to SG time
-        df_historical["Datetime"] = df_historical["Datetime"] + datetime.timedelta(
+        df_historical[self.date_col] = df_historical[self.date_col] + datetime.timedelta(
             hours=8
         )
         return df_historical
