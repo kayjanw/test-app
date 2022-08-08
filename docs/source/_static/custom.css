@@ -3,7 +3,10 @@
     height: 80px;
 }
 
-/* Hide "On GitHub" section from versions menu */
+/* Hide "On Read the Docs", "On GitHub", and "Search" section from versions menu */
+div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(2) {
+    display: none;
+}
 div.rst-versions > div.rst-other-versions > div.injected > dl:nth-child(3) {
     display: none;
 }
