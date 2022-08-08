@@ -487,9 +487,10 @@ def result_download_text(input_text):
             html.Button(
                 [html.Span(input_text)],
                 style={
-                    "line-height": "38px",
+                    "line-height": 1.6,
                     "margin": 0,
                     "padding": 0,
+                    "border-radius":  0,
                     "font-size": "1em",
                     "font-weight": "bold",
                     "letter-spacing": "normal",
