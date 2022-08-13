@@ -1014,6 +1014,7 @@ def register_callbacks(app, print_function):
         "Open Ended Questions 1",
         "Rituals of Connection 1",
         "Opportunity 1",
+        "Couple 1", "Couple 2", "Couple 3", "Couple 4",
     ]
 
     for deck in all_decks:

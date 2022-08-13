@@ -1749,6 +1749,23 @@ def wnrs_tab(app):
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
+                            html.Div(
+                                [
+                                    html.Span("Couple Questions", className="span-short"),
+                                    html.Img(src=app.get_asset_url("info.svg"), id="rs-help"),
+                                    dbc.Tooltip(
+                                        wnrs_information["Relationship Edition"]["Couple"]["description"],
+                                        placement="right",
+                                        target="rs-help",
+                                        className="tooltip",
+                                    ),
+                                    dbc.Button("Level 1", id="Couple 1"),
+                                    dbc.Button("Level 2", id="Couple 2"),
+                                    dbc.Button("Level 3", id="Couple 3"),
+                                    dbc.Button("Level 4", id="Couple 4"),
+                                ],
+                                className="div-with-image div-with-image-left small-image",
+                            ),
                         ]
                     ),
                 ],
