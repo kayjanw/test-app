@@ -180,14 +180,15 @@ class EventPlanner:
         Returns:
             (bool): indicator if email is sent
         """
+        website = "http://kayjan-634i2gf6lq-as.a.run.app"  # "kayjan.herokuapp.com"
         status_code_all = True
         for row_idx, row in output_df.iterrows():
             person = row.Person
             row = row.drop("Person")
-            email_body = f"Here are your results for {event}\n\n"
-            email_body += "\n".join([f"{k}: {v}" for k, v in row.to_dict().items()])
+            email_body = f"Here are your results for <b>{event}</b>\n\n"
+            email_body += "\n".join([f"<b>{k}</b>: {v}" for k, v in row.to_dict().items()])
             email_body += (
-                "\n\nThank you for using kayjan.herokuapp.com\n"
+                f"\n\nThank you for using <a href='{website}' target='_blank'>{website}</a>\n"
                 "Disclaimer: This is an automated email. Please do not reply."
             )
             subject = f"{event} Results for {person}"
