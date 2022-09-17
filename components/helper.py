@@ -546,7 +546,7 @@ def send_email(
         from_email = Email("kay.jan@hotmail.com")  # verified sender
         to_email = To(recipient)
         subject = subject
-        content = Content("text/plain", email_body)
+        content = Content("text/html", email_body.replace("\n", "<br>"))
         mail = Mail(from_email, to_email, subject, content)
         mail_json = mail.get()
         response = my_sg.client.mail.send.post(request_body=mail_json)
