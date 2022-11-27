@@ -61,6 +61,10 @@ footer
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 1.3em;
     }
+    .card {
+        height: 10vh;
+        width: 20vw;
+    }
     #div-wnrs {
         height: 60vw;
         width: 90vw;
@@ -93,6 +97,10 @@ footer
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 13px;
     }
+    .card {
+        height: 30vh;
+        width: 15vw;
+    }
     #div-wnrs {
         height: 53vh;
         width: 80vh;
@@ -110,8 +118,6 @@ footer
 .card {
     display: inline-block;
     vertical-align: top;
-    height: 30vh;
-    width: 15vw;
     overflow: hidden;
     padding: 10px;
     margin-right: 10px;
