@@ -530,6 +530,7 @@ def get_changes_table():
         style_as_list_view=True,
         style_header=style_header,
         style_cell=style_cell,
+        style_table=style_table,
         css=css,
     )
 
