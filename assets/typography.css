@@ -43,6 +43,16 @@ footer
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* For devices or screen size smaller than 800px */
 @media (max-width:800px), (max-device-width:800px) {
+    h2 {
+        font-size: 3rem;
+        line-height: 1;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    h3 {
+        font-size: 2.5rem;
+        line-height: 1;
+    }
     #banner {
         display: inline-block;
     }
@@ -54,6 +64,9 @@ footer
         width: 94vw;
         margin-top: 60px;
         margin-left: 0;
+    }
+    .content-header {
+        margin-top: 4vh;
     }
     .custom-div-smaller, .custom-div-small, .custom-div-small-medium,
     .custom-div-half, .custom-div-medium, .custom-div-large, .custom-div-large-full,
@@ -70,7 +83,7 @@ footer
     [id^="button-wnrs"], [id^="uploadbutton-"], .button-wnrs {
         padding: 0px 10px;
         margin-right: 5px;
-        font-size: 60%;
+        font-size: 50%;
     }
     .span-short {
         margin-left: 20px;
@@ -82,6 +95,9 @@ footer
     #div-wnrs {
         height: 60vw;
         width: 90vw;
+    }
+    #wnrs-card {
+        border-radius: 50px;
     }
     #wnrs-counter {
         font-size: 0.8em;
@@ -105,8 +121,8 @@ footer
         margin-top: 0;
         margin-left: 16vw;
     }
-    .custom-tab, .custom-tab-sub, .custom-tab-disabled {
-        font-size: 80%;
+    .content-header {
+        margin-top: 8vh;
     }
     .card {
         height: 30vh;
@@ -130,6 +146,9 @@ footer
     #div-wnrs {
         height: 53vh;
         width: 80vh;
+    }
+    #wnrs-card {
+        border-radius: 100px;
     }
     #wnrs-counter {
         font-size: 1em;
@@ -195,6 +214,7 @@ footer
 
 .custom-tab, .custom-tab-sub, .custom-tab-disabled {
     color: #BE9B89 !important;
+    font-size: 80%;
     font-weight: bold;
     border-radius: 5px;
     padding: 8px !important;
@@ -226,10 +246,6 @@ footer
 
 /* Custom class / div
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.content-header {
-    margin-top: 8vh;
-}
-
 .div-with-image Img {
     display: inline-block;
     vertical-align: middle;
@@ -404,7 +420,7 @@ footer
 }
 
 .p-short {
-    display: inline-block;
+    display: contents;
     padding: 0;
     margin: 0;
 }
@@ -563,7 +579,6 @@ footer
 
 #wnrs-card {
     height: 100%;
-    border-radius: 100px;
     box-shadow:
         0px 2px 1px -1px rgb(0 0 0 / 20%),
         0px 1px 1px 0px rgb(0 0 0 / 14%),

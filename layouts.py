@@ -1916,7 +1916,7 @@ def wnrs_tab(app):
                                             html.Span("Save Progress"),
                                         ],
                                         type="submit",
-                                        id="button-wnrs-download",
+                                        id="button-wnrs-download-ok",
                                         className="div-with-image div-with-image-left small-image",
                                     ),
                                 ],
