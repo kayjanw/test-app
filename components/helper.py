@@ -144,7 +144,6 @@ def violin_plot():
                 "hoverCompareCartesian",
             ],
         },
-        style={"margin-top": "15vh", "height": "60vh"},
     )
 
 
@@ -626,7 +625,7 @@ def create_json_from_dict(d):
     return buf
 
 
-def create_fig_from_diagram(diagram, id, close_all=True):
+def create_fig_from_diagram(diagram, id, close_all=True, **kwargs):
     """Create html.Img from diagram
 
     Args:
@@ -645,4 +644,4 @@ def create_fig_from_diagram(diagram, id, close_all=True):
     out_img.seek(0)  # rewind file
     encoded = base64.b64encode(out_img.read()).decode("ascii").replace("\n", "")
     content = f"data:image/png;base64,{encoded}"
-    return html.Img(id=id, src=content)
+    return html.Img(id=id, src=content, **kwargs)
