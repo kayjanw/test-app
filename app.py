@@ -17,10 +17,10 @@ meta_tags = [
         "content": "Kay Jan's Side Project - "
         "Automate repetitive data analysis tasks and perform predictions and optimizations",
     },
-    {
-        "name": "viewport",
-        "content": "width=device-width, initial-scale=1"
-    },
+    # {
+    #     "name": "viewport",
+    #     "content": "width=device-width, initial-scale=1"
+    # },
     {
         "property": "og:type",
         "content": "website"
