@@ -1441,7 +1441,7 @@ def wnrs_tab(app):
                     html.P("Have fun!", style={"margin-top": "20px"}, className="p-short p-bold"),
                 ],
                 id="div-wnrs-instruction",
-                className="custom-div-dark image-dark-bg",
+                className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
@@ -1467,7 +1467,7 @@ def wnrs_tab(app):
                     html.P(id="wnrs-suggestion-reply"),
                 ],
                 id="div-wnrs-suggestion",
-                className="custom-div-dark image-dark-bg",
+                className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
@@ -1858,7 +1858,7 @@ def wnrs_tab(app):
                     ),
                 ],
                 id="div-wnrs-selection",
-                className="custom-div-dark image-dark-bg",
+                className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
@@ -1944,23 +1944,29 @@ def contact_tab():
             content_header("Contact Me"),
             html.Div([
                 html.P("If you have any questions, feedback or suggestions, please feel free to drop me an email."),
-                dcc.Input(
-                    id="input-contact-name",
-                    type="text",
-                    placeholder="Name",
-                    style=style_contact_textarea,
+                html.P(
+                        dcc.Input(
+                        id="input-contact-name",
+                        type="text",
+                        placeholder="Name",
+                        style=style_contact_textarea,
+                    ),
                 ),
-                dcc.Input(
-                    id="input-contact-email",
-                    type="text",
-                    placeholder="Email Address",
-                    style=style_contact_textarea,
+                html.P(
+                    dcc.Input(
+                        id="input-contact-email",
+                        type="text",
+                        placeholder="Email Address",
+                        style=style_contact_textarea,
+                    ),
                 ),
-                dcc.Textarea(
-                    id="input-contact-content",
-                    value="",
-                    placeholder="Email body",
-                    style=style_contact_textarea,
+                html.P(
+                    dcc.Textarea(
+                        id="input-contact-content",
+                        value="",
+                        placeholder="Email body",
+                        style=style_contact_textarea,
+                    ),
                 ),
                 html.Br(),
                 html.Button("Send", id="button-contact-ok"),

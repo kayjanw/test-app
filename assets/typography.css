@@ -53,6 +53,14 @@ footer
         font-size: 2.5rem;
         line-height: 1;
     }
+    h5 {
+        font-size: 1.8rem;
+        line-height: 1.3 !important;
+    }
+    p {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
     #banner {
         display: inline-block;
     }
@@ -77,17 +85,21 @@ footer
         height: 30vh;
         width: 40%;
     }
+    .card-header {
+        font-size: 1.3rem;
+    }
     .zoom:hover {
         transform: scale(1.1);
     }
     [id^="button-wnrs"], [id^="uploadbutton-"], .button-wnrs {
-        padding: 0px 10px;
+        padding: 0px 5px;
         margin-right: 5px;
-        font-size: 50%;
+        font-size: 40%;
+        letter-spacing: 0 !important;
     }
     .span-short {
-        margin-left: 20px;
-        width: 160px;
+        margin-left: 2vw;
+        width: 30vw;
     }
     Img[id$="-help"], .blinker {
         display: none !important;
@@ -99,8 +111,18 @@ footer
     #wnrs-card {
         border-radius: 50px;
     }
+    #wnrs-prompt p, #wnrs-reminder-text p, #wnrs-reminder p {
+        font-size: 0.9em;
+    }
+    #wnrs-deck {
+        font-size: 0.4em;
+    }
     #wnrs-counter {
         font-size: 0.8em;
+    }
+    .div-with-invisible-button span {
+        padding: 10px;
+        font-size: 100%;
     }
     #button-wnrs-back, #button-wnrs-next {
         width: 20vw;
@@ -150,8 +172,18 @@ footer
     #wnrs-card {
         border-radius: 100px;
     }
+    #wnrs-prompt p, #wnrs-reminder-text p, #wnrs-reminder p {
+        font-size: 1.3em;
+    }
+    #wnrs-deck {
+        font-size: 0.8em;
+    }
     #wnrs-counter {
         font-size: 1em;
+    }
+    .div-with-invisible-button span {
+        padding: 20px;
+        font-size: 120%;
     }
     #button-wnrs-back, #button-wnrs-next {
         width: 10vw;
@@ -292,12 +324,10 @@ footer
     position: absolute;
     width: fit-content;
     margin: 0;
-    padding: 20px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
     font-family: sans-serif;
-    font-size: 120%;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 0px 0px 10px #FFF;
@@ -590,7 +620,6 @@ footer
 #wnrs-prompt p, #wnrs-reminder-text p, #wnrs-reminder p {
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 1.3em;
     margin: 0;
 }
 
@@ -631,7 +660,6 @@ footer
     right: 0;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 0.8em;
     line-height: 95%;
     text-shadow: 0 0 black;
 }
