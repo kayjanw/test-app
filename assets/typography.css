@@ -63,6 +63,7 @@ footer
     }
     .card {
         height: 10vh;
+        width: 20vw;
     }
     #div-wnrs {
         height: 60vw;
@@ -98,6 +99,7 @@ footer
     }
     .card {
         height: 30vh;
+        width: 15vw;
     }
     #div-wnrs {
         height: 53vh;
@@ -116,7 +118,6 @@ footer
 .card {
     display: inline-block;
     vertical-align: top;
-    width: 15vw;
     overflow: hidden;
     padding: 10px;
     margin-right: 10px;
