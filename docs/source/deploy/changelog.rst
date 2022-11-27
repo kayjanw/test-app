@@ -7,6 +7,7 @@ Changelog
 ========== =====================================================
 Date       Changes
 ========== =====================================================
+2022-11-27 Added Articles tab
 2022-07-22 Added Live Trading tab (using Coinbase API)
 2022-05-23 Added Live Trading tab (using MetaTrader4)
 2022-01-09 Added versioning, deployed using Docker

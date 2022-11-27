@@ -37,6 +37,7 @@ from layouts import (
     app_2,
     app_event,
     about_me_tab,
+    article_tab,
     change_tab,
     changes_tab,
     chat_tab,
@@ -1350,6 +1351,8 @@ def register_callbacks(app, print_function):
             return dcc_loading(violin_plot(), dark_bg=False)
         if tab == "tab-aboutme":
             return about_me_tab(app)
+        elif tab == "tab-articles":
+            return article_tab()
         elif tab == "tab-change":
             return change_tab(app)
         elif tab == "tab-change2":
@@ -1382,6 +1385,8 @@ def register_callbacks(app, print_function):
         function(tab_value) {
             if (tab_value === 'tab-aboutme') {
                 document.title = 'About Me'
+            } else if (tab_value === 'tab-articles') {
+                document.title = 'Articles'
             } else if (tab_value === 'tab-change') {
                 document.title = 'Change Calculator'
             } else if (tab_value === 'tab-change2') {
