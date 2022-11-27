@@ -110,7 +110,9 @@ footer
 .card {
     display: inline-block;
     vertical-align: top;
+    height: 30vh;
     width: 15vw;
+    overflow: hidden;
     padding: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
