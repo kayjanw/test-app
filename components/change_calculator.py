@@ -264,9 +264,13 @@ class ChangeCalculator:
             html.Img(src=app.get_asset_url("info.svg")),
             html.Span(
                 [
-                    "Hover over line to see more information, "
+                    "Hover over line to see more information"
+                ]
+            ),
+            html.Span(
+                [
                     "Single click on legend to hide entry, "
-                    "Double click on legend to highlight entry"
+                    "double click on legend to highlight entry"
                 ]
             ),
         ]
