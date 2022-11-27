@@ -1,6 +1,7 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
 - Base Styles
+- Display
 - Scrollbar
 - Typography
 - Links
@@ -15,6 +16,20 @@ body {
     color: black;
 }
 
+/* Display
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.inline-block-display {
+    display: inline-block;
+}
+
+.block-display {
+    display: block;
+}
+
+.flex-display {
+    display: flex;
+}
+
 /* Scrollbar
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 body::-webkit-scrollbar {
@@ -26,6 +41,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Typography
+h1: KJ Wong
+h2: title in page title
+h3: subtitle in page title
+h4: dash in page title
+h5: card
+h6: version
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6, p, span, details, li, textarea {
     font-family: Source Sans Pro;
@@ -37,7 +58,10 @@ h1 {
     color: #BE9B89;
 }
 
-/* Subtitle */
+h2 {
+    color: #202029;
+}
+
 h3 {
     color: #BE9B89;
 }
@@ -46,6 +70,12 @@ h4 {
     -webkit-text-fill-color: white;
     -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: #BE9B89;
+}
+
+h5 {
+    line-height: 1.2;
+    margin: 0;
+    margin-bottom: 3px;
 }
 
 h6 {
@@ -62,6 +92,48 @@ a {
 
 a:hover {
     color: #BE9B89;
+}
+
+/* Background color
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.background-yellow {
+    background-color: #ffc107;
+    color: black;
+}
+
+.background-grey {
+    background-color: #6c757d;
+    color: white;
+}
+
+.background-green {
+    background-color: #198754;
+    color: white;
+}
+
+.background-red {
+    background-color: #dc3545;
+    color: white;
+}
+
+.background-blue {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.background-lightblue {
+    background-color: #0dcaf0;
+    color: black;
+}
+
+.background-light {
+    background-color: #f8f9fa;
+    color: black;
+}
+
+.background-dark {
+    background-color: #212529;
+    color: white;
 }
 
 /* Input

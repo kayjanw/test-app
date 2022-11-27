@@ -1,6 +1,7 @@
 /* Table of contents
 ––––––––––––––––––––––––––––––––––––––––––––––––––
 - Media
+- Card
 - Button (Customized)
 - Dash leaflet style
 - Custom tabs
@@ -103,6 +104,28 @@ footer
         width: 10vw;
     }
 }
+
+/* Card
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card {
+    display: inline-block;
+    vertical-align: top;
+    width: 15vw;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+.card-header {
+    text-decoration: underline;
+}
+
+.zoom:hover {
+    transform: scale(1.2);
+}
+
 
 /* Button (Customized)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

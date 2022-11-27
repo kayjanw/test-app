@@ -5,6 +5,25 @@ import dash_leaflet as dl
 from dash import dash_table, dcc, html
 from dash_canvas import DashCanvas
 
+from components.articles import (
+    article_coursera,
+    article_dashboard,
+    article_reinforcement_learning,
+    article_ensemble,
+    article_best_practices,
+    article_programming,
+    article_sphinx,
+    article_bigtree,
+    article_logging,
+    article_lists,
+    article_pytest,
+    article_unittest,
+    article_fastapi,
+    article_multithreading,
+    article_mlflow,
+    article_airflow,
+    article_heroku,
+)
 from components.helper import (
     colour_palette,
     violin_plot,
@@ -16,6 +35,35 @@ from components.helper import (
 from components.trade_socket import TradeSocket
 from components.wnrs import WNRS
 from version import __version__
+
+__all__ = [
+    "main_layout",
+    "banner",
+    "sidebar_header",
+    "sidebar_dropdown",
+    "sidebar_dropdown_event",
+    "app_1",
+    "app_2",
+    "app_event",
+    "content_header",
+    "about_me_tab",
+    "article_tab",
+    "change_tab",
+    "get_changes_table",
+    "changes_tab",
+    "chat_tab",
+    "get_trip_table",
+    "trip_tab",
+    "mbti_tab",
+    "trade_tab",
+    "event_tab",
+    "rng_tab",
+    "wnrs_tab",
+    "contact_tab",
+    "image_edit_tab",
+    "keyboard_tab",
+    "sample_tab"
+]
 
 
 style_dropdown = {"width": "100%", "color": "black"}
@@ -69,6 +117,7 @@ def sidebar_dropdown():
                 className="custom-tabs",
                 children=[
                     dcc.Tab(label="About Me", value="tab-aboutme", className="custom-tab", selected_className="custom-tab-selected"),
+                    dcc.Tab(label="Articles", value="tab-articles", className="custom-tab", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Data Analytics", value="", className="custom-tab-disabled", disabled=True),
                     dcc.Tab(label="Change Calculator", value="tab-change", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Change Calculator 2", value="tab-change2", className="custom-tab-sub", selected_className="custom-tab-selected"),
@@ -101,6 +150,7 @@ def sidebar_dropdown_event():
                 className="custom-tabs",
                 children=[
                     dcc.Tab(label="About Me", value="tab-aboutme", className="custom-tab", selected_className="custom-tab-selected"),
+                    dcc.Tab(label="Articles", value="tab-articles", className="custom-tab", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Fun Things", value="", className="custom-tab-disabled", disabled=True),
                     dcc.Tab(label="Event Planner", value="tab-event", className="custom-tab-sub", selected_className="custom-tab-selected"),
                     dcc.Tab(label="Random Generator", value="tab-rng", className="custom-tab-sub", selected_className="custom-tab-selected"),
@@ -266,6 +316,41 @@ def about_me_tab(app):
             )
         ],
         className="div-with-image div-with-image-left medium-image",
+    )
+
+
+def article_tab():
+    return html.Div(
+        [
+            content_header("Articles"),
+            html.Div([
+                dbc.CardGroup(
+                    [
+                        article_coursera,
+                        article_dashboard,
+                        article_reinforcement_learning,
+                        article_ensemble,
+                        html.Br(),
+                        article_best_practices,
+                        article_programming,
+                        article_sphinx,
+                        html.Br(),
+                        article_bigtree,
+                        article_logging,
+                        article_lists,
+                        article_pytest,
+                        article_unittest,
+                        article_fastapi,
+                        article_multithreading,
+                        article_mlflow,
+                        article_airflow,
+                        article_heroku,
+                    ],
+                ),
+            ],
+                className="custom-div-full custom-div-left"
+            )
+        ],
     )
 
 
