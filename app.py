@@ -18,7 +18,7 @@ meta_tags = [
         "Automate repetitive data analysis tasks and perform predictions and optimizations",
     },
     {
-        "property": "viewport",
+        "name": "viewport",
         "content": "width=device-width, initial-scale=1"
     },
     {
