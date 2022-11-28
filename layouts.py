@@ -1485,12 +1485,18 @@ def wnrs_tab(app):
                                         target="main-deck-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button(
-                                        "Level 1", id="Main Deck 1",
-                                        style={"background-color": colour_palette["dark_pink"]}, className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Main Deck 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Main Deck 3", className="button-wnrs"),
-                                    dbc.Button("Final Card", id="Main Deck Final", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button(
+                                                "Level 1", id="Main Deck 1",
+                                                style={"background-color": colour_palette["dark_pink"]},
+                                                className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Main Deck 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Main Deck 3", className="button-wnrs"),
+                                            dbc.Button("Final Card", id="Main Deck Final", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1505,9 +1511,14 @@ def wnrs_tab(app):
                                         target="bumble-bff-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Bumble x BFF Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Bumble x BFF Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Bumble x BFF Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Bumble x BFF Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Bumble x BFF Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Bumble x BFF Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1521,9 +1532,14 @@ def wnrs_tab(app):
                                         target="bumble-bizz-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Bumble Bizz Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Bumble Bizz Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Bumble Bizz Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Bumble Bizz Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Bumble Bizz Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Bumble Bizz Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1537,9 +1553,14 @@ def wnrs_tab(app):
                                         target="bumble-date-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Bumble Date Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Bumble Date Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Bumble Date Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Bumble Date Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Bumble Date Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Bumble Date Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1554,9 +1575,14 @@ def wnrs_tab(app):
                                         target="cann-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Cann Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Cann Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Cann Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Cann Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Cann Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Cann Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1571,7 +1597,12 @@ def wnrs_tab(app):
                                         target="valentino-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Valentino Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Valentino Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1586,9 +1617,14 @@ def wnrs_tab(app):
                                         target="dating-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Honest Dating Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Honest Dating Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Honest Dating Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Honest Dating Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Honest Dating Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Honest Dating Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1602,9 +1638,14 @@ def wnrs_tab(app):
                                         target="inner-circle-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Inner Circle Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Inner Circle Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Inner Circle Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Inner Circle Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Inner Circle Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Inner Circle Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1618,7 +1659,12 @@ def wnrs_tab(app):
                                         target="own-it-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Own It Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Own It Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1632,9 +1678,14 @@ def wnrs_tab(app):
                                         target="relationship-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Relationship Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Relationship Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Relationship Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Relationship Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Relationship Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Relationship Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1649,9 +1700,14 @@ def wnrs_tab(app):
                                         target="race-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Race and Privilege Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Race and Privilege Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Race and Privilege Edition 3", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Race and Privilege Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Race and Privilege Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Race and Privilege Edition 3", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1665,10 +1721,15 @@ def wnrs_tab(app):
                                         target="quarantine-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Quarantine Edition 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Quarantine Edition 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Quarantine Edition 3", className="button-wnrs"),
-                                    dbc.Button("Final Card", id="Quarantine Edition Final", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Quarantine Edition 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Quarantine Edition 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Quarantine Edition 3", className="button-wnrs"),
+                                            dbc.Button("Final Card", id="Quarantine Edition Final", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1682,7 +1743,12 @@ def wnrs_tab(app):
                                         target="voting-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Voting Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Voting Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1697,8 +1763,13 @@ def wnrs_tab(app):
                                         target="breakup-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Breakup Edition 1", className="button-wnrs"),
-                                    dbc.Button("Final Card", id="Breakup Edition Final", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Breakup Edition 1", className="button-wnrs"),
+                                            dbc.Button("Final Card", id="Breakup Edition Final", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1713,7 +1784,12 @@ def wnrs_tab(app):
                                         target="crisis-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Existential Crisis Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Existential Crisis Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1727,7 +1803,12 @@ def wnrs_tab(app):
                                         target="forgiveness-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Forgiveness Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Forgiveness Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1741,7 +1822,12 @@ def wnrs_tab(app):
                                         target="healing-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Healing Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Healing Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1755,8 +1841,13 @@ def wnrs_tab(app):
                                         target="love-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Self-Love Edition 1", className="button-wnrs"),
-                                    dbc.Button("Final Card", id="Self-Love Edition Final", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Self-Love Edition 1", className="button-wnrs"),
+                                            dbc.Button("Final Card", id="Self-Love Edition Final", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1770,7 +1861,12 @@ def wnrs_tab(app):
                                         target="reflection-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Self-Reflection Edition 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Self-Reflection Edition 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1791,7 +1887,12 @@ def wnrs_tab(app):
                                         target="love-maps-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Love Maps 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Love Maps 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1805,7 +1906,12 @@ def wnrs_tab(app):
                                         target="open-ended-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Open Ended Questions 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Open Ended Questions 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1819,7 +1925,12 @@ def wnrs_tab(app):
                                         target="rituals-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Rituals of Connection 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Rituals of Connection 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1833,7 +1944,12 @@ def wnrs_tab(app):
                                         target="opportunity-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Opportunity 1", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Opportunity 1", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),
@@ -1847,10 +1963,15 @@ def wnrs_tab(app):
                                         target="rs-help",
                                         className="tooltip",
                                     ),
-                                    dbc.Button("Level 1", id="Couple 1", className="button-wnrs"),
-                                    dbc.Button("Level 2", id="Couple 2", className="button-wnrs"),
-                                    dbc.Button("Level 3", id="Couple 3", className="button-wnrs"),
-                                    dbc.Button("Level 4", id="Couple 4", className="button-wnrs"),
+                                    html.Div(
+                                        [
+                                            dbc.Button("Level 1", id="Couple 1", className="button-wnrs"),
+                                            dbc.Button("Level 2", id="Couple 2", className="button-wnrs"),
+                                            dbc.Button("Level 3", id="Couple 3", className="button-wnrs"),
+                                            dbc.Button("Level 4", id="Couple 4", className="button-wnrs"),
+                                        ],
+                                        className="wnrs-level"
+                                    ),
                                 ],
                                 className="div-with-image div-with-image-left small-image",
                             ),

@@ -607,6 +607,10 @@ footer
     cursor: crosshair;
 }
 
+.wnrs-level {
+    display: inline-block
+}
+
 #wnrs-card {
     height: 100%;
     box-shadow:
