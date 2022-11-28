@@ -1443,18 +1443,22 @@ def wnrs_tab(app):
                     html.P(
                         "You can contribute too! Suggest prompts that you would like to see in the game",
                     ),
-                    dcc.Input(
-                        id="input-wnrs-suggestion",
-                        type="text",
-                        placeholder="Your prompt(s)",
-                        style={"width": "70%", "margin-bottom": "3px"},
+                    html.P(
+                        dcc.Input(
+                            id="input-wnrs-suggestion",
+                            type="text",
+                            placeholder="Your prompt(s)",
+                            style={"width": "100%", "margin-bottom": "3px"},
+                        ),
                     ),
-                    dcc.Textarea(
-                        id="input-wnrs-suggestion2",
-                        value="",
-                        placeholder="(Optional) Additional comments or feedback, include your contact details if you "
-                                    "expect a reply!",
-                        style={"width": "70%"},
+                    html.P(
+                        dcc.Textarea(
+                            id="input-wnrs-suggestion2",
+                            value="",
+                            placeholder="(Optional) Additional comments or feedback, include your contact details if you "
+                                        "expect a reply!",
+                            style={"width": "100%"},
+                        ),
                     ),
                     html.Br(),
                     html.Button("Send", id="button-wnrs-send-ok"),
@@ -2012,14 +2016,10 @@ def wnrs_tab(app):
                     ),
                     html.Div(
                         [
-                            html.P(id="wnrs-counter"),
+                            html.P("- / -", id="wnrs-counter"),
                             html.Button("Previous", id="button-wnrs-back", style=style_hidden),
                             html.Button("Next", id="button-wnrs-next", style=style_hidden),
-                            html.Button(
-                                "Shuffle Remaining Cards",
-                                id="button-wnrs-shuffle-ok",
-                                className="custom-div-small-space-above"
-                            ),
+                            html.Button("Shuffle Remaining Cards", id="button-wnrs-shuffle-ok"),
                             html.Form(
                                 [
                                     dcc.Input(
