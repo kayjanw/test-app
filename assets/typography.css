@@ -87,6 +87,12 @@ footer
     .small-image Img {
         height: 15px;
     }
+    .div-with-image-left Img {
+        margin-right: 5px
+    }
+    .div-with-image-right Img {
+        margin-left: 5px;
+    }
     .card-group {
         grid-template-columns: repeat(auto-fill, minmax(40vw, 40vw));
     }
@@ -150,13 +156,20 @@ footer
         margin-left: 16vw;
     }
     .content-header {
-        margin-top: 8vh;
+        margin-top: 6vh;
     }
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
         font-size: 80%;
     }
     .small-image Img {
         height: 20px;
+    }
+    .div-with-image-left Img {
+        margin-right: 10px
+    }
+
+    .div-with-image-right Img {
+        margin-left: 10px;
     }
     .card-group {
         grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
@@ -312,14 +325,6 @@ footer
     margin-bottom: 0;
 }
 
-.div-with-image-left Img {
-    margin-right: 10px
-}
-
-.div-with-image-right Img {
-    margin-left: 10px;
-}
-
 .div-with-invisible-button {
     position: relative;
 }
@@ -364,10 +369,6 @@ footer
 .div-with-invisible-button span[id$="-next"] {
     left: 50%;
     text-align: left;
-}
-
-.small-image Img {
-    height: 20px;
 }
 
 .medium-image Img {
@@ -417,10 +418,6 @@ footer
 .custom-div-flex p {
     margin: 0px 5px 0px 0px;
     padding: 0;
-}
-
-.custom-div-small-space-above {
-    margin-top: 10px;
 }
 
 .custom-div-space-above {
@@ -580,7 +577,7 @@ footer
 }
 
 #sidebar h1 {
-    margin-top: 10vh;
+    margin-top: 8vh;
     margin-left: 20px;
 }
 

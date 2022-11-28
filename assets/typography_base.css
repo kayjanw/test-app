@@ -72,9 +72,12 @@ h4 {
     -webkit-text-fill-color: white;
     -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: #BE9B89;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 h5 {
+    font-weight: bold;
     line-height: 1.2;
     margin: 0;
     margin-bottom: 3px;
