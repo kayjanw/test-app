@@ -1847,7 +1847,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
