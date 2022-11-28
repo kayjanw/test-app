@@ -97,8 +97,8 @@ def banner():
     return html.Div(
         [
             html.Button("☰", id="button-sidebar"),
-            html.Div(html.H1(dcc.Link("KJ Wong", href="/")))
-        ]
+            html.Div(html.H1(dcc.Link("KJ Wong", href="/")), className="banner-center")
+        ],
     )
 
 
@@ -324,32 +324,26 @@ def article_tab():
         [
             content_header("Articles"),
             html.Div([
-                dbc.CardGroup(
-                    [
-                        article_coursera,
-                        article_dashboard,
-                        article_reinforcement_learning,
-                        article_ensemble,
-                        html.Br(),
-                        article_best_practices,
-                        article_programming,
-                        article_sphinx,
-                        html.Br(),
-                        article_bigtree,
-                        article_logging,
-                        article_lists,
-                        article_pytest,
-                        article_unittest,
-                        article_fastapi,
-                        article_multithreading,
-                        article_mlflow,
-                        article_airflow,
-                        article_heroku,
-                    ],
-                ),
+                article_coursera,
+                article_dashboard,
+                article_reinforcement_learning,
+                article_ensemble,
+                article_best_practices,
+                article_programming,
+                article_sphinx,
+                article_bigtree,
+                article_logging,
+                article_lists,
+                article_pytest,
+                article_unittest,
+                article_fastapi,
+                article_multithreading,
+                article_mlflow,
+                article_airflow,
+                article_heroku,
             ],
-                className="custom-div-full custom-div-left"
-            )
+                className="card-group",
+            ),
         ],
     )
 
@@ -700,7 +694,7 @@ def chat_tab(app):
                             dcc_loading([html.P(id="chat-result-error")], dark_bg=True),
                             dcc.Store(id="intermediate-chat-result", storage_type="memory"),
                         ],
-                        className="custom-div-small custom-div-left custom-div-dark"
+                        className="custom-div-small-medium custom-div-left custom-div-dark"
                     ),
                 ],
                 className="custom-container custom-div-space-above",
@@ -1498,7 +1492,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.P("Crossover", style=style_wnrs_text),
                             html.Div(
@@ -1520,7 +1514,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1541,7 +1535,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1562,7 +1556,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1584,7 +1578,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1604,7 +1598,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.P("Expansion", style=style_wnrs_text),
                             html.Div(
@@ -1626,7 +1620,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1647,7 +1641,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1666,7 +1660,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1687,7 +1681,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.P("Online", style=style_wnrs_text),
                             html.Div(
@@ -1709,7 +1703,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1731,7 +1725,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1750,7 +1744,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.P("Single-Player", style=style_wnrs_text),
                             html.Div(
@@ -1771,7 +1765,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1791,7 +1785,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1810,7 +1804,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1829,7 +1823,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1868,7 +1862,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.P(
                                 [
@@ -1894,7 +1888,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1913,7 +1907,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1932,7 +1926,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1951,7 +1945,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                             html.Div(
                                 [
@@ -1973,7 +1967,7 @@ def wnrs_tab(app):
                                         className="wnrs-level"
                                     ),
                                 ],
-                                className="div-with-image div-with-image-left small-image",
+                                className="custom-div-flex div-with-image div-with-image-left small-image",
                             ),
                         ]
                     ),

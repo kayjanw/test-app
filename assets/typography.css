@@ -58,8 +58,8 @@ footer
         line-height: 1.3 !important;
     }
     p {
-        font-size: 1.3rem;
-        line-height: 1.3;
+        font-size: 1.5rem;
+        line-height: 1.5;
     }
     #banner {
         display: inline-block;
@@ -76,14 +76,19 @@ footer
     .content-header {
         margin-top: 4vh;
     }
+    .custom-tab, .custom-tab-sub, .custom-tab-disabled {
+        font-size: 100%;
+    }
     .custom-div-smaller, .custom-div-small, .custom-div-small-medium,
     .custom-div-half, .custom-div-medium, .custom-div-large, .custom-div-large-full,
     .custom-div-instruction, .custom-div-full {
         width: -webkit-fill-available !important;
     }
-    .card {
-        height: 30vh;
-        width: 40%;
+    .small-image Img {
+        height: 15px;
+    }
+    .card-group {
+        grid-template-columns: repeat(auto-fill, minmax(40vw, 40vw));
     }
     .card-header {
         font-size: 1.3rem;
@@ -98,8 +103,9 @@ footer
         letter-spacing: 0 !important;
     }
     .span-short {
-        margin-left: 2vw;
         width: 30vw;
+        margin-left: 2vw;
+        padding-right: 2vw;
     }
     Img[id$="-help"], .blinker {
         display: none !important;
@@ -146,9 +152,14 @@ footer
     .content-header {
         margin-top: 8vh;
     }
-    .card {
-        height: 30vh;
-        width: 15vw;
+    .custom-tab, .custom-tab-sub, .custom-tab-disabled {
+        font-size: 80%;
+    }
+    .small-image Img {
+        height: 20px;
+    }
+    .card-group {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
     }
     .zoom:hover {
         transform: scale(1.2);
@@ -159,8 +170,8 @@ footer
         font-size: 80%;
     }
     .span-short {
-        margin-left: 50px;
         width: 200px;
+        margin-left: 50px;
     }
     .blinker {
         display: inline-block;
@@ -192,13 +203,19 @@ footer
 
 /* Card
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card-group {
+    display: grid;
+    justify-content: center;
+    gap: 10px;
+}
+
 .card {
     display: inline-block;
+    height: 30vh;
     vertical-align: top;
     overflow: hidden;
     padding: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin: 2px 1vw;
     border: 2px solid black;
     border-radius: 30px;
 }
@@ -219,10 +236,17 @@ footer
     color: white;
 }
 
-[id$="-ok"], [id^="uploadbutton-"] {
+[id$="-ok"] {
     background-color: #F0E3DF;
     box-shadow: 1px 1px 2px #BE9B89;
     margin-bottom: 10px;
+}
+
+[id^="button-wnrs-"], [id^="uploadbutton-"], .button-wnrs {
+    background-color: #F0E3DF;
+    box-shadow: 1px 1px 2px #BE9B89;
+    margin-bottom: 10px;
+    margin-top: 0;
 }
 
 /* Dash leaflet style
@@ -230,7 +254,6 @@ footer
 .leaflet-container {
     cursor: crosshair !important;
 }
-
 
 /* Custom tabs
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -246,8 +269,8 @@ footer
 
 .custom-tab, .custom-tab-sub, .custom-tab-disabled {
     color: #BE9B89 !important;
-    font-size: 80%;
     font-weight: bold;
+    letter-spacing: -0.05rem;
     border-radius: 5px;
     padding: 8px !important;
     text-align: left !important;
@@ -457,6 +480,7 @@ footer
 
 .p-bold {
     font-weight: bold;
+    letter-spacing: -0.05rem;
 }
 
 .blinker {
@@ -507,10 +531,16 @@ footer
     display: inline-table
 }
 
-#banner h1 {
-    display: table-cell;
+.banner-center {
     height: 8vh;
     width: 80vw;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#banner h1 {
+    display: table-cell;
     font-size: 5vh;
     vertical-align: middle;
     text-align: center;
@@ -523,10 +553,12 @@ footer
 
 #banner button, #banner button:hover, #banner button:focus {
     height: 8vh;
-    width: 10vw;
+    width: 20vw;
+    text-align: center;
     font-size: 5vh;
     color: #BE9B89;
     vertical-align: top;
+    padding: 0;
     margin: 0;
     border: none;
     background-color: transparent;
