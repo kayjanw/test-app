@@ -420,6 +420,10 @@ footer
     padding: 0;
 }
 
+.custom-div-flex span {
+    flex: none;
+}
+
 .custom-div-space-above {
     margin-top: 30px;
 }
