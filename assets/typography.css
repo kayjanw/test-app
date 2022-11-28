@@ -419,6 +419,10 @@ footer
     padding: 0;
 }
 
+.custom-div-small-space-above {
+    margin-top: 10px;
+}
+
 .custom-div-space-above {
     margin-top: 30px;
 }
