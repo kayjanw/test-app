@@ -81,7 +81,7 @@ def main_layout():
             dcc.Location(id="url", refresh=False),
             html.Div(id="page-content"),
             html.Div(id="blank-output"),
-            html.P(
+            html.H6(
                 [
                     "If you like this, ",
                     html.A("buy me a coffee ☕ ", href="https://www.buymeacoffee.com/kayjan", target="_blank"),
