@@ -5,7 +5,9 @@
 - Scrollbar
 - Typography
 - Links
+- Background color
 - Input
+- Label
 - Button
 */
 
@@ -141,6 +143,13 @@ a:hover {
 input {
     background-color: white !important;
     font-family: Source Sans Pro !important;
+    margin-right: 5px !important;
+}
+
+/* Label
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+label {
+    margin-left: 5px !important;
 }
 
 /* Button
