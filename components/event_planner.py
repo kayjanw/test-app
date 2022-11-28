@@ -124,7 +124,7 @@ class EventPlanner:
                         {"Group": [idx + 1] * len(group), "Person": group}
                     )
                 if len(output_df):
-                    output_df = output_df.append(tmp_df)
+                    output_df = pd.concat([output_df, tmp_df])
                 else:
                     output_df = tmp_df.copy()
 
