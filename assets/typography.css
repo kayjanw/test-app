@@ -513,6 +513,7 @@ footer
     color: #BE9B89;
     text-align: right;
     z-index: 9999;
+    white-space: pre;
 }
 
 .footer a {
@@ -541,6 +542,7 @@ footer
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    z-index: -1;
 }
 
 #banner h1 {
