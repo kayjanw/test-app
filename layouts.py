@@ -83,7 +83,7 @@ def main_layout():
             html.Div(id="blank-output"),
             html.H6(
                 [
-                    "If you like this, ",
+                    html.H6("If you like this, "),
                     html.A("buy me a coffee ☕ ", href="https://www.buymeacoffee.com/kayjan", target="_blank"),
                     "! ",
                     html.H6(f"(v{__version__})"),
@@ -2015,7 +2015,11 @@ def wnrs_tab(app):
                             html.P(id="wnrs-counter"),
                             html.Button("Previous", id="button-wnrs-back", style=style_hidden),
                             html.Button("Next", id="button-wnrs-next", style=style_hidden),
-                            html.Button("Shuffle Remaining Cards", id="button-wnrs-shuffle-ok"),
+                            html.Button(
+                                "Shuffle Remaining Cards",
+                                id="button-wnrs-shuffle-ok",
+                                className="custom-div-small-space-above"
+                            ),
                             html.Form(
                                 [
                                     dcc.Input(
