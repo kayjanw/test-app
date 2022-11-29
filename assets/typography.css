@@ -129,7 +129,7 @@ footer
     }
     #wnrs-deck {
         font-size: 8px;
-        line-height: 8px !important;
+        line-height: 8px;
     }
     #wnrs-counter {
         font-size: 0.8em;
@@ -202,7 +202,8 @@ footer
         font-size: 1.3em;
     }
     #wnrs-deck {
-        font-size: 0.8em;
+        font-size: 12px;
+        line-height: 12px;
     }
     #wnrs-counter {
         font-size: 1em;
@@ -322,7 +323,6 @@ footer
 }
 
 .div-with-image span {
-    display: inline-block;
     vertical-align: middle;
     margin-bottom: 0;
 }
@@ -640,10 +640,6 @@ footer
     resize: vertical;
 }
 
-#chat-result {
-    margin-top: 20px;
-}
-
 #graph-trade .js-plotly-plot .plotly .cursor-ew-resize {
     cursor: crosshair;
 }
@@ -705,7 +701,6 @@ footer
     right: 0;
     font-family: sans-serif;
     font-weight: bold;
-    line-height: 95%;
     text-shadow: 0 0 black;
 }
 
