@@ -300,6 +300,7 @@ footer
 }
 
 .custom-tab-sub {
+    width: calc(100% - 20px) !important;
     margin-left: 20px;
 }
 
