@@ -986,7 +986,7 @@ def register_callbacks(app, print_function):
                     "background-color" in current_style
                     and current_style["background-color"] == "#BE9B89"
                 ):
-                    current_style["background-color"] = "white"
+                    current_style["background-color"] = "#F0E3DF"
                 else:
                     current_style["background-color"] = "#BE9B89"
             return current_style

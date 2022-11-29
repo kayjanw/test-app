@@ -450,7 +450,7 @@ def change_tab(app):
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-container custom-div-space-above",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
             html.Div(
                 [
@@ -498,7 +498,7 @@ def change_tab(app):
                     ),
                 ],
                 id="div-change-result",
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-below",
                 style=style_hidden,
             ),
         ]
@@ -616,7 +616,7 @@ def changes_tab(app):
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-container custom-div-space-above",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
             html.Div(
                 [
@@ -652,7 +652,7 @@ def changes_tab(app):
                     ),
                 ],
                 id="div-changes-result",
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-below",
                 style=style_hidden,
             ),
         ]
@@ -697,7 +697,7 @@ def chat_tab(app):
                         className="custom-div-small-medium custom-div-left custom-div-dark"
                     ),
                 ],
-                className="custom-container custom-div-space-above",
+                className="custom-container custom-div-space-above custom-div-space-below",
             ),
             html.Div(
                 [
@@ -734,7 +734,7 @@ def chat_tab(app):
                     ),
                 ],
                 id="div-chat-result",
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-below",
                 style=style_hidden,
             ),
         ]
@@ -969,7 +969,7 @@ def mbti_tab():
                         className="custom-div-center custom-div-half",
                     ),
                 ],
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-above",
             ),
         ]
     )
@@ -1273,10 +1273,10 @@ def event_tab(app):
                     html.Div(
                         id="div-event-result",
                         style=style_hidden,
-                        className="custom-div-small-medium custom-div-left custom-div-dark",
+                        className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-above",
             ),
         ]
     )
@@ -1381,10 +1381,10 @@ def rng_tab():
                     html.Div(
                         id="div-rng-result",
                         style=style_hidden,
-                        className="custom-div-small-medium custom-div-left custom-div-dark",
+                        className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
                 ],
-                className="custom-container custom-div-space-above custom-div-space-below",
+                className="custom-container custom-div-space-above",
             ),
         ]
     )
