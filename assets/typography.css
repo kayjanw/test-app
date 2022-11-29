@@ -113,7 +113,7 @@ footer
         margin-left: 2vw;
         padding-right: 2vw;
     }
-    Img[id$="-help"], .blinker {
+    Img[id$="-help"] {
         display: none !important;
     }
     #div-wnrs {
