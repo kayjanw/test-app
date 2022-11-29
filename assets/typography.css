@@ -77,7 +77,8 @@ footer
         margin-top: 4vh;
     }
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
-        font-size: 100%;
+        font-size: 15px;
+        line-height: 20px;
     }
     .custom-div-smaller, .custom-div-small, .custom-div-small-medium,
     .custom-div-half, .custom-div-medium, .custom-div-large, .custom-div-large-full,
@@ -160,7 +161,8 @@ footer
         margin-top: 6vh;
     }
     .custom-tab, .custom-tab-sub, .custom-tab-disabled {
-        font-size: 80%;
+        font-size: 13px;
+        line-height: 18px;
     }
     .small-image Img {
         height: 20px;
@@ -168,7 +170,6 @@ footer
     .div-with-image-left Img {
         margin-right: 10px
     }
-
     .div-with-image-right Img {
         margin-left: 10px;
     }
@@ -284,7 +285,6 @@ footer
 .custom-tab, .custom-tab-sub, .custom-tab-disabled {
     color: #BE9B89 !important;
     font-weight: bold;
-    letter-spacing: -0.05rem;
     border-radius: 5px;
     padding: 8px !important;
     text-align: left !important;
@@ -295,11 +295,12 @@ footer
     text-decoration: underline;
 }
 
-.custom-tab span {
+.custom-tab {
     margin-left: 0px;
 }
 
-.custom-tab-sub span {
+.custom-tab-sub {
+    width: calc(100% - 20px) !important;
     margin-left: 20px;
 }
 
@@ -540,7 +541,7 @@ footer
 
 .banner-center {
     height: 8vh;
-    width: 60vw;
+    width: fit-content;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
