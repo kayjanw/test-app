@@ -180,7 +180,9 @@ class EventPlanner:
         Returns:
             (bool): indicator if email is sent
         """
-        website = "http://kayjan-634i2gf6lq-as.a.run.app"  # "kayjan.herokuapp.com"
+        # website = "https://kayjan.herokuapp.com"
+        # website = "http://kayjan-634i2gf6lq-as.a.run.app"
+        website = "https://tinyurl.com/kayjan"
         status_code_all = True
         for row_idx, row in output_df.iterrows():
             person = row.Person
