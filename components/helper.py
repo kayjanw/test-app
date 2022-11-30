@@ -521,7 +521,7 @@ def valid_email(email):
 
 
 def send_email(
-    email_body, subject="Email from Herokuapp", recipient="e0503512@u.nus.edu"
+    email_body, subject="Email from utils.py Web App", recipient="e0503512@u.nus.edu"
 ):
     """Helper function to send email
 
