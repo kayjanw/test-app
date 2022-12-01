@@ -359,38 +359,38 @@ class MBTI:
         Returns:
             model
         """
-        EI_model = {
-            "learning_rate": 0.1,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 4.342928660826033,
-        }
-        SN_model = {
-            "learning_rate": 0.2,
-            "max_depth": 3,
-            "n_estimators": 50,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 7.251828631138976,
-        }
-        TF_model = {
-            "learning_rate": 0.2,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 1.1789638932496076,
-        }
-        JP_model = {
-            "learning_rate": 0.1,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 1.5263924281033856,
-        }
+        # EI_model = {
+        #     "learning_rate": 0.1,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 4.342928660826033,
+        # }
+        # SN_model = {
+        #     "learning_rate": 0.2,
+        #     "max_depth": 3,
+        #     "n_estimators": 50,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 7.251828631138976,
+        # }
+        # TF_model = {
+        #     "learning_rate": 0.2,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 1.1789638932496076,
+        # }
+        # JP_model = {
+        #     "learning_rate": 0.1,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 1.5263924281033856,
+        # }
         model = pd.read_pickle(path_model)
         return model
 
