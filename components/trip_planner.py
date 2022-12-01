@@ -1,7 +1,6 @@
 import dash_leaflet as dl
 import numpy as np
 import requests
-
 from dash import html
 
 

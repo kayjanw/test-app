@@ -1,11 +1,11 @@
-import pandas as pd
-import numpy as np
-import pickle
-import plotly.graph_objects as go
 import os
+import pickle
 import re
-import scipy
 
+import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
+import scipy
 from dash import html
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
@@ -13,17 +13,17 @@ from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import (
-    confusion_matrix,
     accuracy_score,
-    f1_score,
     balanced_accuracy_score,
+    confusion_matrix,
+    f1_score,
 )
-from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
 
 try:
     import tensorflow as tf
-    from tensorflow.keras.preprocessing.text import Tokenizer
     from tensorflow.keras.preprocessing.sequence import pad_sequences
+    from tensorflow.keras.preprocessing.text import Tokenizer
 except ModuleNotFoundError:
     pass
 

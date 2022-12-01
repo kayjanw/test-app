@@ -1,9 +1,9 @@
-import pandas as pd
 import random
 import re
-
-from dash import html
 from functools import reduce
+
+import pandas as pd
+from dash import html
 
 
 class WNRS:
