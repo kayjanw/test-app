@@ -1,9 +1,9 @@
 import json
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-
 from dash import html
 from sklearn.feature_extraction.text import CountVectorizer
 from wordcloud import WordCloud as wc

@@ -1,13 +1,12 @@
 import numpy as np
 import pandas as pd
-
 from dash import html
 
 from components.helper import (
-    return_message,
     generate_datatable,
-    valid_email,
+    return_message,
     send_email,
+    valid_email,
 )
 
 

@@ -1,6 +1,7 @@
 import datetime
-import dateutil.parser
 import json
+
+import dateutil.parser
 import pandas as pd
 import requests
 import websocket

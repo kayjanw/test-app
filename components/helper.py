@@ -1,22 +1,21 @@
 """This file contains helper functions that are used across multiple tabs
 """
 import base64
-import dash
 import io
 import json
+import os
+import re
+from functools import reduce
+
+import dash
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 import plotly.graph_objects as go
-import re
 import sendgrid
-
 from dash import dash_table, dcc, html
-from functools import reduce
 from plotly.colors import n_colors
-from sendgrid.helpers.mail import Mail, Email, To, Content
-
+from sendgrid.helpers.mail import Content, Email, Mail, To
 
 colour_palette = {
     "grey": "#57555A",
