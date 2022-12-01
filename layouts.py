@@ -297,6 +297,8 @@ def about_me_tab(app):
                         html.A("formal website", href="http://kayjan.github.io/", target="_blank"),
                         " / ",
                         html.A("Medium articles", href="https://kayjanwong.medium.com/", target="_blank"),
+                        "/",
+                        html.A("bigtree Python Package", href="https://bigtree.readthedocs.io/", target="_blank"),
                         ".",
                     ]
                 ),
@@ -309,6 +311,7 @@ def about_me_tab(app):
                         "This website is made with Dash, deployed using Gunicorn with Docker and hosted on Heroku/GCP, "
                         "view code documentation on Sphinx ",
                         html.A("here", href="http://kayjan.readthedocs.io", target="_blank"),
+                        ".",
                     ]
                 )
             ],
