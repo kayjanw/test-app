@@ -11,7 +11,7 @@ def change_tab(app):
             html.Div(
                 [
                     html.P(
-                        "Users can view summary statistics and plot a scatterplot with marginal histograms of past "
+                        "Users can view summary statistics and plot a scatter plot with marginal histograms of past "
                         "values (x axis) against present values (y axis). Users also have the option to download "
                         "processed results with change value into an excel file"
                     ),
@@ -128,6 +128,7 @@ def change_tab(app):
                 ],
                 className="custom-container custom-div-space-above custom-div-space-below",
             ),
+            # Result
             html.Div(
                 [
                     html.Div(
@@ -161,7 +162,7 @@ def change_tab(app):
                                         "have identical x and y values, it is recommended to zoom or download the "
                                         "results file"
                                     ),
-                                    html.P("3. Interpreting the scatterplot above:"),
+                                    html.P("3. Interpreting the scatter plot above:"),
                                     html.P(
                                         "• Points above the line represent positive change",
                                         style={"margin-left": "10px"},
@@ -234,8 +235,8 @@ def changes_tab(app):
             html.Div(
                 [
                     html.P(
-                        "Users can view summary statistics in table and box plot, and changes over time on a line plot. "
-                        "Just minor changes from the other change tab (haha)"
+                        "Users can view summary statistics in table and box plot, and changes over time on a line "
+                        "plot. Just minor changes from the other change tab (haha)"
                     ),
                     html.Br(),
                     html.P(
@@ -335,6 +336,7 @@ def changes_tab(app):
                 ],
                 className="custom-container custom-div-space-above custom-div-space-below",
             ),
+            # Result
             html.Div(
                 [
                     html.Div(

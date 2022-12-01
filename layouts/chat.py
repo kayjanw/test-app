@@ -55,6 +55,7 @@ def chat_tab(app):
                 ],
                 className="custom-container custom-div-space-above custom-div-space-below",
             ),
+            # Result
             html.Div(
                 [
                     html.Div(

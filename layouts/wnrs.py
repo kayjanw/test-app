@@ -12,6 +12,816 @@ def wnrs_tab(app):
     wnrs_game.initialize_game(list_of_deck)
     wnrs_information = wnrs_game.get_information()
     data_default = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
+
+    main_deck = html.Div(
+        [
+            html.Span("Main Deck", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="main-deck-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Main Deck"]["Main Deck"]["description"],
+                placement="right",
+                target="main-deck-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Main Deck 1",
+                        style={"background-color": colour_palette["dark_pink"]},
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Main Deck 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Main Deck 3",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Final Card",
+                        id="Main Deck Final",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    crossover_bumble_bff = html.Div(
+        [
+            html.Span("Bumble x BFF Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="bumble-bff-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Crossover"]["Bumble x BFF Edition"]["description"],
+                placement="right",
+                target="bumble-bff-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Bumble x BFF Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Bumble x BFF Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Bumble x BFF Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    crossover_bumble_bizz = html.Div(
+        [
+            html.Span("Bumble Bizz Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="bumble-bizz-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Crossover"]["Bumble Bizz Edition"]["description"],
+                placement="right",
+                target="bumble-bizz-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Bumble Bizz Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Bumble Bizz Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Bumble Bizz Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    crossover_bumble_date = html.Div(
+        [
+            html.Span("Bumble Date Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="bumble-date-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Crossover"]["Bumble Date Edition"]["description"],
+                placement="right",
+                target="bumble-date-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Bumble Date Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Bumble Date Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Bumble Date Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    crossover_cann = html.Div(
+        [
+            html.Span(
+                [
+                    "Cann Edition",
+                    html.Sup("Drinking", className="blinker"),
+                ],
+                className="span-short",
+            ),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="cann-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Crossover"]["Cann Edition"]["description"],
+                placement="right",
+                target="cann-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Cann Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Cann Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Cann Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    crossover_valentino = html.Div(
+        [
+            html.Span(
+                [
+                    "Valentino Edition",
+                    html.Sup("Reflection", className="blinker"),
+                ],
+                className="span-short",
+            ),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="valentino-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Crossover"]["Valentino Edition"]["description"],
+                placement="right",
+                target="valentino-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Valentino Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    expansion_honest_dating = html.Div(
+        [
+            html.Span("Honest Dating Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="dating-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Expansion"]["Honest Dating Edition"]["description"],
+                placement="right",
+                target="dating-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Honest Dating Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Honest Dating Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Honest Dating Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    expansion_inner_circle = html.Div(
+        [
+            html.Span("Inner Circle Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="inner-circle-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Expansion"]["Inner Circle Edition"]["description"],
+                placement="right",
+                target="inner-circle-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Inner Circle Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Inner Circle Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Inner Circle Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    expansion_own_it = html.Div(
+        [
+            html.Span("Own It Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="own-it-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Expansion"]["Own It Edition"]["description"],
+                placement="right",
+                target="own-it-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Own It Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    expansion_relationship = html.Div(
+        [
+            html.Span("Relationship Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="relationship-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Expansion"]["Relationship Edition"]["description"],
+                placement="right",
+                target="relationship-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Relationship Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Relationship Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Relationship Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    online_race_privilege = html.Div(
+        [
+            html.Span(
+                "Race and Privilege Edition",
+                className="span-short",
+            ),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="race-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Online"]["Race and Privilege Edition"]["description"],
+                placement="right",
+                target="race-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Race and Privilege Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Race and Privilege Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Race and Privilege Edition 3",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    online_quarantine = html.Div(
+        [
+            html.Span("Quarantine Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="quarantine-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Online"]["Quarantine Edition"]["description"],
+                placement="right",
+                target="quarantine-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Quarantine Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Quarantine Edition 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Quarantine Edition 3",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Final Card",
+                        id="Quarantine Edition Final",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    online_voting = html.Div(
+        [
+            html.Span("Voting Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="voting-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Online"]["Voting Edition"]["description"],
+                placement="right",
+                target="voting-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Voting Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_breakup = html.Div(
+        [
+            html.Span("Breakup Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="breakup-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Breakup Edition"]["description"],
+                placement="right",
+                target="breakup-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Breakup Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Final Card",
+                        id="Breakup Edition Final",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_existential = html.Div(
+        [
+            html.Span(
+                [
+                    "Existential Crisis Edition",
+                    html.Sup("Mine", className="blinker"),
+                ],
+                className="span-short",
+            ),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="crisis-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Existential Crisis Edition"][
+                    "description"
+                ],
+                placement="right",
+                target="crisis-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Existential Crisis Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_forgiveness = html.Div(
+        [
+            html.Span("Forgiveness Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="forgiveness-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Forgiveness Edition"]["description"],
+                placement="right",
+                target="forgiveness-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Forgiveness Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_healing = html.Div(
+        [
+            html.Span("Healing Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="healing-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Healing Edition"]["description"],
+                placement="right",
+                target="healing-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Healing Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_self_love = html.Div(
+        [
+            html.Span("Self-Love Edition", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="love-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Self-Love Edition"]["description"],
+                placement="right",
+                target="love-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Self-Love Edition 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Final Card",
+                        id="Self-Love Edition Final",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    single_self_reflection = html.Div(
+        [
+            html.Span(
+                "Self-Reflection Edition",
+                className="span-short",
+            ),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="reflection-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Single-Player"]["Self-Reflection Edition"][
+                    "description"
+                ],
+                placement="right",
+                target="reflection-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Self-Reflection Edition 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    gottman_love_maps = html.Div(
+        [
+            html.Span("Love Maps", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="love-maps-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Gotmann"]["Love Maps"]["description"],
+                placement="right",
+                target="love-maps-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Love Maps 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    gottman_open_ended = html.Div(
+        [
+            html.Span("Open Ended Questions", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="open-ended-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Gotmann"]["Open Ended Questions"]["description"],
+                placement="right",
+                target="open-ended-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Open Ended Questions 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    gottman_rituals = html.Div(
+        [
+            html.Span("Rituals of Connection", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="rituals-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Gotmann"]["Rituals of Connection"]["description"],
+                placement="right",
+                target="rituals-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Rituals of Connection 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    gottman_opportunity = html.Div(
+        [
+            html.Span("Opportunity", className="span-short"),
+            html.Img(
+                src=app.get_asset_url("info.svg"),
+                id="opportunity-help",
+            ),
+            dbc.Tooltip(
+                wnrs_information["Gotmann"]["Opportunity"]["description"],
+                placement="right",
+                target="opportunity-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Opportunity 1",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    gottman_couple = html.Div(
+        [
+            html.Span("Couple Questions", className="span-short"),
+            html.Img(src=app.get_asset_url("info.svg"), id="rs-help"),
+            dbc.Tooltip(
+                wnrs_information["Relationship Edition"]["Couple"]["description"],
+                placement="right",
+                target="rs-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Level 1",
+                        id="Couple 1",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 2",
+                        id="Couple 2",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 3",
+                        id="Couple 3",
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "Level 4",
+                        id="Couple 4",
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
     return html.Div(
         [
             content_header("We're Not Really Strangers", ""),
@@ -37,7 +847,7 @@ def wnrs_tab(app):
                 " + Instructions", id="button-wnrs-instruction-ok", title="How to play"
             ),
             html.Button(
-                " + Suggest prompts",
+                " + Contribute",
                 id="button-wnrs-suggestion-ok",
                 title="Send in your card prompt ideas",
             ),
@@ -83,7 +893,8 @@ def wnrs_tab(app):
             html.Div(
                 [
                     html.P(
-                        "You can contribute too! Suggest prompts that you would like to see in the game",
+                        "You can contribute too! Suggest prompts that you would like to see in the game, "
+                        "or contribute a card game!",
                     ),
                     html.P(
                         dcc.Input(
@@ -97,8 +908,8 @@ def wnrs_tab(app):
                         dcc.Textarea(
                             id="input-wnrs-suggestion2",
                             value="",
-                            placeholder="(Optional) Additional comments or feedback, include your contact details if you "
-                            "expect a reply!",
+                            placeholder="(Optional) Additional comments or feedback, include your contact details "
+                            "if you expect a reply!",
                             style={"width": "100%"},
                         ),
                     ),
@@ -115,713 +926,29 @@ def wnrs_tab(app):
                     html.Div(
                         [
                             html.P("Main Deck"),
-                            html.Div(
-                                [
-                                    html.Span("Main Deck", className="span-short"),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="main-deck-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Main Deck"]["Main Deck"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="main-deck-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Main Deck 1",
-                                                style={
-                                                    "background-color": colour_palette[
-                                                        "dark_pink"
-                                                    ]
-                                                },
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Main Deck 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Main Deck 3",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Final Card",
-                                                id="Main Deck Final",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            main_deck,
                             html.P("Crossover", style=style_wnrs_text),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Bumble x BFF Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="bumble-bff-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Crossover"][
-                                            "Bumble x BFF Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="bumble-bff-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Bumble x BFF Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Bumble x BFF Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Bumble x BFF Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Bumble Bizz Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="bumble-bizz-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Crossover"][
-                                            "Bumble Bizz Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="bumble-bizz-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Bumble Bizz Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Bumble Bizz Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Bumble Bizz Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Bumble Date Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="bumble-date-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Crossover"][
-                                            "Bumble Date Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="bumble-date-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Bumble Date Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Bumble Date Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Bumble Date Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        [
-                                            "Cann Edition",
-                                            html.Sup("Drinking", className="blinker"),
-                                        ],
-                                        className="span-short",
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="cann-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Crossover"]["Cann Edition"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="cann-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Cann Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Cann Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Cann Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        [
-                                            "Valentino Edition",
-                                            html.Sup("Reflection", className="blinker"),
-                                        ],
-                                        className="span-short",
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="valentino-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Crossover"][
-                                            "Valentino Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="valentino-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Valentino Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            crossover_bumble_bff,
+                            crossover_bumble_bizz,
+                            crossover_bumble_date,
+                            crossover_cann,
+                            crossover_valentino,
                             html.P("Expansion", style=style_wnrs_text),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Honest Dating Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="dating-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Expansion"][
-                                            "Honest Dating Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="dating-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Honest Dating Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Honest Dating Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Honest Dating Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Inner Circle Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="inner-circle-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Expansion"][
-                                            "Inner Circle Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="inner-circle-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Inner Circle Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Inner Circle Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Inner Circle Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span("Own It Edition", className="span-short"),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="own-it-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Expansion"]["Own It Edition"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="own-it-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Own It Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Relationship Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="relationship-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Expansion"][
-                                            "Relationship Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="relationship-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Relationship Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Relationship Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Relationship Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            expansion_honest_dating,
+                            expansion_inner_circle,
+                            expansion_own_it,
+                            expansion_relationship,
                             html.P("Online", style=style_wnrs_text),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Race and Privilege Edition",
-                                        className="span-short",
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="race-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Online"][
-                                            "Race and Privilege Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="race-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Race and Privilege Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Race and Privilege Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Race and Privilege Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Quarantine Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="quarantine-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Online"][
-                                            "Quarantine Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="quarantine-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Quarantine Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Quarantine Edition 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Quarantine Edition 3",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Final Card",
-                                                id="Quarantine Edition Final",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span("Voting Edition", className="span-short"),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="voting-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Online"]["Voting Edition"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="voting-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Voting Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            online_race_privilege,
+                            online_quarantine,
+                            online_voting,
                             html.P("Single-Player", style=style_wnrs_text),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Breakup Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="breakup-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Breakup Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="breakup-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Breakup Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Final Card",
-                                                id="Breakup Edition Final",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        [
-                                            "Existential Crisis Edition",
-                                            html.Sup("Mine", className="blinker"),
-                                        ],
-                                        className="span-short",
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="crisis-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Existential Crisis Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="crisis-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Existential Crisis Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Forgiveness Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="forgiveness-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Forgiveness Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="forgiveness-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Forgiveness Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Healing Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="healing-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Healing Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="healing-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Healing Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Self-Love Edition", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="love-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Self-Love Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="love-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Self-Love Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Final Card",
-                                                id="Self-Love Edition Final",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Self-Reflection Edition",
-                                        className="span-short",
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="reflection-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Single-Player"][
-                                            "Self-Reflection Edition"
-                                        ]["description"],
-                                        placement="right",
-                                        target="reflection-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Self-Reflection Edition 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            single_breakup,
+                            single_existential,
+                            single_forgiveness,
+                            single_healing,
+                            single_self_love,
+                            single_self_reflection,
                             html.P(
                                 [
                                     "Gotmann Card Deck",
@@ -831,166 +958,11 @@ def wnrs_tab(app):
                                 ],
                                 style=style_wnrs_text,
                             ),
-                            html.Div(
-                                [
-                                    html.Span("Love Maps", className="span-short"),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="love-maps-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Gotmann"]["Love Maps"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="love-maps-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Love Maps 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Open Ended Questions", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="open-ended-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Gotmann"][
-                                            "Open Ended Questions"
-                                        ]["description"],
-                                        placement="right",
-                                        target="open-ended-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Open Ended Questions 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Rituals of Connection", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="rituals-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Gotmann"][
-                                            "Rituals of Connection"
-                                        ]["description"],
-                                        placement="right",
-                                        target="rituals-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Rituals of Connection 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span("Opportunity", className="span-short"),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"),
-                                        id="opportunity-help",
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Gotmann"]["Opportunity"][
-                                            "description"
-                                        ],
-                                        placement="right",
-                                        target="opportunity-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Opportunity 1",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
-                            html.Div(
-                                [
-                                    html.Span(
-                                        "Couple Questions", className="span-short"
-                                    ),
-                                    html.Img(
-                                        src=app.get_asset_url("info.svg"), id="rs-help"
-                                    ),
-                                    dbc.Tooltip(
-                                        wnrs_information["Relationship Edition"][
-                                            "Couple"
-                                        ]["description"],
-                                        placement="right",
-                                        target="rs-help",
-                                        className="tooltip",
-                                    ),
-                                    html.Div(
-                                        [
-                                            dbc.Button(
-                                                "Level 1",
-                                                id="Couple 1",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 2",
-                                                id="Couple 2",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 3",
-                                                id="Couple 3",
-                                                className="button-wnrs",
-                                            ),
-                                            dbc.Button(
-                                                "Level 4",
-                                                id="Couple 4",
-                                                className="button-wnrs",
-                                            ),
-                                        ],
-                                        className="wnrs-level",
-                                    ),
-                                ],
-                                className="custom-div-flex div-with-image div-with-image-left small-image",
-                            ),
+                            gottman_love_maps,
+                            gottman_open_ended,
+                            gottman_rituals,
+                            gottman_opportunity,
+                            gottman_couple,
                         ]
                     ),
                 ],

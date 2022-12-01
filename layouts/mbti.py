@@ -106,6 +106,7 @@ def mbti_tab():
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
+                    # Result
                     html.Div(
                         [
                             html.Div(id="mbti-results", className="custom-div-center"),

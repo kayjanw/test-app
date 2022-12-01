@@ -13,8 +13,8 @@ def trip_tab(app):
                 [
                     html.P(
                         "Users can fill in multiple destinations and an optimal route based on distance will be "
-                        "calculated, starting and ending from the first destination specified. This is also known as the "
-                        "Travelling Salesman Problem"
+                        "calculated, starting and ending from the first destination specified. "
+                        "This is also known as the Travelling Salesman Problem"
                     ),
                     html.Br(),
                     html.P("Step 1: Fill in landmark name (optional)"),

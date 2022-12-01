@@ -102,6 +102,7 @@ def rng_tab():
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
+                    # Result
                     html.Div(
                         id="div-rng-result",
                         style=style_hidden,
