@@ -489,7 +489,7 @@ def result_download_text(input_text):
                     "line-height": 1.6,
                     "margin": 0,
                     "padding": 0,
-                    "border-radius":  0,
+                    "border-radius": 0,
                     "font-size": "1em",
                     "font-weight": "bold",
                     "letter-spacing": "normal",
