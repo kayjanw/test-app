@@ -297,7 +297,7 @@ def about_me_tab(app):
                         html.A("formal website", href="http://kayjan.github.io/", target="_blank"),
                         " / ",
                         html.A("Medium articles", href="https://kayjanwong.medium.com/", target="_blank"),
-                        "/",
+                        " / ",
                         html.A("bigtree Python Package", href="https://bigtree.readthedocs.io/", target="_blank"),
                         ".",
                     ]
