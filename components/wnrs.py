@@ -266,8 +266,9 @@ class WNRS:
         Returns:
             (str, list, dict, str): card deck, prompt, style, counter
         """
-        past_index = self.index[: self.pointer + 1].copy()
-        remaining_index = self.index[self.pointer + 1 :].copy()
+        next_pointer = self.pointer + 1
+        past_index = self.index[:next_pointer].copy()
+        remaining_index = self.index[next_pointer:].copy()
         remaining_index = self.shuffle(remaining_index)
         new_index = [*past_index, *remaining_index]
         self.index = new_index

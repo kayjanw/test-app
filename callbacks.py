@@ -1498,7 +1498,7 @@ def register_callbacks(app, print_function):
         [State("knob-canvas", "value")],
     )
     @print_callback(print_function)
-    def update_canvas_brush(trigger_minus, trigger_plus, value):
+    def update_canvas_brush_size(trigger_minus, trigger_plus, value):
         """Update canvas brush size (line width)
 
         Args:

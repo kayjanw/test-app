@@ -22,13 +22,13 @@ def mbti_tab():
                             dcc.Markdown(
                                 """
                     ###### Input Distribution
-                    > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
+                    > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and
                     has distribution
                     > - 77% introvert (vs. 23% extrovert)
                     > - 86% intuition (vs. 14% sensing)
                     > - 54% feeling (vs. 46% thinking)
                     > - 60% perceiving (vs. 40% judging)
-            
+
                     ###### Processing
                     > Processing of training data involves
                     > - Making the words lowercase (so don't worry about your casing)
@@ -36,39 +36,39 @@ def mbti_tab():
                     > - Removing digits and punctuations
                     > - Remove any mention of MBTI types or the word `mbti`
                     > - Lemmatization of words
-            
+
                     ###### Modelling (v1)
-                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified
                     fashion
-            
+
                     > Training data has a vocabulary size of **1710 words/bi-grams/tri-grams**
-            
+
                     > The model used is LightGBM model and 4 different models are trained for each personality trait
-            
+
                     > Grid search is used to tune each model's hyperparameters based on best *balanced accuracy* score, and
                     > is used with stratified cross validation to handle imbalanced data
-            
+
                     > Each model, after hyperparameter tuning, is then scored on the held out testing data
-            
+
                     ###### Modelling (v2)
-                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified 
+                    > After processing the text, input data is split into 80% training and 20% testing data in a stratified
                     fashion
-            
+
                     > Training data has a vocabulary size of **1600 words** with word embedding dimension of 64
-            
+
                     > The model used is tensorflow neural network model and 4 different models are trained for each
                     > personality trait
-            
+
                     > Each model, after training for several epochs, is then scored on the held out testing data
-            
+
                     ###### Results
                     > To interpret the results, accuracy is probability of being correct,
-                    > and balanced accuracy is raw accuracy where each sample is weighted according to the inverse 
+                    > and balanced accuracy is raw accuracy where each sample is weighted according to the inverse
                     > prevalence of its true class, which avoids inflated performance estimates on imbalanced data
                     > * i.e. 70% accuracy means model is correct 70% of the time
                     > * i.e. If model is able to correctly classify actual majority case 70% of the time, and
                     > correctly classify actual minority case 30% of the time, it achieves a balanced accuracy of 50%
-            
+
                     > The results are
                     > * Introversion-Extroversion Model has Accuracy: 64.4% and Balanced Accuracy: 63.9%
                     > * Intuition-Sensing Model has Accuracy: 65.2% and Balanced Accuracy: 64.4%

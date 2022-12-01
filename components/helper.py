@@ -569,7 +569,7 @@ def get_excel_from_df(df):
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
     df.to_excel(excel_writer, sheet_name="Sheet1", index=False)
     excel_writer.save()
-    excel_data = buf.getvalue()
+    excel_data = buf.getvalue()  # noqa: F841
     buf.seek(0)
     return buf
 
@@ -606,7 +606,7 @@ def get_excel_demo():
         worksheet.write(f"D{idx + start_row + 1}", colour_texture[idx])
 
     excel_writer.save()
-    excel_data = buf.getvalue()
+    excel_data = buf.getvalue()  # noqa: F841
     buf.seek(0)
     return buf
 

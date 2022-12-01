@@ -252,7 +252,7 @@ class TripPlanner:
         # Solve
         solver = pyEnv.SolverFactory("gurobi")
         try:
-            result = solver.solve(model, tee=False)
+            _ = solver.solve(model, tee=False)
         except Exception as e:
             raise Exception(
                 f"Cannot connect to gurobi optimization solver, error message: {e}"

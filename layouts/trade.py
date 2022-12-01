@@ -7,13 +7,13 @@ from layouts.main import content_header, style_dropdown, style_input, style_p
 def trade_tab():
     trade = TradeSocket()
     indicators = ["SMA10", "SMA50", "BOLL(Close,20)", "RSI(Close,14)", "MACD"]
-    indicators_desc = [
-        "Simple Moving Average for past 10 values, Lagging Indicator, highlights direction of trend",
-        "Simple Moving Average for past 50 values, Lagging Indicator, highlights direction of trend",
-        "Bollinger Bands for 20 periods, Momentum Indicator, measures volatility of market",
-        "Relative Strength Index, Momentum Indicator, measures magnitude of price changes",
-        "Moving Average Convergence Divergence, Momentum Indicator, measures change between fast and slow EMA",
-    ]
+    # indicators_desc = [
+    #     "Simple Moving Average for past 10 values, Lagging Indicator, highlights direction of trend",
+    #     "Simple Moving Average for past 50 values, Lagging Indicator, highlights direction of trend",
+    #     "Bollinger Bands for 20 periods, Momentum Indicator, measures volatility of market",
+    #     "Relative Strength Index, Momentum Indicator, measures magnitude of price changes",
+    #     "Moving Average Convergence Divergence, Momentum Indicator, measures change between fast and slow EMA",
+    # ]
     return html.Div(
         [
             content_header(
