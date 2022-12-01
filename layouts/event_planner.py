@@ -168,6 +168,7 @@ def event_tab(app):
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
+                    # Result
                     html.Div(
                         id="div-event-result",
                         style=style_hidden,

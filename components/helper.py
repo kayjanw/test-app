@@ -150,7 +150,7 @@ def dcc_loading(children, dark_bg=True):
     """Get default dcc.Loading component
 
     Args:
-        children (list): children of component
+        children: children of component
         dark_bg (bool): indicates whether loading icon is on dark background
 
     Returns:

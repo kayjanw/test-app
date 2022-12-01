@@ -1300,7 +1300,7 @@ def register_callbacks(app, print_function):
         card_prompt, card_deck, card_counter, data_new = (
             [card_prompt, "", ""],
             "",
-            "",
+            "- / -",
             {},
         )
         next_card = 0
