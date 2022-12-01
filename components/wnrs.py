@@ -174,9 +174,18 @@ class WNRS:
             "O": ("#EB744C", "#000000"),  # orange card black font (bumble edition)
             "R": ("#BE001C", "#FAFAEE"),  # red (default)
             "P": ("#EEC4C5", "#BE001C"),  # pink (self-love edition)
-            "S1": ("#5f86b5", "#FAFAEE"),  # special blue card white font (own it edition)
-            "S2": ("#af2637", "#FAFAEE"),  # special maroon card white font (own it edition)
-            "S3": ("#275835", "#FAFAEE"),  # special green card white font (own it edition)
+            "S1": (
+                "#5f86b5",
+                "#FAFAEE",
+            ),  # special blue card white font (own it edition)
+            "S2": (
+                "#af2637",
+                "#FAFAEE",
+            ),  # special maroon card white font (own it edition)
+            "S3": (
+                "#275835",
+                "#FAFAEE",
+            ),  # special green card white font (own it edition)
             "V1": ("#EAD2E0", "#1695C8"),  # violet card blue font (cann edition)
             "V2": ("#FAFAEE", "#1695C8"),  # white card blue font (cann edition)
             "W": ("#FAFAEE", "#BE001C"),  # white (default)

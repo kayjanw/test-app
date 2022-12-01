@@ -132,9 +132,7 @@ class TradeSocket:
         )
         ws.run_forever()
 
-    def get_rates_data(
-        self, symbol, granularity, n_points
-    ):
+    def get_rates_data(self, symbol, granularity, n_points):
         """Compute rate data (time, open, high, low, close)
 
         Args:
@@ -159,7 +157,10 @@ class TradeSocket:
 
             if self.df_tick[self.date_col][0] in set(df_historical[self.date_col]):
                 df_new = df_historical[
-                    (df_historical[self.date_col] == self.df_tick[self.date_col].values[0])
+                    (
+                        df_historical[self.date_col]
+                        == self.df_tick[self.date_col].values[0]
+                    )
                 ]
                 # Replace close
                 df_historical.at[df_new.index.values[0], "Close"] = self.df_tick[
@@ -193,9 +194,9 @@ class TradeSocket:
                 df_historical = pd.concat([df_historical, df_new])
 
         # Adjust to SG time
-        df_historical[self.date_col] = df_historical[self.date_col] + datetime.timedelta(
-            hours=8
-        )
+        df_historical[self.date_col] = df_historical[
+            self.date_col
+        ] + datetime.timedelta(hours=8)
         return df_historical
 
     @staticmethod

@@ -188,7 +188,9 @@ class EventPlanner:
             person = row.Person
             row = row.drop("Person")
             email_body = f"Here are your results for <b>{event}</b>\n\n"
-            email_body += "\n".join([f"<b>{k}</b>: {v}" for k, v in row.to_dict().items()])
+            email_body += "\n".join(
+                [f"<b>{k}</b>: {v}" for k, v in row.to_dict().items()]
+            )
             email_body += (
                 f"\n\nThank you for using <a href='{website}' target='_blank'>{website}</a>\n"
                 "Disclaimer: This is an automated email. Please do not reply."
