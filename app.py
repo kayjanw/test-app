@@ -15,7 +15,7 @@ meta_tags = [
     {
         "name": "description",
         "content": "Kay Jan's Side Project - "
-        "Automate repetitive data analysis tasks and perform predictions and optimizations",
+        "Automate repetitive data analysis tasks, perform predictions and optimizations, and play games",
     },
     {
         "name": "viewport",
@@ -27,13 +27,13 @@ meta_tags = [
     },
     {
         "property": "og:title",
-        "content": "Tools to make life easier"
+        "content": "Tools to make life fun and easier"
     },
     {
         "property": "og:description",
         "content":
-            "Automate repetitive data analysis tasks "
-            "and perform predictions and optimizations",
+            "Automate repetitive data analysis tasks, "
+            "perform predictions and optimizations, and play games",
     },
     {
         "property": "og:image",
@@ -49,13 +49,13 @@ meta_tags = [
     },
     {
         "property": "twitter:title",
-        "content": "Tools to make life easier"
+        "content": "Tools to make life easier and fun"
     },
     {
         "property": "twitter:description",
         "content":
-            "Automate repetitive data analysis tasks "
-            "and perform predictions and optimizations",
+            "Automate repetitive data analysis tasks, "
+            "perform predictions and optimizations, and play games",
     },
     {
         "property": "twitter:image",
