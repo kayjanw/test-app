@@ -4,7 +4,7 @@ import gevent.monkey
 gevent.monkey.patch_all()
 
 from callbacks import register_callbacks
-from layouts import main_layout
+from layouts.main import main_layout
 from routes import register_routes
 
 meta_tags = [

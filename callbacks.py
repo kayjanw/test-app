@@ -33,22 +33,22 @@ from components.helper import (
     send_email,
 )
 from layouts import (
+    about_me_tab,
+    articles_tab,
     app_1,
     app_2,
     app_event,
-    about_me_tab,
-    article_tab,
     change_tab,
     changes_tab,
     chat_tab,
-    trip_tab,
-    mbti_tab,
-    trade_tab,
-    event_tab,
-    rng_tab,
-    wnrs_tab,
     contact_tab,
+    event_tab,
     image_edit_tab,
+    mbti_tab,
+    rng_tab,
+    trade_tab,
+    trip_tab,
+    wnrs_tab,
 )
 
 
@@ -398,7 +398,7 @@ def register_callbacks(app, print_function):
                   [State("graph-changes-line", "figure")])
     @print_callback(print_function)
     def update_changes_hover(hover_data, figure):
-        """Update layout of plotly graph on hover
+        """Update layouts of plotly graph on hover
 
         Args:
             hover_data: trigger on hover
@@ -1352,7 +1352,7 @@ def register_callbacks(app, print_function):
         if tab == "tab-aboutme":
             return about_me_tab(app)
         elif tab == "tab-articles":
-            return article_tab()
+            return articles_tab()
         elif tab == "tab-change":
             return change_tab(app)
         elif tab == "tab-change2":
