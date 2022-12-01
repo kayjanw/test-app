@@ -1,5 +1,5 @@
 import dash_leaflet as dl
-from dash import html, dcc, dash_table
+from dash import dash_table, dcc, html
 
 from components.helper import dcc_loading, table_css
 from layouts.main import content_header
@@ -9,20 +9,27 @@ def trip_tab(app):
     return html.Div(
         [
             content_header("Trip Planner", "Optimize your route"),
-            html.Div([
-                html.P(
-                    "Users can fill in multiple destinations and an optimal route based on distance will be "
-                    "calculated, starting and ending from the first destination specified. This is also known as the "
-                    "Travelling Salesman Problem"
-                ),
-                html.Br(),
-                html.P("Step 1: Fill in landmark name (optional)"),
-                html.P("Step 2: Click point on map corresponding to landmark name"),
-                html.P("Step 3: Repeat steps 1 and 2 until all destinations have been entered"),
-                html.P("Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name"),
-                html.P('Step 5: Click "OK" button to generate shortest and fastest route!'),
-            ],
-                className="custom-div-instruction custom-div-left"
+            html.Div(
+                [
+                    html.P(
+                        "Users can fill in multiple destinations and an optimal route based on distance will be "
+                        "calculated, starting and ending from the first destination specified. This is also known as the "
+                        "Travelling Salesman Problem"
+                    ),
+                    html.Br(),
+                    html.P("Step 1: Fill in landmark name (optional)"),
+                    html.P("Step 2: Click point on map corresponding to landmark name"),
+                    html.P(
+                        "Step 3: Repeat steps 1 and 2 until all destinations have been entered"
+                    ),
+                    html.P(
+                        "Step 4: Name of landmark can be altered in the table. Try not to use the same landmark name"
+                    ),
+                    html.P(
+                        'Step 5: Click "OK" button to generate shortest and fastest route!'
+                    ),
+                ],
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [
@@ -41,7 +48,9 @@ def trip_tab(app):
                                 className="custom-div-flex",
                             ),
                             get_trip_table(),
-                            html.Button("Remove last landmark", id="button-trip-remove"),
+                            html.Button(
+                                "Remove last landmark", id="button-trip-remove"
+                            ),
                             html.Button("Reset all landmarks", id="button-trip-reset"),
                             html.Br(),
                             html.Button("OK", id="button-trip-ok"),

@@ -8,63 +8,34 @@ from layouts.main import main_layout
 from routes import register_routes
 
 meta_tags = [
-    {
-        "name": "author",
-        "content": "Kay Jan WONG"
-    },
+    {"name": "author", "content": "Kay Jan WONG"},
     {
         "name": "description",
         "content": "Kay Jan's Side Project - "
         "Automate repetitive data analysis tasks, perform predictions and optimizations, and play games",
     },
-    {
-        "name": "viewport",
-        "content": "width=device-width, initial-scale=1"
-    },
-    {
-        "property": "og:type",
-        "content": "website"
-    },
-    {
-        "property": "og:title",
-        "content": "Tools to make life fun and easier"
-    },
+    {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+    {"property": "og:type", "content": "website"},
+    {"property": "og:title", "content": "Tools to make life fun and easier"},
     {
         "property": "og:description",
-        "content":
-            "Automate repetitive data analysis tasks, "
-            "perform predictions and optimizations, and play games",
+        "content": "Automate repetitive data analysis tasks, "
+        "perform predictions and optimizations, and play games",
     },
-    {
-        "property": "og:image",
-        "content": "https://i.ibb.co/KrjyLmg/favicon-google.png"
-    },
-    {
-        "property": "og:image:width",
-        "content": "1200"
-    },
-    {
-        "property": "og:image:height",
-        "content": "627"
-    },
-    {
-        "property": "twitter:title",
-        "content": "Tools to make life easier and fun"
-    },
+    {"property": "og:image", "content": "https://i.ibb.co/KrjyLmg/favicon-google.png"},
+    {"property": "og:image:width", "content": "1200"},
+    {"property": "og:image:height", "content": "627"},
+    {"property": "twitter:title", "content": "Tools to make life easier and fun"},
     {
         "property": "twitter:description",
-        "content":
-            "Automate repetitive data analysis tasks, "
-            "perform predictions and optimizations, and play games",
+        "content": "Automate repetitive data analysis tasks, "
+        "perform predictions and optimizations, and play games",
     },
     {
         "property": "twitter:image",
         "content": "https://i.ibb.co/cFwJMGg/favicon-twitter.png",
     },
-    {
-        "http-equiv": "Cache-control",
-        "content": "public"
-     },
+    {"http-equiv": "Cache-control", "content": "public"},
     {
         "name": "google-site-verification",
         "content": "3AcDEhXtFa35ByGGTh-Fy8bDeDY6hUQUqYcrfh0mGso",

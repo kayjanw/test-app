@@ -1,4 +1,4 @@
-from dash import html, dcc, dash_table
+from dash import dash_table, dcc, html
 
 from components.helper import dcc_loading, table_css
 from layouts.main import content_header, style_dropdown, style_hidden, style_input
@@ -16,11 +16,17 @@ def change_tab(app):
                         "processed results with change value into an excel file"
                     ),
                     html.Br(),
-                    html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
-                           "sample of file will be displayed once upload is successful"),
-                    html.P("Step 2: Specify columns for past values (x axis) and present values (y axis)"),
-                    html.P("Step 3: Specify maximum possible value for each column to normalize column values "
-                           "(optional)"),
+                    html.P(
+                        "Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
+                        "sample of file will be displayed once upload is successful"
+                    ),
+                    html.P(
+                        "Step 2: Specify columns for past values (x axis) and present values (y axis)"
+                    ),
+                    html.P(
+                        "Step 3: Specify maximum possible value for each column to normalize column values "
+                        "(optional)"
+                    ),
                     html.P('Step 4: Click "OK" button to generate results!'),
                 ],
                 className="custom-div-instruction custom-div-left",
@@ -32,7 +38,9 @@ def change_tab(app):
                             dcc.Upload(
                                 [
                                     html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
+                                    html.Span(
+                                        "Drag and drop file here, or click to upload"
+                                    ),
                                 ],
                                 id="upload-change",
                                 multiple=False,
@@ -76,7 +84,12 @@ def change_tab(app):
                                         style=style_input,
                                     ),
                                     html.P("out of"),
-                                    dcc.Input(id="input-change-x", type="number", min=1, style={"width": "20%"}),
+                                    dcc.Input(
+                                        id="input-change-x",
+                                        type="number",
+                                        min=1,
+                                        style={"width": "20%"},
+                                    ),
                                 ],
                                 className="custom-div-flex",
                             ),
@@ -95,12 +108,19 @@ def change_tab(app):
                                         style=style_input,
                                     ),
                                     html.P("out of"),
-                                    dcc.Input(id="input-change-y", type="number", min=1, style={"width": "20%"}),
+                                    dcc.Input(
+                                        id="input-change-y",
+                                        type="number",
+                                        min=1,
+                                        style={"width": "20%"},
+                                    ),
                                 ],
                                 className="custom-div-flex",
                             ),
                             html.Button("OK", id="button-change-ok"),
-                            dcc.Store(id="intermediate-change-result", storage_type="memory"),
+                            dcc.Store(
+                                id="intermediate-change-result", storage_type="memory"
+                            ),
                             dcc_loading(html.P(id="change-result-error"), dark_bg=True),
                         ],
                         className="custom-div-small-medium custom-div-left custom-div-dark",
@@ -112,7 +132,7 @@ def change_tab(app):
                 [
                     html.Div(
                         id="change-result",
-                        className="custom-div-small custom-div-space-below custom-div-left custom-div-white image-dark-bg"
+                        className="custom-div-small custom-div-space-below custom-div-left custom-div-white image-dark-bg",
                     ),
                     html.Div(
                         [
@@ -120,8 +140,12 @@ def change_tab(app):
                                 [
                                     html.Img(src=app.get_asset_url("info.svg")),
                                     html.Span(
-                                        "Mouseover for information, highlight to zoom, double click to reset view"),
-                                    html.Span(dcc.Graph(id="graph-change-result"), className="custom-div-large-full"),
+                                        "Mouseover for information, highlight to zoom, double click to reset view"
+                                    ),
+                                    html.Span(
+                                        dcc.Graph(id="graph-change-result"),
+                                        className="custom-div-large-full",
+                                    ),
                                 ],
                                 className="custom-div-full custom-div-center div-with-image div-with-image-left small-image",
                             ),
@@ -130,27 +154,39 @@ def change_tab(app):
                                     html.P("Footnote:"),
                                     html.P(
                                         "1. Computation ignores rows where either x or y value is not in numerical "
-                                        "format"),
+                                        "format"
+                                    ),
                                     html.P(
                                         "2. Points will be very close to each other (but not overlapping) if two rows "
                                         "have identical x and y values, it is recommended to zoom or download the "
-                                        "results file"),
+                                        "results file"
+                                    ),
                                     html.P("3. Interpreting the scatterplot above:"),
-                                    html.P("• Points above the line represent positive change",
-                                           style={"margin-left": "10px"}),
-                                    html.P("• Distance from the line represent magnitude of change",
-                                           style={"margin-left": "10px"}),
+                                    html.P(
+                                        "• Points above the line represent positive change",
+                                        style={"margin-left": "10px"},
+                                    ),
+                                    html.P(
+                                        "• Distance from the line represent magnitude of change",
+                                        style={"margin-left": "10px"},
+                                    ),
                                     html.P("4. Interpreting the histogram above:"),
-                                    html.P("• Histogram shows the distribution of values for x and y axis respectively",
-                                           style={"margin-left": "10px"}),
-                                    html.P("5. Interpreting the summary statistics on the left:"),
+                                    html.P(
+                                        "• Histogram shows the distribution of values for x and y axis respectively",
+                                        style={"margin-left": "10px"},
+                                    ),
+                                    html.P(
+                                        "5. Interpreting the summary statistics on the left:"
+                                    ),
                                     html.P(
                                         "• If median is higher than mean: data is skewed to the left; there is a long "
-                                        "tail of low scores pulling the mean down", style={"margin-left": "10px"}),
+                                        "tail of low scores pulling the mean down",
+                                        style={"margin-left": "10px"},
+                                    ),
                                 ],
                             ),
                         ],
-                        className="custom-div-large custom-div-left custom-div-white"
+                        className="custom-div-large custom-div-left custom-div-white",
                     ),
                 ],
                 id="div-change-result",
@@ -172,8 +208,12 @@ def get_changes_table():
         id="table-changes",
         columns=[
             dict(name="Columns to compare", id="column", presentation="dropdown"),
-            dict(name="Maximum possible value (integer value, optional)", id="max", type="numeric",
-                 on_change={"failure": "default"}),
+            dict(
+                name="Maximum possible value (integer value, optional)",
+                id="max",
+                type="numeric",
+                on_change={"failure": "default"},
+            ),
         ],
         data=[dict(column="", max="") for i in range(4)],
         editable=True,
@@ -188,27 +228,42 @@ def get_changes_table():
 def changes_tab(app):
     return html.Div(
         [
-            content_header("Change Calculator 2", "Compare changes over multiple periods"),
-            html.Div([
-                html.P("Users can view summary statistics in table and box plot, and changes over time on a line plot. "
-                       "Just minor changes from the other change tab (haha)"),
-                html.Br(),
-                html.P("Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
-                       "sample of file will be displayed once upload is successful"),
-                html.P("Step 2: Specify column identifier in dropdown option, and columns to compare in the table"),
-                html.P(
-                    "Step 3: Specify maximum possible value for each column to normalize the column values "
-                    "(optional)"),
-                html.P('Step 4: Click "OK" button to generate results!'),
-                html.Br(),
-                html.P("Footnote:"),
-                html.P("1. Computation ignores rows where any column comparison values are not in numerical format"),
-                html.P("2. Computation ignores rows where column identifier values are empty"),
-                html.P(
-                    "3. Ensure all column identifier values are unique, if not it will be replaced with running "
-                    "numbers"),
-            ],
-                className="custom-div-instruction custom-div-left"
+            content_header(
+                "Change Calculator 2", "Compare changes over multiple periods"
+            ),
+            html.Div(
+                [
+                    html.P(
+                        "Users can view summary statistics in table and box plot, and changes over time on a line plot. "
+                        "Just minor changes from the other change tab (haha)"
+                    ),
+                    html.Br(),
+                    html.P(
+                        "Step 1: Upload a file (.csv, .xls, .xlsx with multiple worksheets supported), "
+                        "sample of file will be displayed once upload is successful"
+                    ),
+                    html.P(
+                        "Step 2: Specify column identifier in dropdown option, and columns to compare in the table"
+                    ),
+                    html.P(
+                        "Step 3: Specify maximum possible value for each column to normalize the column values "
+                        "(optional)"
+                    ),
+                    html.P('Step 4: Click "OK" button to generate results!'),
+                    html.Br(),
+                    html.P("Footnote:"),
+                    html.P(
+                        "1. Computation ignores rows where any column comparison values are not in numerical format"
+                    ),
+                    html.P(
+                        "2. Computation ignores rows where column identifier values are empty"
+                    ),
+                    html.P(
+                        "3. Ensure all column identifier values are unique, if not it will be replaced with running "
+                        "numbers"
+                    ),
+                ],
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [
@@ -217,7 +272,9 @@ def changes_tab(app):
                             dcc.Upload(
                                 [
                                     html.Img(src=app.get_asset_url("upload.svg")),
-                                    html.Span("Drag and drop file here, or click to upload"),
+                                    html.Span(
+                                        "Drag and drop file here, or click to upload"
+                                    ),
                                 ],
                                 id="upload-changes",
                                 multiple=False,
@@ -244,9 +301,11 @@ def changes_tab(app):
                             ),
                             html.Div(
                                 id="changes-sample-data",
-                                className="custom-div-small-space-below"
+                                className="custom-div-small-space-below",
                             ),
-                            dcc.Store(id="intermediate-changes-result", storage_type="memory"),
+                            dcc.Store(
+                                id="intermediate-changes-result", storage_type="memory"
+                            ),
                             html.Div(
                                 [
                                     html.P("Column identifier (i.e. Name):"),
@@ -267,7 +326,9 @@ def changes_tab(app):
                             get_changes_table(),
                             html.Button("Add rows", id="button-changes-add"),
                             html.Button("OK", id="button-changes-ok"),
-                            dcc_loading([html.P(id="changes-result-error")], dark_bg=True),
+                            dcc_loading(
+                                [html.P(id="changes-result-error")], dark_bg=True
+                            ),
                         ],
                         className="custom-div-small-medium custom-div-left custom-div-dark",
                     ),
@@ -278,7 +339,10 @@ def changes_tab(app):
                 [
                     html.Div(
                         [
-                            html.P(id="changes-result", className="custom-div-small custom-div-left custom-div-white"),
+                            html.P(
+                                id="changes-result",
+                                className="custom-div-small custom-div-left custom-div-white",
+                            ),
                             html.Div(
                                 [
                                     html.P(
@@ -292,19 +356,19 @@ def changes_tab(app):
                                                 "hide entry, double click on legend to highlight entry"
                                             ),
                                         ],
-                                        className="div-with-image div-with-image-left small-image image-dark-bg"
+                                        className="div-with-image div-with-image-left small-image image-dark-bg",
                                     ),
-                                    dcc.Graph(id="graph-changes-boxplot")
+                                    dcc.Graph(id="graph-changes-boxplot"),
                                 ],
                                 className="custom-div-large custom-div-center custom-div-white",
                             ),
                         ],
-                        className="custom-container custom-div-center custom-div-dark"
+                        className="custom-container custom-div-center custom-div-dark",
                     ),
                     html.P(
                         id="graph-changes-result",
                         className="custom-div-full custom-div-space-above custom-div-center "
-                                  "div-with-image div-with-image-left small-image",
+                        "div-with-image div-with-image-left small-image",
                     ),
                 ],
                 id="div-changes-result",
