@@ -1,5 +1,5 @@
 import dash_daq as daq
-from dash import html, dcc
+from dash import dcc, html
 from dash_canvas import DashCanvas
 
 from layouts.main import content_header
@@ -9,13 +9,16 @@ def image_edit_tab(app):
     return html.Div(
         [
             content_header("Image Editing", "Draw on images"),
-            html.Div([
-                html.P("Users can edit images directly by drawing on them, or just draw on a blank canvas!"),
-                html.Br(),
-                html.P("Step 1: Upload an image (optional)"),
-                html.P("Step 2: Start drawing!"),
-            ],
-                className="custom-div-instruction custom-div-left"
+            html.Div(
+                [
+                    html.P(
+                        "Users can edit images directly by drawing on them, or just draw on a blank canvas!"
+                    ),
+                    html.Br(),
+                    html.P("Step 1: Upload an image (optional)"),
+                    html.P("Step 2: Start drawing!"),
+                ],
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [

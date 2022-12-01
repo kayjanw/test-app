@@ -1,43 +1,43 @@
-import dash
 import json
 import traceback
 
+import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 
 from components import (
+    MBTI,
+    WNRS,
     ChangeCalculator,
     ChatAnalyzer,
     EventPlanner,
-    MBTI,
     RandomGenerator,
     TradeSocket,
     TripPlanner,
-    WNRS,
 )
 from components.helper import (
-    return_message,
-    print_callback,
-    violin_plot,
     dcc_loading,
-    parse_data,
+    decode_df,
+    decode_dict,
+    encode_df,
+    encode_dict,
     generate_datatable,
     get_summary_statistics,
-    encode_df,
-    decode_df,
-    encode_dict,
-    decode_dict,
-    update_when_upload,
+    parse_data,
+    print_callback,
     result_download_button,
-    valid_email,
+    return_message,
     send_email,
+    update_when_upload,
+    valid_email,
+    violin_plot,
 )
 from layouts import (
     about_me_tab,
-    articles_tab,
     app_1,
     app_2,
     app_event,
+    articles_tab,
     change_tab,
     changes_tab,
     chat_tab,
@@ -77,16 +77,23 @@ def register_callbacks(app, print_function):
         else:
             return app_2(pathname)
 
-    @app.callback([Output("sidebar", "style"),
-                   Output("banner", "style"),
-                   Output("tab-content", "style")],
-                  [Input("button-sidebar", "n_clicks"),
-                   Input("tabs-parent", "value")],
-                  [State("sidebar", "style"),
-                   State("banner", "style"),
-                   State("tab-content", "style")])
+    @app.callback(
+        [
+            Output("sidebar", "style"),
+            Output("banner", "style"),
+            Output("tab-content", "style"),
+        ],
+        [Input("button-sidebar", "n_clicks"), Input("tabs-parent", "value")],
+        [
+            State("sidebar", "style"),
+            State("banner", "style"),
+            State("tab-content", "style"),
+        ],
+    )
     @print_callback(print_function)
-    def display_sidebar_mobile(trigger_sidebar, trigger_tab, style_sidebar, style_banner, style_contents):
+    def display_sidebar_mobile(
+        trigger_sidebar, trigger_tab, style_sidebar, style_banner, style_contents
+    ):
         """Display sidebar on icon click (mobile device)
 
         Args:
@@ -105,7 +112,10 @@ def register_callbacks(app, print_function):
         """
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         if ctx == "button-sidebar":
-            if isinstance(style_sidebar, dict) and style_sidebar["display"] == "inline-block":
+            if (
+                isinstance(style_sidebar, dict)
+                and style_sidebar["display"] == "inline-block"
+            ):
                 # Collapse left sidebar
                 style_sidebar["display"] = "none"
                 style_banner["margin-left"] = "0"
@@ -124,14 +134,19 @@ def register_callbacks(app, print_function):
                 style_contents = {"margin-left": "0", "position": "absolute"}
         return style_sidebar, style_banner, style_contents
 
-    @app.callback([Output("dropdown-change-worksheet", "options"),
-                   Output("change-select-worksheet", "style"),
-                   Output("change-sample-data", "children"),
-                   Output("intermediate-change-result", "data")],
-                  [Input("upload-change", "contents"),
-                   Input("dropdown-change-worksheet", "value")],
-                  [State("upload-change", "filename"),
-                   State("change-select-worksheet", "style")])
+    @app.callback(
+        [
+            Output("dropdown-change-worksheet", "options"),
+            Output("change-select-worksheet", "style"),
+            Output("change-sample-data", "children"),
+            Output("intermediate-change-result", "data"),
+        ],
+        [
+            Input("upload-change", "contents"),
+            Input("dropdown-change-worksheet", "value"),
+        ],
+        [State("upload-change", "filename"), State("change-select-worksheet", "style")],
+    )
     @print_callback(print_function)
     def update_change_upload(contents, worksheet, filename, style):
         """Update change calculator interface when file is uploaded
@@ -153,9 +168,13 @@ def register_callbacks(app, print_function):
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
 
-    @app.callback([Output("dropdown-change-x", "options"),
-                   Output("dropdown-change-y", "options")],
-                  [Input("intermediate-change-result", "data")])
+    @app.callback(
+        [
+            Output("dropdown-change-x", "options"),
+            Output("dropdown-change-y", "options"),
+        ],
+        [Input("intermediate-change-result", "data")],
+    )
     @print_callback(print_function)
     def update_change_dropdown_options(records):
         """Update change calculator column selector dropdown options
@@ -175,12 +194,11 @@ def register_callbacks(app, print_function):
             return col_options, col_options
         return [], []
 
-    @app.callback([Output("dropdown-change-x", "value"),
-                   Output("dropdown-change-y", "value")],
-                  [Input("dropdown-change-x", "options"),
-                   Input("dropdown-change-y", "options")],
-                  [State("dropdown-change-x", "value"),
-                   State("dropdown-change-y", "value")],)
+    @app.callback(
+        [Output("dropdown-change-x", "value"), Output("dropdown-change-y", "value")],
+        [Input("dropdown-change-x", "options"), Input("dropdown-change-y", "options")],
+        [State("dropdown-change-x", "value"), State("dropdown-change-y", "value")],
+    )
     @print_callback(print_function)
     def update_change_dropdown_value(x_options, y_options, x_value, y_value):
         """Update change calculator column selector dropdown value
@@ -205,16 +223,22 @@ def register_callbacks(app, print_function):
             y_value = None
         return x_value, y_value
 
-    @app.callback([Output("change-result-error", "children"),
-                   Output("div-change-result", "style"),
-                   Output("change-result", "children"),
-                   Output("graph-change-result", "figure")],
-                  [Input("button-change-ok", "n_clicks")],
-                  [State("intermediate-change-result", "data"),
-                   State("dropdown-change-x", "value"),
-                   State("input-change-x", "value"),
-                   State("dropdown-change-y", "value"),
-                   State("input-change-y", "value")])
+    @app.callback(
+        [
+            Output("change-result-error", "children"),
+            Output("div-change-result", "style"),
+            Output("change-result", "children"),
+            Output("graph-change-result", "figure"),
+        ],
+        [Input("button-change-ok", "n_clicks")],
+        [
+            State("intermediate-change-result", "data"),
+            State("dropdown-change-x", "value"),
+            State("input-change-x", "value"),
+            State("dropdown-change-y", "value"),
+            State("input-change-y", "value"),
+        ],
+    )
     @print_callback(print_function)
     def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
         """Update and display change calculator results
@@ -240,7 +264,12 @@ def register_callbacks(app, print_function):
         result = []
         fig = {}
         if trigger:
-            if "df" in records and x_col is not None and y_col is not None and x_col != y_col:
+            if (
+                "df" in records
+                and x_col is not None
+                and y_col is not None
+                and x_col != y_col
+            ):
                 result_error = [return_message["scroll_down"]]
                 style = inline_style
                 df = decode_df(records["df"])
@@ -249,7 +278,7 @@ def register_callbacks(app, print_function):
                 result = [
                     html.H5("Summary Statistics"),
                     result_table,
-                    result_download_button(app, df)
+                    result_download_button(app, df),
                 ]
                 fig = ChangeCalculator().get_scatter_plot(df, x_col, y_col)
             elif "df" not in records:
@@ -260,14 +289,22 @@ def register_callbacks(app, print_function):
                 result_error = [return_message["change_columns"]]
         return result_error, style, result, fig
 
-    @app.callback([Output("dropdown-changes-worksheet", "options"),
-                   Output("changes-select-worksheet", "style"),
-                   Output("changes-sample-data", "children"),
-                   Output("intermediate-changes-result", "data")],
-                  [Input("upload-changes", "contents"),
-                   Input("dropdown-changes-worksheet", "value")],
-                  [State("upload-changes", "filename"),
-                   State("changes-select-worksheet", "style")])
+    @app.callback(
+        [
+            Output("dropdown-changes-worksheet", "options"),
+            Output("changes-select-worksheet", "style"),
+            Output("changes-sample-data", "children"),
+            Output("intermediate-changes-result", "data"),
+        ],
+        [
+            Input("upload-changes", "contents"),
+            Input("dropdown-changes-worksheet", "value"),
+        ],
+        [
+            State("upload-changes", "filename"),
+            State("changes-select-worksheet", "style"),
+        ],
+    )
     @print_callback(print_function)
     def update_changes_upload(contents, worksheet, filename, style):
         """Update change calculator 2 interface when file is uploaded
@@ -289,9 +326,13 @@ def register_callbacks(app, print_function):
         ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(contents, worksheet, filename, style, ctx)
 
-    @app.callback([Output("table-changes", "dropdown"),
-                   Output("dropdown-changes-identifier", "options")],
-                  [Input("intermediate-changes-result", "data")])
+    @app.callback(
+        [
+            Output("table-changes", "dropdown"),
+            Output("dropdown-changes-identifier", "options"),
+        ],
+        [Input("intermediate-changes-result", "data")],
+    )
     @print_callback(print_function)
     def update_changes_dropdown_options(records):
         """Update change calculator 2 column selector dropdown options
@@ -311,9 +352,11 @@ def register_callbacks(app, print_function):
             return dict(column=dict(options=col_options)), col_options
         return {}, []
 
-    @app.callback(Output("table-changes", "data"),
-                  [Input("button-changes-add", "n_clicks")],
-                  [State("table-changes", "data")])
+    @app.callback(
+        Output("table-changes", "data"),
+        [Input("button-changes-add", "n_clicks")],
+        [State("table-changes", "data")],
+    )
     @print_callback(print_function)
     def update_changes_add_row(trigger, data):
         """Update and adds additional row to change calculator 2 table
@@ -329,15 +372,21 @@ def register_callbacks(app, print_function):
             data.append(dict(column="", max=""))
         return data
 
-    @app.callback([Output("changes-result-error", "children"),
-                   Output("div-changes-result", "style"),
-                   Output("changes-result", "children"),
-                   Output("graph-changes-boxplot", "figure"),
-                   Output("graph-changes-result", "children")],
-                  [Input("button-changes-ok", "n_clicks")],
-                  [State("intermediate-changes-result", "data"),
-                   State("dropdown-changes-identifier", "value"),
-                   State("table-changes", "data")])
+    @app.callback(
+        [
+            Output("changes-result-error", "children"),
+            Output("div-changes-result", "style"),
+            Output("changes-result", "children"),
+            Output("graph-changes-boxplot", "figure"),
+            Output("graph-changes-result", "children"),
+        ],
+        [Input("button-changes-ok", "n_clicks")],
+        [
+            State("intermediate-changes-result", "data"),
+            State("dropdown-changes-identifier", "value"),
+            State("table-changes", "data"),
+        ],
+    )
     @print_callback(print_function)
     def update_changes_result(trigger, records, col_identifier, data):
         """Update and display change calculator 2 results
@@ -363,9 +412,7 @@ def register_callbacks(app, print_function):
         graph = []
         if trigger:
             list_of_tuples = [
-                (row["column"], row["max"])
-                for row in data
-                if row["column"]
+                (row["column"], row["max"]) for row in data if row["column"]
             ]
             cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
             if "df" in records and len(list_of_tuples):
@@ -376,15 +423,18 @@ def register_callbacks(app, print_function):
                     df, col_identifier, list_of_tuples
                 )
                 if len(df):
-                    df2 = ChangeCalculator().transpose_dataframe(df, col_identifier, cols)
+                    df2 = ChangeCalculator().transpose_dataframe(
+                        df, col_identifier, cols
+                    )
                     result_table = get_summary_statistics(df, cols)
                     fig_box = ChangeCalculator().get_box_plot(df, cols)
-                    instructions_line, fig_line = ChangeCalculator().get_line_plot(app, df2)
-                    result = [
-                        html.H5("Summary Statistics"),
-                        result_table
+                    instructions_line, fig_line = ChangeCalculator().get_line_plot(
+                        app, df2
+                    )
+                    result = [html.H5("Summary Statistics"), result_table]
+                    graph = instructions_line + [
+                        dcc.Graph(figure=fig_line, id="graph-changes-line")
                     ]
-                    graph = instructions_line + [dcc.Graph(figure=fig_line, id="graph-changes-line")]
                 elif not len(df):
                     result_error = [return_message["change_numeric"]]
             elif "df" not in records:
@@ -393,9 +443,11 @@ def register_callbacks(app, print_function):
                 result_error = [return_message["change_columns_empty"]]
         return result_error, style, result, fig_box, graph
 
-    @app.callback(Output("graph-changes-line", "figure"),
-                  [Input("graph-changes-line", "hoverData")],
-                  [State("graph-changes-line", "figure")])
+    @app.callback(
+        Output("graph-changes-line", "figure"),
+        [Input("graph-changes-line", "hoverData")],
+        [State("graph-changes-line", "figure")],
+    )
     @print_callback(print_function)
     def update_changes_hover(hover_data, figure):
         """Update layouts of plotly graph on hover
@@ -424,10 +476,14 @@ def register_callbacks(app, print_function):
     #         content = ['Uploading chat...']
     #     return html.P(content, id='text-chat-confirm')
 
-    @app.callback([Output("text-chat-confirm", "children"),
-                   Output("intermediate-chat-result", "data")],
-                  [Input("upload-chat", "contents")],
-                  [State("upload-chat", "filename")])
+    @app.callback(
+        [
+            Output("text-chat-confirm", "children"),
+            Output("intermediate-chat-result", "data"),
+        ],
+        [Input("upload-chat", "contents")],
+        [State("upload-chat", "filename")],
+    )
     @print_callback(print_function)
     def update_chat_upload(contents, filename):
         """Update chat analyzer interface when file is uploaded
@@ -459,14 +515,18 @@ def register_callbacks(app, print_function):
                     upload_message = [return_message["wrong_format_json"]]
         return upload_message, storage
 
-    @app.callback([Output("chat-result-error", "children"),
-                   Output("div-chat-result", "style"),
-                   Output("chat-result", "children"),
-                   Output("graph-chat-result-day", "figure"),
-                   Output("graph-chat-result-hour", "figure"),
-                   Output("chat-result-wordcloud", "children")],
-                  [Input("button-chat-ok", "n_clicks")],
-                  [State("intermediate-chat-result", "data")])
+    @app.callback(
+        [
+            Output("chat-result-error", "children"),
+            Output("div-chat-result", "style"),
+            Output("chat-result", "children"),
+            Output("graph-chat-result-day", "figure"),
+            Output("graph-chat-result-hour", "figure"),
+            Output("chat-result-wordcloud", "children"),
+        ],
+        [Input("button-chat-ok", "n_clicks")],
+        [State("intermediate-chat-result", "data")],
+    )
     @print_callback(print_function)
     def update_chat_result(trigger, contents):
         """Update and display chat analyzer results
@@ -499,24 +559,28 @@ def register_callbacks(app, print_function):
                 data = parse_data(contents, "json")
                 chat = ChatAnalyzer(data=data)
                 processed_df, text_df = chat.process_chat()
-                message_info_table = generate_datatable(processed_df, max_rows=len(processed_df), dark=False)
-                result = [
-                    html.H5("Chat Breakdown"),
-                    message_info_table
-                ]
+                message_info_table = generate_datatable(
+                    processed_df, max_rows=len(processed_df), dark=False
+                )
+                result = [html.H5("Chat Breakdown"), message_info_table]
                 fig1 = chat.get_time_series_hour_plot(text_df)
                 fig2 = chat.get_time_series_day_plot(text_df)
                 fig3 = chat.get_word_cloud(text_df)
         return result_error, style, result, fig1, fig2, fig3
 
-    @app.callback([Output("table-trip-landmark", "data"),
-                   Output("table-trip-landmark", "style_table"),
-                   Output("input-trip-landmark", "value")],
-                  [Input("map-trip", "click_lat_lng"),
-                   Input("button-trip-remove", "n_clicks"),
-                   Input("button-trip-reset", "n_clicks")],
-                  [State("input-trip-landmark", "value"),
-                   State("table-trip-landmark", "data")])
+    @app.callback(
+        [
+            Output("table-trip-landmark", "data"),
+            Output("table-trip-landmark", "style_table"),
+            Output("input-trip-landmark", "value"),
+        ],
+        [
+            Input("map-trip", "click_lat_lng"),
+            Input("button-trip-remove", "n_clicks"),
+            Input("button-trip-reset", "n_clicks"),
+        ],
+        [State("input-trip-landmark", "value"), State("table-trip-landmark", "data")],
+    )
     @print_callback(print_function)
     def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
         """Update trip table
@@ -547,9 +611,11 @@ def register_callbacks(app, print_function):
         style_table = TripPlanner().get_style_table(data)
         return data, style_table, ""
 
-    @app.callback(Output("map-trip", "children"),
-                  [Input("table-trip-landmark", "data")],
-                  [State("map-trip", "children")])
+    @app.callback(
+        Output("map-trip", "children"),
+        [Input("table-trip-landmark", "data")],
+        [State("map-trip", "children")],
+    )
     @print_callback(print_function)
     def update_trip_map(data, children):
         """Update trip map to include landmark location pin
@@ -564,10 +630,11 @@ def register_callbacks(app, print_function):
         children = TripPlanner().get_map_from_table(data, children)
         return children
 
-    @app.callback(Output("trip-result", "children"),
-                  [Input("button-trip-ok", "n_clicks"),
-                   Input("button-trip-reset", "n_clicks")],
-                  [State("table-trip-landmark", "data")])
+    @app.callback(
+        Output("trip-result", "children"),
+        [Input("button-trip-ok", "n_clicks"), Input("button-trip-reset", "n_clicks")],
+        [State("table-trip-landmark", "data")],
+    )
     @print_callback(print_function)
     def update_trip_results(trigger_ok, trigger_reset, data):
         """Update and display trip results
@@ -591,8 +658,7 @@ def register_callbacks(app, print_function):
             pass
         return result
 
-    @app.callback(Output("text-mbti-words", "children"),
-                  [Input("input-mbti", "value")])
+    @app.callback(Output("text-mbti-words", "children"), [Input("input-mbti", "value")])
     @print_callback(print_function)
     def update_mbti_words(input_text):
         """Update number of input words in vocabulary
@@ -609,12 +675,15 @@ def register_callbacks(app, print_function):
         except Exception as e:
             return f"Error loading number of word(s), error message: {e}"
 
-    @app.callback([Output("graph-mbti", "figure"),
-                   Output("graph-mbti", "style"),
-                   Output("mbti-results", "children")],
-                  [Input("button-mbti-ok", "n_clicks")],
-                  [State("input-mbti", "value"),
-                   State("graph-mbti", "style")])
+    @app.callback(
+        [
+            Output("graph-mbti", "figure"),
+            Output("graph-mbti", "style"),
+            Output("mbti-results", "children"),
+        ],
+        [Input("button-mbti-ok", "n_clicks")],
+        [State("input-mbti", "value"), State("graph-mbti", "style")],
+    )
     @print_callback(print_function)
     def update_mbti_result(trigger, input_text, style):
         """Update results of mbti personality results and graph
@@ -648,16 +717,21 @@ def register_callbacks(app, print_function):
                 print(traceback.print_exc())
         return plot, style, personality_details
 
-    @app.callback([Output("trade-result", "children"),
-                   Output("graph-trade", "figure")],
-                  Input("interval-trade", "n_intervals"),
-                  [State("dropdown-trade-symbol", "value"),
-                   State("dropdown-trade-frequency", "value"),
-                   State("input-trade-candle", "value"),
-                   State("checkbox-trade-ind", "value"),
-                   State("radio-trade-forecast", "value")])
+    @app.callback(
+        [Output("trade-result", "children"), Output("graph-trade", "figure")],
+        Input("interval-trade", "n_intervals"),
+        [
+            State("dropdown-trade-symbol", "value"),
+            State("dropdown-trade-frequency", "value"),
+            State("input-trade-candle", "value"),
+            State("checkbox-trade-ind", "value"),
+            State("radio-trade-forecast", "value"),
+        ],
+    )
     @print_callback(print_function)
-    def update_trade_graph(trigger, symbol, frequency, n_candle, indicators_ind, forecast_methods):
+    def update_trade_graph(
+        trigger, symbol, frequency, n_candle, indicators_ind, forecast_methods
+    ):
         """Update trade candlestick chart
 
         Args:
@@ -677,15 +751,21 @@ def register_callbacks(app, print_function):
             try:
                 trade = TradeSocket()
                 rates_data = trade.get_rates_data(symbol, frequency, n_candle)
-                fig = trade.get_candlestick_chart(symbol, n_candle, rates_data, indicators_ind, forecast_methods)
+                fig = trade.get_candlestick_chart(
+                    symbol, n_candle, rates_data, indicators_ind, forecast_methods
+                )
             except Exception as e:
                 error_message = f"Error: {e}"
         return error_message, fig
 
-    @app.callback([Output("text-event-confirm", "children"),
-                   Output("intermediate-event-result", "data")],
-                  [Input("upload-event", "contents")],
-                  [State("upload-event", "filename")])
+    @app.callback(
+        [
+            Output("text-event-confirm", "children"),
+            Output("intermediate-event-result", "data"),
+        ],
+        [Input("upload-event", "contents")],
+        [State("upload-event", "filename")],
+    )
     @print_callback(print_function)
     def update_event_upload(contents, filename):
         """Update event planner interface when file is uploaded
@@ -706,7 +786,11 @@ def register_callbacks(app, print_function):
             _, _, _, records = update_when_upload(contents, "", filename, {}, "")
             if "df" in records:
                 df = decode_df(records["df"])
-                if df.columns[0] == "Event:" and df.iloc[1, 0] == "Name" and df.iloc[1, 1] == "Email (Optional)":
+                if (
+                    df.columns[0] == "Event:"
+                    and df.iloc[1, 0] == "Name"
+                    and df.iloc[1, 1] == "Email (Optional)"
+                ):
                     event = df.columns[1]
                     df = df.iloc[2:, :].rename(columns=df.iloc[1])
                     storage = dict(df=encode_df(df), event=event)
@@ -717,18 +801,26 @@ def register_callbacks(app, print_function):
                 upload_message = [return_message["wrong_file_type"]]
         return upload_message, storage
 
-    @app.callback([Output("event-result-error", "children"),
-                   Output("div-event-result", "style"),
-                   Output("div-event-result", "children")],
-                  [Input("button-event-ok", "n_clicks")],
-                  [State("intermediate-event-result", "data"),
-                   State("input-event-group", "value"),
-                   State("checklist-event-pair", "value"),
-                   State("radio-event-criteria", "value"),
-                   State("checklist-event-email", "value"),
-                   State("checklist-event-display", "value")])
+    @app.callback(
+        [
+            Output("event-result-error", "children"),
+            Output("div-event-result", "style"),
+            Output("div-event-result", "children"),
+        ],
+        [Input("button-event-ok", "n_clicks")],
+        [
+            State("intermediate-event-result", "data"),
+            State("input-event-group", "value"),
+            State("checklist-event-pair", "value"),
+            State("radio-event-criteria", "value"),
+            State("checklist-event-email", "value"),
+            State("checklist-event-display", "value"),
+        ],
+    )
     @print_callback(print_function)
-    def update_event_result(trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag):
+    def update_event_result(
+        trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag
+    ):
         """Update and display event planner results
 
         Args:
@@ -755,25 +847,45 @@ def register_callbacks(app, print_function):
                 df = decode_df(records["df"])
                 event = records["event"]
                 result_error, result, style = EventPlanner().process_result(
-                    df, event, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
+                    df,
+                    event,
+                    n_groups,
+                    pair_flag,
+                    criteria_level,
+                    email_flag,
+                    hide_flag,
+                    style,
                 )
             else:
                 result_error = [return_message["file_not_uploaded"]]
         return html.P(result_error), style, result
 
-    @app.callback([Output("div-rng-item", "style"),
-                   Output("div-rng-group", "style"),
-                   Output("button-rng-item-ok", "style"),
-                   Output("button-rng-group-ok", "style")],
-                  [Input("button-rng-item-ok", "n_clicks"),
-                   Input("button-rng-group-ok", "n_clicks")],
-                  [State("div-rng-item", "style"),
-                   State("div-rng-group", "style"),
-                   State("button-rng-item-ok", "style"),
-                   State("button-rng-group-ok", "style")])
+    @app.callback(
+        [
+            Output("div-rng-item", "style"),
+            Output("div-rng-group", "style"),
+            Output("button-rng-item-ok", "style"),
+            Output("button-rng-group-ok", "style"),
+        ],
+        [
+            Input("button-rng-item-ok", "n_clicks"),
+            Input("button-rng-group-ok", "n_clicks"),
+        ],
+        [
+            State("div-rng-item", "style"),
+            State("div-rng-group", "style"),
+            State("button-rng-item-ok", "style"),
+            State("button-rng-group-ok", "style"),
+        ],
+    )
     @print_callback(print_function)
-    def update_rng_button_style(trigger_item, trigger_group, item_style, group_style, item_button_style,
-        group_button_style
+    def update_rng_button_style(
+        trigger_item,
+        trigger_group,
+        item_style,
+        group_style,
+        item_button_style,
+        group_button_style,
     ):
         """Update style of random generator button
 
@@ -806,18 +918,26 @@ def register_callbacks(app, print_function):
                 group_button_style.update(show_button_style)
         return item_style, group_style, item_button_style, group_button_style
 
-    @app.callback([Output("rng-result-error", "children"),
-                   Output("div-rng-result", "style"),
-                   Output("div-rng-result", "children")],
-                  [Input("button-rng-ok", "n_clicks")],
-                  [State("input-rng", "value"),
-                   State("input-rng-item", "value"),
-                   State("input-rng-group", "value"),
-                   State("div-rng-item", "style"),
-                   State("div-rng-group", "style"),
-                   State("div-rng-result", "style")])
+    @app.callback(
+        [
+            Output("rng-result-error", "children"),
+            Output("div-rng-result", "style"),
+            Output("div-rng-result", "children"),
+        ],
+        [Input("button-rng-ok", "n_clicks")],
+        [
+            State("input-rng", "value"),
+            State("input-rng-item", "value"),
+            State("input-rng-group", "value"),
+            State("div-rng-item", "style"),
+            State("div-rng-group", "style"),
+            State("div-rng-result", "style"),
+        ],
+    )
     @print_callback(print_function)
-    def update_rng_result(trigger, text, n_items, n_groups, item_style, group_style, style):
+    def update_rng_result(
+        trigger, text, n_items, n_groups, item_style, group_style, style
+    ):
         """Update and display random generator results
 
         Args:
@@ -846,31 +966,49 @@ def register_callbacks(app, print_function):
             elif group_style["display"] == "flex":
                 task = "group"
             if text and task:
-                result_error, result, style = RandomGenerator().process_result(text, n_items, n_groups, task, style)
+                result_error, result, style = RandomGenerator().process_result(
+                    text, n_items, n_groups, task, style
+                )
             elif not text:
                 result_error = [return_message["input_empty"]]
             elif not task:
                 result_error = [return_message["rng_task_empty"]]
         return result_error, style, result
 
-    @app.callback([Output("div-wnrs-selection", "style"),
-                   Output("div-wnrs-instruction", "style"),
-                   Output("div-wnrs-suggestion", "style"),
-                   Output("button-wnrs-show-ok", "style"),
-                   Output("button-wnrs-instruction-ok", "style"),
-                   Output("button-wnrs-suggestion-ok", "style")],
-                  [Input("button-wnrs-show-ok", "n_clicks"),
-                   Input("button-wnrs-instruction-ok", "n_clicks"),
-                   Input("button-wnrs-suggestion-ok", "n_clicks")],
-                  [State("div-wnrs-selection", "style"),
-                   State("div-wnrs-instruction", "style"),
-                   State("div-wnrs-suggestion", "style"),
-                   State("button-wnrs-show-ok", "style"),
-                   State("button-wnrs-instruction-ok", "style"),
-                   State("button-wnrs-suggestion-ok", "style")])
+    @app.callback(
+        [
+            Output("div-wnrs-selection", "style"),
+            Output("div-wnrs-instruction", "style"),
+            Output("div-wnrs-suggestion", "style"),
+            Output("button-wnrs-show-ok", "style"),
+            Output("button-wnrs-instruction-ok", "style"),
+            Output("button-wnrs-suggestion-ok", "style"),
+        ],
+        [
+            Input("button-wnrs-show-ok", "n_clicks"),
+            Input("button-wnrs-instruction-ok", "n_clicks"),
+            Input("button-wnrs-suggestion-ok", "n_clicks"),
+        ],
+        [
+            State("div-wnrs-selection", "style"),
+            State("div-wnrs-instruction", "style"),
+            State("div-wnrs-suggestion", "style"),
+            State("button-wnrs-show-ok", "style"),
+            State("button-wnrs-instruction-ok", "style"),
+            State("button-wnrs-suggestion-ok", "style"),
+        ],
+    )
     @print_callback(print_function)
-    def update_wnrs_deck_style(trigger_selection, trigger_instruction, trigger_suggestion, selection_style,
-        instruction_style, suggestion_style, selection_button_style, instruction_button_style, suggestion_button_style,
+    def update_wnrs_deck_style(
+        trigger_selection,
+        trigger_instruction,
+        trigger_suggestion,
+        selection_style,
+        instruction_style,
+        suggestion_style,
+        selection_button_style,
+        instruction_button_style,
+        suggestion_button_style,
     ):
         """Update style of WNRS card selection and card suggestion (visibility)
 
@@ -929,15 +1067,27 @@ def register_callbacks(app, print_function):
                 selection_button_style.update(hide_button_style)
                 instruction_style.update(hide_style)
                 instruction_button_style.update(hide_button_style)
-        return (selection_style, instruction_style, suggestion_style, selection_button_style, instruction_button_style,
-                suggestion_button_style)
+        return (
+            selection_style,
+            instruction_style,
+            suggestion_style,
+            selection_button_style,
+            instruction_button_style,
+            suggestion_button_style,
+        )
 
-    @app.callback([Output("input-wnrs-suggestion", "value"),
-                   Output("input-wnrs-suggestion2", "value"),
-                   Output("wnrs-suggestion-reply", "children")],
-                  [Input("button-wnrs-send-ok", "n_clicks")],
-                  [State("input-wnrs-suggestion", "value"),
-                   State("input-wnrs-suggestion2", "value")])
+    @app.callback(
+        [
+            Output("input-wnrs-suggestion", "value"),
+            Output("input-wnrs-suggestion2", "value"),
+            Output("wnrs-suggestion-reply", "children"),
+        ],
+        [Input("button-wnrs-send-ok", "n_clicks")],
+        [
+            State("input-wnrs-suggestion", "value"),
+            State("input-wnrs-suggestion2", "value"),
+        ],
+    )
     @print_callback(print_function)
     def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
         """Send email for WNRS card suggestion
@@ -965,9 +1115,9 @@ def register_callbacks(app, print_function):
         return card_prompt, additional_info, reply
 
     def update_wnrs_button_style_wrapper(deck):
-        @app.callback(Output(deck, "style"),
-                      [Input(deck, "n_clicks")],
-                      [State(deck, "style")])
+        @app.callback(
+            Output(deck, "style"), [Input(deck, "n_clicks")], [State(deck, "style")]
+        )
         @print_callback(print_function)
         def update_wnrs_button_style(trigger, current_style):
             """Update style of selected WNRS decks (button colour indication)
@@ -992,37 +1142,66 @@ def register_callbacks(app, print_function):
             return current_style
 
     all_decks = [
-        "Main Deck 1", "Main Deck 2", "Main Deck 3", "Main Deck Final",
-        "Bumble x BFF Edition 1", "Bumble x BFF Edition 2", "Bumble x BFF Edition 3",
-        "Bumble Bizz Edition 1", "Bumble Bizz Edition 2", "Bumble Bizz Edition 3",
-        "Bumble Date Edition 1", "Bumble Date Edition 2", "Bumble Date Edition 3",
-        "Cann Edition 1", "Cann Edition 2", "Cann Edition 3",
+        "Main Deck 1",
+        "Main Deck 2",
+        "Main Deck 3",
+        "Main Deck Final",
+        "Bumble x BFF Edition 1",
+        "Bumble x BFF Edition 2",
+        "Bumble x BFF Edition 3",
+        "Bumble Bizz Edition 1",
+        "Bumble Bizz Edition 2",
+        "Bumble Bizz Edition 3",
+        "Bumble Date Edition 1",
+        "Bumble Date Edition 2",
+        "Bumble Date Edition 3",
+        "Cann Edition 1",
+        "Cann Edition 2",
+        "Cann Edition 3",
         "Valentino Edition 1",
-        "Honest Dating Edition 1", "Honest Dating Edition 2", "Honest Dating Edition 3",
-        "Inner Circle Edition 1", "Inner Circle Edition 2", "Inner Circle Edition 3",
+        "Honest Dating Edition 1",
+        "Honest Dating Edition 2",
+        "Honest Dating Edition 3",
+        "Inner Circle Edition 1",
+        "Inner Circle Edition 2",
+        "Inner Circle Edition 3",
         "Own It Edition 1",
-        "Relationship Edition 1", "Relationship Edition 2", "Relationship Edition 3",
-        "Race and Privilege Edition 1", "Race and Privilege Edition 2", "Race and Privilege Edition 3",
-        "Quarantine Edition 1", "Quarantine Edition 2", "Quarantine Edition 3", "Quarantine Edition Final",
+        "Relationship Edition 1",
+        "Relationship Edition 2",
+        "Relationship Edition 3",
+        "Race and Privilege Edition 1",
+        "Race and Privilege Edition 2",
+        "Race and Privilege Edition 3",
+        "Quarantine Edition 1",
+        "Quarantine Edition 2",
+        "Quarantine Edition 3",
+        "Quarantine Edition Final",
         "Voting Edition 1",
-        "Breakup Edition 1", "Breakup Edition Final",
+        "Breakup Edition 1",
+        "Breakup Edition Final",
         "Existential Crisis Edition 1",
         "Forgiveness Edition 1",
         "Healing Edition 1",
-        "Self-Love Edition 1", "Self-Love Edition Final",
+        "Self-Love Edition 1",
+        "Self-Love Edition Final",
         "Self-Reflection Edition 1",
         "Love Maps 1",
         "Open Ended Questions 1",
         "Rituals of Connection 1",
         "Opportunity 1",
-        "Couple 1", "Couple 2", "Couple 3", "Couple 4",
+        "Couple 1",
+        "Couple 2",
+        "Couple 3",
+        "Couple 4",
     ]
 
     for deck in all_decks:
         update_wnrs_button_style_wrapper(deck)
 
-    @app.callback(Output("intermediate-wnrs", "data"),
-                  [Input(deck, "style") for deck in all_decks])
+    @app.callback(
+        Output("intermediate-wnrs", "data"),
+        [Input(deck, "style") for deck in all_decks],
+    )
     @print_callback(print_function)
     def update_wnrs_list_of_decks(*args):
         """Update list of decks selected
@@ -1044,36 +1223,58 @@ def register_callbacks(app, print_function):
             data = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
         return data
 
-    @app.callback([Output("input-wnrs", "value"),
-                   Output("wnrs-prompt", "children"),
-                   Output("wnrs-reminder-text", "children"),
-                   Output("wnrs-reminder", "children"),
-                   Output("wnrs-deck", "children"),
-                   Output("wnrs-counter", "children"),
-                   Output("wnrs-card", "style"),
-                   Output("wnrs-text-back", "children"),
-                   Output("wnrs-text-next", "children"),
-                   Output("button-wnrs2-back", "style"),
-                   Output("button-wnrs2-next", "style")],
-                  [Input("button-wnrs-back", "n_clicks"),
-                   Input("button-wnrs-next", "n_clicks"),
-                   Input("button-wnrs2-back", "n_clicks"),
-                   Input("button-wnrs2-next", "n_clicks"),
-                   Input("button-wnrs-shuffle-ok", "n_clicks"),
-                   Input("intermediate-wnrs", "data"),
-                   Input("uploadbutton-wnrs", "contents")],
-                  [State("uploadbutton-wnrs", "filename"),
-                   State("input-wnrs", "value"),
-                   State("wnrs-prompt", "children"),
-                   State("wnrs-card", "style"),
-                   State("wnrs-text-back", "children"),
-                   State("wnrs-text-next", "children"),
-                   State("button-wnrs2-back", "style"),
-                   State("button-wnrs2-next", "style")])
+    @app.callback(
+        [
+            Output("input-wnrs", "value"),
+            Output("wnrs-prompt", "children"),
+            Output("wnrs-reminder-text", "children"),
+            Output("wnrs-reminder", "children"),
+            Output("wnrs-deck", "children"),
+            Output("wnrs-counter", "children"),
+            Output("wnrs-card", "style"),
+            Output("wnrs-text-back", "children"),
+            Output("wnrs-text-next", "children"),
+            Output("button-wnrs2-back", "style"),
+            Output("button-wnrs2-next", "style"),
+        ],
+        [
+            Input("button-wnrs-back", "n_clicks"),
+            Input("button-wnrs-next", "n_clicks"),
+            Input("button-wnrs2-back", "n_clicks"),
+            Input("button-wnrs2-next", "n_clicks"),
+            Input("button-wnrs-shuffle-ok", "n_clicks"),
+            Input("intermediate-wnrs", "data"),
+            Input("uploadbutton-wnrs", "contents"),
+        ],
+        [
+            State("uploadbutton-wnrs", "filename"),
+            State("input-wnrs", "value"),
+            State("wnrs-prompt", "children"),
+            State("wnrs-card", "style"),
+            State("wnrs-text-back", "children"),
+            State("wnrs-text-next", "children"),
+            State("button-wnrs2-back", "style"),
+            State("button-wnrs2-next", "style"),
+        ],
+    )
     @print_callback(print_function)
-    def update_wnrs_card(trigger_back, trigger_next, trigger_back2, trigger_next2, trigger_shuffle, data, contents,
-                         filename, data2_ser, card_prompt, current_style, text_back, text_next, button_back,
-                         button_next):
+    def update_wnrs_card(
+        trigger_back,
+        trigger_next,
+        trigger_back2,
+        trigger_next2,
+        trigger_shuffle,
+        data,
+        contents,
+        filename,
+        data2_ser,
+        card_prompt,
+        current_style,
+        text_back,
+        text_next,
+        button_back,
+        button_next,
+    ):
         """Update underlying data, card content and style
 
         Args:
@@ -1096,7 +1297,12 @@ def register_callbacks(app, print_function):
         Returns:
             str, str, str, dict, str, str, str, dict, dict
         """
-        card_prompt, card_deck, card_counter, data_new = [card_prompt, "", ""], "", "", {}
+        card_prompt, card_deck, card_counter, data_new = (
+            [card_prompt, "", ""],
+            "",
+            "",
+            {},
+        )
         next_card = 0
         if current_style is None:
             current_style = {}
@@ -1116,14 +1322,21 @@ def register_callbacks(app, print_function):
                     data = json.loads(data.decode("utf-8"))
                     try:
                         wnrs_game = WNRS()
-                        wnrs_game.load_game(data["list_of_deck"], data["pointer"], data["index"])
+                        wnrs_game.load_game(
+                            data["list_of_deck"], data["pointer"], data["index"]
+                        )
                         data_new = dict(
                             list_of_deck=data["list_of_deck"],
                             wnrs_game_dict=wnrs_game.__dict__,
                         )
                     except KeyError:
                         card_prompt[0] = html.P(return_message["wrong_format_json"])
-            elif ctx in ["button-wnrs-back", "button-wnrs2-back", "button-wnrs-next", "button-wnrs2-next"]:
+            elif ctx in [
+                "button-wnrs-back",
+                "button-wnrs2-back",
+                "button-wnrs-next",
+                "button-wnrs2-next",
+            ]:
                 data_new = data2.copy()
                 if text_back == "":
                     if ctx.endswith("back"):
@@ -1147,29 +1360,66 @@ def register_callbacks(app, print_function):
             wnrs_game = WNRS()
             wnrs_game.load_game_from_dict(data_new["wnrs_game_dict"])
             if next_card == 1:
-                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_next_card()
+                (
+                    card_deck,
+                    card_prompt,
+                    card_style,
+                    card_counter,
+                ) = wnrs_game.get_next_card()
             elif next_card == -1:
-                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_previous_card()
+                (
+                    card_deck,
+                    card_prompt,
+                    card_style,
+                    card_counter,
+                ) = wnrs_game.get_previous_card()
             elif next_card == 0:
-                card_deck, card_prompt, card_style, card_counter = wnrs_game.get_current_card()
+                (
+                    card_deck,
+                    card_prompt,
+                    card_style,
+                    card_counter,
+                ) = wnrs_game.get_current_card()
             elif next_card == 2:
-                card_deck, card_prompt, card_style, card_counter = wnrs_game.shuffle_remaining_cards()
+                (
+                    card_deck,
+                    card_prompt,
+                    card_style,
+                    card_counter,
+                ) = wnrs_game.shuffle_remaining_cards()
             data_new["wnrs_game_dict"] = wnrs_game.__dict__
             current_style.update(card_style)
         data_new2 = encode_dict(data_new)
-        return [data_new2, *card_prompt, card_deck, card_counter, current_style, text_back, text_next, button_back,
-            button_next]
+        return [
+            data_new2,
+            *card_prompt,
+            card_deck,
+            card_counter,
+            current_style,
+            text_back,
+            text_next,
+            button_back,
+            button_next,
+        ]
 
-    @app.callback([Output("input-contact-name", "value"),
-                   Output("input-contact-email", "value"),
-                   Output("input-contact-content", "value"),
-                   Output("contact-reply", "children")],
-                  [Input("button-contact-ok", "n_clicks")],
-                  [State("input-contact-name", "value"),
-                   State("input-contact-email", "value"),
-                   State("input-contact-content", "value")])
+    @app.callback(
+        [
+            Output("input-contact-name", "value"),
+            Output("input-contact-email", "value"),
+            Output("input-contact-content", "value"),
+            Output("contact-reply", "children"),
+        ],
+        [Input("button-contact-ok", "n_clicks")],
+        [
+            State("input-contact-name", "value"),
+            State("input-contact-email", "value"),
+            State("input-contact-content", "value"),
+        ],
+    )
     @print_callback(print_function)
-    def update_contact_send_email(trigger, contact_name, contact_email, contact_content):
+    def update_contact_send_email(
+        trigger, contact_name, contact_email, contact_content
+    ):
         """Send email for contact information
 
         Args:
@@ -1192,7 +1442,9 @@ def register_callbacks(app, print_function):
             elif contact_content is None or contact_content.strip() == "":
                 reply = return_message["email_empty_body"]
             else:
-                status_code = send_email(f"Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}")
+                status_code = send_email(
+                    f"Name: {contact_name}\n\nEmail: {contact_email}\n\n{contact_content}"
+                )
                 if status_code:
                     contact_content = ""
                     reply = return_message["email_sent_feedback"]
@@ -1200,8 +1452,9 @@ def register_callbacks(app, print_function):
                     reply = return_message["email_fail"]
         return contact_name, contact_email, contact_content, reply
 
-    @app.callback(Output("image-canvas", "image_content"),
-                  [Input("upload-image", "contents")])
+    @app.callback(
+        Output("image-canvas", "image_content"), [Input("upload-image", "contents")]
+    )
     @print_callback(print_function)
     def update_canvas_image(contents):
         """Update canvas with loaded image
@@ -1217,8 +1470,10 @@ def register_callbacks(app, print_function):
             if "image" in contents_type:
                 return contents
 
-    @app.callback(Output("image-canvas", "json_objects"),
-                  [Input("button-canvas-clear", "n_clicks")])
+    @app.callback(
+        Output("image-canvas", "json_objects"),
+        [Input("button-canvas-clear", "n_clicks")],
+    )
     @print_callback(print_function)
     def clear_canvas(n_clicks):
         """Clear canvas to blank state
@@ -1234,10 +1489,14 @@ def register_callbacks(app, print_function):
             return strings[n_clicks % 2]
         return strings[0]
 
-    @app.callback(Output("knob-canvas", "value"),
-                  [Input("button-image-minus", "n_clicks"),
-                   Input("button-image-plus", "n_clicks")],
-                  [State("knob-canvas", "value")])
+    @app.callback(
+        Output("knob-canvas", "value"),
+        [
+            Input("button-image-minus", "n_clicks"),
+            Input("button-image-plus", "n_clicks"),
+        ],
+        [State("knob-canvas", "value")],
+    )
     @print_callback(print_function)
     def update_canvas_brush(trigger_minus, trigger_plus, value):
         """Update canvas brush size (line width)
@@ -1257,8 +1516,7 @@ def register_callbacks(app, print_function):
             value += 1
         return value
 
-    @app.callback(Output("image-canvas", "lineWidth"),
-                  [Input("knob-canvas", "value")])
+    @app.callback(Output("image-canvas", "lineWidth"), [Input("knob-canvas", "value")])
     @print_callback(print_function)
     def update_canvas_brush(value):
         """Update canvas brush size (line width)
@@ -1271,8 +1529,9 @@ def register_callbacks(app, print_function):
         """
         return value
 
-    @app.callback(Output("image-canvas", "lineColor"),
-                  [Input("image-color-picker", "value")])
+    @app.callback(
+        Output("image-canvas", "lineColor"), [Input("image-color-picker", "value")]
+    )
     @print_callback(print_function)
     def update_canvas_color(value):
         """Update canvas brush colour (line colour)
@@ -1330,10 +1589,11 @@ def register_callbacks(app, print_function):
     #         encoded_sound = base64.b64encode(open(sound_filename, 'rb').read())
     #         return html.Audio(src=f'data:audio/wav;base64,{encoded_sound.decode()}', controls=False)
 
-    @app.callback(Output("tab-content", "children"),
-                  [Input("tabs-parent", "value")],
-                  [State("tabs-parent", "children"),
-                   State("tab-content", "children")])
+    @app.callback(
+        Output("tab-content", "children"),
+        [Input("tabs-parent", "value")],
+        [State("tabs-parent", "children"), State("tab-content", "children")],
+    )
     @print_callback(print_function)
     def update_output(tab, children, current_content):
         """Update content when tab changes
@@ -1346,7 +1606,9 @@ def register_callbacks(app, print_function):
         Returns:
             html.Div
         """
-        available_tabs = [children[idx]["props"]["value"] for idx in range(len(children))]
+        available_tabs = [
+            children[idx]["props"]["value"] for idx in range(len(children))
+        ]
         if tab not in available_tabs:
             return dcc_loading(violin_plot(), dark_bg=False)
         if tab == "tab-aboutme":

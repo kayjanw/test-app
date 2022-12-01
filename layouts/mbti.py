@@ -1,4 +1,4 @@
-from dash import html, dcc
+from dash import dcc, html
 
 from components.helper import dcc_loading
 from layouts.main import content_header
@@ -8,18 +8,19 @@ def mbti_tab():
     return html.Div(
         [
             content_header("MBTI Personality Test", "Predict MBTI with writing style"),
-            html.Div([
-                html.P(
-                    "Users can find out their MBTI personality based on comparing their writing content, specifically "
-                    "their choice and phrasing of words, to other users in an existing database of over 8000 people"
-                ),
-                html.Details(
-                    [
-                        html.Summary(
-                            "Click here for more details about the data, processing and modelling steps"
-                        ),
-                        dcc.Markdown(
-                            """
+            html.Div(
+                [
+                    html.P(
+                        "Users can find out their MBTI personality based on comparing their writing content, specifically "
+                        "their choice and phrasing of words, to other users in an existing database of over 8000 people"
+                    ),
+                    html.Details(
+                        [
+                            html.Summary(
+                                "Click here for more details about the data, processing and modelling steps"
+                            ),
+                            dcc.Markdown(
+                                """
                     ###### Input Distribution
                     > Input data is taken from [Kaggle](https://www.kaggle.com/datasnaek/mbti-type/) and 
                     has distribution
@@ -75,18 +76,18 @@ def mbti_tab():
                     > * Judging-Perceiving Model has Accuracy: 65.4% and Balanced Accuracy: 64.4%
                     > * Please do not take the results too seriously
                     """
-                        ),
-                    ],
-                    title="Expand for details",
-                ),
-                html.Br(),
-                html.P(
-                    "Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of "
-                    "yourself)"
-                ),
-                html.P('Step 2: Click "OK" button to generate results!'),
-            ],
-                className="custom-div-instruction custom-div-left"
+                            ),
+                        ],
+                        title="Expand for details",
+                    ),
+                    html.Br(),
+                    html.P(
+                        "Step 1: Fill in the text box with any content (i.e. something you would tweet / short summary of "
+                        "yourself)"
+                    ),
+                    html.P('Step 2: Click "OK" button to generate results!'),
+                ],
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [
@@ -96,9 +97,11 @@ def mbti_tab():
                                 id="input-mbti",
                                 value="",
                                 placeholder="Put in your text here, preferably more than 50 words and try not to use "
-                                            "words that are too common or too complex!",
+                                "words that are too common or too complex!",
                             ),
-                            html.Div([html.P(id="text-mbti-words")], style={"float": "right"}),
+                            html.Div(
+                                [html.P(id="text-mbti-words")], style={"float": "right"}
+                            ),
                             html.Button("OK", id="button-mbti-ok"),
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
@@ -128,7 +131,7 @@ def mbti_tab():
                                         style={"display": "none", "height": "100%"},
                                     )
                                 ],
-                                dark_bg=False
+                                dark_bg=False,
                             ),
                         ],
                         className="custom-div-center custom-div-half",

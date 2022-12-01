@@ -1,6 +1,6 @@
-from dash import html, dcc
+from dash import dcc, html
 
-from components.helper import result_download_text, dcc_loading
+from components.helper import dcc_loading, result_download_text
 from layouts.main import content_header, style_checklist, style_hidden
 
 
@@ -20,21 +20,17 @@ def event_tab(app):
                         [
                             "• ",
                             html.P("Team Activity", className="p-short p-bold"),
-                            ": Split team into multiple groups and specify criteria for activity such as location!"
+                            ": Split team into multiple groups and specify criteria for activity such as location!",
                         ],
-                        style={
-                            "padding-left": "20px"
-                        }
+                        style={"padding-left": "20px"},
                     ),
                     html.P(
                         [
                             "• ",
                             html.P("Secret Santa", className="p-short p-bold"),
-                            ": Organize gift exchange and specify criteria for gift such as colour or texture of gift!"
+                            ": Organize gift exchange and specify criteria for gift such as colour or texture of gift!",
                         ],
-                        style={
-                            "padding-left": "20px"
-                        }
+                        style={"padding-left": "20px"},
                     ),
                     html.Br(),
                     html.P(
@@ -42,18 +38,23 @@ def event_tab(app):
                             "Step 1: Download demo worksheet ",
                             result_download_text("here"),
                             " and fill in the values. Do not change items in ",
-                            html.P("red", style={"color": "red"}, className="p-short p-bold")
+                            html.P(
+                                "red",
+                                style={"color": "red"},
+                                className="p-short p-bold",
+                            ),
                         ]
                     ),
                     html.P(
                         "Step 2: Upload completed worksheet, a message will appear to indicate if file is uploaded "
-                        "successfully"),
+                        "successfully"
+                    ),
                     html.P(
                         "Step 3: Specify number of groups to split participants into and other options accordingly"
                     ),
                     html.P('Step 4: Click "OK" button to generate results!'),
                 ],
-                className="custom-div-instruction custom-div-left"
+                className="custom-div-instruction custom-div-left",
             ),
             html.Div(
                 [
@@ -118,15 +119,13 @@ def event_tab(app):
                                                     {
                                                         "label": "group",
                                                         "value": "group",
-                                                    }
+                                                    },
                                                 ],
                                                 value="individual",
-                                                style={
-                                                    "display": "flex"
-                                                }
-                                            )
+                                                style={"display": "flex"},
+                                            ),
                                         ],
-                                        className="custom-div-flex"
+                                        className="custom-div-flex",
                                     ),
                                     html.P(
                                         [
@@ -155,7 +154,7 @@ def event_tab(app):
                                                 style=style_checklist,
                                             )
                                         ]
-                                    )
+                                    ),
                                 ]
                             ),
                             html.Br(),
@@ -163,9 +162,11 @@ def event_tab(app):
                             dcc.Store(
                                 id="intermediate-event-result", storage_type="memory"
                             ),
-                            dcc_loading([html.P(id="event-result-error")], dark_bg=True),
+                            dcc_loading(
+                                [html.P(id="event-result-error")], dark_bg=True
+                            ),
                         ],
-                        className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark"
+                        className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
                     html.Div(
                         id="div-event-result",
