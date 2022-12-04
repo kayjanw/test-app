@@ -3,6 +3,9 @@ __pycache__
 env/
 db.sqlite3
 
+.github/
 docs/
+lib/
 sample_data/
+venv/
 *.log
