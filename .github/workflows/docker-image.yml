@@ -18,16 +18,11 @@ jobs:
         run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
       - name: Build Docker image
         run: docker build --no-cache --build-arg port=8060 -t ${{ secrets.DOCKERHUB_USERNAME }}/test-app:latest .
-  push:
-    name: Push Docker image
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-app
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-app
   deploy:
       name: Deploy app
-      needs: push
+      needs: build
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
