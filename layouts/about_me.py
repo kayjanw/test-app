@@ -92,8 +92,8 @@ def about_me_tab(app):
                     ),
                     html.P(
                         [
-                            "This website is made with Dash, deployed using Gunicorn with Docker and hosted on Google "
-                            "Cloud, view code documentation on Sphinx ",
+                            "This website is made with Dash, deployed using Gunicorn with Docker and hosted on "
+                            "Fly.io, view code documentation on Sphinx ",
                             html.A(
                                 "here",
                                 href="http://kayjan.readthedocs.io",
