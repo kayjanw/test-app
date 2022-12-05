@@ -11,7 +11,10 @@ class WNRS:
 
     def __init__(self):
         """Read and initalize the card game"""
-        file = pd.ExcelFile("data/WNRS.xlsx")
+        self.data_path = (
+            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+        )
+        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
         decks = file.sheet_names
         self.information = {}
 
@@ -51,14 +54,13 @@ class WNRS:
         """
         return self.information
 
-    @staticmethod
-    def get_all_cards():
+    def get_all_cards(self):
         """Get all cards to retrieve playable cards
 
         Returns:
             (dict)
         """
-        file = pd.ExcelFile("data/WNRS.xlsx")
+        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
         decks = file.sheet_names
         cards = {}
 

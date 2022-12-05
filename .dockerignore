@@ -4,8 +4,15 @@ env/
 db.sqlite3
 
 .github/
+data/
 docs/
 lib/
 sample_data/
 venv/
 *.log
+.flake8
+.pre-commit-config.yaml
+.readthedocs.yaml
+heroku.yml
+README.rst
+SECURITY.md

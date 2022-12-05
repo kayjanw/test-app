@@ -52,17 +52,22 @@ class MBTI:
             threshold (float): for modelling, used in tensorflow model
             non_sw (list): list of stop words to exclude
         """
+        self.data_path = (
+            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+        )
         self.mbti_cols = ["EI", "SN", "TF", "JP"]
         self.path_data = "sample_data/mbti.csv"
         self.path_save_data = "sample_data/mbti_clean.csv"
-        self.path_vect = "data/vocabulary.pkl"
-        self.path_tokenizer = "data/tokenizer.pkl"
+        self.path_vect = f"{self.data_path}vocabulary.pkl"
+        self.path_tokenizer = f"{self.data_path}tokenizer.pkl"
         self.path_models = []
         for col in self.mbti_cols:
-            self.path_models.append(f"data/model_{col}.pkl")
+            # self.path_models.append(f"data/model_{col}.pkl")
+            self.path_models.append(f"{self.data_path}model_{col}.pkl")
         self.path_tf_models = []
         for col in self.mbti_cols:
-            self.path_tf_models.append(f"data/model_tf_{col}.h5")
+            # self.path_tf_models.append(f"data/model_tf_{col}.h5")
+            self.path_models.append(f"{self.data_path}model_{col}.h5")
 
         # Parameters for modelling
         self.use_tf = False

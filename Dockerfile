@@ -24,6 +24,6 @@ RUN apt-get update \
     && pip install -U -r requirements.txt \
     && python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('omw-1.4')" \
     && cp -r /root/nltk_data /usr/local/share/ \
-    && ls -lh \
-    && python3 -m unittest discover -s tests/ -p "test_*.py"
+    && python3 -m unittest discover -s tests/ -p "test_*.py" \
+    && ls -lh
 CMD gunicorn app:server --bind 0.0.0.0:$PORT --workers 2 --worker-class gevent --preload
