@@ -1322,7 +1322,7 @@ def register_callbacks(app, print_function):
                 "button-wnrs2-next",
             ]:
                 data_new = data2.copy()
-                if not button_next.get("opacity", 1):
+                if not button_next.get("opacity", True):
                     if ctx.endswith("back"):
                         next_card = -1
                     elif ctx.endswith("next"):
