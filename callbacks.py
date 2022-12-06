@@ -1,5 +1,4 @@
 import json
-import threading
 import traceback
 
 import dash
@@ -1190,9 +1189,8 @@ def register_callbacks(app, print_function):
         "Couple 4",
     ]
 
-    threading.Thread(target=update_wnrs_button_style_wrapper, args=all_decks)
-    # for deck in all_decks:
-    #     update_wnrs_button_style_wrapper(deck)
+    for deck in all_decks:
+        update_wnrs_button_style_wrapper(deck)
 
     @app.callback(
         Output("intermediate-wnrs", "data"),
