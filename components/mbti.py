@@ -53,7 +53,7 @@ class MBTI:
             non_sw (list): list of stop words to exclude
         """
         self.data_path = (
-            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+            "data/"  # "https://github.com/kayjanw/test-app/raw/master/data/"
         )
         self.mbti_cols = ["EI", "SN", "TF", "JP"]
         self.path_data = "sample_data/mbti.csv"
