@@ -4,7 +4,6 @@ env/
 db.sqlite3
 
 .github/
-data/
 docs/
 lib/
 sample_data/
