@@ -30,23 +30,23 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Main Deck 1",
+                        id={"type": "wnrs-deck-button", "id": "Main Deck 1"},
                         style={"background-color": colour_palette["dark_pink"]},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Main Deck 2",
+                        id={"type": "wnrs-deck-button", "id": "Main Deck 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Main Deck 3",
+                        id={"type": "wnrs-deck-button", "id": "Main Deck 3"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Final Card",
-                        id="Main Deck Final",
+                        id={"type": "wnrs-deck-button", "id": "Main Deck Final"},
                         className="button-wnrs",
                     ),
                 ],
@@ -73,17 +73,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Bumble x BFF Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Bumble x BFF Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Bumble x BFF Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -110,17 +110,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Bumble Bizz Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Bumble Bizz Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Bumble Bizz Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -147,17 +147,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Bumble Date Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Bumble Date Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Bumble Date Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -190,17 +190,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Cann Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Cann Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Cann Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Cann Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Cann Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Cann Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -233,7 +233,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Valentino Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Valentino Edition 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -260,17 +260,26 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Honest Dating Edition 1",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Honest Dating Edition 1",
+                        },
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Honest Dating Edition 2",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Honest Dating Edition 2",
+                        },
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Honest Dating Edition 3",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Honest Dating Edition 3",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -297,17 +306,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Inner Circle Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Inner Circle Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Inner Circle Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -334,7 +343,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Own It Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Own It Edition 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -361,17 +370,17 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Relationship Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Relationship Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Relationship Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 3"},
                         className="button-wnrs",
                     ),
                 ],
@@ -401,17 +410,26 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Race and Privilege Edition 1",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Race and Privilege Edition 1",
+                        },
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Race and Privilege Edition 2",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Race and Privilege Edition 2",
+                        },
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Race and Privilege Edition 3",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Race and Privilege Edition 3",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -438,22 +456,25 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Quarantine Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Quarantine Edition 2",
+                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Quarantine Edition 3",
+                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 3"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Final Card",
-                        id="Quarantine Edition Final",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Quarantine Edition Final",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -480,7 +501,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Voting Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Voting Edition 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -507,12 +528,12 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Breakup Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Breakup Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Final Card",
-                        id="Breakup Edition Final",
+                        id={"type": "wnrs-deck-button", "id": "Breakup Edition Final"},
                         className="button-wnrs",
                     ),
                 ],
@@ -547,7 +568,10 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Existential Crisis Edition 1",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Existential Crisis Edition 1",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -574,7 +598,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Forgiveness Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Forgiveness Edition 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -601,7 +625,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Healing Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Healing Edition 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -628,12 +652,15 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Self-Love Edition 1",
+                        id={"type": "wnrs-deck-button", "id": "Self-Love Edition 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Final Card",
-                        id="Self-Love Edition Final",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Self-Love Edition Final",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -665,7 +692,10 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Self-Reflection Edition 1",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Self-Reflection Edition 1",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -692,7 +722,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Love Maps 1",
+                        id={"type": "wnrs-deck-button", "id": "Love Maps 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -719,7 +749,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Open Ended Questions 1",
+                        id={"type": "wnrs-deck-button", "id": "Open Ended Questions 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -746,7 +776,10 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Rituals of Connection 1",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Rituals of Connection 1",
+                        },
                         className="button-wnrs",
                     ),
                 ],
@@ -773,7 +806,7 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Opportunity 1",
+                        id={"type": "wnrs-deck-button", "id": "Opportunity 1"},
                         className="button-wnrs",
                     ),
                 ],
@@ -797,22 +830,22 @@ def wnrs_tab(app):
                 [
                     dbc.Button(
                         "Level 1",
-                        id="Couple 1",
+                        id={"type": "wnrs-deck-button", "id": "Couple 1"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 2",
-                        id="Couple 2",
+                        id={"type": "wnrs-deck-button", "id": "Couple 2"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 3",
-                        id="Couple 3",
+                        id={"type": "wnrs-deck-button", "id": "Couple 3"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
                         "Level 4",
-                        id="Couple 4",
+                        id={"type": "wnrs-deck-button", "id": "Couple 4"},
                         className="button-wnrs",
                     ),
                 ],
@@ -1005,8 +1038,14 @@ def wnrs_tab(app):
                                 id="wnrs-card",
                                 style={},
                             ),
-                            html.Button(html.P("Previous card"), id="button-wnrs2-back", style={}),
-                            html.Button(html.P("Next card"), id="button-wnrs2-next", style={}),
+                            html.Button(
+                                html.P("Previous card"),
+                                id="button-wnrs2-back",
+                                style={},
+                            ),
+                            html.Button(
+                                html.P("Next card"), id="button-wnrs2-next", style={}
+                            ),
                         ],
                         id="div-wnrs",
                         className="custom-div-center div-with-invisible-button",
