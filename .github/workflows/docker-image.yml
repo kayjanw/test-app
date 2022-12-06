@@ -1,0 +1,30 @@
+name: Fly Deploy
+on:
+  push:
+    branches:
+      - master
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        env:
+          DOCKERHUB_USERNAME:  ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN:  ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+      - name: Build Docker image
+        run: docker build --no-cache --build-arg port=8060 -t ${{ secrets.DOCKERHUB_USERNAME }}/test-app:latest .
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-app
+  deploy:
+      name: Deploy app
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: superfly/flyctl-actions/setup-flyctl@master
+        - run: flyctl deploy --remote-only

@@ -11,12 +11,11 @@ except ImportError:
     pass
 
 import datetime
+
 import pandas as pd
 import plotly.graph_objects as go
-
 from dateutil.relativedelta import relativedelta
 from plotly.subplots import make_subplots
-
 
 GRANULARITY = 4
 

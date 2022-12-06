@@ -1,22 +1,21 @@
 """This file contains helper functions that are used across multiple tabs
 """
 import base64
-import dash
 import io
 import json
+import os
+import re
+from functools import reduce
+
+import dash
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 import plotly.graph_objects as go
-import re
 import sendgrid
-
 from dash import dash_table, dcc, html
-from functools import reduce
 from plotly.colors import n_colors
-from sendgrid.helpers.mail import Mail, Email, To, Content
-
+from sendgrid.helpers.mail import Content, Email, Mail, To
 
 colour_palette = {
     "grey": "#57555A",
@@ -151,7 +150,7 @@ def dcc_loading(children, dark_bg=True):
     """Get default dcc.Loading component
 
     Args:
-        children (list): children of component
+        children: children of component
         dark_bg (bool): indicates whether loading icon is on dark background
 
     Returns:
@@ -489,7 +488,7 @@ def result_download_text(input_text):
                     "line-height": 1.6,
                     "margin": 0,
                     "padding": 0,
-                    "border-radius":  0,
+                    "border-radius": 0,
                     "font-size": "1em",
                     "font-weight": "bold",
                     "letter-spacing": "normal",
@@ -521,7 +520,7 @@ def valid_email(email):
 
 
 def send_email(
-    email_body, subject="Email from Herokuapp", recipient="e0503512@u.nus.edu"
+    email_body, subject="Email from utils.py Web App", recipient="e0503512@u.nus.edu"
 ):
     """Helper function to send email
 
@@ -570,7 +569,7 @@ def get_excel_from_df(df):
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
     df.to_excel(excel_writer, sheet_name="Sheet1", index=False)
     excel_writer.save()
-    excel_data = buf.getvalue()
+    excel_data = buf.getvalue()  # noqa: F841
     buf.seek(0)
     return buf
 
@@ -607,7 +606,7 @@ def get_excel_demo():
         worksheet.write(f"D{idx + start_row + 1}", colour_texture[idx])
 
     excel_writer.save()
-    excel_data = buf.getvalue()
+    excel_data = buf.getvalue()  # noqa: F841
     buf.seek(0)
     return buf
 
