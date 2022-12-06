@@ -1028,12 +1028,6 @@ def register_callbacks(app, print_function):
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-            if not selection_button_style:
-                selection_button_style = {}
-            if not instruction_button_style:
-                instruction_button_style = {}
-            if not suggestion_button_style:
-                suggestion_button_style = {}
             if ctx == "button-wnrs-show-ok":
                 if selection_style["display"] == "inline-block":
                     selection_style.update(hide_style)
@@ -1232,8 +1226,6 @@ def register_callbacks(app, print_function):
             Output("wnrs-deck", "children"),
             Output("wnrs-counter", "children"),
             Output("wnrs-card", "style"),
-            Output("wnrs-text-back", "children"),
-            Output("wnrs-text-next", "children"),
             Output("button-wnrs2-back", "style"),
             Output("button-wnrs2-next", "style"),
         ],
@@ -1251,8 +1243,6 @@ def register_callbacks(app, print_function):
             State("input-wnrs", "value"),
             State("wnrs-prompt", "children"),
             State("wnrs-card", "style"),
-            State("wnrs-text-back", "children"),
-            State("wnrs-text-next", "children"),
             State("button-wnrs2-back", "style"),
             State("button-wnrs2-next", "style"),
         ],
@@ -1270,8 +1260,6 @@ def register_callbacks(app, print_function):
         data2_ser,
         card_prompt,
         current_style,
-        text_back,
-        text_next,
         button_back,
         button_next,
     ):
@@ -1289,8 +1277,6 @@ def register_callbacks(app, print_function):
             data2_ser (str): serialized data of WNRS object
             card_prompt (str/list): current prompt on card
             current_style (dict): current style of card
-            text_back (str): current text of words for back button
-            text_next (str): current text of words for next button
             button_back (dict): current opacity for back button
             button_next (dict): current opacity for next button
 
@@ -1304,8 +1290,6 @@ def register_callbacks(app, print_function):
             {},
         )
         next_card = 0
-        if current_style is None:
-            current_style = {}
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             data2 = decode_dict(data2_ser)
@@ -1338,13 +1322,12 @@ def register_callbacks(app, print_function):
                 "button-wnrs2-next",
             ]:
                 data_new = data2.copy()
-                if text_back == "":
+                if not button_next.get("opacity", True):
                     if ctx.endswith("back"):
                         next_card = -1
                     elif ctx.endswith("next"):
                         next_card = 1
                 else:
-                    text_back = text_next = ""
                     button_back = button_next = dict(opacity=0)
             elif ctx == "button-wnrs-shuffle-ok":
                 data_new = data2.copy()
@@ -1396,8 +1379,6 @@ def register_callbacks(app, print_function):
             card_deck,
             card_counter,
             current_style,
-            text_back,
-            text_next,
             button_back,
             button_next,
         ]
