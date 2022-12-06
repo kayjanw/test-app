@@ -337,13 +337,15 @@ footer
     top: 0;
     height: 100%;
     width: 50%;
-    background-color: rgb(190, 0, 28);
-    opacity: 50%;
-    border: 8px dashed black;
+    background-color: rgba(190, 0, 28, 0.5);
+    border: 8px dashed rgba(0, 0, 0, 0.2);
 }
 
 .div-with-invisible-button button[id$="-back"] {
     left: 0%;
+}
+
+.div-with-invisible-button button[id$="-back"] .border {
     transform: scaleX(-1);
 }
 
