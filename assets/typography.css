@@ -337,13 +337,21 @@ footer
     top: 0;
     height: 100%;
     width: 50%;
-    background-color: rgb(190, 0, 28);
-    opacity: 50%;
-    border: 8px dashed black;
+    background-color: rgba(190, 0, 28, 0.5);
+    border: 8px dashed rgba(0, 0, 0, 0.2);
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 0px 0px 10px #FFF;
 }
 
 .div-with-invisible-button button[id$="-back"] {
     left: 0%;
+    transform: scaleX(-1);
+}
+
+.div-with-invisible-button button[id$="-back"] p {
+    transform: scaleX(-1);
 }
 
 .div-with-invisible-button button[id$="-next"] {

@@ -829,6 +829,7 @@ def wnrs_tab(app):
                 "Select deck",
                 id="button-wnrs-show-ok",
                 title="Show/hide deck selection",
+                style={},
             ),
             html.A(
                 [
@@ -844,12 +845,16 @@ def wnrs_tab(app):
                 ]
             ),
             html.Button(
-                " + Instructions", id="button-wnrs-instruction-ok", title="How to play"
+                " + Instructions",
+                id="button-wnrs-instruction-ok",
+                title="How to play",
+                style={},
             ),
             html.Button(
                 " + Contribute",
                 id="button-wnrs-suggestion-ok",
                 title="Send in your card prompt ideas",
+                style={},
             ),
             html.Br(),
             html.Div(
@@ -998,11 +1003,10 @@ def wnrs_tab(app):
                                     )
                                 ],
                                 id="wnrs-card",
+                                style={},
                             ),
-                            html.Button(id="button-wnrs2-back"),
-                            html.Button(id="button-wnrs2-next"),
-                            html.Span("Previous card", id="wnrs-text-back"),
-                            html.Span("Next card", id="wnrs-text-next"),
+                            html.Button(html.P("Previous card"), id="button-wnrs2-back", style={}),
+                            html.Button(html.P("Next card"), id="button-wnrs2-next", style={}),
                         ],
                         id="div-wnrs",
                         className="custom-div-center div-with-invisible-button",
