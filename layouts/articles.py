@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
-
 from dash import html
 
+from layouts.main import content_header
 
 color_productivity = "lightblue"
 color_dashboard = "blue"
@@ -34,7 +34,9 @@ article_dashboard = html.A(
             dbc.CardBody(
                 [
                     dbc.CardHeader("Dashboard"),
-                    html.H5("Advancing to Professional Dashboard with Python, using Dash"),
+                    html.H5(
+                        "Advancing to Professional Dashboard with Python, using Dash"
+                    ),
                     html.P("Advanced ways to enhance initial skeleton code."),
                 ],
             ),
@@ -53,7 +55,9 @@ article_reinforcement_learning = html.A(
                 [
                     dbc.CardHeader("Data Science"),
                     html.H5("6 Reinforcement Learning Algorithms Explained"),
-                    html.P("Introduction to reinforcement learning terminologies, basics, and concepts."),
+                    html.P(
+                        "Introduction to reinforcement learning terminologies, basics, and concepts."
+                    ),
                 ],
             ),
         ],
@@ -87,8 +91,12 @@ article_best_practices = html.A(
             dbc.CardBody(
                 [
                     dbc.CardHeader("Coding Best Practices"),
-                    html.H5("3 Tips for Writing Clean Codes Beyond Coding Best Practices"),
-                    html.P("Write elegant, modular, understandable, and maintainable codes."),
+                    html.H5(
+                        "3 Tips for Writing Clean Codes Beyond Coding Best Practices"
+                    ),
+                    html.P(
+                        "Write elegant, modular, understandable, and maintainable codes."
+                    ),
                 ],
             ),
         ],
@@ -105,7 +113,9 @@ article_programming = html.A(
                 [
                     dbc.CardHeader("Coding Best Practices"),
                     html.H5("How to Learn New Programming Languages Easily"),
-                    html.P("Pick up any new programming language — with Python, Java, and Go examples."),
+                    html.P(
+                        "Pick up any new programming language — with Python, Java, and Go examples."
+                    ),
                 ],
             ),
         ],
@@ -121,8 +131,12 @@ article_sphinx = html.A(
             dbc.CardBody(
                 [
                     dbc.CardHeader("Coding Best Practices"),
-                    html.H5("Advanced Code Documentation Beyond Comments and Docstrings"),
-                    html.P("Use Sphinx and Read the Docs for a user-friendly interface to understand codebase — even for non-technical users."),
+                    html.H5(
+                        "Advanced Code Documentation Beyond Comments and Docstrings"
+                    ),
+                    html.P(
+                        "Use Sphinx and Read the Docs for a user-friendly interface to understand codebase — even for non-technical users."
+                    ),
                 ],
             ),
         ],
@@ -140,7 +154,9 @@ article_bigtree = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Python Tree Implementation with BigTree"),
-                    html.P("Integrating trees with Python lists, dictionaries, and pandas DataFrames."),
+                    html.P(
+                        "Integrating trees with Python lists, dictionaries, and pandas DataFrames."
+                    ),
                 ],
             ),
         ],
@@ -157,7 +173,9 @@ article_logging = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Basic to Advanced Logging with Python in 10 Minutes"),
-                    html.P("Logging crash course with common logging issues addressed."),
+                    html.P(
+                        "Logging crash course with common logging issues addressed."
+                    ),
                 ],
             ),
         ],
@@ -208,7 +226,9 @@ article_unittest = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Unit Testing with Mocking in 10 Minutes"),
-                    html.P("Test your codebase effectively with the built-in unittest Python package."),
+                    html.P(
+                        "Test your codebase effectively with the built-in unittest Python package."
+                    ),
                 ],
             ),
         ],
@@ -259,7 +279,9 @@ article_mlflow = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Experiment Tracking with MLflow in 10 Minutes"),
-                    html.P("Managing Machine Learning Lifecycle made easy — explained with Python examples."),
+                    html.P(
+                        "Managing Machine Learning Lifecycle made easy — explained with Python examples."
+                    ),
                 ],
             ),
         ],
@@ -276,7 +298,9 @@ article_airflow = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Job Scheduling with Apache AirFlow 2.0 in 10 Minutes"),
-                    html.P("Workflow Management System made easy — explained with Python examples."),
+                    html.P(
+                        "Workflow Management System made easy — explained with Python examples."
+                    ),
                 ],
             ),
         ],
@@ -293,7 +317,9 @@ article_heroku = html.A(
                 [
                     dbc.CardHeader("Software Engineering"),
                     html.H5("Heroku + Docker in 10 Minutes"),
-                    html.P("Deployment for Python applications made easy — and it’s free."),
+                    html.P(
+                        "Deployment for Python applications made easy — and it’s free."
+                    ),
                 ],
             ),
         ],
@@ -302,3 +328,33 @@ article_heroku = html.A(
     href="https://medium.com/towards-data-science/heroku-docker-in-10-minutes-f4329c4fd72f",
     target="_blank",
 )
+
+
+def articles_tab():
+    return html.Div(
+        [
+            content_header("Articles"),
+            html.Div(
+                [
+                    article_coursera,
+                    article_dashboard,
+                    article_reinforcement_learning,
+                    article_ensemble,
+                    article_best_practices,
+                    article_programming,
+                    article_sphinx,
+                    article_bigtree,
+                    article_logging,
+                    article_lists,
+                    article_pytest,
+                    article_unittest,
+                    article_fastapi,
+                    article_multithreading,
+                    article_mlflow,
+                    article_airflow,
+                    article_heroku,
+                ],
+                className="card-group",
+            ),
+        ],
+    )

@@ -1,11 +1,11 @@
-import pandas as pd
-import numpy as np
-import pickle
-import plotly.graph_objects as go
 import os
+import pickle
 import re
-import scipy
 
+import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
+import scipy
 from dash import html
 from lightgbm import LGBMClassifier
 from nltk import word_tokenize
@@ -13,17 +13,17 @@ from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import (
-    confusion_matrix,
     accuracy_score,
-    f1_score,
     balanced_accuracy_score,
+    confusion_matrix,
+    f1_score,
 )
-from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
 
 try:
     import tensorflow as tf
-    from tensorflow.keras.preprocessing.text import Tokenizer
     from tensorflow.keras.preprocessing.sequence import pad_sequences
+    from tensorflow.keras.preprocessing.text import Tokenizer
 except ModuleNotFoundError:
     pass
 
@@ -52,17 +52,22 @@ class MBTI:
             threshold (float): for modelling, used in tensorflow model
             non_sw (list): list of stop words to exclude
         """
+        self.data_path = (
+            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+        )
         self.mbti_cols = ["EI", "SN", "TF", "JP"]
         self.path_data = "sample_data/mbti.csv"
         self.path_save_data = "sample_data/mbti_clean.csv"
-        self.path_vect = "data/vocabulary.pkl"
-        self.path_tokenizer = "data/tokenizer.pkl"
+        self.path_vect = f"{self.data_path}vocabulary.pkl"
+        self.path_tokenizer = f"{self.data_path}tokenizer.pkl"
         self.path_models = []
         for col in self.mbti_cols:
-            self.path_models.append(f"data/model_{col}.pkl")
+            # self.path_models.append(f"data/model_{col}.pkl")
+            self.path_models.append(f"{self.data_path}model_{col}.pkl")
         self.path_tf_models = []
         for col in self.mbti_cols:
-            self.path_tf_models.append(f"data/model_tf_{col}.h5")
+            # self.path_tf_models.append(f"data/model_tf_{col}.h5")
+            self.path_models.append(f"{self.data_path}model_{col}.h5")
 
         # Parameters for modelling
         self.use_tf = False
@@ -359,38 +364,38 @@ class MBTI:
         Returns:
             model
         """
-        EI_model = {
-            "learning_rate": 0.1,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 4.342928660826033,
-        }
-        SN_model = {
-            "learning_rate": 0.2,
-            "max_depth": 3,
-            "n_estimators": 50,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 7.251828631138976,
-        }
-        TF_model = {
-            "learning_rate": 0.2,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 1.1789638932496076,
-        }
-        JP_model = {
-            "learning_rate": 0.1,
-            "max_depth": 3,
-            "n_estimators": 200,
-            "n_jobs": 8,
-            "num_leaves": 50,
-            "scale_pos_weight": 1.5263924281033856,
-        }
+        # EI_model = {
+        #     "learning_rate": 0.1,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 4.342928660826033,
+        # }
+        # SN_model = {
+        #     "learning_rate": 0.2,
+        #     "max_depth": 3,
+        #     "n_estimators": 50,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 7.251828631138976,
+        # }
+        # TF_model = {
+        #     "learning_rate": 0.2,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 1.1789638932496076,
+        # }
+        # JP_model = {
+        #     "learning_rate": 0.1,
+        #     "max_depth": 3,
+        #     "n_estimators": 200,
+        #     "n_jobs": 8,
+        #     "num_leaves": 50,
+        #     "scale_pos_weight": 1.5263924281033856,
+        # }
         model = pd.read_pickle(path_model)
         return model
 

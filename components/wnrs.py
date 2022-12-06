@@ -1,9 +1,9 @@
-import pandas as pd
 import random
 import re
-
-from dash import html
 from functools import reduce
+
+import pandas as pd
+from dash import html
 
 
 class WNRS:
@@ -11,7 +11,10 @@ class WNRS:
 
     def __init__(self):
         """Read and initalize the card game"""
-        file = pd.ExcelFile("data/WNRS.xlsx")
+        self.data_path = (
+            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+        )
+        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
         decks = file.sheet_names
         self.information = {}
 
@@ -51,14 +54,13 @@ class WNRS:
         """
         return self.information
 
-    @staticmethod
-    def get_all_cards():
+    def get_all_cards(self):
         """Get all cards to retrieve playable cards
 
         Returns:
             (dict)
         """
-        file = pd.ExcelFile("data/WNRS.xlsx")
+        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
         decks = file.sheet_names
         cards = {}
 
@@ -174,9 +176,18 @@ class WNRS:
             "O": ("#EB744C", "#000000"),  # orange card black font (bumble edition)
             "R": ("#BE001C", "#FAFAEE"),  # red (default)
             "P": ("#EEC4C5", "#BE001C"),  # pink (self-love edition)
-            "S1": ("#5f86b5", "#FAFAEE"),  # special blue card white font (own it edition)
-            "S2": ("#af2637", "#FAFAEE"),  # special maroon card white font (own it edition)
-            "S3": ("#275835", "#FAFAEE"),  # special green card white font (own it edition)
+            "S1": (
+                "#5f86b5",
+                "#FAFAEE",
+            ),  # special blue card white font (own it edition)
+            "S2": (
+                "#af2637",
+                "#FAFAEE",
+            ),  # special maroon card white font (own it edition)
+            "S3": (
+                "#275835",
+                "#FAFAEE",
+            ),  # special green card white font (own it edition)
             "V1": ("#EAD2E0", "#1695C8"),  # violet card blue font (cann edition)
             "V2": ("#FAFAEE", "#1695C8"),  # white card blue font (cann edition)
             "W": ("#FAFAEE", "#BE001C"),  # white (default)
@@ -257,8 +268,9 @@ class WNRS:
         Returns:
             (str, list, dict, str): card deck, prompt, style, counter
         """
-        past_index = self.index[: self.pointer + 1].copy()
-        remaining_index = self.index[self.pointer + 1 :].copy()
+        next_pointer = self.pointer + 1
+        past_index = self.index[:next_pointer].copy()
+        remaining_index = self.index[next_pointer:].copy()
         remaining_index = self.shuffle(remaining_index)
         new_index = [*past_index, *remaining_index]
         self.index = new_index

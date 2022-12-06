@@ -1,6 +1,5 @@
 import numpy as np
 import plotly.graph_objects as go
-
 from dash import html
 
 
@@ -262,11 +261,7 @@ class ChangeCalculator:
         trace = []
         instructions = [
             html.Img(src=app.get_asset_url("info.svg")),
-            html.Span(
-                [
-                    "Hover over line to see more information"
-                ]
-            ),
+            html.Span(["Hover over line to see more information"]),
             html.Span(
                 [
                     "Single click on legend to hide entry, "

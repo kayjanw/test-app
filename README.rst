@@ -10,7 +10,7 @@ This ``utils.py`` project aims to be a helper tool to automate repetitive data a
 or perform predictions and optimizations that are computationally expensive etc.
 This documentation comprises of deployment documentation and code documentation.
 
-The web application can be found `here <https://kayjan.herokuapp.com>`_.
+The web application can be found `here <https://tinyurl.com/kayjan>`_.
 
 
 File Structure
@@ -35,6 +35,9 @@ There are many other ways to structure your codes, but I find this implementatio
   │   ├── source
   │   ├── make.bat
   │   └── Makefile
+  ├── layouts
+  │   ├── articles.py
+  │   └── etc (other .py files)
   ├── tests
   ├── app.py
   ├── callbacks.py

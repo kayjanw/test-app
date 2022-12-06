@@ -1,9 +1,9 @@
 import json
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-
 from dash import html
 from sklearn.feature_extraction.text import CountVectorizer
 from wordcloud import WordCloud as wc
@@ -269,7 +269,9 @@ class ChatAnalyzer:
                 )
                 axs[0].axis("off")
                 axs[0].set_title("Word Cloud of Messages")
-                image = create_fig_from_diagram(fig, "wordcloud", className="custom-div-full")
+                image = create_fig_from_diagram(
+                    fig, "wordcloud", className="custom-div-full"
+                )
             else:
                 plt.imshow(
                     wc_diagram.recolor(color_func=grey_color_func, random_state=3),

@@ -1,13 +1,12 @@
 import numpy as np
 import pandas as pd
-
 from dash import html
 
 from components.helper import (
-    return_message,
     generate_datatable,
-    valid_email,
+    return_message,
     send_email,
+    valid_email,
 )
 
 
@@ -180,13 +179,17 @@ class EventPlanner:
         Returns:
             (bool): indicator if email is sent
         """
-        website = "http://kayjan-634i2gf6lq-as.a.run.app"  # "kayjan.herokuapp.com"
+        # website = "https://kayjan.herokuapp.com"
+        # website = "http://kayjan-634i2gf6lq-as.a.run.app"
+        website = "https://tinyurl.com/kayjan"
         status_code_all = True
         for row_idx, row in output_df.iterrows():
             person = row.Person
             row = row.drop("Person")
             email_body = f"Here are your results for <b>{event}</b>\n\n"
-            email_body += "\n".join([f"<b>{k}</b>: {v}" for k, v in row.to_dict().items()])
+            email_body += "\n".join(
+                [f"<b>{k}</b>: {v}" for k, v in row.to_dict().items()]
+            )
             email_body += (
                 f"\n\nThank you for using <a href='{website}' target='_blank'>{website}</a>\n"
                 "Disclaimer: This is an automated email. Please do not reply."

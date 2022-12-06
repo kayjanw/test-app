@@ -352,13 +352,14 @@ footer
 
 .div-with-invisible-button span {
     position: absolute;
-    width: fit-content;
+    width: 40%;
     margin: 0;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
     font-family: sans-serif;
     font-weight: bold;
+    text-align: center !important;
     text-transform: uppercase;
     text-shadow: 0px 0px 10px #FFF;
 }
