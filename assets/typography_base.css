@@ -165,6 +165,7 @@ button {
     color: #202029;
     height: 28px;
     line-height: 28px;
+    letter-spacing: .05rem;
     margin-top: 10px;
     margin-right: 10px;
 }
