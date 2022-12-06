@@ -12,7 +12,7 @@ class WNRS:
     def __init__(self):
         """Read and initalize the card game"""
         self.data_path = (
-            "https://github.com/kayjanw/test-app/raw/master/data/"  # "data/"
+            "data/"  # "https://github.com/kayjanw/test-app/raw/master/data/"
         )
         file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
         decks = file.sheet_names
