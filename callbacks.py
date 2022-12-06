@@ -2,7 +2,7 @@ import json
 import traceback
 
 import dash
-from dash import dcc, html
+from dash import ALL, MATCH, dcc, html
 from dash.dependencies import Input, Output, State
 
 from components import (
@@ -146,6 +146,7 @@ def register_callbacks(app, print_function):
             Input("dropdown-change-worksheet", "value"),
         ],
         [State("upload-change", "filename"), State("change-select-worksheet", "style")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_change_upload(contents, worksheet, filename, style):
@@ -174,6 +175,7 @@ def register_callbacks(app, print_function):
             Output("dropdown-change-y", "options"),
         ],
         [Input("intermediate-change-result", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_change_dropdown_options(records):
@@ -198,6 +200,7 @@ def register_callbacks(app, print_function):
         [Output("dropdown-change-x", "value"), Output("dropdown-change-y", "value")],
         [Input("dropdown-change-x", "options"), Input("dropdown-change-y", "options")],
         [State("dropdown-change-x", "value"), State("dropdown-change-y", "value")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_change_dropdown_value(x_options, y_options, x_value, y_value):
@@ -238,6 +241,7 @@ def register_callbacks(app, print_function):
             State("dropdown-change-y", "value"),
             State("input-change-y", "value"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
@@ -304,6 +308,7 @@ def register_callbacks(app, print_function):
             State("upload-changes", "filename"),
             State("changes-select-worksheet", "style"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_changes_upload(contents, worksheet, filename, style):
@@ -332,6 +337,7 @@ def register_callbacks(app, print_function):
             Output("dropdown-changes-identifier", "options"),
         ],
         [Input("intermediate-changes-result", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_changes_dropdown_options(records):
@@ -356,6 +362,7 @@ def register_callbacks(app, print_function):
         Output("table-changes", "data"),
         [Input("button-changes-add", "n_clicks")],
         [State("table-changes", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_changes_add_row(trigger, data):
@@ -386,6 +393,7 @@ def register_callbacks(app, print_function):
             State("dropdown-changes-identifier", "value"),
             State("table-changes", "data"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_changes_result(trigger, records, col_identifier, data):
@@ -483,6 +491,7 @@ def register_callbacks(app, print_function):
         ],
         [Input("upload-chat", "contents")],
         [State("upload-chat", "filename")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_chat_upload(contents, filename):
@@ -526,6 +535,7 @@ def register_callbacks(app, print_function):
         ],
         [Input("button-chat-ok", "n_clicks")],
         [State("intermediate-chat-result", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_chat_result(trigger, contents):
@@ -580,6 +590,7 @@ def register_callbacks(app, print_function):
             Input("button-trip-reset", "n_clicks"),
         ],
         [State("input-trip-landmark", "value"), State("table-trip-landmark", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
@@ -615,6 +626,7 @@ def register_callbacks(app, print_function):
         Output("map-trip", "children"),
         [Input("table-trip-landmark", "data")],
         [State("map-trip", "children")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_trip_map(data, children):
@@ -634,6 +646,7 @@ def register_callbacks(app, print_function):
         Output("trip-result", "children"),
         [Input("button-trip-ok", "n_clicks"), Input("button-trip-reset", "n_clicks")],
         [State("table-trip-landmark", "data")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_trip_results(trigger_ok, trigger_reset, data):
@@ -658,7 +671,11 @@ def register_callbacks(app, print_function):
             pass
         return result
 
-    @app.callback(Output("text-mbti-words", "children"), [Input("input-mbti", "value")])
+    @app.callback(
+        Output("text-mbti-words", "children"),
+        [Input("input-mbti", "value")],
+        prevent_initial_call=True,
+    )
     @print_callback(print_function)
     def update_mbti_words(input_text):
         """Update number of input words in vocabulary
@@ -683,6 +700,7 @@ def register_callbacks(app, print_function):
         ],
         [Input("button-mbti-ok", "n_clicks")],
         [State("input-mbti", "value"), State("graph-mbti", "style")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_mbti_result(trigger, input_text, style):
@@ -765,6 +783,7 @@ def register_callbacks(app, print_function):
         ],
         [Input("upload-event", "contents")],
         [State("upload-event", "filename")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_event_upload(contents, filename):
@@ -816,6 +835,7 @@ def register_callbacks(app, print_function):
             State("checklist-event-email", "value"),
             State("checklist-event-display", "value"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_event_result(
@@ -877,6 +897,7 @@ def register_callbacks(app, print_function):
             State("button-rng-item-ok", "style"),
             State("button-rng-group-ok", "style"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_rng_button_style(
@@ -933,6 +954,7 @@ def register_callbacks(app, print_function):
             State("div-rng-group", "style"),
             State("div-rng-result", "style"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_rng_result(
@@ -997,6 +1019,7 @@ def register_callbacks(app, print_function):
             State("button-wnrs-instruction-ok", "style"),
             State("button-wnrs-suggestion-ok", "style"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_wnrs_deck_style(
@@ -1081,6 +1104,7 @@ def register_callbacks(app, print_function):
             State("input-wnrs-suggestion", "value"),
             State("input-wnrs-suggestion2", "value"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
@@ -1108,109 +1132,56 @@ def register_callbacks(app, print_function):
                     reply = return_message["email_fail"]
         return card_prompt, additional_info, reply
 
-    def update_wnrs_button_style_wrapper(deck):
-        @app.callback(
-            Output(deck, "style"), [Input(deck, "n_clicks")], [State(deck, "style")]
-        )
-        @print_callback(print_function)
-        def update_wnrs_button_style(trigger, current_style):
-            """Update style of selected WNRS decks (button colour indication)
+    @app.callback(
+        Output({"type": "wnrs-deck-button", "id": MATCH}, "style"),
+        [Input({"type": "wnrs-deck-button", "id": MATCH}, "n_clicks")],
+        [State({"type": "wnrs-deck-button", "id": MATCH}, "style")],
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_wnrs_button_style(trigger, current_style):
+        """Update style of selected WNRS decks (button colour indication)
 
-            Args:
-                trigger: trigger on button click
-                current_style (dict): current style of button
+        Args:
+            trigger: trigger on button click
+            current_style (dict): current style of button
 
-            Returns:
-                dict: updated style of button
-            """
-            if dash.callback_context.triggered:
-                if current_style is None:
-                    current_style = dict()
-                if (
-                    "background-color" in current_style
-                    and current_style["background-color"] == "#BE9B89"
-                ):
-                    current_style["background-color"] = "#F0E3DF"
-                else:
-                    current_style["background-color"] = "#BE9B89"
-            return current_style
-
-    all_decks = [
-        "Main Deck 1",
-        "Main Deck 2",
-        "Main Deck 3",
-        "Main Deck Final",
-        "Bumble x BFF Edition 1",
-        "Bumble x BFF Edition 2",
-        "Bumble x BFF Edition 3",
-        "Bumble Bizz Edition 1",
-        "Bumble Bizz Edition 2",
-        "Bumble Bizz Edition 3",
-        "Bumble Date Edition 1",
-        "Bumble Date Edition 2",
-        "Bumble Date Edition 3",
-        "Cann Edition 1",
-        "Cann Edition 2",
-        "Cann Edition 3",
-        "Valentino Edition 1",
-        "Honest Dating Edition 1",
-        "Honest Dating Edition 2",
-        "Honest Dating Edition 3",
-        "Inner Circle Edition 1",
-        "Inner Circle Edition 2",
-        "Inner Circle Edition 3",
-        "Own It Edition 1",
-        "Relationship Edition 1",
-        "Relationship Edition 2",
-        "Relationship Edition 3",
-        "Race and Privilege Edition 1",
-        "Race and Privilege Edition 2",
-        "Race and Privilege Edition 3",
-        "Quarantine Edition 1",
-        "Quarantine Edition 2",
-        "Quarantine Edition 3",
-        "Quarantine Edition Final",
-        "Voting Edition 1",
-        "Breakup Edition 1",
-        "Breakup Edition Final",
-        "Existential Crisis Edition 1",
-        "Forgiveness Edition 1",
-        "Healing Edition 1",
-        "Self-Love Edition 1",
-        "Self-Love Edition Final",
-        "Self-Reflection Edition 1",
-        "Love Maps 1",
-        "Open Ended Questions 1",
-        "Rituals of Connection 1",
-        "Opportunity 1",
-        "Couple 1",
-        "Couple 2",
-        "Couple 3",
-        "Couple 4",
-    ]
-
-    for deck in all_decks:
-        update_wnrs_button_style_wrapper(deck)
+        Returns:
+            dict: updated style of button
+        """
+        if dash.callback_context.triggered:
+            if current_style is None:
+                current_style = dict()
+            if (
+                "background-color" in current_style
+                and current_style["background-color"] == "#BE9B89"
+            ):
+                current_style["background-color"] = "#F0E3DF"
+            else:
+                current_style["background-color"] = "#BE9B89"
+        return current_style
 
     @app.callback(
         Output("intermediate-wnrs", "data"),
-        [Input(deck, "style") for deck in all_decks],
+        [Input({"type": "wnrs-deck-button", "id": ALL}, "style")],
+        [Input({"type": "wnrs-deck-button", "id": ALL}, "id")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_wnrs_list_of_decks(*args):
+    def update_wnrs_list_of_decks(styles, ids):
         """Update list of decks selected
 
         Args:
-            *args (dict): current style of all buttons
+            args (dict): current style of all buttons
 
         Returns:
             dict: updated style of all buttons
         """
         data = {}
         list_of_deck = []
-        for style, deck_name in zip(args, all_decks):
-            if style is not None and style["background-color"] == "#BE9B89":
-                list_of_deck.append(deck_name)
+        for _style, _id in zip(styles, ids):
+            if _style is not None and _style["background-color"] == "#BE9B89":
+                list_of_deck.append(_id["id"])
         if len(list_of_deck):
             wnrs_game = WNRS()
             wnrs_game.initialize_game(list_of_deck)
@@ -1396,6 +1367,7 @@ def register_callbacks(app, print_function):
             State("input-contact-email", "value"),
             State("input-contact-content", "value"),
         ],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_contact_send_email(
@@ -1434,7 +1406,9 @@ def register_callbacks(app, print_function):
         return contact_name, contact_email, contact_content, reply
 
     @app.callback(
-        Output("image-canvas", "image_content"), [Input("upload-image", "contents")]
+        Output("image-canvas", "image_content"),
+        [Input("upload-image", "contents")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_canvas_image(contents):
@@ -1454,6 +1428,7 @@ def register_callbacks(app, print_function):
     @app.callback(
         Output("image-canvas", "json_objects"),
         [Input("button-canvas-clear", "n_clicks")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def clear_canvas(n_clicks):
@@ -1477,6 +1452,7 @@ def register_callbacks(app, print_function):
             Input("button-image-plus", "n_clicks"),
         ],
         [State("knob-canvas", "value")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_canvas_brush_size(trigger_minus, trigger_plus, value):
@@ -1497,7 +1473,11 @@ def register_callbacks(app, print_function):
             value += 1
         return value
 
-    @app.callback(Output("image-canvas", "lineWidth"), [Input("knob-canvas", "value")])
+    @app.callback(
+        Output("image-canvas", "lineWidth"),
+        [Input("knob-canvas", "value")],
+        prevent_initial_call=True,
+    )
     @print_callback(print_function)
     def update_canvas_brush(value):
         """Update canvas brush size (line width)
@@ -1511,7 +1491,9 @@ def register_callbacks(app, print_function):
         return value
 
     @app.callback(
-        Output("image-canvas", "lineColor"), [Input("image-color-picker", "value")]
+        Output("image-canvas", "lineColor"),
+        [Input("image-color-picker", "value")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_canvas_color(value):
@@ -1529,7 +1511,9 @@ def register_callbacks(app, print_function):
             return value
 
     # @app.callback(Output('image-result', 'children'),
-    #               [Input('image-canvas', 'json_data')])
+    #               [Input('image-canvas', 'json_data')],
+    #               prevent_initial_call=True,
+    #               )
     # def update_canvas_result(string):
     #     """Update canvas result
     #
@@ -1560,7 +1544,9 @@ def register_callbacks(app, print_function):
     #     return uri
 
     # @app.callback(Output('placeholder', 'children'),
-    #               [Input('button_music', 'n_clicks')])
+    #               [Input('button_music', 'n_clicks')],
+    #               prevent_initial_call=True,
+    #               )
     # @print_callback(print_function)
     # def update_keyboard(trigger):
     #     if trigger:
@@ -1574,6 +1560,7 @@ def register_callbacks(app, print_function):
         Output("tab-content", "children"),
         [Input("tabs-parent", "value")],
         [State("tabs-parent", "children"), State("tab-content", "children")],
+        prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_output(tab, children, current_content):
