@@ -1028,12 +1028,6 @@ def register_callbacks(app, print_function):
         """
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-            if not selection_button_style:
-                selection_button_style = {}
-            if not instruction_button_style:
-                instruction_button_style = {}
-            if not suggestion_button_style:
-                suggestion_button_style = {}
             if ctx == "button-wnrs-show-ok":
                 if selection_style["display"] == "inline-block":
                     selection_style.update(hide_style)
@@ -1296,8 +1290,6 @@ def register_callbacks(app, print_function):
             {},
         )
         next_card = 0
-        if current_style is None:
-            current_style = {}
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             data2 = decode_dict(data2_ser)
