@@ -406,7 +406,7 @@ class TripPlanner:
             (str/list)
         """
         if len(data) < 2:
-            return html.P("Please input more landmarks")
+            return html.P("Please input more landmarks", className="color-red")
         try:
             landmarks = [x["Landmark"] for x in data]
             (

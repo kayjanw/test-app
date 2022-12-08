@@ -162,7 +162,9 @@ def register_callbacks(app, print_function):
         result = []
         fig = {}
         if trigger:
-            if (
+            if not records:
+                result_error = [return_message["file_not_uploaded"]]
+            elif (
                 "df" in records
                 and x_col is not None
                 and y_col is not None
@@ -326,7 +328,9 @@ def register_callbacks(app, print_function):
                 (row["column"], row["max"]) for row in data if row["column"]
             ]
             cols = list(dict.fromkeys([row[0] for row in list_of_tuples]))
-            if "df" in records and len(list_of_tuples):
+            if not records:
+                result_error = [return_message["file_not_uploaded"]]
+            elif "df" in records and len(list_of_tuples):
                 df = decode_df(records["df"])
                 df = ChangeCalculator().compute_changes(
                     df, col_identifier, list_of_tuples
