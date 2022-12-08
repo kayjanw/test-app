@@ -40,8 +40,7 @@ def event_tab(app):
                             " and fill in the values. Do not change items in ",
                             html.P(
                                 "red",
-                                style={"color": "red"},
-                                className="p-short p-bold",
+                                className="p-short p-bold color-red",
                             ),
                         ]
                     ),
@@ -163,7 +162,12 @@ def event_tab(app):
                                 id="intermediate-event-result", storage_type="memory"
                             ),
                             dcc_loading(
-                                [html.P(id="event-result-error")], dark_bg=True
+                                [
+                                    html.P(
+                                        id="event-result-error", className="color-red"
+                                    )
+                                ],
+                                dark_bg=True,
                             ),
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",

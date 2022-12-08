@@ -25,6 +25,11 @@ colour_palette = {
     "pink_grey": "#D6CAC7",
 }
 
+inline_style = {"display": "inline-block"}
+flex_style = {"display": "flex"}
+hide_style = {"display": "none"}
+show_button_style = {"background-color": "#BE9B89"}
+hide_button_style = {"background-color": "#F0E3DF"}
 
 return_message = {
     "card_not_filled": "Please fill in a card prompt (required field)",
@@ -238,16 +243,16 @@ def parse_data(contents, filename, worksheet=None, **kwargs):
     decoded = base64.b64decode(content_string)
     df = None
     try:
-        if "csv" in filename:
+        if ".csv" in filename:
             file = io.StringIO(decoded.decode("utf-8"))
             df = pd.read_csv(file, **kwargs)
-        elif "xls" in filename:
+        elif ".xls" in filename:
             if worksheet is not None:
                 xls = pd.ExcelFile(io.BytesIO(decoded), **kwargs)
                 df = pd.read_excel(xls, worksheet)
             else:
                 df = pd.read_excel(io.BytesIO(decoded), **kwargs)
-        elif "json" in filename:
+        elif ".json" in filename:
             df = decoded
         else:
             raise Exception("File format not supported")
@@ -378,33 +383,41 @@ def decode_dict(d_ser):
     return json.loads(d_ser)
 
 
-def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
+def update_when_upload(
+    contents, worksheet, sample_data_style, filename, style, ctx, **kwargs
+):
     """Reads uploaded data into DataFrame and return dash application objects
 
     Args:
         contents (str): contents of data uploaded
         worksheet (str): worksheet of excel file, if applicable, defaults to None
+        sample_data_style (dict): current style of sample uploaded data
         filename (str): filename of data uploaded
         style (dict): current style of worksheet selector dropdown
         ctx (str): dash callback trigger item name
 
     Returns:
-        4-element tuple
+        5-element tuple
 
         - (list): list of worksheets options
         - (dict): updated style of worksheet selector dropdown
         - (dash_table.DataTable/list): sample of uploaded data
+        - (dict): updated style of uploaded data
         - (dict): intermediate data stored in dcc.Store
     """
     worksheet_options = []
     sample_table = []
     if dash.callback_context.triggered and contents is not None:
+        if sample_data_style is None:
+            sample_data_style = {}
+
         # Check file type
-        if "xls" not in filename and "csv" not in filename:
+        if ".xls" not in filename and ".csv" not in filename:
             sample_table = [html.P(return_message["wrong_file_type"])]
+            sample_data_style["color"] = "red"
 
         # Get worksheet options
-        if "xls" in filename:
+        if ".xls" in filename:
             worksheet_list = get_worksheet(contents)
             if len(worksheet_list) > 1:
                 worksheet_options = [
@@ -430,9 +443,10 @@ def update_when_upload(contents, worksheet, filename, style, ctx, **kwargs):
                 generate_datatable(df),
                 html.P(f"Number of rows: {len(df)}", style={"margin": 0}),
             ]
+            sample_data_style["color"] = "inherit"
             records = dict(df=encode_df(df))
-            return worksheet_options, style, sample_table, records
-    return worksheet_options, style, sample_table, {}
+            return worksheet_options, style, sample_table, sample_data_style, records
+    return worksheet_options, style, sample_table, sample_data_style, {}
 
 
 def result_download_button(app, df, dark=True):

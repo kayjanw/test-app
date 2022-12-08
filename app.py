@@ -3,7 +3,19 @@ import gevent.monkey
 
 gevent.monkey.patch_all()
 
-from callbacks import register_callbacks
+from callbacks.callbacks import register_callbacks
+from callbacks.change_calculator import (
+    register_callbacks as register_callbacks_change_calculator,
+)
+from callbacks.chat import register_callbacks as register_callbacks_chat
+from callbacks.event_planner import (
+    register_callbacks as register_callbacks_event_planner,
+)
+from callbacks.mbti import register_callbacks as register_callbacks_mbti
+from callbacks.rng import register_callbacks as register_callbacks_rng
+from callbacks.trade import register_callbacks as register_callbacks_trade
+from callbacks.trip_planner import register_callbacks as register_callbacks_trip_planner
+from callbacks.wnrs import register_callbacks as register_callbacks_wnrs
 from layouts.main import main_layout
 from routes import register_routes
 
@@ -78,6 +90,14 @@ app.index_string = """
 
 print_function = False
 register_callbacks(app, print_function)
+register_callbacks_change_calculator(app, print_function)
+register_callbacks_chat(app, print_function)
+register_callbacks_event_planner(app, print_function)
+register_callbacks_mbti(app, print_function)
+register_callbacks_rng(app, print_function)
+register_callbacks_trade(app, print_function)
+register_callbacks_trip_planner(app, print_function)
+register_callbacks_wnrs(app, print_function)
 register_routes(app)
 
 
