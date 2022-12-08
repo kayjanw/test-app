@@ -45,7 +45,10 @@ def chat_tab(app):
                                 [html.P(id="text-chat-confirm")], id="text-chat-loading"
                             ),
                             html.Button("OK", id="button-chat-ok"),
-                            dcc_loading([html.P(id="chat-result-error")], dark_bg=True),
+                            dcc_loading(
+                                [html.P(id="chat-result-error", className="color-red")],
+                                dark_bg=True,
+                            ),
                             dcc.Store(
                                 id="intermediate-chat-result", storage_type="memory"
                             ),

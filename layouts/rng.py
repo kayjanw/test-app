@@ -98,7 +98,10 @@ def rng_tab():
                             ),
                             html.Br(),
                             html.Button("OK", id="button-rng-ok"),
-                            dcc_loading([html.P(id="rng-result-error")], dark_bg=True),
+                            dcc_loading(
+                                [html.P(id="rng-result-error", className="color-red")],
+                                dark_bg=True,
+                            ),
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),

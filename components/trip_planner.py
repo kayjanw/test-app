@@ -443,5 +443,5 @@ class TripPlanner:
                 ),
             ]
         except Exception as e:
-            return str(e)
+            return html.P(str(e), className="color-red")
         return answer
