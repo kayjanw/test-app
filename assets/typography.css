@@ -24,7 +24,7 @@ content-header
 div-with-image, div-with-image-left, div-with-image-right
 div-with-invisible-button
 small-image, medium-image
-image-dark-bg
+image-dark-bg image-vertical-flip
 
 custom-container
 custom-div-dark, custom-div-white
@@ -34,6 +34,8 @@ custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
 
 p-short, p-bold
+invisible-button
+vertical-center
 blinker
 footer
 */
@@ -370,6 +372,18 @@ footer
     filter: invert();
 }
 
+.image-vertical-flip Img {
+    transform: scale(1, -1);
+}
+
+.image-horizontal-flip Img {
+    transform: scale(-1, 1);
+}
+
+.image-dark-blue {
+    filter: invert(10%) sepia(2%) saturate(5866%) hue-rotate(202deg) brightness(96%) contrast(91%);
+}
+
 .custom-container {
     width: -webkit-fill-available;
 }
@@ -477,6 +491,20 @@ footer
 .p-bold {
     font-weight: bold;
     letter-spacing: -0.05rem;
+}
+
+.invisible-button {
+    background-color: rgba(0,0,0,0);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0 5px;
+}
+
+.vertical-center {
+    display: inline-flex;
+    justify-content: center
 }
 
 .blinker {
@@ -612,6 +640,10 @@ footer
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: .1rem;
+}
+
+[id^="uploadwnrs-"] {
+    padding: 0;
 }
 
 [class^="tooltip"] {

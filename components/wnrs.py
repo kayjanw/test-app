@@ -129,13 +129,14 @@ class WNRS:
         self.pointer = pointer
         self.index = index
 
-    def load_game_from_dict(self, game_dict):
+    def load_game_from_dict(self, game_info, game_dict):
         """Load existing game from dictionary
 
         Args:
-            game_dict (dict): dictionary of existing game, called with WNRS().__dict__
+            game_info (dict): dictionary of existing game, with card deck
+            game_dict (dict): dictionary of existing game, with pointer information
         """
-        self.playing_cards = game_dict["playing_cards"]
+        self.playing_cards = game_info["wnrs_game_dict"]["playing_cards"]
         self.pointer = game_dict["pointer"]
         self.index = game_dict["index"]
 
@@ -294,3 +295,20 @@ class WNRS:
         random.shuffle(index_without_final)
         index = index_without_final + index_final_cards
         return index
+
+    @staticmethod
+    def convert_to_save_format(data: dict):
+        """Convert data to save format
+
+        Args:
+            data (dict): input data to be saved
+
+        Returns:
+            (dict)
+        """
+        data_save = dict(
+            list_of_deck=data["list_of_deck"],
+            index=data["wnrs_game_dict"]["index"],
+            pointer=data["wnrs_game_dict"]["pointer"],
+        )
+        return data_save
