@@ -20,6 +20,7 @@ class WNRS:
 
         # Needed for game play
         self.playing_cards = None
+        self.list_of_deck = []
         self.pointer = 0
         self.index = []
 
@@ -112,6 +113,7 @@ class WNRS:
         """
         if list_of_deck is None:
             list_of_deck = ["Main Deck 1"]
+        self.list_of_deck = list_of_deck
         self.get_all_playable_cards(list_of_deck)
         index = list(self.playing_cards["Deck"].keys())
         index = self.shuffle(index)
@@ -126,17 +128,18 @@ class WNRS:
             index (list): order of cards to play
         """
         self.get_all_playable_cards(list_of_deck)
+        self.list_of_deck = list_of_deck
         self.pointer = pointer
         self.index = index
 
-    def load_game_from_dict(self, game_info, game_dict):
+    def load_game_from_dict(self, game_dict):
         """Load existing game from dictionary
 
         Args:
-            game_info (dict): dictionary of existing game, with card deck
-            game_dict (dict): dictionary of existing game, with pointer information
+            game_dict (dict): dictionary of existing game
         """
-        self.playing_cards = game_info["wnrs_game_dict"]["playing_cards"]
+        self.playing_cards = game_dict["playing_cards"]
+        self.list_of_deck = game_dict["list_of_deck"]
         self.pointer = game_dict["pointer"]
         self.index = game_dict["index"]
 
@@ -296,19 +299,26 @@ class WNRS:
         index = index_without_final + index_final_cards
         return index
 
-    @staticmethod
-    def convert_to_save_format(data: dict):
+    def convert_to_store_format(self):
         """Convert data to save format
 
-        Args:
-            data (dict): input data to be saved
+        Returns:
+            (dict)
+        """
+        data_store = dict(
+            playing_cards=self.playing_cards,
+        )
+        return data_store
+
+    def convert_to_save_format(self):
+        """Convert data to save format
 
         Returns:
             (dict)
         """
         data_save = dict(
-            list_of_deck=data["list_of_deck"],
-            index=data["wnrs_game_dict"]["index"],
-            pointer=data["wnrs_game_dict"]["pointer"],
+            list_of_deck=self.list_of_deck,
+            index=self.index,
+            pointer=self.pointer,
         )
         return data_save
