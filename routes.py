@@ -40,12 +40,7 @@ def register_routes(app):
         d_ser = request.form.get("result")
         d = decode_dict(d_ser)
         if d:
-            d_save = dict(
-                list_of_deck=d["list_of_deck"],
-                index=d["wnrs_game_dict"]["index"],
-                pointer=d["wnrs_game_dict"]["pointer"],
-            )
-            buf = create_json_from_dict(d_save)
+            buf = create_json_from_dict(d)
             return send_file(
                 buf,
                 mimetype="application/json",

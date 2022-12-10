@@ -230,10 +230,10 @@ def register_callbacks(app, print_function):
             Input("button-wnrs2-next", "n_clicks"),
             Input("button-wnrs-shuffle-ok", "n_clicks"),
             Input("intermediate-wnrs", "data"),
-            Input("uploadbutton-wnrs", "contents"),
+            Input("uploadwnrs-button", "contents"),
         ],
         [
-            State("uploadbutton-wnrs", "filename"),
+            State("uploadwnrs-button", "filename"),
             State("input-wnrs", "value"),
             State("wnrs-prompt", "children"),
             State("wnrs-card", "style"),
@@ -292,7 +292,7 @@ def register_callbacks(app, print_function):
                     card_prompt[0] = html.P(return_message["card_not_select"])
                 else:  # dummy callback
                     data_new = data.copy()
-            elif ctx == "uploadbutton-wnrs":
+            elif ctx == "uploadwnrs-button":
                 if "json" not in filename:
                     card_prompt[0] = html.P(return_message["file_not_uploaded_json"])
                 else:
@@ -303,9 +303,14 @@ def register_callbacks(app, print_function):
                         wnrs_game.load_game(
                             data["list_of_deck"], data["pointer"], data["index"]
                         )
-                        data_new = dict(
+                        data = dict(
                             list_of_deck=data["list_of_deck"],
                             wnrs_game_dict=wnrs_game.__dict__,
+                        )
+                        data_new = dict(
+                            list_of_deck=data["list_of_deck"],
+                            index=data["wnrs_game_dict"]["index"],
+                            pointer=data["wnrs_game_dict"]["pointer"],
                         )
                     except KeyError:
                         card_prompt[0] = html.P(return_message["wrong_format_json"])
@@ -335,7 +340,7 @@ def register_callbacks(app, print_function):
 
         if len(data_new) > 1:
             wnrs_game = WNRS()
-            wnrs_game.load_game_from_dict(data_new["wnrs_game_dict"])
+            wnrs_game.load_game_from_dict(data, data_new)
             if next_card == 1:
                 (
                     card_deck,
@@ -366,7 +371,7 @@ def register_callbacks(app, print_function):
                 ) = wnrs_game.shuffle_remaining_cards()
             data_new["wnrs_game_dict"] = wnrs_game.__dict__
             current_style.update(card_style)
-        data_new2 = encode_dict(data_new)
+        data_new2 = encode_dict(wnrs_game.convert_to_save_format(data_new))
         return [
             data_new2,
             *card_prompt,
