@@ -11,8 +11,8 @@ def wnrs_tab(app):
     list_of_deck = ["Main Deck 1"]
     wnrs_game.initialize_game(list_of_deck)
     wnrs_information = wnrs_game.get_information()
-    data_default = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
-    data_save = wnrs_game.convert_to_save_format(data_default)
+    data_store = wnrs_game.convert_to_store_format()
+    data_save = wnrs_game.convert_to_save_format()
 
     main_deck = html.Div(
         [
@@ -1120,6 +1120,6 @@ def wnrs_tab(app):
                     "margin-bottom": 0,
                 },
             ),
-            dcc.Store(id="intermediate-wnrs", storage_type="memory", data=data_default),
+            dcc.Store(id="intermediate-wnrs", storage_type="memory", data=data_store),
         ]
     )

@@ -208,7 +208,12 @@ def register_callbacks(app, print_function):
         if len(list_of_deck):
             wnrs_game = WNRS()
             wnrs_game.initialize_game(list_of_deck)
-            data = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
+            data = dict(
+                playing_cards=wnrs_game.playing_cards,
+                list_of_deck=wnrs_game.list_of_deck,
+                pointer=wnrs_game.pointer,
+                index=wnrs_game.index,
+            )
         return data
 
     @app.callback(
@@ -287,12 +292,31 @@ def register_callbacks(app, print_function):
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             data2 = decode_dict(data2_ser)
-            if ctx == "intermediate-wnrs":
-                if "wnrs_game_dict" not in data:
-                    card_prompt[0] = html.P(return_message["card_not_select"])
-                else:  # dummy callback
-                    data_new = data.copy()
-            elif ctx == "uploadwnrs-button":
+            if "playing_cards" not in data:
+                card_prompt[0] = html.P(return_message["card_not_select"])
+                data_new = {}
+                if ctx in [
+                    "button-wnrs-back",
+                    "button-wnrs2-back",
+                    "button-wnrs-next",
+                    "button-wnrs2-next",
+                ]:
+                    button_back = button_next = dict(opacity=0)
+            else:
+                data_new = dict(
+                    playing_cards=data["playing_cards"],
+                    list_of_deck=data2["list_of_deck"],
+                    pointer=data2["pointer"],
+                    index=data2["index"],
+                )
+            if ctx == "intermediate-wnrs":  # new decks selected
+                data_new = dict(
+                    playing_cards=data["playing_cards"],
+                    list_of_deck=data["list_of_deck"],
+                    pointer=data["pointer"],
+                    index=data["index"],
+                )
+            elif ctx == "uploadwnrs-button":  # upload past progress
                 if "json" not in filename:
                     card_prompt[0] = html.P(return_message["file_not_uploaded_json"])
                 else:
@@ -303,14 +327,11 @@ def register_callbacks(app, print_function):
                         wnrs_game.load_game(
                             data["list_of_deck"], data["pointer"], data["index"]
                         )
-                        data = dict(
-                            list_of_deck=data["list_of_deck"],
-                            wnrs_game_dict=wnrs_game.__dict__,
-                        )
                         data_new = dict(
-                            list_of_deck=data["list_of_deck"],
-                            index=data["wnrs_game_dict"]["index"],
-                            pointer=data["wnrs_game_dict"]["pointer"],
+                            playing_cards=wnrs_game.playing_cards,
+                            list_of_deck=wnrs_game.list_of_deck,
+                            pointer=wnrs_game.pointer,
+                            index=wnrs_game.index,
                         )
                     except KeyError:
                         card_prompt[0] = html.P(return_message["wrong_format_json"])
@@ -320,7 +341,6 @@ def register_callbacks(app, print_function):
                 "button-wnrs-next",
                 "button-wnrs2-next",
             ]:
-                data_new = data2.copy()
                 if not button_next.get("opacity", True):
                     if ctx.endswith("back"):
                         next_card = -1
@@ -329,18 +349,22 @@ def register_callbacks(app, print_function):
                 else:
                     button_back = button_next = dict(opacity=0)
             elif ctx == "button-wnrs-shuffle-ok":
-                data_new = data2.copy()
                 next_card = 2
         elif data2_ser is None:
             print("Not triggered")
-            data_new = data.copy()
+            data_new = {}
         else:  # initial run
             data2 = decode_dict(data2_ser)
-            data_new = data2.copy()
+            data_new = dict(
+                playing_cards=data["playing_cards"],
+                list_of_deck=data2["list_of_deck"],
+                pointer=data2["pointer"],
+                index=data2["index"],
+            )
 
         if len(data_new) > 1:
             wnrs_game = WNRS()
-            wnrs_game.load_game_from_dict(data, data_new)
+            wnrs_game.load_game_from_dict(data_new)
             if next_card == 1:
                 (
                     card_deck,
@@ -369,11 +393,10 @@ def register_callbacks(app, print_function):
                     card_style,
                     card_counter,
                 ) = wnrs_game.shuffle_remaining_cards()
-            data_new["wnrs_game_dict"] = wnrs_game.__dict__
             current_style.update(card_style)
-        data_new2 = encode_dict(wnrs_game.convert_to_save_format(data_new))
+            data2 = wnrs_game.convert_to_save_format()
         return [
-            data_new2,
+            encode_dict(data2),
             *card_prompt,
             card_deck,
             card_counter,
