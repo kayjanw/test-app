@@ -1,5 +1,4 @@
-import dash
-from dash import dcc, html
+from dash import ctx, dcc, html
 from dash.dependencies import Input, Output, State
 
 from components import ChangeCalculator
@@ -55,9 +54,8 @@ def register_callbacks(app, print_function):
             - (dict): updated style of uploaded data
             - (dict): intermediate data stored in dcc.Store
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(
-            contents, worksheet, sample_data_style, filename, style, ctx
+            contents, worksheet, sample_data_style, filename, style, ctx.triggered_id
         )
 
     @app.callback(
@@ -227,9 +225,8 @@ def register_callbacks(app, print_function):
             - (dict): updated style of uploaded data
             - (dict): intermediate data stored in dcc.Store
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         return update_when_upload(
-            contents, worksheet, sample_data_style, filename, style, ctx
+            contents, worksheet, sample_data_style, filename, style, ctx.triggered_id
         )
 
     @app.callback(

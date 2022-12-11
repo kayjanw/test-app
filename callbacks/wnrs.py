@@ -1,7 +1,7 @@
 import json
 
 import dash
-from dash import ALL, MATCH, html
+from dash import ALL, MATCH, ctx, html
 from dash.dependencies import Input, Output, State
 
 from components import WNRS
@@ -73,8 +73,7 @@ def register_callbacks(app, print_function):
             dict: updated style of card selection, instruction and card suggestion div and button
         """
         if dash.callback_context.triggered:
-            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-            if ctx == "button-wnrs-show-ok":
+            if ctx.triggered_id == "button-wnrs-show-ok":
                 if selection_style["display"] == "inline-block":
                     selection_style.update(hide_style)
                     selection_button_style.update(hide_button_style)
@@ -85,7 +84,7 @@ def register_callbacks(app, print_function):
                 instruction_button_style.update(hide_button_style)
                 suggestion_style.update(hide_style)
                 suggestion_button_style.update(hide_button_style)
-            elif ctx == "button-wnrs-instruction-ok":
+            elif ctx.triggered_id == "button-wnrs-instruction-ok":
                 if instruction_style["display"] == "inline-block":
                     instruction_style.update(hide_style)
                     instruction_button_style.update(hide_button_style)
@@ -96,7 +95,7 @@ def register_callbacks(app, print_function):
                 selection_button_style.update(hide_button_style)
                 suggestion_style.update(hide_style)
                 suggestion_button_style.update(hide_button_style)
-            elif ctx == "button-wnrs-suggestion-ok":
+            elif ctx.triggered_id == "button-wnrs-suggestion-ok":
                 if suggestion_style["display"] == "inline-block":
                     suggestion_style.update(hide_style)
                     suggestion_button_style.update(hide_button_style)
@@ -207,10 +206,9 @@ def register_callbacks(app, print_function):
         Returns:
             dict: updated style of all buttons
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         data = {}
         list_of_deck = []
-        if ctx == "uploadwnrs-button":  # upload past progress
+        if ctx.triggered_id == "uploadwnrs-button":  # upload past progress
             if "json" not in filename:
                 data["error"] = return_message["file_not_uploaded_json"]
             else:
@@ -315,14 +313,14 @@ def register_callbacks(app, print_function):
         data_new = {}
 
         if dash.callback_context.triggered:
-            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+            ctx_id = ctx.triggered_id
             data2 = decode_dict(data2_ser)
 
             if "error" in data:
                 card_prompt[0] = html.P(data["error"])
                 data2 = {"error": data["error"]}
-                ctx = ""
-            if ctx == "intermediate-wnrs":  # new decks selected
+                ctx_id = ""
+            if ctx_id == "intermediate-wnrs":  # new decks selected
                 if "playing_cards" not in data:
                     card_prompt[0] = html.P(return_message["card_not_select"])
                     data2 = {"error": return_message["card_not_select"]}
@@ -334,16 +332,16 @@ def register_callbacks(app, print_function):
                         index=data["index"],
                     )
 
-            elif ctx in [
+            elif ctx_id in [
                 "button-wnrs-back",
                 "button-wnrs2-back",
                 "button-wnrs-next",
                 "button-wnrs2-next",
             ]:
                 if not button_next.get("opacity", True):
-                    if ctx.endswith("back"):
+                    if ctx_id.endswith("back"):
                         next_card = -1
-                    elif ctx.endswith("next"):
+                    elif ctx_id.endswith("next"):
                         next_card = 1
                 else:
                     button_back = button_next = dict(opacity=0)
@@ -354,7 +352,7 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
-            elif ctx == "button-wnrs-shuffle-ok":
+            elif ctx_id == "button-wnrs-shuffle-ok":
                 if not button_next.get("opacity", True):
                     next_card = 2
                 if "playing_cards" in data:
