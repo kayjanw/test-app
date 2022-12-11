@@ -1,3 +1,5 @@
+import warnings
+
 import dash
 import gevent.monkey
 
@@ -18,6 +20,9 @@ from callbacks.trip_planner import register_callbacks as register_callbacks_trip
 from callbacks.wnrs import register_callbacks as register_callbacks_wnrs
 from layouts.main import main_layout
 from routes import register_routes
+
+warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
+
 
 meta_tags = [
     {"name": "author", "content": "Kay Jan WONG"},

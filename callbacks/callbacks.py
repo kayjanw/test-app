@@ -1,5 +1,5 @@
 import dash
-from dash import dcc
+from dash import ctx, dcc
 from dash.dependencies import Input, Output, State
 
 from components.helper import (
@@ -82,8 +82,7 @@ def register_callbacks(app, print_function):
         - (dict): updated style of banner
         - (dict): updated style of tab content
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-        if ctx == "button-sidebar":
+        if ctx.triggered_id == "button-sidebar":
             if (
                 isinstance(style_sidebar, dict)
                 and style_sidebar["display"] == "inline-block"
@@ -98,7 +97,7 @@ def register_callbacks(app, print_function):
                 style_sidebar = {"display": "inline-block"}
                 style_banner = {"margin-left": "85vw"}
                 style_contents = {"margin-left": "85vw", "position": "fixed"}
-        elif ctx == "tabs-parent":
+        elif ctx.triggered_id == "tabs-parent":
             if isinstance(style_sidebar, dict):
                 # Collapse left sidebar
                 style_sidebar = {"display": "none"}
@@ -218,10 +217,9 @@ def register_callbacks(app, print_function):
         Returns:
             (int): updated value of brush size
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-        if ctx == "button-image-minus":
+        if ctx.triggered_id == "button-image-minus":
             value -= 1
-        elif ctx == "button-image-plus":
+        elif ctx.triggered_id == "button-image-plus":
             value += 1
         return value
 
