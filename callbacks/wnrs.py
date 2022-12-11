@@ -172,44 +172,77 @@ def register_callbacks(app, print_function):
         Returns:
             dict: updated style of button
         """
+        shaded_colour = "#BE9B89"
+        unshaded_colour = "#F0E3DF"
         if dash.callback_context.triggered:
             if current_style is None:
                 current_style = dict()
             if (
                 "background-color" in current_style
-                and current_style["background-color"] == "#BE9B89"
+                and current_style["background-color"] == shaded_colour
             ):
-                current_style["background-color"] = "#F0E3DF"
+                current_style["background-color"] = unshaded_colour
             else:
-                current_style["background-color"] = "#BE9B89"
+                current_style["background-color"] = shaded_colour
         return current_style
 
     @app.callback(
-        Output("intermediate-wnrs", "data"),
+        [Output("intermediate-wnrs", "data"), Output("uploadwnrs-button", "contents")],
         [Input({"type": "wnrs-deck-button", "id": ALL}, "style")],
         [Input({"type": "wnrs-deck-button", "id": ALL}, "id")],
+        Input("uploadwnrs-button", "contents"),
+        State("uploadwnrs-button", "filename"),
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_wnrs_list_of_decks(styles, ids):
+    def update_wnrs_list_of_decks(styles, ids, contents, filename):
         """Update list of decks selected
 
         Args:
-            args (dict): current style of all buttons
+            styles (dict): current style of all buttons
+            ids (dict): current id of all buttons
+            contents (str): contents of data uploaded, triggers callback
+            filename (str): filename of data uploaded
 
         Returns:
             dict: updated style of all buttons
         """
+        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         data = {}
         list_of_deck = []
-        for _style, _id in zip(styles, ids):
-            if _style is not None and _style["background-color"] == "#BE9B89":
-                list_of_deck.append(_id["id"])
-        if len(list_of_deck):
-            wnrs_game = WNRS()
-            wnrs_game.initialize_game(list_of_deck)
-            data = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
-        return data
+        if ctx == "uploadwnrs-button":  # upload past progress
+            if "json" not in filename:
+                data["error"] = return_message["file_not_uploaded_json"]
+            else:
+                data = parse_data(contents, filename)
+                data = json.loads(data.decode("utf-8"))
+                try:
+                    wnrs_game = WNRS()
+                    wnrs_game.load_game(
+                        data["list_of_deck"], data["pointer"], data["index"]
+                    )
+                    data = dict(
+                        playing_cards=wnrs_game.playing_cards,
+                        list_of_deck=wnrs_game.list_of_deck,
+                        pointer=wnrs_game.pointer,
+                        index=wnrs_game.index,
+                    )
+                except KeyError:
+                    data["error"] = return_message["wrong_format_json"]
+        else:
+            for _style, _id in zip(styles, ids):
+                if _style is not None and _style["background-color"] == "#BE9B89":
+                    list_of_deck.append(_id["id"])
+            if len(list_of_deck):
+                wnrs_game = WNRS()
+                wnrs_game.initialize_game(list_of_deck)
+                data = dict(
+                    playing_cards=wnrs_game.playing_cards,
+                    list_of_deck=wnrs_game.list_of_deck,
+                    pointer=wnrs_game.pointer,
+                    index=wnrs_game.index,
+                )
+        return data, ""
 
     @app.callback(
         [
@@ -230,10 +263,8 @@ def register_callbacks(app, print_function):
             Input("button-wnrs2-next", "n_clicks"),
             Input("button-wnrs-shuffle-ok", "n_clicks"),
             Input("intermediate-wnrs", "data"),
-            Input("uploadbutton-wnrs", "contents"),
         ],
         [
-            State("uploadbutton-wnrs", "filename"),
             State("input-wnrs", "value"),
             State("wnrs-prompt", "children"),
             State("wnrs-card", "style"),
@@ -249,8 +280,6 @@ def register_callbacks(app, print_function):
         trigger_next2,
         trigger_shuffle,
         data,
-        contents,
-        filename,
         data2_ser,
         card_prompt,
         current_style,
@@ -265,10 +294,8 @@ def register_callbacks(app, print_function):
             trigger_back2: trigger on button click
             trigger_next2: trigger on button click
             trigger_shuffle: trigger on button click
-            data (dict): data of WNRS object
-            contents (str): contents of data uploaded, triggers callback
-            filename (str): filename of data uploaded
-            data2_ser (str): serialized data of WNRS object
+            data (dict): data of WNRS object, from store data
+            data2_ser (str): serialized data of WNRS object, from saved data
             card_prompt (str/list): current prompt on card
             current_style (dict): current style of card
             button_back (dict): current opacity for back button
@@ -284,38 +311,35 @@ def register_callbacks(app, print_function):
             {},
         )
         next_card = 0
+        data2 = decode_dict(data2_ser)
+        data_new = {}
+
         if dash.callback_context.triggered:
             ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             data2 = decode_dict(data2_ser)
-            if ctx == "intermediate-wnrs":
-                if "wnrs_game_dict" not in data:
+
+            if "error" in data:
+                card_prompt[0] = html.P(data["error"])
+                data2 = {"error": data["error"]}
+                ctx = ""
+            if ctx == "intermediate-wnrs":  # new decks selected
+                if "playing_cards" not in data:
                     card_prompt[0] = html.P(return_message["card_not_select"])
-                else:  # dummy callback
-                    data_new = data.copy()
-            elif ctx == "uploadbutton-wnrs":
-                if "json" not in filename:
-                    card_prompt[0] = html.P(return_message["file_not_uploaded_json"])
+                    data2 = {"error": return_message["card_not_select"]}
                 else:
-                    data = parse_data(contents, filename)
-                    data = json.loads(data.decode("utf-8"))
-                    try:
-                        wnrs_game = WNRS()
-                        wnrs_game.load_game(
-                            data["list_of_deck"], data["pointer"], data["index"]
-                        )
-                        data_new = dict(
-                            list_of_deck=data["list_of_deck"],
-                            wnrs_game_dict=wnrs_game.__dict__,
-                        )
-                    except KeyError:
-                        card_prompt[0] = html.P(return_message["wrong_format_json"])
+                    data_new = dict(
+                        playing_cards=data["playing_cards"],
+                        list_of_deck=data["list_of_deck"],
+                        pointer=data["pointer"],
+                        index=data["index"],
+                    )
+
             elif ctx in [
                 "button-wnrs-back",
                 "button-wnrs2-back",
                 "button-wnrs-next",
                 "button-wnrs2-next",
             ]:
-                data_new = data2.copy()
                 if not button_next.get("opacity", True):
                     if ctx.endswith("back"):
                         next_card = -1
@@ -323,19 +347,37 @@ def register_callbacks(app, print_function):
                         next_card = 1
                 else:
                     button_back = button_next = dict(opacity=0)
+                if "playing_cards" in data:
+                    data_new = dict(
+                        playing_cards=data["playing_cards"],
+                        list_of_deck=data2["list_of_deck"],
+                        pointer=data2["pointer"],
+                        index=data2["index"],
+                    )
             elif ctx == "button-wnrs-shuffle-ok":
-                data_new = data2.copy()
-                next_card = 2
+                if not button_next.get("opacity", True):
+                    next_card = 2
+                if "playing_cards" in data:
+                    data_new = dict(
+                        playing_cards=data["playing_cards"],
+                        list_of_deck=data2["list_of_deck"],
+                        pointer=data2["pointer"],
+                        index=data2["index"],
+                    )
         elif data2_ser is None:
             print("Not triggered")
-            data_new = data.copy()
+            data_new = {}
         else:  # initial run
-            data2 = decode_dict(data2_ser)
-            data_new = data2.copy()
+            data_new = dict(
+                playing_cards=data["playing_cards"],
+                list_of_deck=data2["list_of_deck"],
+                pointer=data2["pointer"],
+                index=data2["index"],
+            )
 
         if len(data_new) > 1:
             wnrs_game = WNRS()
-            wnrs_game.load_game_from_dict(data_new["wnrs_game_dict"])
+            wnrs_game.load_game_from_dict(data_new)
             if next_card == 1:
                 (
                     card_deck,
@@ -364,11 +406,10 @@ def register_callbacks(app, print_function):
                     card_style,
                     card_counter,
                 ) = wnrs_game.shuffle_remaining_cards()
-            data_new["wnrs_game_dict"] = wnrs_game.__dict__
             current_style.update(card_style)
-        data_new2 = encode_dict(data_new)
+            data2 = wnrs_game.convert_to_save_format()
         return [
-            data_new2,
+            encode_dict(data2),
             *card_prompt,
             card_deck,
             card_counter,

@@ -11,7 +11,8 @@ def wnrs_tab(app):
     list_of_deck = ["Main Deck 1"]
     wnrs_game.initialize_game(list_of_deck)
     wnrs_information = wnrs_game.get_information()
-    data_default = dict(list_of_deck=list_of_deck, wnrs_game_dict=wnrs_game.__dict__)
+    data_store = wnrs_game.convert_to_store_format()
+    data_save = wnrs_game.convert_to_save_format()
 
     main_deck = html.Div(
         [
@@ -864,19 +865,6 @@ def wnrs_tab(app):
                 title="Show/hide deck selection",
                 style={},
             ),
-            html.A(
-                [
-                    dcc.Upload(
-                        [
-                            html.Span(
-                                "Upload past progress", title="Upload past progress"
-                            )
-                        ],
-                        id="uploadbutton-wnrs",
-                        multiple=False,
-                    )
-                ]
-            ),
             html.Button(
                 " + Instructions",
                 id="button-wnrs-instruction-ok",
@@ -1053,39 +1041,75 @@ def wnrs_tab(app):
                     html.Div(
                         [
                             html.P("- / -", id="wnrs-counter"),
+                        ]
+                    ),
+                    html.Div(
+                        [
                             html.Button(
-                                "Previous", id="button-wnrs-back", style=style_hidden
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("next.png")),
+                                    title="Back",
+                                ),
+                                id="button-wnrs-back",
+                                className="div-with-image small-image image-dark-blue invisible-button image-horizontal-flip vertical-center",
                             ),
                             html.Button(
-                                "Next", id="button-wnrs-next", style=style_hidden
-                            ),
-                            html.Button(
-                                "Shuffle Remaining Cards", id="button-wnrs-shuffle-ok"
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("shuffle.png")),
+                                    title="Shuffle remaining cards",
+                                ),
+                                id="button-wnrs-shuffle-ok",
+                                className="div-with-image small-image invisible-button vertical-center",
                             ),
                             html.Form(
                                 [
                                     dcc.Input(
-                                        value=encode_dict(data_default),
+                                        value=encode_dict(data_save),
                                         name="result",
                                         type="text",
                                         style=style_hidden,
                                         id="input-wnrs",
                                     ),
                                     html.Button(
-                                        [
+                                        html.Span(
                                             html.Img(
                                                 src=app.get_asset_url("download.svg")
                                             ),
-                                            html.Span("Save Progress"),
-                                        ],
+                                            title="Save progress",
+                                        ),
                                         type="submit",
                                         id="button-wnrs-download-ok",
-                                        className="div-with-image div-with-image-left small-image",
+                                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                                     ),
                                 ],
                                 method="POST",
                                 action="/download_dict/",
                                 style={"display": "inline-block"},
+                            ),
+                            html.A(
+                                [
+                                    dcc.Upload(
+                                        [
+                                            html.Span(
+                                                html.Img(
+                                                    src=app.get_asset_url("upload.svg")
+                                                ),
+                                                title="Upload past progress",
+                                            ),
+                                        ],
+                                        id="uploadwnrs-button",
+                                        multiple=False,
+                                    )
+                                ],
+                                className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("next.png")),
+                                    title="Next",
+                                ),
+                                id="button-wnrs-next",
+                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                         ]
                     ),
@@ -1096,6 +1120,6 @@ def wnrs_tab(app):
                     "margin-bottom": 0,
                 },
             ),
-            dcc.Store(id="intermediate-wnrs", storage_type="memory", data=data_default),
+            dcc.Store(id="intermediate-wnrs", storage_type="memory", data=data_store),
         ]
     )
