@@ -106,7 +106,7 @@ footer
         transform: scale(1.1);
     }
     [id^="button-wnrs"], [id^="uploadbutton-"], .button-wnrs {
-        padding: 0px 5px;
+        padding: 0px 10px;
         margin-right: 5px;
         font-size: 10px;
         letter-spacing: 0 !important;

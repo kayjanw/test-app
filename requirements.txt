@@ -4,7 +4,7 @@ astor==0.8.0
 certifi==2022.12.7
 chardet==3.0.4
 charset-normalizer==2.0.3
-dash==2.0.0
+dash==2.7.0
 dash-bootstrap-components==1.0.2
 dash-core-components==2.0.0
 dash-html-components==2.0.0

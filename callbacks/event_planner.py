@@ -120,6 +120,7 @@ def register_callbacks(app, print_function):
                     hide_flag,
                     style,
                 )
+                result = result[:3]
             else:
                 result_error = [return_message["file_not_uploaded"]]
         return html.P(result_error), style, result
