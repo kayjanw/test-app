@@ -1,4 +1,5 @@
 import dash
+from dash import ctx
 from dash.dependencies import Input, Output, State
 
 from components import RandomGenerator
@@ -55,17 +56,16 @@ def register_callbacks(app, print_function):
             dict: updated style of item and group button
         """
         if dash.callback_context.triggered:
-            ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
             if not item_button_style:
                 item_button_style = {}
             if not group_button_style:
                 group_button_style = {}
-            if ctx == "button-rng-item-ok":
+            if ctx.triggered_id == "button-rng-item-ok":
                 item_style.update(flex_style)
                 item_button_style.update(show_button_style)
                 group_style.update(hide_style)
                 group_button_style.update(hide_button_style)
-            elif ctx == "button-rng-group-ok":
+            elif ctx.triggered_id == "button-rng-group-ok":
                 item_style.update(hide_style)
                 item_button_style.update(hide_button_style)
                 group_style.update(flex_style)

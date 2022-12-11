@@ -1,4 +1,4 @@
-import dash
+from dash import ctx
 from dash.dependencies import Input, Output, State
 
 from components import TripPlanner
@@ -38,10 +38,9 @@ def register_callbacks(app, print_function):
             - (dict): style of table that displays landmarks information
             - (str): reset name of next landmark to be added
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
-        if ctx == "button-trip-remove":
+        if ctx.triggered_id == "button-trip-remove":
             data = TripPlanner().remove_last_point_on_table(data)
-        elif ctx == "button-trip-reset":
+        elif ctx.triggered_id == "button-trip-reset":
             data = []
         else:
             if e is not None:
@@ -88,13 +87,12 @@ def register_callbacks(app, print_function):
         Returns:
             (str/list)
         """
-        ctx = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
         result = ""
-        if ctx == "button-trip-ok":
+        if ctx.triggered_id == "button-trip-ok":
             try:
                 result = TripPlanner().optimiser_pipeline(data)
             except IndexError:
                 result = TripPlanner().optimiser_pipeline(data)
-        elif ctx == "button-trip-reset":
+        elif ctx.triggered_id == "button-trip-reset":
             pass
         return result
