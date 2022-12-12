@@ -869,81 +869,11 @@ def wnrs_tab(app):
                 " + Instructions",
                 id="button-wnrs-instruction-ok",
                 title="How to play",
-                style={},
-            ),
-            html.Button(
-                " + Contribute",
-                id="button-wnrs-suggestion-ok",
-                title="Send in your card prompt ideas",
-                style={},
+                style={"display": "none"},
             ),
             html.Br(),
             html.Div(
-                [
-                    html.P("How to Play (2-6 players)", className="p-short p-bold"),
-                    html.P(
-                        "The game is played on a single device. Sit in a circle with device in middle of all "
-                        "players. Select the decks you want to play with and the levels. Players take turn to "
-                        "answer questions shown on the screen and tap on the right side of card to proceed to next "
-                        "question."
-                    ),
-                    html.P(
-                        "Wildcards",
-                        style={"margin-top": "20px"},
-                        className="p-short p-bold",
-                    ),
-                    html.P(
-                        "If you're presented with a wildcard you must complete the instructions otherwise stated. "
-                        "These cards can appear at any moment during the game!"
-                    ),
-                    html.P(
-                        "Save your progress!",
-                        style={"margin-top": "20px"},
-                        className="p-short p-bold",
-                    ),
-                    html.P(
-                        "Couldn't manage to go through all the cards in one session? Save your progress by clicking "
-                        "on the 'Save progress' button at the bottom of the page and load the game next time to "
-                        "pick up exactly where you left off."
-                    ),
-                    html.P(
-                        "Have fun!",
-                        style={"margin-top": "20px"},
-                        className="p-short p-bold",
-                    ),
-                ],
                 id="div-wnrs-instruction",
-                className="custom-div-full custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%", "margin-top": "20px"},
-            ),
-            html.Div(
-                [
-                    html.P(
-                        "You can contribute too! Suggest prompts that you would like to see in the game, "
-                        "or contribute a card game!",
-                    ),
-                    html.P(
-                        dcc.Input(
-                            id="input-wnrs-suggestion",
-                            type="text",
-                            placeholder="Your prompt(s)",
-                            style={"width": "100%", "margin-bottom": "3px"},
-                        ),
-                    ),
-                    html.P(
-                        dcc.Textarea(
-                            id="input-wnrs-suggestion2",
-                            value="",
-                            placeholder="(Optional) Additional comments or feedback, include your contact details "
-                            "if you expect a reply!",
-                            style={"width": "100%"},
-                        ),
-                    ),
-                    html.Br(),
-                    html.Button("Send", id="button-wnrs-send-ok"),
-                    html.P(id="wnrs-suggestion-reply"),
-                ],
-                id="div-wnrs-suggestion",
                 className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
@@ -1055,6 +985,14 @@ def wnrs_tab(app):
                             ),
                             html.Button(
                                 html.Span(
+                                    html.Img(src=app.get_asset_url("help.png")),
+                                    title="How to play",
+                                ),
+                                id={"type": "button-modal-wnrs", "index": "modal-help"},
+                                className="div-with-image small-image invisible-button vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
                                     html.Img(src=app.get_asset_url("shuffle.png")),
                                     title="Shuffle remaining cards",
                                 ),
@@ -1105,6 +1043,17 @@ def wnrs_tab(app):
                             ),
                             html.Button(
                                 html.Span(
+                                    html.Img(src=app.get_asset_url("idea.png")),
+                                    title="Send in your card prompt ideas",
+                                ),
+                                id={
+                                    "type": "button-modal-wnrs",
+                                    "index": "modal-contribute",
+                                },
+                                className="div-with-image small-image invisible-button vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
                                     html.Img(src=app.get_asset_url("next.png")),
                                     title="Next",
                                 ),
@@ -1112,6 +1061,99 @@ def wnrs_tab(app):
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                         ]
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("Instructions")),
+                            dbc.ModalBody(
+                                [
+                                    html.P(
+                                        "How to Play (2-6 players)",
+                                        className="p-short p-bold",
+                                    ),
+                                    html.P(
+                                        "The game is played on a single device. Sit in a circle with device in "
+                                        "middle of all players. Select the decks you want to play with and the levels. "
+                                        "Players take turn to answer questions shown on the screen and tap on the right "
+                                        "side of card to proceed to next question."
+                                    ),
+                                    html.Br(),
+                                    html.P(
+                                        "Wildcards",
+                                        style={"margin-top": "20px"},
+                                        className="p-short p-bold",
+                                    ),
+                                    html.P(
+                                        "If you're presented with a wildcard you must complete the instructions "
+                                        "otherwise stated. These cards can appear at any moment during the game!"
+                                    ),
+                                    html.Br(),
+                                    html.P(
+                                        "Save your progress!",
+                                        style={"margin-top": "20px"},
+                                        className="p-short p-bold",
+                                    ),
+                                    html.P(
+                                        "Couldn't manage to go through all the cards in one session? Save your progress "
+                                        "by clicking on the 'Save progress' button at the bottom of the page and load the "
+                                        "game next time to pick up exactly where you left off."
+                                    ),
+                                    html.Br(),
+                                    html.P(
+                                        "Have fun!",
+                                        style={"margin-top": "20px"},
+                                        className="p-short p-bold",
+                                    ),
+                                    html.Br(),
+                                    html.Br(),
+                                ]
+                            ),
+                        ],
+                        id={"type": "modal-wnrs", "index": "modal-help"},
+                        is_open=False,
+                        centered=True,
+                        size="lg",
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("Contribute")),
+                            dbc.ModalBody(
+                                [
+                                    html.P(
+                                        "You can contribute too! Suggest prompts that you would like to see in the game, "
+                                        "or contribute a card game!",
+                                    ),
+                                    html.P(
+                                        dcc.Input(
+                                            id="input-wnrs-suggestion",
+                                            type="text",
+                                            placeholder="Your prompt(s)",
+                                            style={
+                                                "width": "100%",
+                                                "margin-bottom": "3px",
+                                            },
+                                        ),
+                                    ),
+                                    html.P(
+                                        dcc.Textarea(
+                                            id="input-wnrs-suggestion2",
+                                            value="",
+                                            placeholder="(Optional) Additional comments or feedback, include your "
+                                            "contact details if you expect a reply!",
+                                            style={"width": "100%"},
+                                        ),
+                                    ),
+                                    html.Br(),
+                                    html.Button("Send", id="button-wnrs-send-ok"),
+                                    html.P(id="wnrs-suggestion-reply"),
+                                    html.Br(),
+                                ]
+                            ),
+                        ],
+                        id={"type": "modal-wnrs", "index": "modal-contribute"},
+                        is_open=False,
+                        centered=True,
+                        size="lg",
                     ),
                 ],
                 className="custom-container custom-div-space-above custom-div-space-below",

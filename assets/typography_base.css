@@ -9,6 +9,8 @@
 - Input
 - Label
 - Button
+- Card
+- Modal
 */
 
 /* Base Styles
@@ -179,4 +181,33 @@ button[disabled] {
     background-color: #cccccc;
     opacity: 0.6;
     pointer-events: none;
+}
+
+/* Card
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card-group {
+    display: grid;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card {
+    display: inline-block;
+    height: 30vh;
+    vertical-align: top;
+    overflow: hidden;
+    padding: 10px;
+    margin: 2px 1vw;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+.card-header {
+    text-decoration: underline;
+}
+
+/* Modal
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.modal-title {
+    font-weight: bold;
 }
