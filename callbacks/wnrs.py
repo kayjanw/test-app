@@ -24,23 +24,18 @@ def register_callbacks(app, print_function):
         [
             Output("div-wnrs-selection", "style"),
             Output("div-wnrs-instruction", "style"),
-            Output("div-wnrs-suggestion", "style"),
             Output("button-wnrs-show-ok", "style"),
             Output("button-wnrs-instruction-ok", "style"),
-            Output("button-wnrs-suggestion-ok", "style"),
         ],
         [
             Input("button-wnrs-show-ok", "n_clicks"),
             Input("button-wnrs-instruction-ok", "n_clicks"),
-            Input("button-wnrs-suggestion-ok", "n_clicks"),
         ],
         [
             State("div-wnrs-selection", "style"),
             State("div-wnrs-instruction", "style"),
-            State("div-wnrs-suggestion", "style"),
             State("button-wnrs-show-ok", "style"),
             State("button-wnrs-instruction-ok", "style"),
-            State("button-wnrs-suggestion-ok", "style"),
         ],
         prevent_initial_call=True,
     )
@@ -48,26 +43,20 @@ def register_callbacks(app, print_function):
     def update_wnrs_deck_style(
         trigger_selection,
         trigger_instruction,
-        trigger_suggestion,
         selection_style,
         instruction_style,
-        suggestion_style,
         selection_button_style,
         instruction_button_style,
-        suggestion_button_style,
     ):
         """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
             trigger_selection: trigger on button click
             trigger_instruction: trigger on button click
-            trigger_suggestion: trigger on button click
             selection_style (dict): current style of card selection div
             instruction_style (dict): current style of instruction div
-            suggestion_style (dict): current style of card suggestion div
             selection_button_style(dict): current style of card selection button
             instruction_button_style (dict): current style of instruction button
-            suggestion_button_style (dict): current style of card suggestion button
 
         Returns:
             dict: updated style of card selection, instruction and card suggestion div and button
@@ -82,8 +71,6 @@ def register_callbacks(app, print_function):
                     selection_button_style.update(show_button_style)
                 instruction_style.update(hide_style)
                 instruction_button_style.update(hide_button_style)
-                suggestion_style.update(hide_style)
-                suggestion_button_style.update(hide_button_style)
             elif ctx.triggered_id == "button-wnrs-instruction-ok":
                 if instruction_style["display"] == "inline-block":
                     instruction_style.update(hide_style)
@@ -93,27 +80,33 @@ def register_callbacks(app, print_function):
                     instruction_button_style.update(show_button_style)
                 selection_style.update(hide_style)
                 selection_button_style.update(hide_button_style)
-                suggestion_style.update(hide_style)
-                suggestion_button_style.update(hide_button_style)
-            elif ctx.triggered_id == "button-wnrs-suggestion-ok":
-                if suggestion_style["display"] == "inline-block":
-                    suggestion_style.update(hide_style)
-                    suggestion_button_style.update(hide_button_style)
-                else:
-                    suggestion_style.update(inline_style)
-                    suggestion_button_style.update(show_button_style)
-                selection_style.update(hide_style)
-                selection_button_style.update(hide_button_style)
-                instruction_style.update(hide_style)
-                instruction_button_style.update(hide_button_style)
         return (
             selection_style,
             instruction_style,
-            suggestion_style,
             selection_button_style,
             instruction_button_style,
-            suggestion_button_style,
         )
+
+    @app.callback(
+        Output({"type": "modal-wnrs", "index": MATCH}, "is_open"),
+        Input({"type": "button-modal-wnrs", "index": MATCH}, "n_clicks"),
+        State({"type": "modal-wnrs", "index": MATCH}, "is_open"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_modal_display(trigger_open, is_open):
+        """Update modal display
+
+        Args:
+            trigger_open: trigger on button click
+            is_open (bool): current state of open
+
+        Returns:
+            (bool)
+        """
+        if trigger_open:
+            return not is_open
+        return is_open
 
     @app.callback(
         [
@@ -206,6 +199,7 @@ def register_callbacks(app, print_function):
         Returns:
             dict: updated style of all buttons
         """
+        shaded_colour = "#BE9B89"
         data = {}
         list_of_deck = []
         if ctx.triggered_id == "uploadwnrs-button":  # upload past progress
@@ -229,7 +223,7 @@ def register_callbacks(app, print_function):
                     data["error"] = return_message["wrong_format_json"]
         else:
             for _style, _id in zip(styles, ids):
-                if _style is not None and _style["background-color"] == "#BE9B89":
+                if _style is not None and _style["background-color"] == shaded_colour:
                     list_of_deck.append(_id["id"])
             if len(list_of_deck):
                 wnrs_game = WNRS()
