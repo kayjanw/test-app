@@ -940,6 +940,14 @@ def wnrs_tab(app):
                             ),
                             html.Button(
                                 html.Span(
+                                    html.Img(src=app.get_asset_url("help.png")),
+                                    title="How to play",
+                                ),
+                                id={"type": "button-modal-wnrs", "index": "modal-help"},
+                                className="div-with-image small-image invisible-button vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
                                     html.Img(src=app.get_asset_url("game.png")),
                                     title="Select deck",
                                 ),
@@ -947,14 +955,6 @@ def wnrs_tab(app):
                                     "type": "button-modal-wnrs",
                                     "index": "modal-select",
                                 },
-                                className="div-with-image small-image invisible-button vertical-center",
-                            ),
-                            html.Button(
-                                html.Span(
-                                    html.Img(src=app.get_asset_url("help.png")),
-                                    title="How to play",
-                                ),
-                                id={"type": "button-modal-wnrs", "index": "modal-help"},
                                 className="div-with-image small-image invisible-button vertical-center",
                             ),
                             html.Button(
