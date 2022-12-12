@@ -54,7 +54,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_bff = html.Div(
@@ -91,7 +91,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_bizz = html.Div(
@@ -128,7 +128,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_date = html.Div(
@@ -165,7 +165,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     crossover_cann = html.Div(
@@ -208,7 +208,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     crossover_valentino = html.Div(
@@ -241,7 +241,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     expansion_honest_dating = html.Div(
@@ -287,7 +287,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     expansion_inner_circle = html.Div(
@@ -324,7 +324,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     expansion_own_it = html.Div(
@@ -351,7 +351,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     expansion_relationship = html.Div(
@@ -388,7 +388,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     online_race_privilege = html.Div(
@@ -437,7 +437,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     online_quarantine = html.Div(
@@ -482,7 +482,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     online_voting = html.Div(
@@ -509,7 +509,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_breakup = html.Div(
@@ -541,7 +541,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_existential = html.Div(
@@ -579,7 +579,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_forgiveness = html.Div(
@@ -606,7 +606,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_healing = html.Div(
@@ -633,7 +633,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_self_love = html.Div(
@@ -668,7 +668,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     single_self_reflection = html.Div(
@@ -703,7 +703,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     gottman_love_maps = html.Div(
@@ -730,7 +730,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     gottman_open_ended = html.Div(
@@ -757,7 +757,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     gottman_rituals = html.Div(
@@ -787,7 +787,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     gottman_opportunity = html.Div(
@@ -814,7 +814,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     gottman_couple = html.Div(
@@ -853,7 +853,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
+        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
     )
 
     return html.Div(

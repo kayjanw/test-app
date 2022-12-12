@@ -33,6 +33,7 @@ custom-div-space-above, custom-div-space-below, custom-div-space-left
 custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
 
+margin-bottom-20
 p-short, p-bold
 invisible-button
 vertical-center
@@ -239,7 +240,6 @@ footer
 [id^="button-wnrs-"], [id^="uploadbutton-"], .button-wnrs {
     background-color: #F0E3DF;
     box-shadow: 1px 1px 2px #BE9B89;
-    margin-bottom: 10px;
     margin-top: 0;
 }
 
@@ -456,6 +456,10 @@ footer
 
 .custom-div-full {
     width: 100%;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px !important;
 }
 
 .p-short {
