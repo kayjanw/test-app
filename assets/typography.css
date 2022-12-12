@@ -624,10 +624,17 @@ footer
 }
 
 [class^="tooltip"] {
-    background-color: #F0E3DF;
-    margin-left: 2px;
-    padding: 3px;
+
+}
+
+.tooltip {
+    background-color: #57555A;
+    color: white;
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 15px;
     white-space: pre;
+    z-index: 9999;
 }
 
 /* Custom id (tabs content)
