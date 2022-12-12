@@ -89,22 +89,26 @@ def register_callbacks(app, print_function):
 
     @app.callback(
         Output({"type": "modal-wnrs", "index": MATCH}, "is_open"),
-        Input({"type": "button-modal-wnrs", "index": MATCH}, "n_clicks"),
+        [
+            Input({"type": "button-modal-wnrs", "index": MATCH}, "n_clicks"),
+            Input({"type": "button-close-modal-wnrs", "index": MATCH}, "n_clicks"),
+        ],
         State({"type": "modal-wnrs", "index": MATCH}, "is_open"),
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_modal_display(trigger_open, is_open):
+    def update_modal_display(trigger_open, trigger_close, is_open):
         """Update modal display
 
         Args:
             trigger_open: trigger on button click
+            trigger_close: trigger on button click
             is_open (bool): current state of open
 
         Returns:
             (bool)
         """
-        if trigger_open:
+        if trigger_open or trigger_close:
             return not is_open
         return is_open
 

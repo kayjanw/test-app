@@ -54,7 +54,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_bff = html.Div(
@@ -91,7 +91,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_bizz = html.Div(
@@ -128,7 +128,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     crossover_bumble_date = html.Div(
@@ -165,7 +165,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     crossover_cann = html.Div(
@@ -208,7 +208,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     crossover_valentino = html.Div(
@@ -241,7 +241,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     expansion_honest_dating = html.Div(
@@ -287,7 +287,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     expansion_inner_circle = html.Div(
@@ -324,7 +324,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     expansion_own_it = html.Div(
@@ -351,7 +351,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     expansion_relationship = html.Div(
@@ -388,7 +388,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     online_race_privilege = html.Div(
@@ -437,7 +437,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     online_quarantine = html.Div(
@@ -482,7 +482,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     online_voting = html.Div(
@@ -509,7 +509,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_breakup = html.Div(
@@ -541,7 +541,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_existential = html.Div(
@@ -579,7 +579,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_forgiveness = html.Div(
@@ -606,7 +606,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_healing = html.Div(
@@ -633,7 +633,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_self_love = html.Div(
@@ -668,7 +668,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     single_self_reflection = html.Div(
@@ -703,7 +703,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     gottman_love_maps = html.Div(
@@ -730,7 +730,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     gottman_open_ended = html.Div(
@@ -757,7 +757,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     gottman_rituals = html.Div(
@@ -787,7 +787,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     gottman_opportunity = html.Div(
@@ -814,7 +814,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     gottman_couple = html.Div(
@@ -853,7 +853,7 @@ def wnrs_tab(app):
                 className="wnrs-level",
             ),
         ],
-        className="custom-div-flex margin-bottom-20 div-with-image div-with-image-left small-image",
+        className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
     return html.Div(
@@ -863,7 +863,7 @@ def wnrs_tab(app):
                 "Select deck",
                 id="button-wnrs-show-ok",
                 title="Show/hide deck selection",
-                style={},
+                style={"display": "none"},
             ),
             html.Button(
                 " + Instructions",
@@ -871,57 +871,12 @@ def wnrs_tab(app):
                 title="How to play",
                 style={"display": "none"},
             ),
-            html.Br(),
             html.Div(
                 id="div-wnrs-instruction",
                 className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
-                [
-                    html.Div(
-                        [
-                            html.P("Main Deck"),
-                            main_deck,
-                            html.P("Crossover", style=style_wnrs_text),
-                            crossover_bumble_bff,
-                            crossover_bumble_bizz,
-                            crossover_bumble_date,
-                            crossover_cann,
-                            crossover_valentino,
-                            html.P("Expansion", style=style_wnrs_text),
-                            expansion_honest_dating,
-                            expansion_inner_circle,
-                            expansion_own_it,
-                            expansion_relationship,
-                            html.P("Online", style=style_wnrs_text),
-                            online_race_privilege,
-                            online_quarantine,
-                            online_voting,
-                            html.P("Single-Player", style=style_wnrs_text),
-                            single_breakup,
-                            single_existential,
-                            single_forgiveness,
-                            single_healing,
-                            single_self_love,
-                            single_self_reflection,
-                            html.P(
-                                [
-                                    "Gotmann Card Deck",
-                                    html.Sup(
-                                        "improve relationship", className="blinker"
-                                    ),
-                                ],
-                                style=style_wnrs_text,
-                            ),
-                            gottman_love_maps,
-                            gottman_open_ended,
-                            gottman_rituals,
-                            gottman_opportunity,
-                            gottman_couple,
-                        ]
-                    ),
-                ],
                 id="div-wnrs-selection",
                 className="custom-div-full custom-div-dark image-dark-bg",
                 style={"display": "none", "width": "90%", "margin-top": "20px"},
@@ -982,6 +937,17 @@ def wnrs_tab(app):
                                 ),
                                 id="button-wnrs-back",
                                 className="div-with-image small-image image-dark-blue invisible-button image-horizontal-flip vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("game.png")),
+                                    title="Select deck",
+                                ),
+                                id={
+                                    "type": "button-modal-wnrs",
+                                    "index": "modal-select",
+                                },
+                                className="div-with-image small-image invisible-button vertical-center",
                             ),
                             html.Button(
                                 html.Span(
@@ -1074,8 +1040,8 @@ def wnrs_tab(app):
                                     html.P(
                                         "The game is played on a single device. Sit in a circle with device in "
                                         "middle of all players. Select the decks you want to play with and the levels. "
-                                        "Players take turn to answer questions shown on the screen and tap on the right "
-                                        "side of card to proceed to next question."
+                                        "Players take turn to answer questions shown on the screen and tap on the "
+                                        "right side of card to proceed to next question."
                                     ),
                                     html.Br(),
                                     html.P(
@@ -1094,9 +1060,9 @@ def wnrs_tab(app):
                                         className="p-short p-bold",
                                     ),
                                     html.P(
-                                        "Couldn't manage to go through all the cards in one session? Save your progress "
-                                        "by clicking on the 'Save progress' button at the bottom of the page and load the "
-                                        "game next time to pick up exactly where you left off."
+                                        "Couldn't manage to go through all the cards in one session? Save your "
+                                        "progress by clicking on the 'Save progress' button at the bottom of "
+                                        "the page and load the game next time to pick up exactly where you left off."
                                     ),
                                     html.Br(),
                                     html.P(
@@ -1107,6 +1073,15 @@ def wnrs_tab(app):
                                     html.Br(),
                                     html.Br(),
                                 ]
+                            ),
+                            dbc.ModalFooter(
+                                dbc.Button(
+                                    "Close",
+                                    id={
+                                        "type": "button-close-modal-wnrs",
+                                        "index": "modal-help",
+                                    },
+                                )
                             ),
                         ],
                         id={"type": "modal-wnrs", "index": "modal-help"},
@@ -1149,8 +1124,80 @@ def wnrs_tab(app):
                                     html.Br(),
                                 ]
                             ),
+                            dbc.ModalFooter(
+                                dbc.Button(
+                                    "Close",
+                                    id={
+                                        "type": "button-close-modal-wnrs",
+                                        "index": "modal-contribute",
+                                    },
+                                )
+                            ),
                         ],
                         id={"type": "modal-wnrs", "index": "modal-contribute"},
+                        is_open=False,
+                        centered=True,
+                        size="lg",
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("Select Deck")),
+                            dbc.ModalBody(
+                                [
+                                    html.P("Main Deck"),
+                                    main_deck,
+                                    html.P("Crossover", style=style_wnrs_text),
+                                    crossover_bumble_bff,
+                                    crossover_bumble_bizz,
+                                    crossover_bumble_date,
+                                    crossover_cann,
+                                    crossover_valentino,
+                                    html.P("Expansion", style=style_wnrs_text),
+                                    expansion_honest_dating,
+                                    expansion_inner_circle,
+                                    expansion_own_it,
+                                    expansion_relationship,
+                                    html.P("Online", style=style_wnrs_text),
+                                    online_race_privilege,
+                                    online_quarantine,
+                                    online_voting,
+                                    html.P("Single-Player", style=style_wnrs_text),
+                                    single_breakup,
+                                    single_existential,
+                                    single_forgiveness,
+                                    single_healing,
+                                    single_self_love,
+                                    single_self_reflection,
+                                    html.P(
+                                        [
+                                            "Gotmann Card Deck",
+                                            html.Sup(
+                                                "improve relationship",
+                                                className="blinker",
+                                            ),
+                                        ],
+                                        style=style_wnrs_text,
+                                    ),
+                                    gottman_love_maps,
+                                    gottman_open_ended,
+                                    gottman_rituals,
+                                    gottman_opportunity,
+                                    gottman_couple,
+                                    html.Br(),
+                                    html.Br(),
+                                ]
+                            ),
+                            dbc.ModalFooter(
+                                dbc.Button(
+                                    "Close",
+                                    id={
+                                        "type": "button-close-modal-wnrs",
+                                        "index": "modal-select",
+                                    },
+                                )
+                            ),
+                        ],
+                        id={"type": "modal-wnrs", "index": "modal-select"},
                         is_open=False,
                         centered=True,
                         size="lg",

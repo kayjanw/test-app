@@ -240,7 +240,8 @@ footer
 [id^="button-wnrs-"], [id^="uploadbutton-"], .button-wnrs {
     background-color: #F0E3DF;
     box-shadow: 1px 1px 2px #BE9B89;
-    margin-top: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 /* Dash leaflet style
@@ -456,10 +457,6 @@ footer
 
 .custom-div-full {
     width: 100%;
-}
-
-.margin-bottom-20 {
-    margin-bottom: 20px !important;
 }
 
 .p-short {
