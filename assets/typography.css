@@ -24,7 +24,7 @@ content-header
 div-with-image, div-with-image-left, div-with-image-right
 div-with-invisible-button
 small-image, medium-image
-image-dark-bg image-vertical-flip
+image-dark-bg image-vertical-flip image-horizontal-flip image-dark-blue
 
 custom-container
 custom-div-dark, custom-div-white
@@ -358,7 +358,7 @@ footer
 }
 
 .image-dark-blue {
-    filter: invert(10%) sepia(2%) saturate(5866%) hue-rotate(202deg) brightness(96%) contrast(91%);
+    /** filter: invert(10%) sepia(2%) saturate(5866%) hue-rotate(202deg) brightness(96%) contrast(91%); **/
 }
 
 .custom-container {
