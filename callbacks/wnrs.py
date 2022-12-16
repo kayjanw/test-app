@@ -340,6 +340,7 @@ def register_callbacks(app, print_function):
                         pointer=data["pointer"],
                         index=data["index"],
                     )
+                    style_text = dict()
 
             elif ctx_id in [
                 "button-wnrs-back",
