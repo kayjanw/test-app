@@ -1,4 +1,5 @@
 import dash_bootstrap_components as dbc
+import dash_daq as daq
 from dash import dcc, html
 
 from components import WNRS
@@ -1014,6 +1015,17 @@ def wnrs_tab(app):
                             ),
                             html.Button(
                                 html.Span(
+                                    html.Img(src=app.get_asset_url("palette.png")),
+                                    title="Customize theme",
+                                ),
+                                id={
+                                    "type": "button-modal-wnrs",
+                                    "index": "modal-palette",
+                                },
+                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
+                            ),
+                            html.Button(
+                                html.Span(
                                     html.Img(src=app.get_asset_url("idea.png")),
                                     title="Send in your card prompt ideas",
                                 ),
@@ -1096,56 +1108,6 @@ def wnrs_tab(app):
                     ),
                     dbc.Modal(
                         [
-                            dbc.ModalHeader(dbc.ModalTitle("Contribute")),
-                            dbc.ModalBody(
-                                [
-                                    html.P(
-                                        "You can contribute too! Suggest prompts that you would like to see in the game, "
-                                        "or contribute a card game!",
-                                    ),
-                                    html.P(
-                                        dcc.Input(
-                                            id="input-wnrs-suggestion",
-                                            type="text",
-                                            placeholder="Your prompt(s)",
-                                            style={
-                                                "width": "100%",
-                                                "margin-bottom": "3px",
-                                            },
-                                        ),
-                                    ),
-                                    html.P(
-                                        dcc.Textarea(
-                                            id="input-wnrs-suggestion2",
-                                            value="",
-                                            placeholder="(Optional) Additional comments or feedback, include your "
-                                            "contact details if you expect a reply!",
-                                            style={"width": "100%"},
-                                        ),
-                                    ),
-                                    html.Br(),
-                                    html.Button("Send", id="button-wnrs-send-ok"),
-                                    html.P(id="wnrs-suggestion-reply"),
-                                    html.Br(),
-                                ]
-                            ),
-                            dbc.ModalFooter(
-                                dbc.Button(
-                                    "Close",
-                                    id={
-                                        "type": "button-close-modal-wnrs",
-                                        "index": "modal-contribute",
-                                    },
-                                )
-                            ),
-                        ],
-                        id={"type": "modal-wnrs", "index": "modal-contribute"},
-                        is_open=False,
-                        centered=True,
-                        size="lg",
-                    ),
-                    dbc.Modal(
-                        [
                             dbc.ModalHeader(dbc.ModalTitle("Select Deck")),
                             dbc.ModalBody(
                                 [
@@ -1203,6 +1165,97 @@ def wnrs_tab(app):
                             ),
                         ],
                         id={"type": "modal-wnrs", "index": "modal-select"},
+                        is_open=False,
+                        centered=True,
+                        size="lg",
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("Customize Theme")),
+                            dbc.ModalBody(
+                                [
+                                    daq.ColorPicker(
+                                        id="colorpicker-wnrs-text",
+                                        label="Text Colour",
+                                        value=dict(),
+                                        className="custom-div-inline p-bold",
+                                    ),
+                                    daq.ColorPicker(
+                                        id="colorpicker-wnrs-background",
+                                        label="Background Colour",
+                                        value=dict(),
+                                        className="custom-div-inline p-bold",
+                                    ),
+                                ],
+                                className="custom-div-center",
+                            ),
+                            dbc.ModalFooter(
+                                [
+                                    dbc.Button(
+                                        "Reset",
+                                        id="button-reset-style",
+                                    ),
+                                    dbc.Button(
+                                        "Close",
+                                        id={
+                                            "type": "button-close-modal-wnrs",
+                                            "index": "modal-palette",
+                                        },
+                                    ),
+                                ]
+                            ),
+                        ],
+                        id={"type": "modal-wnrs", "index": "modal-palette"},
+                        is_open=False,
+                        centered=True,
+                        size="lg",
+                    ),
+                    dbc.Modal(
+                        [
+                            dbc.ModalHeader(dbc.ModalTitle("Contribute")),
+                            dbc.ModalBody(
+                                [
+                                    html.P(
+                                        "You can contribute too! Suggest prompts that you would like to see in the game, "
+                                        "or contribute a card game!",
+                                    ),
+                                    html.P(
+                                        dcc.Input(
+                                            id="input-wnrs-suggestion",
+                                            type="text",
+                                            placeholder="Your prompt(s)",
+                                            style={
+                                                "width": "100%",
+                                                "margin-bottom": "3px",
+                                            },
+                                        ),
+                                    ),
+                                    html.P(
+                                        dcc.Textarea(
+                                            id="input-wnrs-suggestion2",
+                                            value="",
+                                            placeholder="(Optional) Additional comments or feedback, include your "
+                                            "contact details if you expect a reply!",
+                                            style={"width": "100%"},
+                                        ),
+                                    ),
+                                    html.Br(),
+                                    html.Button("Send", id="button-wnrs-send-ok"),
+                                    html.P(id="wnrs-suggestion-reply"),
+                                    html.Br(),
+                                ]
+                            ),
+                            dbc.ModalFooter(
+                                dbc.Button(
+                                    "Close",
+                                    id={
+                                        "type": "button-close-modal-wnrs",
+                                        "index": "modal-contribute",
+                                    },
+                                )
+                            ),
+                        ],
+                        id={"type": "modal-wnrs", "index": "modal-contribute"},
                         is_open=False,
                         centered=True,
                         size="lg",

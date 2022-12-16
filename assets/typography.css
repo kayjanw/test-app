@@ -389,6 +389,10 @@ footer
     vertical-align: top;
 }
 
+.custom-div-inline {
+    display: inline-block;
+}
+
 .custom-div-flex {
     display: flex;
     vertical-align: middle;
