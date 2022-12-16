@@ -849,6 +849,11 @@ def wnrs_tab(app):
                         id={"type": "wnrs-deck-button", "id": "Couple 4"},
                         className="button-wnrs",
                     ),
+                    dbc.Button(
+                        "Level 5",
+                        id={"type": "wnrs-deck-button", "id": "Couple 5"},
+                        className="button-wnrs",
+                    ),
                 ],
                 className="wnrs-level",
             ),
