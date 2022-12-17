@@ -91,10 +91,10 @@ footer
     .small-image Img {
         height: 15px;
     }
-    .div-with-image-left Img {
+    .div-with-image-left Img, .div-with-small-image-left Img {
         margin-right: 5px
     }
-    .div-with-image-right Img {
+    .div-with-image-right Img, .div-with-small-image-right Img {
         margin-left: 5px;
     }
     .card-group {
@@ -114,7 +114,7 @@ footer
     }
     .span-short {
         width: 30vw;
-        margin-left: 2vw;
+        margin-left: 4vw;
         padding-right: 2vw;
     }
     Img[id$="-help"] {
@@ -170,6 +170,12 @@ footer
     .small-image Img {
         height: 20px;
     }
+    .div-with-small-image-left Img {
+        margin-right: 5px
+    }
+    .div-with-small-image-right Img {
+        margin-left: 5px;
+    }
     .div-with-image-left Img {
         margin-right: 10px
     }
@@ -189,7 +195,7 @@ footer
     }
     .span-short {
         width: 200px;
-        margin-left: 50px;
+        margin-left: 20px;
     }
     .blinker {
         display: inline-block;
@@ -343,6 +349,30 @@ footer
 
 .medium-image Img {
     height: 30px;
+}
+
+.rainbow {
+  font-family: sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.9;
+  text-shadow: -2px 2px #ef3550,
+               -4px 4px #f48fb1,
+               -6px 6px #7e57c2,
+               -8px 8px #2196f3,
+               -10px 10px #26c6da,
+               -12px 12px #43a047,
+               -14px 14px #eeff41,
+               -16px 16px #f9a825,
+               -18px 18px #ff5722;
+}
+
+.rainbow2 {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, #d2d20f, #eb9c0b, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .image-dark-bg Img {

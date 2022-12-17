@@ -217,7 +217,7 @@ def wnrs_tab(app):
             html.Span(
                 [
                     "Valentino Edition",
-                    html.Sup("Reflection", className="blinker"),
+                    html.Sup("Reflect", className="blinker"),
                 ],
                 className="span-short",
             ),
@@ -1055,10 +1055,19 @@ def wnrs_tab(app):
                                         className="p-short p-bold",
                                     ),
                                     html.P(
-                                        "The game is played on a single device. Sit in a circle with device in "
-                                        "middle of all players. Select the decks you want to play with and the levels. "
-                                        "Players take turn to answer questions shown on the screen and tap on the "
-                                        "right side of card to proceed to next question."
+                                        [
+                                            "The game is played on a single device. Sit in a circle with device in "
+                                            "middle of all players. Select the decks",
+                                            html.Img(src=app.get_asset_url("game.png")),
+                                            "you want to play with and the levels. Players take turn to answer "
+                                            "questions shown on the screen and tap on the right side of card to "
+                                            "proceed to next question. Feel free to shuffle",
+                                            html.Img(
+                                                src=app.get_asset_url("shuffle.png")
+                                            ),
+                                            "the cards if needed.",
+                                        ],
+                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
                                     ),
                                     html.Br(),
                                     html.P(
@@ -1067,29 +1076,67 @@ def wnrs_tab(app):
                                         className="p-short p-bold",
                                     ),
                                     html.P(
-                                        "If you're presented with a wildcard you must complete the instructions "
-                                        "otherwise stated. These cards can appear at any moment during the game!"
+                                        [
+                                            "If you're presented with a wildcard you must complete the instructions "
+                                            "otherwise stated. These cards can appear at any moment during the game!"
+                                        ],
                                     ),
                                     html.Br(),
                                     html.P(
-                                        "Save your progress!",
+                                        "Save your Progress",
                                         style={"margin-top": "20px"},
                                         className="p-short p-bold",
                                     ),
                                     html.P(
-                                        "Couldn't manage to go through all the cards in one session? Save your "
-                                        "progress by clicking on the 'Save progress' button at the bottom of "
-                                        "the page and load the game next time to pick up exactly where you left off."
+                                        [
+                                            "Couldn't manage to go through all the cards in one session? Save your "
+                                            "progress",
+                                            html.Img(
+                                                src=app.get_asset_url("download.svg")
+                                            ),
+                                            "and load the game next time to pick up "
+                                            "exactly where you left off.",
+                                        ],
+                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
                                     ),
                                     html.Br(),
                                     html.P(
-                                        "Have fun!",
+                                        "Customize Theme",
                                         style={"margin-top": "20px"},
                                         className="p-short p-bold",
                                     ),
+                                    html.P(
+                                        [
+                                            "Change the card background and font colour",
+                                            html.Img(
+                                                src=app.get_asset_url("palette.png")
+                                            ),
+                                            "to customize it to your liking! You can change and reset the theme "
+                                            "anytime during the game.",
+                                        ],
+                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+                                    ),
                                     html.Br(),
+                                    html.P(
+                                        "Want to Contribute?",
+                                        style={"margin-top": "20px"},
+                                        className="p-short p-bold",
+                                    ),
+                                    html.P(
+                                        [
+                                            "If you have prompts to suggest or a card deck you want to contribute, "
+                                            "do not hesitate to reach out",
+                                            html.Img(src=app.get_asset_url("idea.png")),
+                                        ],
+                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+                                    ),
+                                    html.P(
+                                        html.P("Have fun!", className="rainbow"),
+                                        style={"margin-top": "20px"},
+                                        className="custom-div-center p-short p-bold",
+                                    ),
                                     html.Br(),
-                                ]
+                                ],
                             ),
                             dbc.ModalFooter(
                                 dbc.Button(
@@ -1111,7 +1158,7 @@ def wnrs_tab(app):
                             dbc.ModalHeader(dbc.ModalTitle("Select Deck")),
                             dbc.ModalBody(
                                 [
-                                    html.P("Main Deck"),
+                                    html.P("Main Deck", style=style_wnrs_text),
                                     main_deck,
                                     html.P("Crossover", style=style_wnrs_text),
                                     crossover_bumble_bff,
@@ -1150,7 +1197,6 @@ def wnrs_tab(app):
                                     gottman_rituals,
                                     gottman_opportunity,
                                     gottman_couple,
-                                    html.Br(),
                                     html.Br(),
                                 ]
                             ),
@@ -1239,7 +1285,6 @@ def wnrs_tab(app):
                                             style={"width": "100%"},
                                         ),
                                     ),
-                                    html.Br(),
                                     html.Button("Send", id="button-wnrs-send-ok"),
                                     html.P(id="wnrs-suggestion-reply"),
                                     html.Br(),
