@@ -1,3 +1,4 @@
+import os
 import random
 import re
 from functools import reduce
@@ -5,16 +6,29 @@ from functools import reduce
 import pandas as pd
 from dash import html
 
+from components.helper import decrypt_workbook
+
 
 class WNRS:
     """The WNRS object contains functions used for We're Not Really Strangers tab"""
 
     def __init__(self):
         """Read and initalize the card game"""
+        try:
+            self.WNRS_KEY = ENV["WNRS_KEY"]
+        except NameError:
+            try:
+                self.WNRS_KEY = os.environ["WNRS_KEY"]
+            except KeyError:
+                print("No WNRS_KEY found")
+                self.WNRS_KEY = ""
+
         self.data_path = (
             "data/"  # "https://github.com/kayjanw/test-app/raw/master/data/"
         )
-        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
+        file = pd.ExcelFile(
+            decrypt_workbook(f"{self.data_path}wnrs-game.xlsx", self.WNRS_KEY)
+        )
         decks = file.sheet_names
         self.information = {}
 
@@ -61,7 +75,9 @@ class WNRS:
         Returns:
             (dict)
         """
-        file = pd.ExcelFile(f"{self.data_path}WNRS.xlsx")
+        file = pd.ExcelFile(
+            decrypt_workbook(f"{self.data_path}wnrs-game.xlsx", self.WNRS_KEY)
+        )
         decks = file.sheet_names
         cards = {}
 
