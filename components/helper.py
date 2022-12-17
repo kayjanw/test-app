@@ -9,6 +9,7 @@ from functools import reduce
 
 import dash
 import matplotlib.pyplot as plt
+import msoffcrypto
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -381,6 +382,24 @@ def decode_dict(d_ser):
         (dict)
     """
     return json.loads(d_ser)
+
+
+def decrypt_workbook(file_path, password):
+    """Decrypt file
+
+    Args:
+        file_path (str): file path
+        password (str): file password
+
+    Returns:
+        (io.BytesIO)
+    """
+    decrypted_workbook = io.BytesIO()
+    with open(file_path, "rb") as file:
+        office_file = msoffcrypto.OfficeFile(file)
+        office_file.load_key(password=password)
+        office_file.decrypt(decrypted_workbook)
+    return decrypted_workbook
 
 
 def update_when_upload(
