@@ -7,7 +7,7 @@ style_dropdown = {"width": "100%", "color": "black"}
 style_p = {"width": "40%"}
 style_input = {"width": "35%"}
 style_checklist = {"width": "100%"}
-style_wnrs_text = {"margin-top": "20px"}
+style_wnrs_text = {}
 style_contact_textarea = {"width": "70%", "margin-bottom": "5px"}
 style_hidden = {"display": "none"}
 

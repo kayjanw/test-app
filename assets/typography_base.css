@@ -211,3 +211,7 @@ button[disabled] {
 .modal-title {
     font-weight: bold;
 }
+
+.modal-body {
+    padding: 20px;
+}
