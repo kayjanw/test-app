@@ -129,6 +129,7 @@ footer
     }
     #wnrs-prompt p, #wnrs-reminder-text p, #wnrs-reminder p {
         font-size: 0.9em;
+        letter-spacing: -0.02em;
     }
     #wnrs-deck {
         font-size: 8px;
