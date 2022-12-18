@@ -534,6 +534,14 @@ def wnrs_tab(app):
                         className="button-wnrs",
                     ),
                     dbc.Button(
+                        "ChatGPT",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Breakup Edition ChatGPT",
+                        },
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
                         "Final Card",
                         id={"type": "wnrs-deck-button", "id": "Breakup Edition Final"},
                         className="button-wnrs",
@@ -601,6 +609,14 @@ def wnrs_tab(app):
                     dbc.Button(
                         "Level 1",
                         id={"type": "wnrs-deck-button", "id": "Forgiveness Edition 1"},
+                        className="button-wnrs",
+                    ),
+                    dbc.Button(
+                        "ChatGPT",
+                        id={
+                            "type": "wnrs-deck-button",
+                            "id": "Forgiveness Edition ChatGPT",
+                        },
                         className="button-wnrs",
                     ),
                 ],
