@@ -160,6 +160,7 @@ def sidebar_dropdown():
                         selected_className="custom-tab-selected",
                     ),
                     # dcc.Tab(label='Image Editing', value='tab-image', className='custom-tab', selected_className='custom-tab-selected')
+                    html.Br(),
                 ],
                 colors={"background": colour_palette["deep_blue"]},
                 persistence=True,
