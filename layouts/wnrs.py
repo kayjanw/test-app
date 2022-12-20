@@ -7,6 +7,55 @@ from components.helper import colour_palette, encode_dict
 from layouts.main import content_header, style_hidden, style_wnrs_text
 
 
+def modal_palette():
+    return [
+        daq.ColorPicker(
+            id="colorpicker-wnrs-text",
+            label="Text Colour",
+            value=dict(),
+            className="custom-div-inline p-bold",
+        ),
+        daq.ColorPicker(
+            id="colorpicker-wnrs-background",
+            label="Background Colour",
+            value=dict(),
+            className="custom-div-inline p-bold",
+        ),
+    ]
+
+
+def modal_contribute():
+    return [
+        html.P(
+            "You can contribute too! Suggest prompts that you would like to see in the game, "
+            "or contribute a card game!",
+        ),
+        html.P(
+            dcc.Input(
+                id="input-wnrs-suggestion",
+                type="text",
+                placeholder="Your prompt(s)",
+                style={
+                    "width": "100%",
+                    "margin-bottom": "3px",
+                },
+            ),
+        ),
+        html.P(
+            dcc.Textarea(
+                id="input-wnrs-suggestion2",
+                value="",
+                placeholder="(Optional) Additional comments or feedback, include your "
+                "contact details if you expect a reply!",
+                style={"width": "100%"},
+            ),
+        ),
+        html.Button("Send", id="button-wnrs-send-ok"),
+        html.P(id="wnrs-suggestion-reply"),
+        html.Br(),
+    ]
+
+
 def wnrs_tab(app):
     wnrs_game = WNRS()
     list_of_deck = ["Main Deck 1"]
@@ -878,6 +927,131 @@ def wnrs_tab(app):
         className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
+    def modal_deck():
+        return [
+            html.P("Main Deck", style=style_wnrs_text),
+            main_deck,
+            html.P("Crossover", style=style_wnrs_text),
+            crossover_bumble_bff,
+            crossover_bumble_bizz,
+            crossover_bumble_date,
+            crossover_cann,
+            crossover_valentino,
+            html.P("Expansion", style=style_wnrs_text),
+            expansion_honest_dating,
+            expansion_inner_circle,
+            expansion_own_it,
+            expansion_relationship,
+            html.P("Online", style=style_wnrs_text),
+            online_race_privilege,
+            online_quarantine,
+            online_voting,
+            html.P("Single-Player", style=style_wnrs_text),
+            single_breakup,
+            single_existential,
+            single_forgiveness,
+            single_healing,
+            single_self_love,
+            single_self_reflection,
+            html.P(
+                [
+                    "Gotmann Card Deck",
+                    html.Sup("improve relationship", className="blinker"),
+                ],
+                style=style_wnrs_text,
+            ),
+            gottman_love_maps,
+            gottman_open_ended,
+            gottman_rituals,
+            gottman_opportunity,
+            gottman_couple,
+            html.Br(),
+        ]
+
+    def modal_help():
+        return [
+            html.P(
+                "How to Play (2-6 players)",
+                className="p-short p-bold",
+            ),
+            html.P(
+                [
+                    "The game is played on a single device. Sit in a circle with device in "
+                    "middle of all players. Select the decks",
+                    html.Img(src=app.get_asset_url("game.png")),
+                    "you want to play with and the levels. Players take turn to answer "
+                    "questions shown on the screen and tap on the right side of card to "
+                    "proceed to next question. Feel free to shuffle",
+                    html.Img(src=app.get_asset_url("shuffle.png")),
+                    "the cards if needed.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.Br(),
+            html.P(
+                "Wildcards",
+                style={"margin-top": "20px"},
+                className="p-short p-bold",
+            ),
+            html.P(
+                [
+                    "If you're presented with a wildcard you must complete the instructions "
+                    "otherwise stated. These cards can appear at any moment during the game!"
+                ],
+            ),
+            html.Br(),
+            html.P(
+                "Save your Progress",
+                style={"margin-top": "20px"},
+                className="p-short p-bold",
+            ),
+            html.P(
+                [
+                    "Couldn't manage to go through all the cards in one session? Save your "
+                    "progress",
+                    html.Img(src=app.get_asset_url("download.svg")),
+                    "and load the game next time to pick up "
+                    "exactly where you left off.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.Br(),
+            html.P(
+                "Customize Theme",
+                style={"margin-top": "20px"},
+                className="p-short p-bold",
+            ),
+            html.P(
+                [
+                    "Change the card background and font colour",
+                    html.Img(src=app.get_asset_url("palette.png")),
+                    "to customize it to your liking! You can change and reset the theme "
+                    "anytime during the game.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.Br(),
+            html.P(
+                "Want to Contribute?",
+                style={"margin-top": "20px"},
+                className="p-short p-bold",
+            ),
+            html.P(
+                [
+                    "If you have prompts to suggest or a card deck you want to contribute, "
+                    "do not hesitate to reach out",
+                    html.Img(src=app.get_asset_url("idea.png")),
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                html.P("Have fun!", className="rainbow"),
+                style={"margin-top": "20px"},
+                className="custom-div-center p-short p-bold",
+            ),
+            html.Br(),
+        ]
+
     return html.Div(
         [
             content_header("We're Not Really Strangers", ""),
@@ -1065,94 +1239,7 @@ def wnrs_tab(app):
                         [
                             dbc.ModalHeader(dbc.ModalTitle("Instructions")),
                             dbc.ModalBody(
-                                [
-                                    html.P(
-                                        "How to Play (2-6 players)",
-                                        className="p-short p-bold",
-                                    ),
-                                    html.P(
-                                        [
-                                            "The game is played on a single device. Sit in a circle with device in "
-                                            "middle of all players. Select the decks",
-                                            html.Img(src=app.get_asset_url("game.png")),
-                                            "you want to play with and the levels. Players take turn to answer "
-                                            "questions shown on the screen and tap on the right side of card to "
-                                            "proceed to next question. Feel free to shuffle",
-                                            html.Img(
-                                                src=app.get_asset_url("shuffle.png")
-                                            ),
-                                            "the cards if needed.",
-                                        ],
-                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
-                                    ),
-                                    html.Br(),
-                                    html.P(
-                                        "Wildcards",
-                                        style={"margin-top": "20px"},
-                                        className="p-short p-bold",
-                                    ),
-                                    html.P(
-                                        [
-                                            "If you're presented with a wildcard you must complete the instructions "
-                                            "otherwise stated. These cards can appear at any moment during the game!"
-                                        ],
-                                    ),
-                                    html.Br(),
-                                    html.P(
-                                        "Save your Progress",
-                                        style={"margin-top": "20px"},
-                                        className="p-short p-bold",
-                                    ),
-                                    html.P(
-                                        [
-                                            "Couldn't manage to go through all the cards in one session? Save your "
-                                            "progress",
-                                            html.Img(
-                                                src=app.get_asset_url("download.svg")
-                                            ),
-                                            "and load the game next time to pick up "
-                                            "exactly where you left off.",
-                                        ],
-                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
-                                    ),
-                                    html.Br(),
-                                    html.P(
-                                        "Customize Theme",
-                                        style={"margin-top": "20px"},
-                                        className="p-short p-bold",
-                                    ),
-                                    html.P(
-                                        [
-                                            "Change the card background and font colour",
-                                            html.Img(
-                                                src=app.get_asset_url("palette.png")
-                                            ),
-                                            "to customize it to your liking! You can change and reset the theme "
-                                            "anytime during the game.",
-                                        ],
-                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
-                                    ),
-                                    html.Br(),
-                                    html.P(
-                                        "Want to Contribute?",
-                                        style={"margin-top": "20px"},
-                                        className="p-short p-bold",
-                                    ),
-                                    html.P(
-                                        [
-                                            "If you have prompts to suggest or a card deck you want to contribute, "
-                                            "do not hesitate to reach out",
-                                            html.Img(src=app.get_asset_url("idea.png")),
-                                        ],
-                                        className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
-                                    ),
-                                    html.P(
-                                        html.P("Have fun!", className="rainbow"),
-                                        style={"margin-top": "20px"},
-                                        className="custom-div-center p-short p-bold",
-                                    ),
-                                    html.Br(),
-                                ],
+                                modal_help(),
                             ),
                             dbc.ModalFooter(
                                 dbc.Button(
@@ -1172,50 +1259,7 @@ def wnrs_tab(app):
                     dbc.Modal(
                         [
                             dbc.ModalHeader(dbc.ModalTitle("Select Deck")),
-                            dbc.ModalBody(
-                                [
-                                    html.P("Main Deck", style=style_wnrs_text),
-                                    main_deck,
-                                    html.P("Crossover", style=style_wnrs_text),
-                                    crossover_bumble_bff,
-                                    crossover_bumble_bizz,
-                                    crossover_bumble_date,
-                                    crossover_cann,
-                                    crossover_valentino,
-                                    html.P("Expansion", style=style_wnrs_text),
-                                    expansion_honest_dating,
-                                    expansion_inner_circle,
-                                    expansion_own_it,
-                                    expansion_relationship,
-                                    html.P("Online", style=style_wnrs_text),
-                                    online_race_privilege,
-                                    online_quarantine,
-                                    online_voting,
-                                    html.P("Single-Player", style=style_wnrs_text),
-                                    single_breakup,
-                                    single_existential,
-                                    single_forgiveness,
-                                    single_healing,
-                                    single_self_love,
-                                    single_self_reflection,
-                                    html.P(
-                                        [
-                                            "Gotmann Card Deck",
-                                            html.Sup(
-                                                "improve relationship",
-                                                className="blinker",
-                                            ),
-                                        ],
-                                        style=style_wnrs_text,
-                                    ),
-                                    gottman_love_maps,
-                                    gottman_open_ended,
-                                    gottman_rituals,
-                                    gottman_opportunity,
-                                    gottman_couple,
-                                    html.Br(),
-                                ]
-                            ),
+                            dbc.ModalBody(modal_deck()),
                             dbc.ModalFooter(
                                 dbc.Button(
                                     "Close",
@@ -1235,21 +1279,7 @@ def wnrs_tab(app):
                         [
                             dbc.ModalHeader(dbc.ModalTitle("Customize Theme")),
                             dbc.ModalBody(
-                                [
-                                    daq.ColorPicker(
-                                        id="colorpicker-wnrs-text",
-                                        label="Text Colour",
-                                        value=dict(),
-                                        className="custom-div-inline p-bold",
-                                    ),
-                                    daq.ColorPicker(
-                                        id="colorpicker-wnrs-background",
-                                        label="Background Colour",
-                                        value=dict(),
-                                        className="custom-div-inline p-bold",
-                                    ),
-                                ],
-                                className="custom-div-center",
+                                modal_palette(), className="custom-div-center"
                             ),
                             dbc.ModalFooter(
                                 [
@@ -1275,37 +1305,7 @@ def wnrs_tab(app):
                     dbc.Modal(
                         [
                             dbc.ModalHeader(dbc.ModalTitle("Contribute")),
-                            dbc.ModalBody(
-                                [
-                                    html.P(
-                                        "You can contribute too! Suggest prompts that you would like to see in the game, "
-                                        "or contribute a card game!",
-                                    ),
-                                    html.P(
-                                        dcc.Input(
-                                            id="input-wnrs-suggestion",
-                                            type="text",
-                                            placeholder="Your prompt(s)",
-                                            style={
-                                                "width": "100%",
-                                                "margin-bottom": "3px",
-                                            },
-                                        ),
-                                    ),
-                                    html.P(
-                                        dcc.Textarea(
-                                            id="input-wnrs-suggestion2",
-                                            value="",
-                                            placeholder="(Optional) Additional comments or feedback, include your "
-                                            "contact details if you expect a reply!",
-                                            style={"width": "100%"},
-                                        ),
-                                    ),
-                                    html.Button("Send", id="button-wnrs-send-ok"),
-                                    html.P(id="wnrs-suggestion-reply"),
-                                    html.Br(),
-                                ]
-                            ),
+                            dbc.ModalBody(modal_contribute()),
                             dbc.ModalFooter(
                                 dbc.Button(
                                     "Close",
