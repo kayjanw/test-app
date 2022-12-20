@@ -48,7 +48,7 @@ def about_me_tab(app):
                     html.Div(
                         [
                             html.Img(src=app.get_asset_url("event.png")),
-                            html.P("Events", className="p-short p-bold"),
+                            html.P("Fun Things", className="p-short p-bold"),
                             html.P(
                                 ": Plan events and play games!", className="p-short"
                             ),

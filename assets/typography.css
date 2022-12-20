@@ -271,7 +271,7 @@ footer
 
 .custom-tab, .custom-tab-sub, .custom-tab-disabled {
     color: #BE9B89 !important;
-    font-weight: bold;
+    font-weight: normal;
     border-radius: 5px;
     padding: 8px !important;
     text-align: left !important;
@@ -279,7 +279,7 @@ footer
 
 .custom-tab-disabled {
     cursor: auto !important;
-    text-decoration: underline;
+    font-weight: bold;
 }
 
 .custom-tab {
