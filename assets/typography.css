@@ -33,7 +33,6 @@ custom-div-space-above, custom-div-space-below, custom-div-space-left
 custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
 
-margin-bottom-20
 p-short, p-bold
 invisible-button
 vertical-center
@@ -266,6 +265,7 @@ footer
 .custom-tabs {
     margin-left: 20px;
     margin-right: 10px;
+    margin-bottom: 20px;
     width: 90%;
 }
 
@@ -606,12 +606,13 @@ footer
     top: 0;
     left: 0;
     position: fixed;
-    height: 100vh;
+    height: -webkit-fill-available;
     background-color: #202029;
     z-index: 1;
-    overflow: auto;
+    overflow: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    -webkit-overflow-scrolling: touch; /* iPhone */
 }
 
 #sidebar::-webkit-scrollbar { /* WebKit */
