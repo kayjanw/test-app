@@ -609,13 +609,27 @@ footer
     height: 100vh;
     background-color: #202029;
     z-index: 1;
-    overflow: scroll !important;
-    -webkit-overflow-scrolling: touch !important;
+    overflow: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    -webkit-overflow-scrolling: touch; /* iPhone */
+}
+
+#sidebar::-webkit-scrollbar { /* WebKit */
+    background: transparent; /* Chrome/Safari/Webkit */
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 #sidebar h1 {
     margin-top: 8vh;
     margin-left: 20px;
+}
+
+#tabs-parent {
+    overflow: scroll;
+    padding-bottom: 30px;
 }
 
 #tab-content {
