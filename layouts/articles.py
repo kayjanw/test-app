@@ -370,7 +370,7 @@ def articles_tab():
     return html.Div(
         [
             content_header(
-                "Articles", "Friend Links for Towards Data Science articles"
+                "Articles", "Friend Links for my Towards Data Science articles"
             ),
             html.Div(
                 [

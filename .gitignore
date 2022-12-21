@@ -1,5 +1,6 @@
 # Project files
 sample_data
+Makefile
 
 # Byte-compiled / optimized / DLL files
 .idea*

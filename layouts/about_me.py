@@ -48,7 +48,7 @@ def about_me_tab(app):
                     html.Div(
                         [
                             html.Img(src=app.get_asset_url("event.png")),
-                            html.P("Events", className="p-short p-bold"),
+                            html.P("Fun Things", className="p-short p-bold"),
                             html.P(
                                 ": Plan events and play games!", className="p-short"
                             ),
@@ -92,7 +92,7 @@ def about_me_tab(app):
                     ),
                     html.P(
                         [
-                            "This website is made with Dash, deployed using Gunicorn with Docker and hosted on "
+                            "This website is made with Python Dash, deployed using Gunicorn with Docker and hosted on "
                             "GCP/Fly.io, view code documentation on Sphinx ",
                             html.A(
                                 "here",
