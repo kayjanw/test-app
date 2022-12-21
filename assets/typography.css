@@ -609,7 +609,7 @@ footer
     height: 100vh;
     background-color: #202029;
     z-index: 1;
-    overflow: auto;
+    overflow: scroll;
 }
 
 #sidebar h1 {
