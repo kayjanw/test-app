@@ -165,7 +165,6 @@ def sidebar_dropdown():
                 persistence=True,
                 persistence_type="memory",
             ),
-            html.Br(),
         ]
     )
 
