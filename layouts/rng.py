@@ -1,6 +1,8 @@
+import dash_daq as daq
 from dash import dcc, html
+from mergedeep import merge
 
-from components.helper import dcc_loading
+from components.helper import dcc_loading, flex_style
 from layouts.main import content_header, style_hidden
 
 
@@ -40,63 +42,59 @@ def rng_tab():
                             ),
                             html.Div(
                                 [
-                                    html.Button(
-                                        "Select N items", id="button-rng-item-ok"
+                                    html.P("Select N items", className="p-short"),
+                                    daq.ToggleSwitch(
+                                        id="toggle-rng",
+                                        value=False,
+                                        color="rgb(190, 155, 137)",
+                                        className="custom-div-inline custom-margin-left custom-margin-right",
                                     ),
-                                    html.Div(
-                                        [
-                                            html.P("Number of items:"),
-                                            dcc.Input(
-                                                id="input-rng-item",
-                                                type="number",
-                                                value=1,
-                                                min=1,
-                                                style={
-                                                    "width": "40%",
-                                                },
-                                            ),
-                                        ],
-                                        id="div-rng-item",
-                                        className="custom-div-flex",
-                                        style={
-                                            "display": "none",
-                                            "margin": 0,
-                                        },
-                                    ),
-                                ],
-                                className="custom-div-flex",
-                                style={"margin-bottom": 0},
+                                    html.P("Split into N groups", className="p-short"),
+                                ]
                             ),
                             html.Div(
                                 [
-                                    html.Button(
-                                        "Split into N groups", id="button-rng-group-ok"
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.P("Number of groups:"),
-                                            dcc.Input(
-                                                id="input-rng-group",
-                                                type="number",
-                                                value=2,
-                                                min=2,
-                                                style={
-                                                    "width": "40%",
-                                                },
-                                            ),
-                                        ],
-                                        id="div-rng-group",
-                                        className="custom-div-flex",
+                                    html.P("Number of items:"),
+                                    dcc.Input(
+                                        id="input-rng-item",
+                                        type="number",
+                                        value=1,
+                                        min=1,
                                         style={
-                                            "display": "none",
-                                            "margin": 0,
+                                            "width": "40%",
                                         },
                                     ),
                                 ],
-                                className="custom-div-flex",
-                                style={"margin-bottom": 0},
+                                id="div-rng-item",
+                                className="custom-div-flex custom-margin-top",
+                                style=merge(
+                                    {
+                                        "display": "none",
+                                        "margin": 0,
+                                    },
+                                    flex_style,
+                                ),
                             ),
-                            html.Br(),
+                            html.Div(
+                                [
+                                    html.P("Number of groups:"),
+                                    dcc.Input(
+                                        id="input-rng-group",
+                                        type="number",
+                                        value=2,
+                                        min=2,
+                                        style={
+                                            "width": "40%",
+                                        },
+                                    ),
+                                ],
+                                id="div-rng-group",
+                                className="custom-div-flex custom-margin-top",
+                                style={
+                                    "display": "none",
+                                    "margin": 0,
+                                },
+                            ),
                             html.Button("OK", id="button-rng-ok"),
                             dcc_loading(
                                 [html.P(id="rng-result-error", className="color-red")],
