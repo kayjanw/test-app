@@ -628,8 +628,18 @@ footer
 }
 
 #tabs-parent {
+    padding-bottom: 50px;
     overflow: scroll;
-    padding-bottom: 30px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    -webkit-overflow-scrolling: touch; /* iPhone */
+}
+
+#tabs-parent::-webkit-scrollbar { /* WebKit */
+    background: transparent; /* Chrome/Safari/Webkit */
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 #tab-content {
