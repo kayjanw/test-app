@@ -610,15 +610,6 @@ footer
     background-color: #202029;
     z-index: 1;
     overflow: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
-
-#sidebar::-webkit-scrollbar { /* WebKit */
-    background: transparent; /* Chrome/Safari/Webkit */
-    display: none;
-    width: 0;
-    height: 0;
 }
 
 #sidebar h1 {
