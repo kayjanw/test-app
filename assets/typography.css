@@ -609,8 +609,8 @@ footer
     height: 100vh;
     background-color: #202029;
     z-index: 1;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
 }
 
 #sidebar h1 {
