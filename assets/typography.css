@@ -28,10 +28,11 @@ image-dark-bg image-vertical-flip image-horizontal-flip image-dark-blue
 
 custom-container
 custom-div-dark, custom-div-white
-custom-div-left, custom-div-center, custom-div-flex
+custom-div-left, custom-div-center, custom-div-inline, custom-div-flex
 custom-div-space-above, custom-div-space-below, custom-div-space-left
 custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
+custom-margin-top, custom-margin-left, custom-margin-right
 
 p-short, p-bold
 invisible-button
@@ -492,6 +493,18 @@ footer
 
 .custom-div-full {
     width: 100%;
+}
+
+.custom-margin-top {
+    margin-top: 10px !important;
+}
+
+.custom-margin-left {
+    margin-left: 10px;
+}
+
+.custom-margin-right {
+    margin-right: 10px;
 }
 
 .p-short {
