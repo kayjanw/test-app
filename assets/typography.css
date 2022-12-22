@@ -254,14 +254,13 @@ footer
 
 /* SegmentedControl, Checklist, RadioButton (Customized)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.mantine-SegmentedControl-labelActive  {
-    background-color: #BE9B89;
-    margin: 0 !important;
+.mantine-SegmentedControl-label {
     font-family: Source Sans Pro !important;
+    margin: 0 !important;
 }
 
-.mantine-SegmentedControl-root {
-    font-family: Source Sans Pro !important;
+.mantine-SegmentedControl-labelActive  {
+    background-color: #BE9B89;
 }
 
 /* Dash leaflet style
