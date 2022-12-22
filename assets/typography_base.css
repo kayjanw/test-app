@@ -52,8 +52,8 @@ h4: dash in page title
 h5: card
 h6: version
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-h1, h2, h3, h4, h5, h6, p, span, details, li, textarea, .mantine-SegmentedControl, .mantine-SegmentedControl-labelActive {
-    font-family: Source Sans Pro !important;
+h1, h2, h3, h4, h5, h6, p, span, details, li, textarea {
+    font-family: Source Sans Pro;
 }
 
 h1 {
