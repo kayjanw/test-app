@@ -1,4 +1,5 @@
 from dash import dash_table, dcc, html
+from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, table_css
 from layouts.main import content_header, style_dropdown, style_hidden, style_input
@@ -7,7 +8,13 @@ from layouts.main import content_header, style_dropdown, style_hidden, style_inp
 def change_tab(app):
     return html.Div(
         [
-            content_header("Change Calculator", "Compare changes over two periods"),
+            content_header(
+                "Change Calculator",
+                [
+                    DashIconify(icon="openmoji:abacus", height=40),
+                    "Compare changes over two periods",
+                ],
+            ),
             html.Div(
                 [
                     html.P(
@@ -230,7 +237,11 @@ def changes_tab(app):
     return html.Div(
         [
             content_header(
-                "Change Calculator 2", "Compare changes over multiple periods"
+                "Change Calculator 2",
+                [
+                    DashIconify(icon="openmoji:abacus", height=40),
+                    "Compare changes over multiple periods",
+                ],
             ),
             html.Div(
                 [

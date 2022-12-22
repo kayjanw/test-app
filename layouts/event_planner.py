@@ -1,4 +1,5 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, result_download_text
 from layouts.main import content_header, style_checklist, style_hidden
@@ -7,7 +8,13 @@ from layouts.main import content_header, style_checklist, style_hidden
 def event_tab(app):
     return html.Div(
         [
-            content_header("Event Planner", "Generate random matches and groups"),
+            content_header(
+                "Event Planner",
+                [
+                    DashIconify(icon="openmoji:balloon", height=40),
+                    "Generate random matches and groups",
+                ],
+            ),
             html.Div(
                 [
                     html.P(

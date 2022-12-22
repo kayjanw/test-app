@@ -1,4 +1,5 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from components import TradeSocket
 from layouts.main import content_header, style_dropdown, style_input, style_p
@@ -17,7 +18,11 @@ def trade_tab():
     return html.Div(
         [
             content_header(
-                "Live Trading", "Candlestick + Technical Indicators + Forecast"
+                "Live Trading",
+                [
+                    DashIconify(icon="openmoji:chart-increasing-with-yen", height=40),
+                    "Candlestick + Technical Indicators + Forecast",
+                ],
             ),
             html.Div(
                 [

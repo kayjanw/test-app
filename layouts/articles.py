@@ -1,5 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import html
+from dash_iconify import DashIconify
 
 from layouts.main import content_header
 
@@ -370,7 +371,11 @@ def articles_tab():
     return html.Div(
         [
             content_header(
-                "Articles", "Friend Links for my Towards Data Science articles"
+                "Articles",
+                [
+                    DashIconify(icon="openmoji:rainbow", height=40),
+                    "Friend Links for my Towards Data Science articles",
+                ],
             ),
             html.Div(
                 [

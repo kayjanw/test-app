@@ -1,5 +1,6 @@
 import dash_mantine_components as dmc
 from dash import dcc, html
+from dash_iconify import DashIconify
 from mergedeep import merge
 
 from components.helper import dcc_loading, flex_style
@@ -9,7 +10,13 @@ from layouts.main import content_header, style_hidden
 def rng_tab():
     return html.Div(
         [
-            content_header("Random Generator", "Generate random selection or groups"),
+            content_header(
+                "Random Generator",
+                [
+                    DashIconify(icon="openmoji:sparkles", height=40),
+                    "Generate random selection or groups",
+                ],
+            ),
             html.Div(
                 [
                     html.P(

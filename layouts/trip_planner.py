@@ -1,5 +1,6 @@
 import dash_leaflet as dl
 from dash import dash_table, dcc, html
+from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, table_css
 from layouts.main import content_header
@@ -8,7 +9,13 @@ from layouts.main import content_header
 def trip_tab(app):
     return html.Div(
         [
-            content_header("Trip Planner", "Optimize your route"),
+            content_header(
+                "Trip Planner",
+                [
+                    DashIconify(icon="openmoji:location-indicator", height=40),
+                    "Optimize your route",
+                ],
+            ),
             html.Div(
                 [
                     html.P(

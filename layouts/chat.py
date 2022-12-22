@@ -1,4 +1,5 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from components.helper import dcc_loading
 from layouts.main import content_header, style_hidden
@@ -7,7 +8,13 @@ from layouts.main import content_header, style_hidden
 def chat_tab(app):
     return html.Div(
         [
-            content_header("Chat Analyzer", "View your messaging pattern"),
+            content_header(
+                "Chat Analyzer",
+                [
+                    DashIconify(icon="openmoji:chats", height=40),
+                    "View your messaging pattern",
+                ],
+            ),
             html.Div(
                 [
                     html.P(

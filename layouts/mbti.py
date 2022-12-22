@@ -1,4 +1,5 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from components.helper import dcc_loading
 from layouts.main import content_header
@@ -7,7 +8,13 @@ from layouts.main import content_header
 def mbti_tab():
     return html.Div(
         [
-            content_header("MBTI Personality Test", "Predict MBTI with writing style"),
+            content_header(
+                "MBTI Personality Test",
+                [
+                    DashIconify(icon="openmoji:test-tube", height=40),
+                    "Predict MBTI with writing style",
+                ],
+            ),
             html.Div(
                 [
                     html.P(
