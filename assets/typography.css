@@ -257,9 +257,10 @@ footer
 .mantine-SegmentedControl-labelActive  {
     background-color: #BE9B89;
     margin: 0 !important;
+    font-family: Source Sans Pro !important;
 }
 
-[class^="mantine-SegmentedControl-"] {
+.mantine-SegmentedControl-root {
     font-family: Source Sans Pro !important;
 }
 
