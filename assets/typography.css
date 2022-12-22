@@ -259,6 +259,10 @@ footer
     margin: 0 !important;
 }
 
+[class^="mantine-SegmentedControl-"] {
+    font-family: Source Sans Pro;
+}
+
 /* Dash leaflet style
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .leaflet-container {
