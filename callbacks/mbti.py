@@ -33,6 +33,7 @@ def register_callbacks(app, print_function):
             Output("graph-mbti", "figure"),
             Output("graph-mbti", "style"),
             Output("mbti-results", "children"),
+            Output("mbti-result-error", "children"),
         ],
         [Input("button-mbti-ok", "n_clicks")],
         [State("input-mbti", "value"), State("graph-mbti", "style")],
@@ -57,6 +58,7 @@ def register_callbacks(app, print_function):
         plot = {}
         style["display"] = "none"
         personality_details = []
+        error = ""
         if trigger:
             try:
                 personality, predictions = MBTI().test_pipeline(input_text)
@@ -65,8 +67,6 @@ def register_callbacks(app, print_function):
                 style["display"] = "block"
                 style["height"] = 400
             except Exception as e:
-                personality_details = [
-                    f"Error loading results, error message: {e}. Please try again."
-                ]
+                error = str(e)
                 print(traceback.print_exc())
-        return plot, style, personality_details
+        return plot, style, personality_details, error

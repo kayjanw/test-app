@@ -600,6 +600,11 @@ class MBTI:
             - personality (str): MBTI personality results, to be shown in title of bar plot
             - predictions (list): list of tuple of model prediction probabilities
         """
+        if not len(input_text.strip()):
+            raise Exception("Please input text")
+        if not self.get_num_words(input_text):
+            raise Exception("No words found in vocabulary, do change your phrasing")
+
         if not self.use_tf:
             vector_input = self.vectorize_new_input(input_text)
         else:

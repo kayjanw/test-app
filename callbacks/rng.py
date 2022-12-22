@@ -1,76 +1,49 @@
 import dash
-from dash import ctx
 from dash.dependencies import Input, Output, State
 
 from components import RandomGenerator
-from components.helper import (
-    flex_style,
-    hide_button_style,
-    hide_style,
-    print_callback,
-    return_message,
-    show_button_style,
-)
+from components.helper import flex_style, hide_style, print_callback, return_message
 
 
 def register_callbacks(app, print_function):
     @app.callback(
         [
-            Output("div-rng-item", "style"),
-            Output("div-rng-group", "style"),
-            Output("button-rng-item-ok", "style"),
-            Output("button-rng-group-ok", "style"),
+            Output("div-rng-select", "style"),
+            Output("div-rng-split", "style"),
         ],
         [
-            Input("button-rng-item-ok", "n_clicks"),
-            Input("button-rng-group-ok", "n_clicks"),
+            Input("segment-rng", "value"),
         ],
         [
-            State("div-rng-item", "style"),
-            State("div-rng-group", "style"),
-            State("button-rng-item-ok", "style"),
-            State("button-rng-group-ok", "style"),
+            State("div-rng-select", "style"),
+            State("div-rng-split", "style"),
         ],
         prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_rng_button_style(
-        trigger_item,
-        trigger_group,
-        item_style,
-        group_style,
-        item_button_style,
-        group_button_style,
+        trigger_button,
+        select_style,
+        split_style,
     ):
         """Update style of random generator button
 
         Args:
-            trigger_item: trigger on button click
-            trigger_group: trigger on button click
-            item_style (dict): current style of item div
-            group_style (dict): current style of group div
-            item_button_style(dict): current style of item button
-            group_button_style (dict): current style of group button
+            trigger_button: trigger on button click
+            select_style (dict): current style of item div
+            split_style (dict): current style of group div
 
         Returns:
             dict: updated style of item and group button
         """
         if dash.callback_context.triggered:
-            if not item_button_style:
-                item_button_style = {}
-            if not group_button_style:
-                group_button_style = {}
-            if ctx.triggered_id == "button-rng-item-ok":
-                item_style.update(flex_style)
-                item_button_style.update(show_button_style)
-                group_style.update(hide_style)
-                group_button_style.update(hide_button_style)
-            elif ctx.triggered_id == "button-rng-group-ok":
-                item_style.update(hide_style)
-                item_button_style.update(hide_button_style)
-                group_style.update(flex_style)
-                group_button_style.update(show_button_style)
-        return item_style, group_style, item_button_style, group_button_style
+            if trigger_button == "select":
+                select_style.update(flex_style)
+                split_style.update(hide_style)
+            elif trigger_button == "split":
+                select_style.update(hide_style)
+                split_style.update(flex_style)
+        return select_style, split_style
 
     @app.callback(
         [
@@ -81,18 +54,15 @@ def register_callbacks(app, print_function):
         [Input("button-rng-ok", "n_clicks")],
         [
             State("input-rng", "value"),
-            State("input-rng-item", "value"),
-            State("input-rng-group", "value"),
-            State("div-rng-item", "style"),
-            State("div-rng-group", "style"),
-            State("div-rng-result", "style"),
+            State("input-rng-select", "value"),
+            State("input-rng-split", "value"),
+            State("div-rng-select", "style"),
+            State("div-rng-split", "style"),
         ],
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_rng_result(
-        trigger, text, n_items, n_groups, item_style, group_style, style
-    ):
+    def update_rng_result(trigger, text, n_items, n_groups, item_style, group_style):
         """Update and display random generator results
 
         Args:
@@ -102,7 +72,6 @@ def register_callbacks(app, print_function):
             n_groups (int): number of groups
             item_style (dict): current style of item div
             group_style (dict): current style of group div
-            style (dict): current style of results div
 
         Returns:
             3-element tuple

@@ -3,6 +3,7 @@
 - Media
 - Card
 - Button (Customized)
+- SegmentedControl, Checklist, RadioButton (Customized)
 - Dash leaflet style
 - Custom tabs
 - Custom class / div
@@ -28,10 +29,11 @@ image-dark-bg image-vertical-flip image-horizontal-flip image-dark-blue
 
 custom-container
 custom-div-dark, custom-div-white
-custom-div-left, custom-div-center, custom-div-flex
+custom-div-left, custom-div-center, custom-div-inline, custom-div-flex
 custom-div-space-above, custom-div-space-below, custom-div-space-left
 custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
+custom-margin-top, custom-margin-left, custom-margin-right
 
 p-short, p-bold
 invisible-button
@@ -248,6 +250,13 @@ footer
     box-shadow: 1px 1px 2px #BE9B89;
     margin-bottom: 5px;
     margin-top: 5px;
+}
+
+/* SegmentedControl, Checklist, RadioButton (Customized)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mantine-SegmentedControl-labelActive  {
+    background-color: #BE9B89;
+    margin: 0 !important;
 }
 
 /* Dash leaflet style
@@ -492,6 +501,18 @@ footer
 
 .custom-div-full {
     width: 100%;
+}
+
+.custom-margin-top {
+    margin-top: 10px !important;
+}
+
+.custom-margin-left {
+    margin-left: 10px;
+}
+
+.custom-margin-right {
+    margin-right: 10px;
 }
 
 .p-short {
