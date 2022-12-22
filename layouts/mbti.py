@@ -103,6 +103,10 @@ def mbti_tab():
                                 [html.P(id="text-mbti-words")], style={"float": "right"}
                             ),
                             html.Button("OK", id="button-mbti-ok"),
+                            dcc_loading(
+                                html.P(id="mbti-result-error", className="color-red"),
+                                dark_bg=True,
+                            ),
                         ],
                         className="custom-div-small-medium custom-div-space-below custom-div-left custom-div-dark",
                     ),
