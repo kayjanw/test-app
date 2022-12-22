@@ -1,27 +1,17 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from layouts.main import content_header, style_contact_textarea
 
 
 def contact_tab():
-    image_src_linkedin = "https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"
     return html.Div(
         [
             content_header("Contact Me"),
             html.Div(
                 [
                     html.P(
-                        [
-                            "If you have any questions, feedback or suggestions, please feel free to drop me an email.",
-                            html.Br(),
-                            "Alternatively, you can reach me on ",
-                            html.A(
-                                html.Img(src=image_src_linkedin),
-                                href="https://www.linkedin.com/in/kayjan/",
-                                target="_blank",
-                            ),
-                        ],
-                        className="div-with-image div-with-small-image-right",
+                        "If you have any questions, feedback or suggestions, please feel free to drop me an email."
                     ),
                     html.P(
                         dcc.Input(
@@ -50,6 +40,16 @@ def contact_tab():
                     html.Br(),
                     html.Button("Send", id="button-contact-ok"),
                     html.P(id="contact-reply"),
+                    html.A(
+                        DashIconify(icon="openmoji:linkedin", height=40),
+                        href="https://www.linkedin.com/in/kayjan/",
+                        target="_blank",
+                    ),
+                    html.A(
+                        DashIconify(icon="openmoji:github", height=40),
+                        href="https://www.github.com/kayjan/",
+                        target="_blank",
+                    ),
                 ],
                 className="custom-div-instruction custom-div-left",
             ),

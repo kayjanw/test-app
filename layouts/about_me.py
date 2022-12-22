@@ -1,4 +1,5 @@
 from dash import html
+from dash_iconify import DashIconify
 
 from layouts.main import content_header
 
@@ -14,7 +15,7 @@ def about_me_tab(app):
                     ),
                     html.Div(
                         [
-                            html.Img(src=app.get_asset_url("data-analytics.svg")),
+                            DashIconify(icon="openmoji:bar-chart", height=40),
                             html.P("Data Analytics", className="p-short p-bold"),
                             html.P(
                                 ": Using uploaded data, visualize results graphically",
@@ -25,7 +26,7 @@ def about_me_tab(app):
                     ),
                     html.Div(
                         [
-                            html.Img(src=app.get_asset_url("optimization.svg")),
+                            DashIconify(icon="openmoji:chart-increasing", height=40),
                             html.P("Optimization", className="p-short p-bold"),
                             html.P(
                                 ": Solve computationally expensive math problems",
@@ -36,7 +37,7 @@ def about_me_tab(app):
                     ),
                     html.Div(
                         [
-                            html.Img(src=app.get_asset_url("prediction.svg")),
+                            DashIconify(icon="openmoji:brain", height=40),
                             html.P("Prediction", className="p-short p-bold"),
                             html.P(
                                 ": Use machine learning methods to churn out predictions",
@@ -47,7 +48,7 @@ def about_me_tab(app):
                     ),
                     html.Div(
                         [
-                            html.Img(src=app.get_asset_url("event.png")),
+                            DashIconify(icon="openmoji:party-popper", height=40),
                             html.P("Fun Things", className="p-short p-bold"),
                             html.P(
                                 ": Plan events and play games!", className="p-short"

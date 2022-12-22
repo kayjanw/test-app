@@ -320,6 +320,10 @@ footer
     display: flex;
 }
 
+svg {
+    vertical-align: middle;
+}
+
 .div-with-image Img {
     display: inline-block;
     vertical-align: middle;
