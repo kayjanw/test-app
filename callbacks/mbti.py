@@ -1,5 +1,3 @@
-import traceback
-
 from dash.dependencies import Input, Output, State
 
 from components import MBTI
@@ -68,5 +66,4 @@ def register_callbacks(app, print_function):
                 style["height"] = 400
             except Exception as e:
                 error = str(e)
-                print(traceback.print_exc())
         return plot, style, personality_details, error

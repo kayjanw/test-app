@@ -415,7 +415,6 @@ class TripPlanner:
             ) = self.get_distance_and_duration_from_table(data)
             try:
                 routes = self.best_route_gurobi(distance_matrix)
-                print(data)
                 print(f"Using optimiser: {routes}")
                 print(
                     f"Using insertion: {self.best_route_nearest_insertion(distance_matrix)}"

@@ -312,6 +312,10 @@ footer
 
 /* Custom class / div
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.content-header {
+    display: flex;
+}
+
 .div-with-image Img {
     display: inline-block;
     vertical-align: middle;

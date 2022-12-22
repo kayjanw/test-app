@@ -1054,7 +1054,20 @@ def wnrs_tab(app):
 
     return html.Div(
         [
-            content_header("We're Not Really Strangers", ""),
+            content_header(
+                [
+                    "We're Not Really Strangers",
+                    html.Button(
+                        html.Span(
+                            html.Img(src=app.get_asset_url("help.png")),
+                            title="How to play",
+                        ),
+                        id={"type": "button-modal-wnrs", "index": "modal-help"},
+                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
+                    ),
+                ],
+                "",
+            ),
             html.Button(
                 "Select deck",
                 id="button-wnrs-show-ok",
@@ -1133,14 +1146,6 @@ def wnrs_tab(app):
                                 ),
                                 id="button-wnrs-back",
                                 className="div-with-image small-image image-dark-blue invisible-button image-horizontal-flip vertical-center",
-                            ),
-                            html.Button(
-                                html.Span(
-                                    html.Img(src=app.get_asset_url("help.png")),
-                                    title="How to play",
-                                ),
-                                id={"type": "button-modal-wnrs", "index": "modal-help"},
-                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                             html.Button(
                                 html.Span(
