@@ -53,7 +53,7 @@ def sidebar_dropdown():
         [
             dcc.Tabs(
                 id="tabs-parent",
-                value="tab-rng",
+                value=None,
                 vertical=True,
                 parent_className="custom-tabs-parent",
                 className="custom-tabs",
