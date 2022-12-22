@@ -8,42 +8,42 @@ from components.helper import flex_style, hide_style, print_callback, return_mes
 def register_callbacks(app, print_function):
     @app.callback(
         [
-            Output("div-rng-item", "style"),
-            Output("div-rng-group", "style"),
+            Output("div-rng-select", "style"),
+            Output("div-rng-split", "style"),
         ],
         [
-            Input("toggle-rng", "value"),
+            Input("segment-rng", "value"),
         ],
         [
-            State("div-rng-item", "style"),
-            State("div-rng-group", "style"),
+            State("div-rng-select", "style"),
+            State("div-rng-split", "style"),
         ],
         prevent_initial_call=True,
     )
     @print_callback(print_function)
     def update_rng_button_style(
-        trigger_toggle,
-        item_style,
-        group_style,
+        trigger_button,
+        select_style,
+        split_style,
     ):
         """Update style of random generator button
 
         Args:
-            trigger_toggle: trigger on toggle click
-            item_style (dict): current style of item div
-            group_style (dict): current style of group div
+            trigger_button: trigger on button click
+            select_style (dict): current style of item div
+            split_style (dict): current style of group div
 
         Returns:
             dict: updated style of item and group button
         """
         if dash.callback_context.triggered:
-            if trigger_toggle:
-                item_style.update(hide_style)
-                group_style.update(flex_style)
-            else:
-                item_style.update(flex_style)
-                group_style.update(hide_style)
-        return item_style, group_style
+            if trigger_button == "select":
+                select_style.update(flex_style)
+                split_style.update(hide_style)
+            elif trigger_button == "split":
+                select_style.update(hide_style)
+                split_style.update(flex_style)
+        return select_style, split_style
 
     @app.callback(
         [
@@ -54,10 +54,10 @@ def register_callbacks(app, print_function):
         [Input("button-rng-ok", "n_clicks")],
         [
             State("input-rng", "value"),
-            State("input-rng-item", "value"),
-            State("input-rng-group", "value"),
-            State("div-rng-item", "style"),
-            State("div-rng-group", "style"),
+            State("input-rng-select", "value"),
+            State("input-rng-split", "value"),
+            State("div-rng-select", "style"),
+            State("div-rng-split", "style"),
         ],
         prevent_initial_call=True,
     )

@@ -1,4 +1,4 @@
-import dash_daq as daq
+import dash_mantine_components as dmc
 from dash import dcc, html
 from mergedeep import merge
 
@@ -42,21 +42,30 @@ def rng_tab():
                             ),
                             html.Div(
                                 [
-                                    html.P("Select N items", className="p-short"),
-                                    daq.ToggleSwitch(
-                                        id="toggle-rng",
-                                        value=False,
-                                        color="rgb(190, 155, 137)",
-                                        className="custom-div-inline custom-margin-left custom-margin-right",
+                                    dmc.SegmentedControl(
+                                        id="segment-rng",
+                                        value="select",
+                                        data=[
+                                            {
+                                                "value": "select",
+                                                "label": "Select N items",
+                                            },
+                                            {
+                                                "value": "split",
+                                                "label": "Split into N groups",
+                                            },
+                                        ],
+                                        size="sm",
+                                        radius="lg",
+                                        transitionDuration=0,
                                     ),
-                                    html.P("Split into N groups", className="p-short"),
                                 ]
                             ),
                             html.Div(
                                 [
                                     html.P("Number of items:"),
                                     dcc.Input(
-                                        id="input-rng-item",
+                                        id="input-rng-select",
                                         type="number",
                                         value=1,
                                         min=1,
@@ -65,7 +74,7 @@ def rng_tab():
                                         },
                                     ),
                                 ],
-                                id="div-rng-item",
+                                id="div-rng-select",
                                 className="custom-div-flex custom-margin-top",
                                 style=merge(
                                     {
@@ -79,7 +88,7 @@ def rng_tab():
                                 [
                                     html.P("Number of groups:"),
                                     dcc.Input(
-                                        id="input-rng-group",
+                                        id="input-rng-split",
                                         type="number",
                                         value=2,
                                         min=2,
@@ -88,7 +97,7 @@ def rng_tab():
                                         },
                                     ),
                                 ],
-                                id="div-rng-group",
+                                id="div-rng-split",
                                 className="custom-div-flex custom-margin-top",
                                 style={
                                     "display": "none",

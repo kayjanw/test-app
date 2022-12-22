@@ -3,6 +3,7 @@
 - Media
 - Card
 - Button (Customized)
+- SegmentedControl, Checklist, RadioButton (Customized)
 - Dash leaflet style
 - Custom tabs
 - Custom class / div
@@ -249,6 +250,13 @@ footer
     box-shadow: 1px 1px 2px #BE9B89;
     margin-bottom: 5px;
     margin-top: 5px;
+}
+
+/* SegmentedControl, Checklist, RadioButton (Customized)
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mantine-SegmentedControl-labelActive  {
+    background-color: #BE9B89;
+    margin: 0 !important;
 }
 
 /* Dash leaflet style
