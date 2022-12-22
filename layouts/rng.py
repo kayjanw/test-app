@@ -58,9 +58,6 @@ def rng_tab():
                                         size="sm",
                                         radius="lg",
                                         transitionDuration=0,
-                                        style={
-                                            "font-family": "Source Sans Pro",
-                                        },
                                     ),
                                 ]
                             ),
