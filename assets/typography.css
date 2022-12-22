@@ -260,7 +260,7 @@ footer
 }
 
 [class^="mantine-SegmentedControl-"] {
-    font-family: Source Sans Pro;
+    font-family: Source Sans Pro !important;
 }
 
 /* Dash leaflet style
