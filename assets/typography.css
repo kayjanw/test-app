@@ -263,6 +263,10 @@ footer
     background-color: #BE9B89;
 }
 
+[class^="daq-colorpicker"] label {
+    margin: 0 !important;
+}
+
 /* Dash leaflet style
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .leaflet-container {
@@ -517,6 +521,10 @@ svg {
 
 .custom-margin-top {
     margin-top: 10px !important;
+}
+
+.custom-margin-bottom {
+    margin-bottom: 10px;
 }
 
 .custom-margin-left {

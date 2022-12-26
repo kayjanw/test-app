@@ -197,11 +197,11 @@ class WNRS:
             "R": ("#BE001C", "#FAFAEE"),  # red (default)
             "P": ("#EEC4C5", "#BE001C"),  # pink (self-love edition)
             "S1": (
-                "#5f86b5",
+                "#5F86B5",
                 "#FAFAEE",
             ),  # special blue card white font (own it edition)
             "S2": (
-                "#af2637",
+                "#AF2637",
                 "#FAFAEE",
             ),  # special maroon card white font (own it edition)
             "S3": (

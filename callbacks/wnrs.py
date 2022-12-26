@@ -262,6 +262,8 @@ def register_callbacks(app, print_function):
             Input("button-wnrs-shuffle-ok", "n_clicks"),
             Input("colorpicker-wnrs-text", "value"),
             Input("colorpicker-wnrs-background", "value"),
+            Input("swatches-wnrs-text", "value"),
+            Input("swatches-wnrs-background", "value"),
             Input("button-reset-style", "n_clicks"),
             Input("intermediate-wnrs", "data"),
         ],
@@ -282,6 +284,8 @@ def register_callbacks(app, print_function):
         trigger_shuffle,
         style_text,
         style_background,
+        swatch_text,
+        swatch_background,
         style_reset,
         data,
         data2_ser,
@@ -300,6 +304,8 @@ def register_callbacks(app, print_function):
             trigger_shuffle: trigger on button click
             style_text (dict): current style of card text
             style_background (dict): current style of card background
+            swatch_text (str): input swatch colour of card text
+            swatch_background (str): input swatch colour of card background
             style_reset: trigger on button click
             data (dict): data of WNRS object, from store data
             data2_ser (str): serialized data of WNRS object, from saved data
@@ -309,7 +315,7 @@ def register_callbacks(app, print_function):
             button_next (dict): current opacity for next button
 
         Returns:
-            str, str, str, dict, str, str, str, dict, dict
+            str, list, list, list, list str, dict, dict, dict, dict, dict
         """
         card_prompt, card_deck, card_counter, data_new = (
             [card_prompt, "", ""],
@@ -372,7 +378,17 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
-            elif ctx_id in ["colorpicker-wnrs-text", "colorpicker-wnrs-background"]:
+            elif ctx_id in [
+                "colorpicker-wnrs-text",
+                "colorpicker-wnrs-background",
+                "swatches-wnrs-text",
+                "swatches-wnrs-background",
+            ]:
+                if ctx_id == "swatches-wnrs-text":
+                    style_text["hex"] = swatch_text
+                elif ctx_id == "swatches-wnrs-background":
+                    style_background["hex"] = swatch_background
+
                 if "playing_cards" in data:
                     data_new = dict(
                         playing_cards=data["playing_cards"],

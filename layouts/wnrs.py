@@ -1,5 +1,6 @@
 import dash_bootstrap_components as dbc
 import dash_daq as daq
+import dash_mantine_components as dmc
 from dash import dcc, html
 
 from components import WNRS
@@ -8,18 +9,74 @@ from layouts.main import content_header, style_hidden, style_wnrs_text
 
 
 def modal_palette():
+    # swatches = [
+    #     "#25262b", "#868e96", "#fa5252", "#e64980", "#be4bdb", "#7950f2", "#4c6ef5",
+    #     "#228be6", "#15aabf", "#12b886", "#40c057", "#82c91e", "#fab005", "#fd7e14"
+    # ]
+    swatches_text = [
+        "#FFFFFF",
+        "#FAFAEE",
+        "#F6CA69",
+        "#BE001C",
+        "#1695C8",
+        "#4D1015",
+        "#000000",
+    ]
+    swatches_background = [
+        "#FAFAEE",
+        "#F6CA69",
+        "#EAD2E0",
+        "#EEC4C5",
+        "#EB744C",
+        "#BE001C",
+        "#AF2637",
+        "#275835",
+        "#4598BA",
+        "#5F86b5",
+        "#282C69",
+        "#4D1015",
+        "#000000",
+    ]
     return [
-        daq.ColorPicker(
-            id="colorpicker-wnrs-text",
-            label="Text Colour",
-            value=dict(),
-            className="custom-div-inline p-bold",
+        html.Div(
+            [
+                daq.ColorPicker(
+                    id="colorpicker-wnrs-text",
+                    label="Text Colour",
+                    value=dict(),
+                    className="p-bold",
+                ),
+                dmc.ColorPicker(
+                    id="swatches-wnrs-text",
+                    swatches=swatches_text,
+                    swatchesPerRow=9,
+                    withPicker=False,
+                    format="hex",
+                    value="",
+                    className="custom-div-inline",
+                ),
+            ],
+            className="custom-div-inline custom-margin-bottom custom-margin-left custom-margin-right",
         ),
-        daq.ColorPicker(
-            id="colorpicker-wnrs-background",
-            label="Background Colour",
-            value=dict(),
-            className="custom-div-inline p-bold",
+        html.Div(
+            [
+                daq.ColorPicker(
+                    id="colorpicker-wnrs-background",
+                    label="Background Colour",
+                    value=dict(),
+                    className="p-bold",
+                ),
+                dmc.ColorPicker(
+                    id="swatches-wnrs-background",
+                    swatches=swatches_background,
+                    swatchesPerRow=9,
+                    withPicker=False,
+                    format="hex",
+                    value="",
+                    className="custom-div-inline",
+                ),
+            ],
+            className="custom-div-inline custom-margin-bottom custom-margin-left custom-margin-right",
         ),
     ]
 
