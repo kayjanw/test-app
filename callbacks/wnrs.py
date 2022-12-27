@@ -253,6 +253,7 @@ def register_callbacks(app, print_function):
             Output("colorpicker-wnrs-background", "value"),
             Output("button-wnrs2-back", "style"),
             Output("button-wnrs2-next", "style"),
+            Output("theme-wnrs", "data"),
         ],
         [
             Input("button-wnrs-back", "n_clicks"),
@@ -273,6 +274,7 @@ def register_callbacks(app, print_function):
             State("wnrs-card", "style"),
             State("button-wnrs2-back", "style"),
             State("button-wnrs2-next", "style"),
+            State("theme-wnrs", "data"),
         ],
     )
     @print_callback(print_function)
@@ -293,6 +295,7 @@ def register_callbacks(app, print_function):
         current_style,
         button_back,
         button_next,
+        theme_ind,
     ):
         """Update underlying data, card content and style
 
@@ -313,6 +316,7 @@ def register_callbacks(app, print_function):
             current_style (dict): current style of card
             button_back (dict): current opacity for back button
             button_next (dict): current opacity for next button
+            theme_ind (bool): indicator on whether theme is set or not
 
         Returns:
             str, list, list, list, list str, dict, dict, dict, dict, dict
@@ -346,7 +350,6 @@ def register_callbacks(app, print_function):
                         pointer=data["pointer"],
                         index=data["index"],
                     )
-                    style_text = dict()
 
             elif ctx_id in [
                 "button-wnrs-back",
@@ -368,6 +371,7 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
+
             elif ctx_id == "button-wnrs-shuffle-ok":
                 if not button_next.get("opacity", True):
                     next_card = 2
@@ -378,17 +382,18 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
+
             elif ctx_id in [
                 "colorpicker-wnrs-text",
                 "colorpicker-wnrs-background",
                 "swatches-wnrs-text",
                 "swatches-wnrs-background",
             ]:
+                theme_ind = True
                 if ctx_id == "swatches-wnrs-text":
                     style_text["hex"] = swatch_text
                 elif ctx_id == "swatches-wnrs-background":
                     style_background["hex"] = swatch_background
-
                 if "playing_cards" in data:
                     data_new = dict(
                         playing_cards=data["playing_cards"],
@@ -396,6 +401,7 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
+
             elif ctx_id == "button-reset-style":
                 if "playing_cards" in data:
                     data_new = dict(
@@ -404,10 +410,12 @@ def register_callbacks(app, print_function):
                         pointer=data2["pointer"],
                         index=data2["index"],
                     )
-                style_text = dict()
+                theme_ind = False
+
         elif data2_ser is None:
             print("Not triggered")
             data_new = {}
+
         else:  # initial run
             data_new = dict(
                 playing_cards=data["playing_cards"],
@@ -450,7 +458,7 @@ def register_callbacks(app, print_function):
             current_style.update(card_style)
             data2 = wnrs_game.convert_to_save_format()
 
-        if style_text.get("hex", None):
+        if theme_ind:
             current_style.update(
                 {
                     "color": style_text["hex"],
@@ -468,4 +476,5 @@ def register_callbacks(app, print_function):
             dict(hex=current_style["background-color"]),
             button_back,
             button_next,
+            theme_ind,
         ]

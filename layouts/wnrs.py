@@ -1391,5 +1391,6 @@ def wnrs_tab(app):
                 },
             ),
             dcc.Store(id="intermediate-wnrs", storage_type="memory", data=data_store),
+            dcc.Store(id="theme-wnrs", storage_type="memory", data=False),
         ]
     )
