@@ -73,7 +73,7 @@ footer
         width: 85vw;
     }
     #tab-content {
-        width: 94vw;
+        width: 93vw;
         margin-top: 60px;
         margin-left: 0;
     }
@@ -253,6 +253,18 @@ footer
 }
 
 /* SegmentedControl, Checklist, RadioButton (Customized)
+.mantine-Button-root {
+    margin: 0px 10px 10px 0px;
+    padding: 0 10px;
+    border-radius: 32px;
+    height: 20px;
+}
+
+.mantine-Button-root span {
+    font-size: 11px;
+    letter-spacing: 0.25px;
+    line-height: 18px;
+}
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .mantine-SegmentedControl-label {
     font-family: Source Sans Pro !important;

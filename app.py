@@ -5,6 +5,7 @@ import gevent.monkey
 
 gevent.monkey.patch_all()
 
+from callbacks.articles import register_callbacks_articles
 from callbacks.callbacks import register_callbacks
 from callbacks.change_calculator import (
     register_callbacks as register_callbacks_change_calculator,
@@ -94,6 +95,7 @@ app.index_string = """
 """
 
 print_function = False
+register_callbacks_articles(app, print_function)
 register_callbacks(app, print_function)
 register_callbacks_change_calculator(app, print_function)
 register_callbacks_chat(app, print_function)
