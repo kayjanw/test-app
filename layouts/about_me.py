@@ -105,9 +105,7 @@ def about_me_tab(app):
                             html.Span(
                                 html.A(
                                     [
-                                        DashIconify(
-                                            icon="openmoji:chromium", height=40
-                                        ),
+                                        DashIconify(icon="openmoji:chrome", height=40),
                                         "Formal Website",
                                     ],
                                     href="http://kayjan.github.io/",
