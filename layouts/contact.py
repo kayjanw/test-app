@@ -40,15 +40,21 @@ def contact_tab():
                     html.Br(),
                     html.Button("Send", id="button-contact-ok"),
                     html.P(id="contact-reply"),
-                    html.A(
-                        DashIconify(icon="openmoji:linkedin", height=40),
-                        href="https://www.linkedin.com/in/kayjan/",
-                        target="_blank",
+                    html.Span(
+                        html.A(
+                            DashIconify(icon="openmoji:linkedin", height=40),
+                            href="https://www.linkedin.com/in/kayjan/",
+                            target="_blank",
+                        ),
+                        title="LinkedIn",
                     ),
-                    html.A(
-                        DashIconify(icon="openmoji:github", height=40),
-                        href="https://www.github.com/kayjan/",
-                        target="_blank",
+                    html.Span(
+                        html.A(
+                            DashIconify(icon="openmoji:github", height=40),
+                            href="https://www.github.com/kayjan/",
+                            target="_blank",
+                        ),
+                        title="GitHub",
                     ),
                 ],
                 className="custom-div-instruction custom-div-left",

@@ -59,35 +59,6 @@ def about_me_tab(app):
                     html.Br(),
                     html.Br(),
                     html.P(
-                        [
-                            "Check out my ",
-                            html.A(
-                                "linkedin",
-                                href="https://www.linkedin.com/in/kayjan/",
-                                target="_blank",
-                            ),
-                            " / ",
-                            html.A(
-                                "formal website",
-                                href="http://kayjan.github.io/",
-                                target="_blank",
-                            ),
-                            " / ",
-                            html.A(
-                                "Medium articles",
-                                href="https://kayjanwong.medium.com/",
-                                target="_blank",
-                            ),
-                            " / ",
-                            html.A(
-                                "bigtree Python Package",
-                                href="https://bigtree.readthedocs.io/",
-                                target="_blank",
-                            ),
-                            ".",
-                        ]
-                    ),
-                    html.P(
                         "Feel free to write in for any UI/UX suggestion, functionality idea, "
                         "new use case or bugs encountered!"
                     ),
@@ -101,6 +72,75 @@ def about_me_tab(app):
                                 target="_blank",
                             ),
                             ".",
+                        ]
+                    ),
+                    html.P(
+                        [
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(
+                                            icon="openmoji:linkedin", height=40
+                                        ),
+                                        "LinkedIn",
+                                    ],
+                                    href="https://www.linkedin.com/in/kayjan/",
+                                    target="_blank",
+                                ),
+                                title="LinkedIn",
+                            ),
+                            " / ",
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(icon="openmoji:github", height=40),
+                                        "GitHub",
+                                    ],
+                                    href="https://www.github.com/kayjan/",
+                                    target="_blank",
+                                ),
+                                title="GitHub",
+                            ),
+                            " / ",
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(
+                                            icon="openmoji:chromium", height=40
+                                        ),
+                                        "Formal Website",
+                                    ],
+                                    href="http://kayjan.github.io/",
+                                    target="_blank",
+                                ),
+                                title="Formal Website",
+                            ),
+                            " / ",
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(
+                                            icon="openmoji:newspaper", height=40
+                                        ),
+                                        "Medium Articles",
+                                    ],
+                                    href="https://kayjanwong.medium.com/",
+                                    target="_blank",
+                                ),
+                                title="Medium Articles",
+                            ),
+                            " / ",
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(icon="openmoji:package", height=40),
+                                        "bigtree Python Package",
+                                    ],
+                                    href="https://bigtree.readthedocs.io/",
+                                    target="_blank",
+                                ),
+                                title="bigtree Python Package",
+                            ),
                         ]
                     ),
                 ],
