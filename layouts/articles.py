@@ -46,6 +46,12 @@ card_list = [
         "https://towardsdatascience.com/7-evaluation-metrics-for-clustering-algorithms-bdc537ff54d2?sk=565cf6977935e51f1622e2b28ed8d8cc",
     ),
     (
+        "Data Science",
+        "Feature Encoding Techniques in Machine Learning with Python Implementation",
+        "6 feature encoding techniques to consider for your data science workflows",
+        "https://towardsdatascience.com/feature-encoding-techniques-in-machine-learning-with-python-implementation-dbf933e64aa?sk=47d0a64ab3eed9bc3babf59870152aff",
+    ),
+    (
         "Coding Best Practices",
         "3 Tips for Writing Clean Codes Beyond Coding Best Practices",
         "Write elegant, modular, understandable, and maintainable codes.",
