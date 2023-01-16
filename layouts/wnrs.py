@@ -953,28 +953,28 @@ def wnrs_tab(app):
             html.Div(
                 [
                     dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Couple 1"},
+                        "Ice Breaker",
+                        id={"type": "wnrs-deck-button", "id": "Couple IceBreaker"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Couple 2"},
+                        "Family and Childhood",
+                        id={"type": "wnrs-deck-button", "id": "Couple Childhood"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Couple 3"},
+                        "Relationship",
+                        id={"type": "wnrs-deck-button", "id": "Couple Relationship"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
-                        "Level 4",
-                        id={"type": "wnrs-deck-button", "id": "Couple 4"},
+                        "Sex and Kids",
+                        id={"type": "wnrs-deck-button", "id": "Couple Sex&Kids"},
                         className="button-wnrs",
                     ),
                     dbc.Button(
-                        "Level 5",
-                        id={"type": "wnrs-deck-button", "id": "Couple 5"},
+                        "Marriage",
+                        id={"type": "wnrs-deck-button", "id": "Couple Marriage"},
                         className="button-wnrs",
                     ),
                 ],
