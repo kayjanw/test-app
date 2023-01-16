@@ -1180,7 +1180,7 @@ def wnrs_tab(app):
                             ),
                             html.Button(
                                 [
-                                    html.P("Previous card"),
+                                    html.P("Back"),
                                     DashIconify(icon="openmoji:tap", height=40),
                                 ],
                                 id="button-wnrs2-back",
@@ -1189,7 +1189,7 @@ def wnrs_tab(app):
                             html.Button(
                                 [
                                     DashIconify(icon="openmoji:tap", height=40),
-                                    html.P("Next card"),
+                                    html.P("Next"),
                                 ],
                                 id="button-wnrs2-next",
                                 style={},
