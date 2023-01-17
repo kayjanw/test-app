@@ -361,16 +361,19 @@ svg {
     top: 0;
     height: 100%;
     width: 50%;
-    background-color: rgba(190, 0, 28, 0.5);
+    background-color: rgba(190, 0, 28, 0.8);
     border: 8px dashed rgba(0, 0, 0, 0.2);
+    white-space: normal;
 }
 
 .div-with-invisible-button button p {
     display: inline-block;
+    color: white;
     font-family: sans-serif;
     font-weight: bold;
     font-size: 1.625em;
     text-shadow: 0px 0px 10px #FFF;
+    text-transform: none;
     margin-bottom: 0;
 }
 

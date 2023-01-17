@@ -2,7 +2,6 @@ import dash_bootstrap_components as dbc
 import dash_daq as daq
 import dash_mantine_components as dmc
 from dash import dcc, html
-from dash_iconify import DashIconify
 
 from components import WNRS
 from components.helper import colour_palette, encode_dict
@@ -1179,18 +1178,12 @@ def wnrs_tab(app):
                                 style={},
                             ),
                             html.Button(
-                                [
-                                    html.P("Back"),
-                                    DashIconify(icon="openmoji:tap", height=40),
-                                ],
+                                html.P("👆 Tap here for previous card"),
                                 id="button-wnrs2-back",
                                 style={},
                             ),
                             html.Button(
-                                [
-                                    DashIconify(icon="openmoji:tap", height=40),
-                                    html.P("Next"),
-                                ],
+                                html.P("👆 Tap here for next card"),
                                 id="button-wnrs2-next",
                                 style={},
                             ),
