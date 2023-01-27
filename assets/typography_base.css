@@ -107,14 +107,19 @@ a:hover {
 
 /* Background color
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.background-yellow, .background-yellow:hover {
-    background-color: #ffc107;
+.background-red, .background-red:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.background-orange, .background-orange:hover {
+    background-color: #ff7518;
     color: black;
 }
 
-.background-grey, .background-grey:hover {
-    background-color: #6c757d;
-    color: white;
+.background-yellow, .background-yellow:hover {
+    background-color: #ffc107;
+    color: black;
 }
 
 .background-green, .background-green:hover {
@@ -122,9 +127,9 @@ a:hover {
     color: white;
 }
 
-.background-red, .background-red:hover {
-    background-color: #dc3545;
-    color: white;
+.background-lightblue, .background-lightblue:hover {
+    background-color: #0dcaf0;
+    color: black;
 }
 
 .background-blue, .background-blue:hover {
@@ -132,9 +137,14 @@ a:hover {
     color: white;
 }
 
-.background-lightblue, .background-lightblue:hover {
-    background-color: #0dcaf0;
-    color: black;
+.background-purple, .background-purple:hover {
+    background-color: #9954bb;
+    color: white;
+}
+
+.background-grey, .background-grey:hover {
+    background-color: #6c757d;
+    color: white;
 }
 
 .background-light, .background-light:hover {
