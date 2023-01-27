@@ -1029,7 +1029,7 @@ def wnrs_tab(app):
         return [
             html.P(
                 "How to Play (2-6 players)",
-                className="p-short p-bold",
+                className="p-short p-bold neucha-font",
             ),
             html.P(
                 [
@@ -1048,7 +1048,7 @@ def wnrs_tab(app):
             html.P(
                 "Wildcards",
                 style={"margin-top": "20px"},
-                className="p-short p-bold",
+                className="p-short p-bold neucha-font",
             ),
             html.P(
                 [
@@ -1060,7 +1060,7 @@ def wnrs_tab(app):
             html.P(
                 "Save your Progress",
                 style={"margin-top": "20px"},
-                className="p-short p-bold",
+                className="p-short p-bold neucha-font",
             ),
             html.P(
                 [
@@ -1076,7 +1076,7 @@ def wnrs_tab(app):
             html.P(
                 "Customize Theme",
                 style={"margin-top": "20px"},
-                className="p-short p-bold",
+                className="p-short p-bold neucha-font",
             ),
             html.P(
                 [
@@ -1091,7 +1091,7 @@ def wnrs_tab(app):
             html.P(
                 "Want to Contribute?",
                 style={"margin-top": "20px"},
-                className="p-short p-bold",
+                className="p-short p-bold neucha-font",
             ),
             html.P(
                 [

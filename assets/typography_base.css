@@ -95,6 +95,15 @@ h6 {
     color: red;
 }
 
+@font-face {
+font-family: "Cabin Sketch";
+src: url("font/CabinSketch-Regular.ttf") format("truetype");
+}
+
+.neucha-font {
+    font-family: Cabin Sketch, Source Sans Pro, sans-serif;
+}
+
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
