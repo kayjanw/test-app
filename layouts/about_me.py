@@ -18,7 +18,7 @@ def about_me_tab(app):
                             DashIconify(icon="openmoji:bar-chart", height=40),
                             html.P("Data Analytics", className="p-short p-bold"),
                             html.P(
-                                ": Using uploaded data, visualize results graphically",
+                                ": Visualize results graphically using uploaded data",
                                 className="p-short",
                             ),
                         ],
