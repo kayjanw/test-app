@@ -37,6 +37,12 @@ card_list = [
     ),
     (
         "Data Science (UL)",
+        "6 Types of Clustering Methods — An Overview",
+        "Types of clustering methods and algorithms and when to use them.",
+        "https://towardsdatascience.com/6-types-of-clustering-methods-an-overview-7522dba026ca?sk=3488b74834219055514781269adb778f",
+    ),
+    (
+        "Data Science (UL)",
         "7 Evaluation Metrics for Clustering Algorithms",
         "In-depth explanation with Python examples of unsupervised learning evaluation metrics.",
         "https://towardsdatascience.com/7-evaluation-metrics-for-clustering-algorithms-bdc537ff54d2?sk=565cf6977935e51f1622e2b28ed8d8cc",
