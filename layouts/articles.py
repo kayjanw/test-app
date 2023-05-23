@@ -91,6 +91,12 @@ card_list = [
     ),
     (
         "Software Engineering",
+        "Git 101 — From Terminologies to Architecture and Workflows",
+        "Git behind-the-scenes and how to use Git efficiently.",
+        "https://towardsdatascience.com/git-101-from-terminologies-to-architecture-and-workflows-78cb6d735798?sk=e62cd0fc61adae028d610306af7bf7ce",
+    ),
+    (
+        "Software Engineering",
         "Basic to Advanced Logging with Python in 10 Minutes",
         "Logging crash course with common logging issues addressed.",
         "https://towardsdatascience.com/basic-to-advanced-logging-with-python-in-10-minutes-631501339650?sk=a17d61aeff13d6791168042330fbc3b1",
