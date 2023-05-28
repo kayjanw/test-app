@@ -984,6 +984,54 @@ def wnrs_tab(app):
         className="custom-div-flex div-with-image div-with-image-left small-image",
     )
 
+    gottmann_work = html.Div(
+        [
+            html.Span("Work Questions", className="span-short"),
+            html.Img(src=app.get_asset_url("info.svg"), id="work-help"),
+            dbc.Tooltip(
+                wnrs_information["Work Edition"]["Team"]["description"],
+                placement="right",
+                target="work-help",
+                className="tooltip",
+            ),
+            html.Div(
+                [
+                    dbc.Button(
+                        "Creative",
+                        id={"type": "wnrs-deck-button", "id": "Team Creative"},
+                        className="button-wnrs",
+                    ),
+                ],
+                className="wnrs-level",
+            ),
+        ],
+        className="custom-div-flex div-with-image div-with-image-left small-image",
+    )
+
+    # sample_section = html.Div(
+    #     [
+    #         html.Span("Section Head", className="span-short"),
+    #         html.Img(src=app.get_asset_url("info.svg"), id="section-help"),
+    #         dbc.Tooltip(
+    #             wnrs_information["<excel Type>"]["<excel SheetName>"]["description"],
+    #             placement="right",
+    #             target="section-help",
+    #             className="tooltip",
+    #         ),
+    #         html.Div(
+    #             [
+    #                 dbc.Button(
+    #                     "Custom Level",
+    #                     id={"type": "wnrs-deck-button", "id": "<excel SheetName> <excel Level>"},
+    #                     className="button-wnrs",
+    #                 ),
+    #             ],
+    #             className="wnrs-level",
+    #         ),
+    #     ],
+    #     className="custom-div-flex div-with-image div-with-image-left small-image",
+    # )
+
     def modal_deck():
         return [
             html.P("Main Deck", style=style_wnrs_text),
@@ -1022,6 +1070,7 @@ def wnrs_tab(app):
             gottman_rituals,
             gottman_opportunity,
             gottman_couple,
+            gottmann_work,
             html.Br(),
         ]
 
