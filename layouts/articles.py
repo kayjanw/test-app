@@ -146,7 +146,7 @@ card_list = [
     (
         "Software Engineering",
         "Google Cloud vs. Fly.io as Heroku Alternatives",
-        "Comparison of free-tier Docker deployments",
+        "Comparison of free-tier Docker deployments.",
         "https://towardsdatascience.com/google-cloud-vs-fly-io-as-heroku-alternatives-1f5a47716a58?sk=c9d1395f5833b63e5e6af795748bf58d",
     ),
     (

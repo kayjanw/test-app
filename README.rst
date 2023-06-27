@@ -7,7 +7,7 @@ utils.py Project
    :alt: Documentation Status
 
 This ``utils.py`` project aims to be a helper tool to automate repetitive data analysis tasks,
-or perform predictions and optimizations that are computationally expensive etc.
+perform predictions and optimizations that are computationally expensive, and play games.
 This documentation comprises of deployment documentation and code documentation.
 
 The web application can be found `here <https://kayjan.fly.dev>`_.
@@ -24,12 +24,17 @@ There are many other ways to structure your codes, but I find this implementatio
   ├── assets
   │   ├── default_css.css
   │   └── etc (other .css, .ico, .png, .svg files)
+  ├── callbacks
+  │   ├── callbacks.py
+  │   ├── trip_planner.py
+  │   └── etc (other callback .py files for each tab)
   ├── components
   │   ├── helper.py
-  │   └── etc (other .py files)
+  │   ├── trip_planner.py
+  │   └── etc (other python classes .py files)
   ├── data
   │   ├── model.pkl
-  │   └── etc (other .pkl files)
+  │   └── etc (other .pkl/.xlsx data files)
   ├── docs
   │   ├── build
   │   ├── source
@@ -37,11 +42,10 @@ There are many other ways to structure your codes, but I find this implementatio
   │   └── Makefile
   ├── layouts
   │   ├── articles.py
-  │   └── etc (other .py files)
+  │   └── etc (other layout .py files for each tab)
   ├── tests
   ├── app.py
-  ├── callbacks.py
-  ├── layouts.py
+  ├── pyproject.toml
   ├── requirements.txt
   └── routes.py
 
