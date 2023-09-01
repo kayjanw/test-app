@@ -139,6 +139,18 @@ def about_me_tab(app):
                                 ),
                                 title="bigtree Python Package",
                             ),
+                            " / ",
+                            html.Span(
+                                html.A(
+                                    [
+                                        DashIconify(icon="openmoji:robot", height=40),
+                                        "PickMe Telegram Bot",
+                                    ],
+                                    href="https://t.me/pickme_bot",
+                                    target="_blank",
+                                ),
+                                title="PickMe Telegram Bot",
+                            ),
                         ]
                     ),
                 ],
