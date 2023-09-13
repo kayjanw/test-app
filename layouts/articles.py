@@ -7,6 +7,7 @@ from layouts.main import content_header
 
 topic_colour_dict = {
     "Productivity": "dark",
+    "Algorithm": "purple",
     "Data Science (SL)": "red",
     "Data Science (UL)": "orange",
     "Data Science (RL)": "yellow",
@@ -22,6 +23,30 @@ card_list = [
         "5 Tips After Completing 100 Coursera Courses",
         "Reflections on my e-learning journey.",
         "https://towardsdatascience.com/5-tips-after-completing-100-coursera-courses-1ee5a35e72a4?sk=bd67c6888a7a552c8f5fbdedf64f7554",
+    ),
+    (
+        "Productivity",
+        "Kedro as a Data Pipeline in 10 Minutes",
+        "Development Workflow Framework made easy — explained with Python examples.",
+        "https://towardsdatascience.com/kedro-as-a-data-pipeline-in-10-minutes-21c1a7c6bbb?sk=3888d0201676baa22f2343f778a2bb44",
+    ),
+    (
+        "Productivity",
+        "Experiment Tracking with MLflow in 10 Minutes",
+        "Managing Machine Learning Lifecycle made easy — explained with Python examples.",
+        "https://towardsdatascience.com/experiment-tracking-with-mlflow-in-10-minutes-f7c2128b8f2c?sk=6ee34637af9dacd734dbc57ac4213209",
+    ),
+    (
+        "Productivity",
+        "Job Scheduling with Apache AirFlow 2.0 in 10 Minutes",
+        "Workflow Management System made easy — explained with Python examples.",
+        "https://towardsdatascience.com/job-scheduling-with-apache-airflow-2-0-in-10-minutes-16d19f548a46?sk=df2921ed50a7ddded0360cf248162092",
+    ),
+    (
+        "Algorithm",
+        "The Reingold Tilford Algorithm Explained, with Walkthrough",
+        "Algorithm to Plot Tree Nodes with Numerical Examples and Python Code.",
+        "https://towardsdatascience.com/reingold-tilford-algorithm-explained-with-walkthrough-be5810e8ed93?sk=2db8e10398cee76c486c4b06b0b33322",
     ),
     (
         "Data Science (SL)",
@@ -133,18 +158,6 @@ card_list = [
     ),
     (
         "Software Engineering",
-        "Experiment Tracking with MLflow in 10 Minutes",
-        "Managing Machine Learning Lifecycle made easy — explained with Python examples.",
-        "https://towardsdatascience.com/experiment-tracking-with-mlflow-in-10-minutes-f7c2128b8f2c?sk=6ee34637af9dacd734dbc57ac4213209",
-    ),
-    (
-        "Software Engineering",
-        "Job Scheduling with Apache AirFlow 2.0 in 10 Minutes",
-        "Workflow Management System made easy — explained with Python examples.",
-        "https://towardsdatascience.com/job-scheduling-with-apache-airflow-2-0-in-10-minutes-16d19f548a46?sk=df2921ed50a7ddded0360cf248162092",
-    ),
-    (
-        "Software Engineering",
         "Google Cloud vs. Fly.io as Heroku Alternatives",
         "Comparison of free-tier Docker deployments.",
         "https://towardsdatascience.com/google-cloud-vs-fly-io-as-heroku-alternatives-1f5a47716a58?sk=c9d1395f5833b63e5e6af795748bf58d",
@@ -154,6 +167,18 @@ card_list = [
         "Heroku + Docker in 10 Minutes",
         "Deployment for Python applications made easy — and it’s free.",
         "https://towardsdatascience.com/heroku-docker-in-10-minutes-f4329c4fd72f?sk=568b7e38903f7175080faa8e7cbe42ee",
+    ),
+    (
+        "Software Engineering",
+        "Python Decorators in 10 minutes",
+        "Decorator crash course with popular real-life usage examples.",
+        "https://towardsdatascience.com/python-decorators-in-10-minutes-c8bca1020235?sk=2f342e376cf86e5ef18d512f58ad88ff",
+    ),
+    (
+        "Software Engineering",
+        "Python Context Managers in 10 Minutes — using the ‘with’ keyword",
+        "Context managers made simple with sample usage examples.",
+        "https://towardsdatascience.com/python-context-managers-in-10-minutes-using-the-with-keyword-51eb254c1b89?sk=8693fef46f18d62c40f0caf19a177098",
     ),
 ]
 
