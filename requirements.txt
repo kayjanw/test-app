@@ -63,7 +63,7 @@ threadpoolctl==2.1.0
 tomli==1.2.3
 tqdm==4.46.1
 typed-ast==1.5.4
-urllib3==1.26.5
+urllib3==1.26.17
 Werkzeug==2.2.3
 wincertstore==0.2
 wordcloud==1.8.2.2
