@@ -116,6 +116,12 @@ card_list = [
     ),
     (
         "Software Engineering",
+        "Command Line Interface with sysargv, argparse, docopts, and Typer",
+        "4 ways to pass arguments to your Python scripts.",
+        "https://towardsdatascience.com/command-line-interface-with-sysargv-argparse-docopts-and-typer-e876f577a5d6?sk=af964481fbcf6f31e1cc7342feedfff8",
+    ),
+    (
+        "Software Engineering",
         "Git 101 — From Terminologies to Architecture and Workflows",
         "Git behind-the-scenes and how to use Git efficiently.",
         "https://towardsdatascience.com/git-101-from-terminologies-to-architecture-and-workflows-78cb6d735798?sk=e62cd0fc61adae028d610306af7bf7ce",
