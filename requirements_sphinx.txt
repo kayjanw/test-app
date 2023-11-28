@@ -9,7 +9,7 @@ pyOpenSSL==19.1.0
 pyparsing==2.4.7
 PySocks==1.7.1
 snowballstemmer==2.0.0
-Sphinx==7.1.2
+Sphinx==6.2.1
 sphinx-rtd-theme==0.4.3
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
