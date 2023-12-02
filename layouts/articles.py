@@ -116,6 +116,12 @@ card_list = [
     ),
     (
         "Software Engineering",
+        "Complete Guide to Caching in Python",
+        "How does caching work, and ways to cache your functions.",
+        "https://towardsdatascience.com/complete-guide-to-caching-in-python-b4e37a4bcebf?sk=7e21b65103c7a9c8e03e161708e78c05",
+    ),
+    (
+        "Software Engineering",
         "Command Line Interface with sysargv, argparse, docopts, and Typer",
         "4 ways to pass arguments to your Python scripts.",
         "https://towardsdatascience.com/command-line-interface-with-sysargv-argparse-docopts-and-typer-e876f577a5d6?sk=af964481fbcf6f31e1cc7342feedfff8",
