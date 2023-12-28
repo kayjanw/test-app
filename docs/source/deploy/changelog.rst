@@ -4,9 +4,10 @@ Changelog
 
 .. note::  This changelog records the milestone progress, and does not include any hotfix made
 
-========== =====================================================
+========== ========================================================
 Date       Changes
-========== =====================================================
+========== ========================================================
+2023-12-28 Refactor: Added constants file and reusable components
 2022-11-27 Added Articles tab
 2022-07-22 Added Live Trading tab (using Coinbase API)
 2022-05-23 Added Live Trading tab (using MetaTrader4)
