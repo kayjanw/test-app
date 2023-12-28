@@ -4,6 +4,65 @@ from dash_iconify import DashIconify
 from layouts.main import content_header
 
 
+def about_me_component(icon_name: str, component_name: str, component_description: str):
+    """Component for about-me tab
+
+    Args:
+        icon_name (str): component icon
+        component_name (str): component title
+        component_description (str): component description
+
+    Returns:
+        (html.Div)
+    """
+    return html.Div(
+        [
+            DashIconify(icon=f"openmoji:{icon_name}", height=40),
+            html.P(component_name, className="p-short p-bold"),
+            html.P(f": {component_description}", className="p-short"),
+        ],
+        className="custom-div-small-space-below",
+    )
+
+
+def about_me_links(icon_name: str, link_title: str, link_url: str):
+    """Link component for about-me tab
+
+    Args:
+        icon_name (str): link icon
+        link_title (str): link title
+        link_url (str): link URL
+
+    Returns:
+        (html.Span)
+    """
+    return html.Span(
+        html.A(
+            [
+                DashIconify(icon=f"openmoji:{icon_name}", height=40),
+                link_title,
+            ],
+            href=link_url,
+            target="_blank",
+        ),
+        title=link_title,
+    )
+
+
+def about_me_audio():
+    """Audio component for about-me tab (WIP)
+
+    Returns:
+        (html.Audio)
+    """
+    return (
+        html.Audio(
+            src="https://www.youtube.com/embed/kgx4WGK0oNU",
+            autoPlay=True,
+        ),
+    )
+
+
 def about_me_tab(app):
     return html.Div(
         [
@@ -13,48 +72,25 @@ def about_me_tab(app):
                     html.P(
                         "Just someone who loves coding, and believes coding should make our lives easier."
                     ),
-                    html.Div(
-                        [
-                            DashIconify(icon="openmoji:bar-chart", height=40),
-                            html.P("Data Analytics", className="p-short p-bold"),
-                            html.P(
-                                ": Visualize results graphically using uploaded data",
-                                className="p-short",
-                            ),
-                        ],
-                        className="custom-div-small-space-below",
+                    about_me_component(
+                        "bar-chart",
+                        "Data Analytics",
+                        "Visualize results graphically using uploaded data",
                     ),
-                    html.Div(
-                        [
-                            DashIconify(icon="openmoji:chart-increasing", height=40),
-                            html.P("Optimization", className="p-short p-bold"),
-                            html.P(
-                                ": Solve computationally expensive math problems",
-                                className="p-short",
-                            ),
-                        ],
-                        className="custom-div-small-space-below",
+                    about_me_component(
+                        "chart-increasing",
+                        "Optimization",
+                        "Solve computationally expensive math problems",
                     ),
-                    html.Div(
-                        [
-                            DashIconify(icon="openmoji:brain", height=40),
-                            html.P("Prediction", className="p-short p-bold"),
-                            html.P(
-                                ": Use machine learning methods to churn out predictions",
-                                className="p-short",
-                            ),
-                        ],
-                        className="custom-div-small-space-below",
+                    about_me_component(
+                        "brain",
+                        "Prediction",
+                        "Use machine learning methods to churn out predictions",
                     ),
-                    html.Div(
-                        [
-                            DashIconify(icon="openmoji:party-popper", height=40),
-                            html.P("Fun Things", className="p-short p-bold"),
-                            html.P(
-                                ": Plan events and play games!", className="p-short"
-                            ),
-                        ],
-                        className="custom-div-small-space-below",
+                    about_me_component(
+                        "party-popper",
+                        "Fun Things",
+                        "Plan events and play games!",
                     ),
                     html.Br(),
                     html.Br(),
@@ -76,80 +112,36 @@ def about_me_tab(app):
                     ),
                     html.P(
                         [
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(
-                                            icon="openmoji:linkedin", height=40
-                                        ),
-                                        "LinkedIn",
-                                    ],
-                                    href="https://www.linkedin.com/in/kayjan/",
-                                    target="_blank",
-                                ),
-                                title="LinkedIn",
+                            about_me_links(
+                                "linkedin",
+                                "LinkedIn",
+                                "https://www.linkedin.com/in/kayjan/",
                             ),
                             " / ",
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(icon="openmoji:github", height=40),
-                                        "GitHub",
-                                    ],
-                                    href="https://www.github.com/kayjan/",
-                                    target="_blank",
-                                ),
-                                title="GitHub",
+                            about_me_links(
+                                "github", "GitHub", "https://www.github.com/kayjan/"
                             ),
                             " / ",
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(icon="openmoji:chrome", height=40),
-                                        "Formal Website",
-                                    ],
-                                    href="http://kayjan.github.io/",
-                                    target="_blank",
-                                ),
-                                title="Formal Website",
+                            about_me_links(
+                                "chrome", "Formal Website", "http://kayjan.github.io/"
                             ),
                             " / ",
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(
-                                            icon="openmoji:newspaper", height=40
-                                        ),
-                                        "Medium Articles",
-                                    ],
-                                    href="https://kayjanwong.medium.com/",
-                                    target="_blank",
-                                ),
-                                title="Medium Articles",
+                            about_me_links(
+                                "newspaper",
+                                "Medium Articles",
+                                "https://kayjanwong.medium.com/",
                             ),
                             " / ",
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(icon="openmoji:package", height=40),
-                                        "bigtree Python Package",
-                                    ],
-                                    href="https://bigtree.readthedocs.io/",
-                                    target="_blank",
-                                ),
-                                title="bigtree Python Package",
+                            about_me_links(
+                                "package",
+                                "bigtree Python Package",
+                                "https://bigtree.readthedocs.io/",
                             ),
                             " / ",
-                            html.Span(
-                                html.A(
-                                    [
-                                        DashIconify(icon="openmoji:robot", height=40),
-                                        "PickMe Telegram Bot",
-                                    ],
-                                    href="https://t.me/pickme_bot",
-                                    target="_blank",
-                                ),
-                                title="PickMe Telegram Bot",
+                            about_me_links(
+                                "robot",
+                                "PickMe Telegram Bot",
+                                "https://t.me/pickme_bot",
                             ),
                         ]
                     ),

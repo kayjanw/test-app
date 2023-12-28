@@ -3,19 +3,8 @@ import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
+from layouts.constants import ARTICLE_TOPIC_COLOUR_DICT
 from layouts.main import content_header
-
-topic_colour_dict = {
-    "Productivity": "dark",
-    "Algorithm": "purple",
-    "Data Science (SL)": "red",
-    "Data Science (UL)": "orange",
-    "Data Science (RL)": "yellow",
-    "Coding Best Practices": "green",
-    "Dashboard": "lightblue",
-    "Software Engineering": "blue",
-}
-
 
 card_list = [
     (
@@ -194,51 +183,77 @@ card_list = [
     ),
 ]
 
-button_dict = {
-    "variant": "filled",
-    "size": "xs",
-    "compact": True,
-    "radius": "lg",
-    "style": {"margin": "0px 10px 10px 0px"},
-}
+
+def articles_button(topic: str, colour: str):
+    """Button for articles tab
+
+    Args:
+        topic (str): topic of button
+        colour (str): colour of button
+
+    Returns:
+        (dmc.Button)
+    """
+    button_dict = {
+        "variant": "filled",
+        "size": "xs",
+        "compact": True,
+        "radius": "lg",
+        "style": {"margin": "0px 10px 10px 0px"},
+    }
+    return dmc.Button(
+        topic,
+        id={"type": "button-article", "id": f"article-{topic}"},
+        className=f"background-{colour}",
+        **button_dict,
+    )
+
+
+def articles_card(
+    topic: str, article_title: str, article_description: str, article_url: str, idx: int
+):
+    """Card for articles tab
+
+    Args:
+        topic (str): topic of article
+        article_title (str): article title
+        article_description (str): article description
+        article_url (str): article URL
+        idx (int): unique index of card
+
+    Returns:
+        (html.A)
+    """
+    return html.A(
+        dbc.Card(
+            [
+                dbc.CardBody(
+                    [
+                        dbc.CardHeader(topic),
+                        html.H5(article_title),
+                        html.P(article_description),
+                    ],
+                ),
+            ],
+            className=f"zoom background-{ARTICLE_TOPIC_COLOUR_DICT[topic]}",
+        ),
+        id={"type": "card-article", "id": f"article-{topic}", "idx": idx},
+        href=article_url,
+        target="_blank",
+    )
 
 
 def articles_tab():
     # Button
     button_div_list = []
-    for topic, colour in topic_colour_dict.items():
-        button_div_list.append(
-            dmc.Button(
-                topic,
-                id={"type": "button-article", "id": f"article-{topic}"},
-                className=f"background-{colour}",
-                **button_dict,
-            )
-        )
+    for topic, colour in ARTICLE_TOPIC_COLOUR_DICT.items():
+        button_div_list.append(articles_button(topic, colour))
 
     # Card
     card_div_list = []
     for idx, values in enumerate(card_list):
         topic, title, description, link = values
-        card_div_list.append(
-            html.A(
-                dbc.Card(
-                    [
-                        dbc.CardBody(
-                            [
-                                dbc.CardHeader(topic),
-                                html.H5(title),
-                                html.P(description),
-                            ],
-                        ),
-                    ],
-                    className=f"zoom background-{topic_colour_dict[topic]}",
-                ),
-                id={"type": "card-article", "id": f"article-{topic}", "idx": idx},
-                href=link,
-                target="_blank",
-            )
-        )
+        card_div_list.append(articles_card(topic, title, description, link, idx))
 
     return html.Div(
         [
