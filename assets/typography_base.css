@@ -91,6 +91,11 @@ h6 {
     line-height: 1.7;
 }
 
+.footer h6, .footer a {
+    font-size: 12px;
+    line-height: 1;
+}
+
 blockquote {
     margin-top: 0;
     margin-bottom: 0;
