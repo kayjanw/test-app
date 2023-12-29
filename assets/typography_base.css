@@ -87,8 +87,13 @@ h5 {
 
 h6 {
     display: inline-block;
-    font-size: 12px;
-    line-height: 0;
+    font-size: 1em;
+    line-height: 1.7;
+}
+
+blockquote {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .color-red {
