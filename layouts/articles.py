@@ -92,6 +92,12 @@ card_list = [
         "https://towardsdatascience.com/advanced-code-documentation-beyond-comments-and-docstrings-2cc5b2ace28a?sk=e27cf3ec7723a1af37271e83e4dff888",
     ),
     (
+        "Coding Best Practices",
+        "Switching From Sphinx to MkDocs Documentation — What Did I Gain and Lose?",
+        "Guide on performing this switch, and a comparison between them.",
+        "https://medium.com/towards-data-science/switching-from-sphinx-to-mkdocs-documentation-what-did-i-gain-and-lose-04080338ad38?sk=ac2ca5d6f5b5060fabd62a97ad1a38ad",
+    ),
+    (
         "Dashboard",
         "Advancing to Professional Dashboard with Python, using Dash",
         "Advanced ways to enhance initial skeleton code.",
