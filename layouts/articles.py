@@ -135,6 +135,12 @@ card_list = [
     ),
     (
         "Software Engineering",
+        "Benchmarking Pytest with CICD Using GitHub Action",
+        "Making Pytest benchmark automated, actionable, and intuitive.",
+        "https://towardsdatascience.com/benchmarking-pytest-with-cicd-using-github-action-17af32b4a30b?sk=36c09bdf821b29ab1aea09fd34836f30",
+    ),
+    (
+        "Software Engineering",
         "Pytest with Marking, Mocking, and Fixtures in 10 Minutes",
         "Write robust unit tests with Python pytest.",
         "https://towardsdatascience.com/pytest-with-marking-mocking-and-fixtures-in-10-minutes-678d7ccd2f70?sk=9707ed3994d15e2e2a0344f4dfec425b",
