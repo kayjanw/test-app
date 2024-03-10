@@ -309,6 +309,7 @@ footer
 .custom-tab-disabled {
     cursor: auto !important;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 .custom-tab {
