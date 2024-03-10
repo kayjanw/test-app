@@ -112,14 +112,6 @@ def trade_tab():
                                         ],
                                         value=indicators[:2],
                                     ),
-                                    # ] + [
-                                    #     dbc.Tooltip(
-                                    #         indicators_desc[idx],
-                                    #         target=indicators[idx],
-                                    #         placement="right",
-                                    #         className="tooltip"
-                                    #     )
-                                    #     for idx in range(len(indicators))
                                 ],
                                 className="custom-div-flex",
                             ),

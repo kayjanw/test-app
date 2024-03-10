@@ -62,11 +62,9 @@ class MBTI:
         self.path_tokenizer = f"{self.data_path}tokenizer.pkl"
         self.path_models = []
         for col in self.mbti_cols:
-            # self.path_models.append(f"data/model_{col}.pkl")
             self.path_models.append(f"{self.data_path}model_{col}.pkl")
         self.path_tf_models = []
         for col in self.mbti_cols:
-            # self.path_tf_models.append(f"data/model_tf_{col}.h5")
             self.path_models.append(f"{self.data_path}model_{col}.h5")
 
         # Parameters for modelling
