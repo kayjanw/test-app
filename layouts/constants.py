@@ -1,10 +1,11 @@
 ARTICLE_TOPIC_COLOUR_DICT = {
-    "Productivity": "dark",
-    "Algorithm": "purple",
-    "Data Science (SL)": "red",
-    "Data Science (UL)": "orange",
-    "Data Science (RL)": "yellow",
-    "Coding Best Practices": "green",
+    "Productivity": "red",
+    "Algorithm": "orange",
+    "Coding Best Practices": "yellow",
+    "Code Testing": "green",
     "Dashboard": "lightblue",
-    "Software Engineering": "blue",
+    "Data Science (SL)": "blue",
+    "Data Science (UL)": "purple",
+    "Data Science (RL)": "grey",
+    "Software Engineering": "dark",
 }
