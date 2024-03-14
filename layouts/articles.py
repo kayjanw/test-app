@@ -69,6 +69,12 @@ card_list = [
     ),
     (
         "Code Testing",
+        "Pytest Mocking Cheat Sheet",
+        "Mocking made simple, patching made easy.",
+        "https://towardsdatascience.com/pytest-mocking-cheat-sheet-c7bb06d58598?sk=c17c9a0fa8eedc683220d8bee1faf430",
+    ),
+    (
+        "Code Testing",
         "Benchmarking Pytest with CICD Using GitHub Action",
         "Making Pytest benchmark automated, actionable, and intuitive.",
         "https://towardsdatascience.com/benchmarking-pytest-with-cicd-using-github-action-17af32b4a30b?sk=36c09bdf821b29ab1aea09fd34836f30",
