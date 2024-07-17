@@ -135,6 +135,12 @@ card_list = [
     ),
     (
         "Software Engineering",
+        "Validations in Pydantic V2",
+        "Validating with Field, Annotated, field validator, and model validator.",
+        "https://towardsdatascience.com/validations-in-pydantic-v2-15bcbb39a98b?sk=667157782e3c9b0d5dcc43d07a225d1e",
+    ),
+    (
+        "Software Engineering",
         "Complete Guide to Caching in Python",
         "How does caching work, and ways to cache your functions.",
         "https://towardsdatascience.com/complete-guide-to-caching-in-python-b4e37a4bcebf?sk=7e21b65103c7a9c8e03e161708e78c05",
