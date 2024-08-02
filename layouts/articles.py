@@ -62,6 +62,12 @@ card_list = [
         "https://medium.com/towards-data-science/switching-from-sphinx-to-mkdocs-documentation-what-did-i-gain-and-lose-04080338ad38?sk=ac2ca5d6f5b5060fabd62a97ad1a38ad",
     ),
     (
+        "Coding Best Practices",
+        "Python Code Playground in MkDocs",
+        "Making documentation come to life.",
+        "https://medium.com/towards-data-science/python-code-playground-in-mkdocs-cc05eddceb63?sk=829246f5467c1a85a8170baf7220ec9a",
+    ),
+    (
         "Code Testing",
         "Pytest with Marking, Mocking, and Fixtures in 10 Minutes",
         "Write robust unit tests with Python pytest.",
