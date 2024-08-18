@@ -22,8 +22,8 @@ RUN apt-get update \
     && chmod -R g=u /test-app \
     && pip install pip --upgrade \
     && pip install -U -r requirements.txt \
-    && python3 -c "import nltk; nltk.download('stopwords'); nltk.download('omw-1.4'); nltk.download('punkt_tab')" \
-    && cp -r /root/nltk_data /usr/local/share/ \
-    && python3 -m unittest discover -s tests/ -p "test_*.py" \
+    && python3 -c "import nltk; nltk.download('punkt_tab')" \
+    && cp -r /root/nltk_data /usr/local/share/
+RUN python3 -m unittest discover -s tests/ -p "test_*.py" \
     && ls -lh
 CMD gunicorn app:server --bind 0.0.0.0:$PORT --workers 2 --worker-class gevent --preload
