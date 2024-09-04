@@ -6,6 +6,7 @@ import json
 import os
 import re
 from functools import reduce
+from typing import Any, Dict, List, Optional
 
 import dash
 import matplotlib.pyplot as plt
@@ -86,13 +87,10 @@ def print_callback(print_function):
     return decorator
 
 
-def violin_plot():
+def violin_plot() -> dcc.Graph:
     """Get data for plot, return plot
 
     Adds plotly.graph_objects charts for violin plot at initial loading page
-
-    Returns:
-        (dcc.Graph)
     """
     np.random.seed(1)
     points = (
@@ -152,15 +150,12 @@ def violin_plot():
     )
 
 
-def dcc_loading(children, dark_bg=True):
+def dcc_loading(children, dark_bg: bool = True) -> dcc.Loading:
     """Get default dcc.Loading component
 
     Args:
         children: children of component
-        dark_bg (bool): indicates whether loading icon is on dark background
-
-    Returns:
-        (dcc.Loading)
+        dark_bg: indicates whether loading icon is on dark background
     """
     if dark_bg:
         color = "white"
@@ -169,11 +164,11 @@ def dcc_loading(children, dark_bg=True):
     return dcc.Loading(children, type="circle", color=color)
 
 
-def table_css(dark=True):
+def table_css(dark: bool = True):
     """Gets default dash_table CSS components
 
     Args:
-        dark (bool): if table is loaded in dark background, defaults to True
+        dark: if table is loaded in dark background, defaults to True
 
     Returns:
         4-element tuple
@@ -214,14 +209,14 @@ def table_css(dark=True):
     return style_header, style_cell, style_table, css
 
 
-def get_worksheet(contents):
+def get_worksheet(contents: str) -> List[str]:
     """Get worksheet names from an excel file
 
     Args:
-        contents (str): contents of data uploaded
+        contents: contents of data uploaded
 
     Returns:
-        (list): list of worksheet names
+        list of worksheet names
     """
     content_type, content_string = contents.split(",")
     decoded = base64.b64decode(content_string)
@@ -229,16 +224,15 @@ def get_worksheet(contents):
     return xls.sheet_names
 
 
-def parse_data(contents, filename, worksheet=None, **kwargs):
+def parse_data(
+    contents: str, filename: str, worksheet: Optional[str] = None, **kwargs
+) -> pd.DataFrame:
     """Reads uploaded data into DataFrame
 
     Args:
-        contents (str): contents of data uploaded
-        filename (str): filename of data uploaded
-        worksheet (str): worksheet of excel file, if applicable, defaults to None
-
-    Returns:
-        (pd.DataFrame)
+        contents: contents of data uploaded
+        filename: filename of data uploaded
+        worksheet: worksheet of excel file, if applicable, defaults to None
     """
     content_type, content_string = contents.split(",")
     decoded = base64.b64decode(content_string)
@@ -262,16 +256,15 @@ def parse_data(contents, filename, worksheet=None, **kwargs):
     return df
 
 
-def generate_datatable(df, max_rows=3, dark=True):
+def generate_datatable(
+    df: pd.DataFrame, max_rows: int = 3, dark: bool = True
+) -> dash_table.DataTable:
     """Generate table from pandas DataFrame
 
     Args:
-        df (pd.DataFrame): input DataFrame
-        max_rows (int): maximum number of rows to show
-        dark (bool): if table is loaded in dark background, defaults to True
-
-    Returns:
-        (dash_table.DataTable)
+        df: input DataFrame
+        max_rows: maximum number of rows to show
+        dark: if table is loaded in dark background, defaults to True
     """
     style_header, style_cell, style_table, css = table_css(dark=dark)
     return dash_table.DataTable(
@@ -286,16 +279,15 @@ def generate_datatable(df, max_rows=3, dark=True):
     )
 
 
-def get_summary_statistics(df, cols, dark=True):
+def get_summary_statistics(
+    df: pd.DataFrame, cols: List[str], dark: bool = True
+) -> dash_table.DataTable:
     """Generate table of summary statistics for DataFrame for list of columns
 
     Args:
-        df (pd.DataFrame): input DataFrame
-        cols (list): column(s) to get summary statistic for
-        dark (bool): if table is loaded in dark background, defaults to True
-
-    Returns:
-        (dash_table.DataTable)
+        df: input DataFrame
+        cols: column(s) to get summary statistic for
+        dark: if table is loaded in dark background, defaults to True
     """
     param_name = [
         "Number of values",
@@ -333,66 +325,52 @@ def get_summary_statistics(df, cols, dark=True):
     )
 
 
-def encode_df(df):
+def encode_df(df: pd.DataFrame) -> str:
     """Serializes pandas DataFrame to JSON format
 
     Args:
-        df (pd.DataFrame): input DataFrame
-
-    Returns:
-        (str)
+        df: input DataFrame
     """
     df_ser = df.to_json(orient="split", date_format="iso")
     return df_ser
 
 
-def decode_df(df_ser):
+def decode_df(df_ser: str) -> pd.DataFrame:
     """De-serializes JSON format string to pandas DataFrame
 
     Args:
-        df_ser (str): input serialized DataFrame
-
-    Returns:
-        (pd.DataFrame)
+        df_ser: input serialized DataFrame
     """
     df = pd.read_json(df_ser, orient="split")
     df.columns = df.columns.astype(str)
     return df
 
 
-def encode_dict(d):
+def encode_dict(d: Dict[str, Any]) -> str:
     """Serializes dictionary to JSON format
 
     Args:
-        d (dict): input dictionary
+        d: input dictionary
 
-    Returns:
-        (str)
     """
     return json.dumps(d)
 
 
-def decode_dict(d_ser):
+def decode_dict(d_ser: str) -> Dict[str, Any]:
     """De-serializes JSON format string to dictionary
 
     Args:
-        d_ser (str): input serialized dictionary
-
-    Returns:
-        (dict)
+        d_ser: input serialized dictionary
     """
     return json.loads(d_ser)
 
 
-def decrypt_workbook(file_path, password):
+def decrypt_workbook(file_path: str, password: str) -> io.BytesIO:
     """Decrypt file
 
     Args:
-        file_path (str): file path
-        password (str): file password
-
-    Returns:
-        (io.BytesIO)
+        file_path: file path
+        password: file password
     """
     decrypted_workbook = io.BytesIO()
     with open(file_path, "rb") as file:
@@ -403,17 +381,23 @@ def decrypt_workbook(file_path, password):
 
 
 def update_when_upload(
-    contents, worksheet, sample_data_style, filename, style, ctx, **kwargs
+    contents: str,
+    worksheet: str,
+    sample_data_style: Dict[str, Any],
+    filename: str,
+    style: Dict[str, Any],
+    ctx: str,
+    **kwargs,
 ):
     """Reads uploaded data into DataFrame and return dash application objects
 
     Args:
-        contents (str): contents of data uploaded
-        worksheet (str): worksheet of excel file, if applicable, defaults to None
-        sample_data_style (dict): current style of sample uploaded data
-        filename (str): filename of data uploaded
-        style (dict): current style of worksheet selector dropdown
-        ctx (str): dash callback trigger item name
+        contents: contents of data uploaded
+        worksheet: worksheet of excel file, if applicable, defaults to None
+        sample_data_style: current style of sample uploaded data
+        filename: filename of data uploaded
+        style: current style of worksheet selector dropdown
+        ctx: dash callback trigger item name
 
     Returns:
         5-element tuple
@@ -468,16 +452,13 @@ def update_when_upload(
     return worksheet_options, style, sample_table, sample_data_style, {}
 
 
-def result_download_button(app, df, dark=True):
+def result_download_button(app, df: pd.DataFrame, dark: bool = True) -> html.Form:
     """Download button for processed data or results
 
     Args:
         app (app): get app properties
-        df (pd.DataFrame): input DataFrame, to be downloaded by user
-        dark (bool): if table is loaded in dark background, defaults to True
-
-    Returns:
-        (html.Form)
+        df: input DataFrame, to be downloaded by user
+        dark: if table is loaded in dark background, defaults to True
     """
     if dark:
         class_name = "button-dark image-dark-bg"
@@ -503,15 +484,11 @@ def result_download_button(app, df, dark=True):
     )
 
 
-def result_download_text(input_text):
+def result_download_text(input_text: str) -> html.Form:
     """Download text for processed data or results
 
     Args:
-        df (pd.DataFrame): input DataFrame, to be downloaded by user
         input_text (str): text to display
-
-    Returns:
-        (html.Form)
     """
     return html.Form(
         [
@@ -537,14 +514,14 @@ def result_download_text(input_text):
     )
 
 
-def valid_email(email):
+def valid_email(email: str) -> bool:
     """Helper function to validate email address
 
     Args:
-        email (str): email address
+        email: email address
 
     Returns:
-        (bool): indicator if email is valid
+        indicator if email is valid
     """
     regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     if re.fullmatch(regex, email):
@@ -553,17 +530,19 @@ def valid_email(email):
 
 
 def send_email(
-    email_body, subject="Email from utils.py Web App", recipient="kayjanw@gmail.com"
-):
+    email_body: str,
+    subject: str = "Email from utils.py Web App",
+    recipient: str = "kayjanw@gmail.com",
+) -> bool:
     """Helper function to send email
 
     Args:
-        email_body (str): email body to be sent
-        subject (str): email subject to be sent
-        recipient (str): email recipient to receive email
+        email_body: email body to be sent
+        subject: email subject to be sent
+        recipient: email recipient to receive email
 
     Returns:
-        (bool): indicator if email is sent
+        indicator if email is sent
     """
     try:
         SENDGRID_API_KEY = ENV["SENDGRID_API_KEY"]
@@ -589,14 +568,11 @@ def send_email(
         return False
 
 
-def get_excel_from_df(df):
+def get_excel_from_df(df: pd.DataFrame) -> io.BytesIO:
     """Create excel from DataFrame
 
     Args:
-        df (pd.DataFrame): input DataFrame
-
-    Returns:
-        (io.BytesIO)
+        df: input DataFrame
     """
     buf = io.BytesIO()
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
@@ -607,12 +583,8 @@ def get_excel_from_df(df):
     return buf
 
 
-def get_excel_demo():
-    """Create demo excel for Event Planner tab
-
-    Returns:
-        (io.BytesIO)
-    """
+def get_excel_demo() -> io.BytesIO:
+    """Create demo excel for Event Planner tab"""
     buf = io.BytesIO()
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
     pd.DataFrame().to_excel(excel_writer, sheet_name="Sheet1", index=False)
@@ -644,29 +616,25 @@ def get_excel_demo():
     return buf
 
 
-def create_json_from_dict(d):
+def create_json_from_dict(d: Dict[str, Any]) -> io.BytesIO:
     """Create JSON from dictionary
 
     Args:
-        d (dict): input dictionary
-
-    Returns:
-        (io.BytesIO)
+        d: input dictionary
     """
     buf = io.BytesIO(json.dumps(d).encode())
     return buf
 
 
-def create_fig_from_diagram(diagram, id, close_all=True, **kwargs):
+def create_fig_from_diagram(
+    diagram, id: str, close_all: bool = True, **kwargs
+) -> html.Img:
     """Create html.Img from diagram
 
     Args:
         diagram: input diagram
-        id (str): id of html.Img object
-        close_all (bool): whether to close image
-
-    Returns:
-        (html.Img)
+        id: id of html.Img object
+        close_all: whether to close image
     """
     out_img = io.BytesIO()
     diagram.savefig(out_img, format="png", transparent=True)

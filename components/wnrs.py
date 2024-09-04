@@ -2,6 +2,7 @@ import os
 import random
 import re
 from functools import reduce
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from dash import html
@@ -61,20 +62,12 @@ class WNRS:
             else:
                 self.information[deck_type][deck]["levels"] = [1]
 
-    def get_information(self):
-        """Get information (type, description, summary) of all card deck
-
-        Returns:
-            (dict)
-        """
+    def get_information(self) -> Dict[str, str]:
+        """Get information (type, description, summary) of all card deck"""
         return self.information
 
-    def get_all_cards(self):
-        """Get all cards to retrieve playable cards
-
-        Returns:
-            (dict)
-        """
+    def get_all_cards(self) -> Dict[str, str]:
+        """Get all cards to retrieve playable cards"""
         file = pd.ExcelFile(
             decrypt_workbook(f"{self.data_path}wnrs-game.xlsx", self.WNRS_KEY)
         )
@@ -104,11 +97,11 @@ class WNRS:
             cards[deck] = deck_cards_dict
         return cards
 
-    def get_all_playable_cards(self, list_of_deck):
+    def get_all_playable_cards(self, list_of_deck: List[str]):
         """Initialize playing cards and index from list of deck for game play
 
         Args:
-            list_of_deck (list): list of all selected games to play
+            list_of_deck: list of all selected games to play
         """
         assert list_of_deck, "Please select at least one deck to start with"
         cards = self.get_all_cards()
@@ -121,11 +114,11 @@ class WNRS:
         playing_cards.index = playing_cards.index.map(str)
         self.playing_cards = playing_cards.to_dict()
 
-    def initialize_game(self, list_of_deck=None):
+    def initialize_game(self, list_of_deck: Optional[List[str]] = None):
         """Initialize new game
 
         Args:
-            list_of_deck (list): list of all selected games to play
+            list_of_deck: list of all selected games to play
         """
         if list_of_deck is None:
             list_of_deck = ["Main Deck 1"]
@@ -135,20 +128,20 @@ class WNRS:
         index = self.shuffle(index)
         self.index = index
 
-    def load_game(self, list_of_deck, pointer, index):
+    def load_game(self, list_of_deck: List[str], pointer: int, index: List[int]):
         """Load existing game from deck selection
 
         Args:
-            list_of_deck (list): list of all selected games to play
-            pointer (int): current pointer of card
-            index (list): order of cards to play
+            list_of_deck: list of all selected games to play
+            pointer: current pointer of card
+            index: order of cards to play
         """
         self.get_all_playable_cards(list_of_deck)
         self.list_of_deck = list_of_deck
         self.pointer = pointer
         self.index = index
 
-    def load_game_from_dict(self, game_dict):
+    def load_game_from_dict(self, game_dict: Dict[str, Any]):
         """Load existing game from dictionary
 
         Args:
@@ -296,14 +289,14 @@ class WNRS:
         self.index = new_index
         return self.get_next_card()
 
-    def shuffle(self, index):
+    def shuffle(self, index: List[int]) -> List[int]:
         """Shuffle algorithm to preserve 'final' cards location
 
         Args:
-            index (list): list of index to be shuffled
+            index: list of index to be shuffled
 
         Returns:
-            index (list): shuffled index
+            shuffled index
         """
         index_final_cards = [
             k for k, v in self.playing_cards["Deck"].items() if v.endswith("Final")
@@ -315,23 +308,15 @@ class WNRS:
         index = index_without_final + index_final_cards
         return index
 
-    def convert_to_store_format(self):
-        """Convert data to save format
-
-        Returns:
-            (dict)
-        """
+    def convert_to_store_format(self) -> Dict[str, Any]:
+        """Convert data to save format"""
         data_store = dict(
             playing_cards=self.playing_cards,
         )
         return data_store
 
-    def convert_to_save_format(self):
-        """Convert data to save format
-
-        Returns:
-            (dict)
-        """
+    def convert_to_save_format(self) -> Dict[str, Any]:
+        """Convert data to save format"""
         data_save = dict(
             list_of_deck=self.list_of_deck,
             index=self.index,

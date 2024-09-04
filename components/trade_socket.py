@@ -1,5 +1,6 @@
 import datetime
 import json
+from typing import Any, Dict, List, Optional
 
 import dateutil.parser
 import pandas as pd
@@ -30,12 +31,8 @@ class TradeSocket:
         self.df_tick = pd.DataFrame()
 
     @staticmethod
-    def get_symbol_names():
-        """Get symbol names
-
-        Returns:
-            (list)
-        """
+    def get_symbol_names() -> List[str]:
+        """Get symbol names"""
         symbol_names = [
             "BTC-USD",
             # "ETH-BTC",
@@ -44,16 +41,15 @@ class TradeSocket:
         ]
         return symbol_names
 
-    def get_historical_data(self, ticker, granularity, end=None):
+    def get_historical_data(
+        self, ticker: str, granularity: str, end: Optional[str] = None
+    ) -> pd.DataFrame:
         """Get historical data of stock symbol
 
         Args:
-            ticker (str): symbol to display
-            granularity (str): granularity of candlestick chart
-            end (str): end datetime of historical data
-
-        Returns:
-            (pd.DataFrame)
+            ticker: symbol to display
+            granularity: granularity of candlestick chart
+            end: end datetime of historical data
         """
         _request = (
             self.api_url
@@ -70,12 +66,12 @@ class TradeSocket:
         df_historical[self.date_col] = pd.to_datetime(df_historical["Epoch"], unit="s")
         return df_historical[[self.date_col, "Open", "High", "Low", "Close"]]
 
-    def on_open(self, ws, symbol):
+    def on_open(self, ws, symbol: str):
         """Websocket callback object, called when opening websocket
 
         Args:
             ws (WebSocketApp): websocket object
-            symbol (str): symbol to display
+            symbol: symbol to display
         """
         subscribe_msg = {
             "type": "subscribe",
@@ -83,13 +79,13 @@ class TradeSocket:
         }
         ws.send(json.dumps(subscribe_msg))
 
-    def on_message(self, ws, message, granularity):
+    def on_message(self, ws, message: str, granularity: str):
         """Websocket callback object, called when received data
 
         Args:
             ws (WebSocketApp): websocket class object
-            message (str): utf-8 data received from server
-            granularity (str): granularity of candlestick chart
+            message: utf-8 data received from server
+            granularity: granularity of candlestick chart
 
         Returns:
             (pd.DataFrame)
@@ -119,12 +115,12 @@ class TradeSocket:
         )
         ws.close()
 
-    def run_socket(self, ticker, granularity):
+    def run_socket(self, ticker: str, granularity: str):
         """Connect to web socket
 
         Args:
-            ticker (str): symbol to display
-            granularity (str): granularity of candlestick chart
+            ticker: symbol to display
+            granularity: granularity of candlestick chart
         """
         ws = websocket.WebSocketApp(
             self.socket,
@@ -133,16 +129,15 @@ class TradeSocket:
         )
         ws.run_forever()
 
-    def get_rates_data(self, symbol, granularity, n_points):
+    def get_rates_data(
+        self, symbol: str, granularity: str, n_points: int
+    ) -> pd.DataFrame:
         """Compute rate data (time, open, high, low, close)
 
         Args:
-            symbol (str): symbol to display
-            granularity (str): granularity of candlestick chart
-            n_points (int): number of points on candlestick
-
-        Returns:
-            (pd.DataFrame)
+            symbol: symbol to display
+            granularity: granularity of candlestick chart
+            n_points: number of points on candlestick
         """
         historical_only = False
 
@@ -202,21 +197,25 @@ class TradeSocket:
 
     @staticmethod
     def get_candlestick_chart(
-        symbol, n_points, rates_df, indicators_ind, forecast_methods
-    ):
+        symbol: str,
+        n_points: int,
+        rates_df: pd.DataFrame,
+        indicators_ind: List[str],
+        forecast_methods: List[str],
+    ) -> Dict[str, Any]:
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
 
         Args:
-            symbol (str): symbol to plot for
-            n_points (int): number of points on candlestick
-            rates_df (pd.DataFrame): rate data (time, open, high, low, close, tick volume, spread)
-            indicators_ind (list): list of indicators to plot
-            forecast_methods (list): list of forecasting methods
+            symbol: symbol to plot for
+            n_points: number of points on candlestick
+            rates_df: rate data (time, open, high, low, close, tick volume, spread)
+            indicators_ind: list of indicators to plot
+            forecast_methods: list of forecasting methods
 
         Returns:
-            (dict): graphical result of trade
+            graphical result of trade
         """
         return Trade().get_candlestick_chart(
             symbol=symbol,

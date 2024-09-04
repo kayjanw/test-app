@@ -1,3 +1,5 @@
+from typing import Any, Dict, List
+
 import numpy as np
 import pandas as pd
 from dash import html
@@ -15,19 +17,26 @@ class EventPlanner:
 
     @staticmethod
     def process_result(
-        df, event, n_groups, pair_flag, criteria_level, email_flag, hide_flag, style
+        df: pd.DataFrame,
+        event: str,
+        n_groups: int,
+        pair_flag: str,
+        criteria_level: str,
+        email_flag: str,
+        hide_flag: str,
+        style: Dict[str, Any],
     ):
         """Processing for event planner, shuffling and splitting participants
 
         Args:
-            df (pd.DataFrame): input DataFrame
-            event (str): name of event, for result heading and email
-            n_groups (int): number of groups
-            pair_flag (str): option whether to pair participants up
-            criteria_level (str): whether criteria is on individual or group level
-            email_flag (str): option whether to email results to recipients
-            hide_flag (str): option whether to display output results
-            style (dict): current style of results div
+            df: input DataFrame
+            event: name of event, for result heading and email
+            n_groups: number of groups
+            pair_flag: option whether to pair participants up
+            criteria_level: whether criteria is on individual or group level
+            email_flag: option whether to email results to recipients
+            hide_flag: option whether to display output results
+            style: current style of results div
 
         Returns:
             3-element tuple
@@ -145,15 +154,15 @@ class EventPlanner:
         return result, output, style
 
     @staticmethod
-    def get_criteria_list(other_cols_values, n):
+    def get_criteria_list(other_cols_values: List[str], n: int) -> List[str]:
         """Create list of criteria selection for every criteria column
 
         Args:
-            other_cols_values (list): list of criteria columns
-            n (int): number of criterias to generate
+            other_cols_values: list of criteria columns
+            n: number of criterias to generate
 
         Returns:
-            (list): list of criteria selection that is randomly selected
+            list of criteria selection that is randomly selected
         """
         criteria_list = []
         for m in range(len(other_cols_values)):
@@ -168,16 +177,18 @@ class EventPlanner:
         return criteria_list
 
     @staticmethod
-    def email_results(output_df, email_dict, event):
+    def email_results(
+        output_df: pd.DataFrame, email_dict: Dict[str, str], event: str
+    ) -> bool:
         """Function to send email to participants
 
         Args:
-            output_df (pd.DataFrame): output DataFrame from process_result
-            email_dict (dict): dictionary mapping participants to email address
-            event (str): name of event, for result heading and email
+            output_df: output DataFrame from process_result
+            email_dict: dictionary mapping participants to email address
+            event: name of event, for result heading and email
 
         Returns:
-            (bool): indicator if email is sent
+            indicator if email is sent
         """
         # website = "https://kayjan.herokuapp.com"
         # website = "http://kayjan-634i2gf6lq-as.a.run.app"

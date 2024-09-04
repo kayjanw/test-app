@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import dash
 from dash import html
 from dash.dependencies import Input, Output, State
@@ -25,12 +27,12 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_event_upload(contents, filename):
+    def update_event_upload(contents: str, filename: str):
         """Update event planner interface when file is uploaded
 
         Args:
-            contents (str): contents of data uploaded, triggers callback
-            filename (str): filename of data uploaded
+            contents: contents of data uploaded, triggers callback
+            filename: filename of data uploaded
 
         Returns:
             3-element tuple
@@ -81,18 +83,24 @@ def register_callbacks(app, print_function):
     )
     @print_callback(print_function)
     def update_event_result(
-        trigger, records, n_groups, pair_flag, criteria_level, email_flag, hide_flag
+        trigger,
+        records: Dict[str, Any],
+        n_groups: int,
+        pair_flag: str,
+        criteria_level: str,
+        email_flag: str,
+        hide_flag: str,
     ):
         """Update and display event planner results
 
         Args:
             trigger: trigger on button click
-            records (dict): intermediate data stored in dcc.Store
-            n_groups (int): number of groups
-            pair_flag (str): option whether to pair participants up
-            criteria_level (str): whether criteria is on individual or group level
-            email_flag (str): option whether to email results to recipients
-            hide_flag (str): option whether to display output results
+            records: intermediate data stored in dcc.Store
+            n_groups: number of groups
+            pair_flag: option whether to pair participants up
+            criteria_level: whether criteria is on individual or group level
+            email_flag: option whether to email results to recipients
+            hide_flag: option whether to display output results
 
         Returns:
             3-element tuple

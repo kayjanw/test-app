@@ -1,3 +1,5 @@
+from typing import Any, Dict, List, Union
+
 import dash_leaflet as dl
 import numpy as np
 import requests
@@ -27,7 +29,7 @@ class TripPlanner:
                 self.GOOGLE_API_KEY = ""
 
     @staticmethod
-    def remove_last_point_on_table(data):
+    def remove_last_point_on_table(data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Removes last entry from landmark table
 
         Args:
@@ -39,17 +41,14 @@ class TripPlanner:
         data = data[:-1]
         return data
 
-    def get_street_name(self, lat, lon):
+    def get_street_name(self, lat: float, lon: float) -> str:
         """Get street name from latitude and longitude information, calls Google API
 
         Return default string if street name is not found
 
         Args:
-            lat (float): latitude information
-            lon (float): longitude information
-
-        Returns:
-            (str)
+            lat: latitude information
+            lon: longitude information
         """
         url = (
             f"https://maps.googleapis.com/maps/api/geocode/json?"
@@ -65,17 +64,16 @@ class TripPlanner:
         else:
             return "Location not found, please select another location."
 
-    def add_new_point_on_table(self, lat, lon, landmark, data):
+    def add_new_point_on_table(
+        self, lat: float, lon: float, landmark: str, data: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Adds new entry into landmark table
 
         Args:
-            lat (float): latitude information
-            lon (float): longitude information
-            landmark (str): name of landmark, could be None or empty string
-            data (list): data of landmark table
-
-        Returns:
-            (list)
+            lat: latitude information
+            lon: longitude information
+            landmark: name of landmark, could be None or empty string
+            data: data of landmark table
         """
         # Initialize landmark name if not provided
         if landmark is None or landmark == "":
@@ -104,14 +102,11 @@ class TripPlanner:
         return data
 
     @staticmethod
-    def get_style_table(data):
+    def get_style_table(data: List[Dict[str, Any]]) -> Dict[str, str]:
         """Return style of landmark table
 
         Args:
-            data (list): data of landmark table
-
-        Returns:
-            (dict)
+            data: data of landmark table
         """
         if len(data):
             style_table = {
@@ -124,15 +119,17 @@ class TripPlanner:
         return style_table
 
     @staticmethod
-    def get_map_from_table(data, children):
+    def get_map_from_table(
+        data: List[Dict[str, Any]], children: List[Any]
+    ) -> List[Any]:
         """Adds landmark location pin on map from landmark table
 
         Args:
-            data (list): data of landmark table
-            children (list): current map children
+            data: data of landmark table
+            children: current map children
 
         Returns:
-            (list): updated map children
+            updated map children
         """
         children = [children[0]] + [
             dl.Marker(
@@ -150,11 +147,11 @@ class TripPlanner:
         ]
         return children
 
-    def get_distance_and_duration_from_table(self, data):
+    def get_distance_and_duration_from_table(self, data: List[Dict[str, Any]]):
         """Get distance and duration matrix from landmark table, calls Google API
 
         Args:
-            data (list): data of landmark table
+            data: data of landmark table
 
         Returns:
             2-element tuple
@@ -195,14 +192,14 @@ class TripPlanner:
         return distance_matrix, duration_matrix
 
     @staticmethod
-    def best_route_gurobi(distance_matrix):
+    def best_route_gurobi(distance_matrix: np.ndarray) -> List[Any]:
         """Calculates best route using gurobi optimiser
 
         Args:
-            distance_matrix (np.ndarray): inter-distance between locations
+            distance_matrix: inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            list containing tuple of routes
         """
         import pyomo.environ as pyEnv
         import pyutilib.subprocess.GlobalData
@@ -276,14 +273,14 @@ class TripPlanner:
         return routes
 
     @staticmethod
-    def best_route_nearest_neighbour(distance_matrix):
+    def best_route_nearest_neighbour(distance_matrix: np.ndarray) -> List[Any]:
         """Calculates best route using nearest neighbour heuristic
 
         Args:
-            distance_matrix (np.ndarray): inter-distance between locations
+            distance_matrix: inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            list containing tuple of routes
         """
         idx = 0
         visited_landmarks = [idx]
@@ -304,15 +301,15 @@ class TripPlanner:
         return routes
 
     @staticmethod
-    def get_permutation_of_routes(routes_list, landmark):
+    def get_permutation_of_routes(routes_list: List[Any], landmark: int) -> List[Any]:
         """Get permutation of routes with existing routes list and new landmark
 
         Args:
-            routes_list (list): existing routes
-            landmark (int): new landmark to visit
+            routes_list: existing routes
+            landmark: new landmark to visit
 
         Returns:
-            (list): list of list
+            list of list
         """
         permutation = []
         for idx in range(1, len(routes_list) + 1):
@@ -322,11 +319,11 @@ class TripPlanner:
         return permutation
 
     @staticmethod
-    def get_routes_from_list(routes_list):
+    def get_routes_from_list(routes_list: List[Any]) -> List[Any]:
         """Get tuple of routes from existing routes list
 
         Args:
-            routes_list (list): existing routes
+            routes_list: existing routes
 
         Returns:
             list of tuple
@@ -337,29 +334,28 @@ class TripPlanner:
         ]
 
     @staticmethod
-    def get_distance_from_routes(routes, distance_matrix):
+    def get_distance_from_routes(
+        routes: List[Any], distance_matrix: np.ndarray
+    ) -> float:
         """Calculates distance from existing routes tuple list
 
         Args:
-            routes (list): list of tuple of existing routes
-            distance_matrix (np.ndarray): inter-distance between locations
-
-        Returns:
-            (float)
+            routes: list of tuple of existing routes
+            distance_matrix: inter-distance between locations
         """
         distance_km = np.round(
             np.sum([distance_matrix[route] for route in routes]) / 1000, 2
         )
         return distance_km
 
-    def best_route_nearest_insertion(self, distance_matrix):
+    def best_route_nearest_insertion(self, distance_matrix: np.ndarray) -> List[Any]:
         """Calculates best route using nearest insertion heuristic
 
         Args:
-            distance_matrix (np.ndarray): inter-distance between locations
+            distance_matrix: inter-distance between locations
 
         Returns:
-            (list): contains tuple of routes
+            contains tuple of routes
         """
         idx = 0
         idx_next = distance_matrix[0][1:].argmin() + 1
@@ -396,14 +392,11 @@ class TripPlanner:
         routes = self.get_routes_from_list(visited_landmarks)
         return routes
 
-    def optimiser_pipeline(self, data):
+    def optimiser_pipeline(self, data: List[Any]) -> Union[str, List]:
         """Pipeline to run optimization algorithm
 
         Args:
-            data (list): data of landmark table
-
-        Returns:
-            (str/list)
+            data: data of landmark table
         """
         if len(data) < 2:
             return html.P("Please input more landmarks", className="color-red")

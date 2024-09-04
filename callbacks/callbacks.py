@@ -1,5 +1,7 @@
+from typing import List, Union
+
 import dash
-from dash import ctx, dcc
+from dash import ctx, dcc, html
 from dash.dependencies import Input, Output, State
 
 from components.helper import (
@@ -33,14 +35,14 @@ from layouts import (
 def register_callbacks(app, print_function):
     @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
     @print_callback(print_function)
-    def display_page(pathname):
+    def display_page(pathname: str) -> html.Div:
         """Display page based on URL
 
         Args:
-            pathname (str): url path
+            pathname: url path
 
         Returns:
-            (html.Div)
+            page display
         """
         if pathname == "/":
             return app_1()
@@ -122,18 +124,18 @@ def register_callbacks(app, print_function):
     )
     @print_callback(print_function)
     def update_contact_send_email(
-        trigger, contact_name, contact_email, contact_content
-    ):
+        trigger, contact_name: str, contact_email: str, contact_content: str
+    ) -> str:
         """Send email for contact information
 
         Args:
             trigger: trigger on button click
-            contact_name (str): input for contact name
-            contact_email (str): input for contact email
-            contact_content (str): input for email body
+            contact_name: input for contact name
+            contact_email: input for contact email
+            contact_content: input for email body
 
         Returns:
-            (str): feedback for email sent
+            feedback for email sent
         """
         reply = ""
         if dash.callback_context.triggered:
@@ -162,14 +164,14 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_canvas_image(contents):
+    def update_canvas_image(contents) -> str:
         """Update canvas with loaded image
 
         Args:
             contents: contents of data uploaded, triggers callback
 
         Returns:
-            (str): contents of data uploaded
+            contents of data uploaded
         """
         if dash.callback_context.triggered:
             contents_type, _ = contents.split(";")
@@ -182,7 +184,7 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def clear_canvas(n_clicks):
+    def clear_canvas(n_clicks) -> str:
         """Clear canvas to blank state
 
         Args:
@@ -206,7 +208,7 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_canvas_brush_size(trigger_minus, trigger_plus, value):
+    def update_canvas_brush_size(trigger_minus, trigger_plus, value) -> int:
         """Update canvas brush size (line width)
 
         Args:
@@ -215,7 +217,7 @@ def register_callbacks(app, print_function):
             value: value of brush size
 
         Returns:
-            (int): updated value of brush size
+            updated value of brush size
         """
         if ctx.triggered_id == "button-image-minus":
             value -= 1
@@ -229,14 +231,14 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_canvas_brush(value):
+    def update_canvas_brush(value) -> int:
         """Update canvas brush size (line width)
 
         Args:
             value: input value of brush size
 
         Returns:
-            (int): updated value of brush size
+            updated value of brush size
         """
         return value
 
@@ -246,14 +248,14 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_canvas_color(value):
+    def update_canvas_color(value) -> str:
         """Update canvas brush colour (line colour)
 
         Args:
             value: input value of brush colour
 
         Returns:
-            (str): updated value of brush colour
+            updated value of brush colour
         """
         if isinstance(value, dict):
             return value["hex"]
@@ -313,16 +315,18 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_output(tab, children, current_content):
+    def update_output(
+        tab, children: List, current_content: html.Div
+    ) -> Union[html.Div, dcc.Location]:
         """Update content when tab changes
 
         Args:
             tab: trigger on tab change
-            children (list): list of available tab contents
-            current_content (html.Div): current tab content
+            children: list of available tab contents
+            current_content: current tab content
 
         Returns:
-            (html.Div)
+            content of tab
         """
         available_tabs = [
             children[idx]["props"]["value"] for idx in range(len(children))

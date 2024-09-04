@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import dash
 from dash.dependencies import Input, Output, State
 
@@ -23,15 +25,15 @@ def register_callbacks(app, print_function):
     @print_callback(print_function)
     def update_rng_button_style(
         trigger_button,
-        select_style,
-        split_style,
+        select_style: Dict[str, Any],
+        split_style: Dict[str, Any],
     ):
         """Update style of random generator button
 
         Args:
             trigger_button: trigger on button click
-            select_style (dict): current style of item div
-            split_style (dict): current style of group div
+            select_style: current style of item div
+            split_style: current style of group div
 
         Returns:
             dict: updated style of item and group button
@@ -62,16 +64,23 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_rng_result(trigger, text, n_items, n_groups, item_style, group_style):
+    def update_rng_result(
+        trigger,
+        text: str,
+        n_items: int,
+        n_groups: int,
+        item_style: Dict[str, Any],
+        group_style: Dict[str, Any],
+    ):
         """Update and display random generator results
 
         Args:
             trigger: trigger on button click
-            text (str): input text
-            n_items (int): number of items
-            n_groups (int): number of groups
-            item_style (dict): current style of item div
-            group_style (dict): current style of group div
+            text: input text
+            n_items: number of items
+            n_groups: number of groups
+            item_style: current style of item div
+            group_style: current style of group div
 
         Returns:
             3-element tuple

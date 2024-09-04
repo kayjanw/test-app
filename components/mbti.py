@@ -1,6 +1,7 @@
 import os
 import pickle
 import re
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -117,7 +118,7 @@ class MBTI:
         ]
 
     @staticmethod
-    def clean_text(text, lemma=WordNetLemmatizer()):
+    def clean_text(text: str, lemma=WordNetLemmatizer()):
         """Process text
 
         1. Split different sentences
@@ -130,7 +131,7 @@ class MBTI:
         8. Join text into string
 
         Args:
-            text (str): input text
+            text: input text
             lemma: Lemmatizer (defaults to nltk WordNetLemmatizer)
 
         Returns:
@@ -198,14 +199,16 @@ class MBTI:
         return df
 
     @staticmethod
-    def get_train_test(X, y, test_size=0.2, random_state=0):
+    def get_train_test(
+        X: pd.DataFrame, y: pd.DataFrame, test_size: float = 0.2, random_state: int = 0
+    ):
         """Splits data into training and testing data
 
         Args:
-            X (pd.DataFrame): processed input data
-            y (pd.DataFrame): processed output data
-            test_size (float): proportion of test data, defaults to 0.2
-            random_state (int): fixed seed, allows reproducible result, defaults to 0
+            X: processed input data
+            y: processed output data
+            test_size: proportion of test data, defaults to 0.2
+            random_state: fixed seed, allows reproducible result, defaults to 0
 
         Returns:
             4-element tuple
@@ -220,12 +223,14 @@ class MBTI:
         )
         return X_train, X_test, y_train, y_test
 
-    def save_vectorizer(self, corpus, params=None):
+    def save_vectorizer(
+        self, corpus: pd.Series, params: Optional[Dict[str, Any]] = None
+    ):
         """Fit, save and return vectorizer
 
         Args:
-            corpus (pd.Series): input text corpus (training input)
-            params (dict): specifies parameters for vectorizer, defaults to None
+            corpus: input text corpus (training input)
+            params: specifies parameters for vectorizer, defaults to None
 
         Returns:
             (sklearn.CountVectorizer)
@@ -257,12 +262,12 @@ class MBTI:
         vect = CountVectorizer(vocabulary=vocabulary)
         return vect
 
-    def transform_vectorizer(self, vect, corpus):
+    def transform_vectorizer(self, vect, corpus: pd.Series):
         """Transform corpus with vectorizer
 
         Args:
             vect (sklearn.CountVectorizer): vectorizer to be used to transform text corpus
-            corpus (pd.Series): input text corpus
+            corpus: input text corpus
 
         Returns:
             vector_corpus (scipy.csr_matrix): vectorized text corpus
@@ -270,12 +275,14 @@ class MBTI:
         vector_corpus = vect.transform(corpus).astype(np.float64)
         return vector_corpus
 
-    def save_tokenizer(self, corpus, params=None):
+    def save_tokenizer(
+        self, corpus: pd.Series, params: Optional[Dict[str, Any]] = None
+    ):
         """Fit, save and return tokenizer
 
         Args:
-            corpus (pd.Series): input text corpus (training input)
-            params (dict): specifies parameters for tokenizer, defaults to None
+            corpus: input text corpus (training input)
+            params: specifies parameters for tokenizer, defaults to None
 
         Returns:
             (keras.Tokenizer)
@@ -298,12 +305,12 @@ class MBTI:
         tokenizer = pd.read_pickle(self.path_tokenizer)
         return tokenizer
 
-    def transform_tokenizer(self, tokenizer, corpus):
+    def transform_tokenizer(self, tokenizer, corpus: pd.Series):
         """Transform corpus with tokenizer
 
         Args:
             tokenizer (keras Tokenizer): tokenizer to be used to transform text corpus
-            corpus (pd.Series): input text corpus
+            corpus: input text corpus
 
         Returns:
             vector_corpus (np.ndarray): tokenized text corpus
@@ -315,13 +322,13 @@ class MBTI:
         return vector_corpus
 
     @staticmethod
-    def save_model(vector_train, y_train_series, path_model):
+    def save_model(vector_train, y_train_series: pd.Series, path_model: str):
         """Train, save and return best model after grid search with stratified cross validation
 
         Args:
             vector_train (scipy.csr_matrix): vectorized training input
-            y_train_series (pd.Series): training output, one-column subset of y_train
-            path_model (str): location and file name of saved model
+            y_train_series: training output, one-column subset of y_train
+            path_model: location and file name of saved model
 
         Returns:
             model
@@ -353,11 +360,11 @@ class MBTI:
         return model
 
     @staticmethod
-    def load_model(path_model):
+    def load_model(path_model: str):
         """Load and return saved best model after grid search with stratified cross validation
 
         Args:
-            path_model (str): location and file name of saved model
+            path_model: location and file name of saved model
 
         Returns:
             model
@@ -398,7 +405,7 @@ class MBTI:
         return model
 
     @staticmethod
-    def predict_model(model, vector_test):
+    def predict_model(model, vector_test) -> np.ndarray:
         """Perform prediction on test set
 
         Args:
@@ -406,7 +413,7 @@ class MBTI:
             vector_test (scipy.csr_matrix): vectorized training input
 
         Returns:
-            y_pred (np.ndarray)
+            y_pred
         """
         y_pred = model.predict(vector_test)
         return y_pred
@@ -440,11 +447,11 @@ class MBTI:
         return model
 
     @staticmethod
-    def load_model_tf(path_model):
+    def load_model_tf(path_model: str):
         """Load and return saved tensorflow model
 
         Args:
-            path_model (str): location and file name of saved model
+            path_model): location and file name of saved model
 
         Returns:
             model
@@ -452,25 +459,25 @@ class MBTI:
         model = tf.keras.models.load_model(path_model)
         return model
 
-    def predict_model_tf(self, model, vector_test):
+    def predict_model_tf(self, model, vector_test: np.ndarray) -> np.ndarray:
         """Perform prediction on test set
 
         Args:
             model (model): model to be used for prediction
-            vector_test (np.ndarray): vectorized training input
+            vector_test: vectorized training input
 
         Returns:
-            y_pred (np.ndarray)
+            y_pred
         """
         y_pred = model.predict(vector_test) > self.threshold
         return y_pred
 
-    def train_pipeline(self, train_vect=False, train_model=False):
+    def train_pipeline(self, train_vect: bool = False, train_model: bool = False):
         """Training pipeline for loading, preprocessing and model training
 
         Args:
-            train_vect (bool): indicates whether to retrain vectorizer, defaults to False
-            train_model (bool): indicates whether to retrain models, defaults to False
+            train_vect: indicates whether to retrain vectorizer, defaults to False
+            train_model: indicates whether to retrain models, defaults to False
 
         Returns:
             NA
@@ -534,11 +541,11 @@ class MBTI:
             print(f"F1 for {col}: {metric_f1}")
             print()
 
-    def get_feature_importance(self, max_num_features=10):
+    def get_feature_importance(self, max_num_features: int = 10):
         """Print top feature importance for each model
 
         Args:
-            max_num_features (int): number of top feature importance
+            max_num_features: number of top feature importance
         """
         vect = self.load_vectorizer()
         vocab = vect.vocabulary
@@ -550,14 +557,14 @@ class MBTI:
             for idx2 in range(max_num_features):
                 print(fi_sorted[idx2])
 
-    def vectorize_new_input(self, input_text):
+    def vectorize_new_input(self, input_text: str):
         """Load saved vectorizer and transform input text
 
         Args:
-            input_text (str): input text
+            input_text: input text
 
         Returns:
-            (scipy.csr_matrix): vectorized input_text
+            (scipy.csr_matrix) vectorized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -568,14 +575,14 @@ class MBTI:
         vector_input = self.transform_vectorizer(vect, pd.Series(clean_input))
         return vector_input
 
-    def tokenize_new_input(self, input_text):
+    def tokenize_new_input(self, input_text: str) -> np.ndarray:
         """Load saved tokenizer and transform input text
 
         Args:
-            input_text (str): input text
+            input_text: input text
 
         Returns:
-            (np.ndarray): tokenized input_text
+            tokenized input_text
         """
         try:
             wordnet.ensure_loaded()
@@ -586,11 +593,11 @@ class MBTI:
         tokenizer_input = self.transform_tokenizer(tokenizer, pd.Series(clean_input))
         return tokenizer_input
 
-    def test_pipeline(self, input_text):
+    def test_pipeline(self, input_text: str):
         """Testing pipeline for new input text
 
         Args:
-            input_text (str): input text
+            input_text: input text
 
         Returns:
             2-element tuple
@@ -627,14 +634,11 @@ class MBTI:
 
         return personality, predictions
 
-    def get_num_words(self, input_text):
+    def get_num_words(self, input_text: str) -> int:
         """Get number of input words in vocabulary
 
         Args:
-            input_text (str): input text
-
-        Returns:
-            (int)
+            input_text: input text
         """
         if not self.use_tf:
             vector_input = self.vectorize_new_input(input_text)
@@ -645,16 +649,13 @@ class MBTI:
         return n_words
 
     @staticmethod
-    def get_bar_plot(predictions):
+    def get_bar_plot(predictions: List[Any]) -> Dict[str, Any]:
         """Get figure for plot
 
         Adds plotly.graph_objects charts for bar plot
 
         Args:
-            predictions (list): list of model prediction probabilities
-
-        Returns:
-            (dict)
+            predictions: list of model prediction probabilities
         """
         y_data = [
             "Introversion-Extroversion",
@@ -727,19 +728,16 @@ class MBTI:
             yaxis=dict(
                 categoryarray=y_data[::-1], showticklabels=False, fixedrange=True
             ),
-            font=dict(family="Source Sans Pro", size="15"),
+            font=dict(family="Source Sans Pro", size=15),
         )
         return dict(data=data, layout=layout)
 
     @staticmethod
-    def get_personality_details(personality):
+    def get_personality_details(personality: str) -> List[html.P]:
         """Get personality details (summary and details)
 
         Args:
-            personality (str): MBTI personality results, to retrieve detailed results
-
-        Returns:
-            (list)
+            personality: MBTI personality results, to retrieve detailed results
         """
         mbti_dict = {
             "INTJ": {

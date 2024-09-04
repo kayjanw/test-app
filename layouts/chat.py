@@ -2,7 +2,27 @@ from dash import dcc, html
 from dash_iconify import DashIconify
 
 from components.helper import dcc_loading
-from layouts.main import content_header, style_hidden
+from layouts.main import content_header, style_dropdown, style_hidden, style_input
+
+dropdown_theme = dcc.Dropdown(
+    id="dropdown-chat-template",
+    placeholder="Toggle theme for plots",
+    clearable=False,
+    style=style_dropdown,
+    value="presentation",
+    options=[
+        "ggplot2",
+        "seaborn",
+        "simple_white",
+        "plotly",
+        "plotly_white",
+        "presentation",
+        "xgridoff",
+        "ygridoff",
+        "gridon",
+        "none",
+    ],
+)
 
 
 def chat_tab(app):
@@ -70,8 +90,20 @@ def chat_tab(app):
                 [
                     html.Div(
                         [
-                            html.P(
-                                id="chat-result",
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.P("Toggle theme for plots:"),
+                                            html.P([dropdown_theme], style=style_input),
+                                        ],
+                                        className="custom-div-flex",
+                                    ),
+                                    html.Br(),
+                                    html.P(
+                                        id="chat-result",
+                                    ),
+                                ],
                                 className="custom-div-small custom-div-left custom-div-white",
                             ),
                             html.Div(

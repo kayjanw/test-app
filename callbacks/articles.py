@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from dash.dependencies import ALL, MATCH, Input, Output, State
 
 from components.helper import hide_style, print_callback
@@ -15,7 +17,7 @@ def register_callbacks_articles(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_button_colour(trigger, button_style):
+    def update_button_colour(trigger, button_style: Dict[str, str]) -> Dict[str, str]:
         """Update button colour on button click
 
         Args:
@@ -23,7 +25,7 @@ def register_callbacks_articles(app, print_function):
             button_style (dict): current style of buttons
 
         Returns:
-            (dict)
+            dictionary mapping of button to the colour
         """
         empty_button_style = {
             "color": "black",
@@ -51,16 +53,18 @@ def register_callbacks_articles(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_article_visibility(button_styles, button_ids, card_ids):
+    def update_article_visibility(
+        button_styles: Dict[str, str], button_ids: List[str], card_ids: List[str]
+    ) -> List[Dict[str, str]]:
         """Update article visibility on button click
 
         Args:
-            button_styles (dict): current style of buttons
-            button_ids (list): current id of buttons
-            card_ids (list): current id of cards
+            button_styles: current style of buttons
+            button_ids: current id of buttons
+            card_ids: current id of cards
 
         Returns:
-            (dict, dict)
+            list of card style
         """
         invisible_styles = []
         for _button_id, _style in zip(button_ids, button_styles):

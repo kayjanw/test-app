@@ -11,6 +11,7 @@ except ImportError:
     pass
 
 import datetime
+from typing import Any, Dict, List
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -20,24 +21,27 @@ from plotly.subplots import make_subplots
 GRANULARITY = 4
 
 
-def sma(data, window):
+def sma(data: pd.Series, window: int) -> pd.Series:
     """
     Calculates Simple Moving Average (SMA)
 
     SMA is a lagging indicator that smooths out price action and highlights direction of trend
 
     Args:
-        data (pd.Series): input pandas Series
-        window (int): number of historical periods to calculate SMA
-
-    Returns:
-        (pd.Series)
+        data: input pandas Series
+        window: number of historical periods to calculate SMA
     """
     _sma = data.rolling(window).mean()
     return round(_sma, GRANULARITY)
 
 
-def bol(data_close, data_low, data_high, periods=20, num_std=2):
+def bol(
+    data_close: pd.Series,
+    data_low: pd.Series,
+    data_high: pd.Series,
+    periods: int = 20,
+    num_std: int = 2,
+) -> pd.Series:
     """
     Calculates Bollinger Bands (BOL)
 
@@ -46,14 +50,11 @@ def bol(data_close, data_low, data_high, periods=20, num_std=2):
     very close (low volatility), this can be indication of potential future volatility, vice versa
 
     Args:
-        data_close (pd.Series): input pandas Series for closing price
-        data_low (pd.Series): input pandas Series for low price
-        data_high (pd.Series): input pandas Series for high price
-        periods (int): number of periods to smooth, defaults to 20
-        num_std (int): number of standard deviation, defaults to 2
-
-    Returns:
-        (pd.Series)
+        data_close: input pandas Series for closing price
+        data_low: input pandas Series for low price
+        data_high: input pandas Series for high price
+        periods: number of periods to smooth, defaults to 20
+        num_std: number of standard deviation, defaults to 2
     """
     typical_price = (data_close + data_low + data_high) / 3
     typical_price_std = typical_price.rolling(periods).std(ddof=0)
@@ -63,7 +64,7 @@ def bol(data_close, data_low, data_high, periods=20, num_std=2):
     return round(bol_lower, GRANULARITY), round(bol_upper, GRANULARITY)
 
 
-def rsi(data, periods=14, ema=True):
+def rsi(data: pd.Series, periods: int = 14, ema: bool = True) -> pd.Series:
     """
     Calculates Relative Strength Index (RSI)
 
@@ -71,12 +72,9 @@ def rsi(data, periods=14, ema=True):
     oversold conditions in the price of an asset. RSI measures price change in relation to recent price highs and lows
 
     Args:
-        data (pd.Series): input pandas Series
-        periods (int): number of periods to calculate RSI, defaults to 14
-        ema (bool): indicator to use exponential moving average, defaults to True
-
-    Returns:
-        (pd.Series)
+        data: input pandas Series
+        periods: number of periods to calculate RSI, defaults to 14
+        ema: indicator to use exponential moving average, defaults to True
     """
     close_delta = data.diff()
 
@@ -98,7 +96,7 @@ def rsi(data, periods=14, ema=True):
     return round(_rsi, GRANULARITY)
 
 
-def macd(data, fast=12, slow=26, signal=9):
+def macd(data: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9):
     """
     Calculates Moving Average Convergence Divergence (MACD)
 
@@ -109,10 +107,10 @@ def macd(data, fast=12, slow=26, signal=9):
     whereas negative indicate bearish one
 
     Args:
-        data (pd.Series): input pandas Series
-        fast (int): number of period to calculate fast EMA, defaults to 12
-        slow (int): number of periods to calculate slow EMA, defaults to 26
-        signal (int): number of periods to calculate signal, defaults to 9
+        data: input pandas Series
+        fast: number of period to calculate fast EMA, defaults to 12
+        slow: number of periods to calculate slow EMA, defaults to 26
+        signal: number of periods to calculate signal, defaults to 9
 
     Returns:
         (pd.Series, pd.Series, pd.Series): MACD, MACD SIGNAL, MACD - Signal
@@ -138,16 +136,13 @@ def macd(data, fast=12, slow=26, signal=9):
     )
 
 
-def forecast_ewm(data, alpha=0.8):
+def forecast_ewm(data: pd.Series, alpha: float = 0.8) -> float:
     """
     Forecasting with Exponential Weighted Moving Average
 
     Args:
-        data (pd.Series): input pandas Series
-        alpha (float): weight given to preceding EMA value
-
-    Returns:
-        (float)
+        data: input pandas Series
+        alpha: weight given to preceding EMA value
     """
     pred = data[:-1].ewm(alpha=alpha).mean().values[-1]
     return round(pred, GRANULARITY)
@@ -192,28 +187,26 @@ class Trade:
                 "1 month": mt5.TIMEFRAME_MN1,
             }
 
-    def get_symbol_names(self):
-        """Get symbol names
-
-        Returns:
-            (list)
-        """
+    def get_symbol_names(self) -> List[str]:
+        """Get symbol names"""
         symbol_names = []
         if self.use_mt5:
             symbols = mt5.symbols_get()
             symbol_names = [symbol._asdict()["name"] for symbol in symbols]
         return symbol_names
 
-    def get_rates_data(self, symbol, timeframe, n_points):
+    def get_rates_data(
+        self, symbol: str, timeframe: str, n_points: int
+    ) -> pd.DataFrame:
         """Compute rate data (time, open, high, low, close, tick volume, spread)
 
         Args:
-            symbol (str): symbol to plot for
-            timeframe (str): frequency of candlestick
-            n_points (int): number of points on candlestick
+            symbol: symbol to plot for
+            timeframe: frequency of candlestick
+            n_points: number of points on candlestick
 
         Returns:
-            (pd.DataFrame): result of rate data
+            result of rate data
         """
         frequency = self.TIMEFRAME_DICT[timeframe]
 
@@ -247,21 +240,25 @@ class Trade:
 
     @staticmethod
     def get_candlestick_chart(
-        symbol, n_points, rates_df, indicators_ind, forecast_methods
-    ):
+        symbol: str,
+        n_points: int,
+        rates_df: pd.DataFrame,
+        indicators_ind: List[str],
+        forecast_methods: List[str],
+    ) -> Dict[str, Any]:
         """Get figure for plot
 
         Adds plotly.graph_objects charts for candlestick plot, visualizing trade movement
 
         Args:
-            symbol (str): symbol to plot for
-            n_points (int): number of points on candlestick
-            rates_df (pd.DataFrame): rate data (time, open, high, low, close, tick volume, spread)
-            indicators_ind (list): list of indicators to plot
-            forecast_methods (list): list of forecasting methods
+            symbol: symbol to plot for
+            n_points: number of points on candlestick
+            rates_df: rate data (time, open, high, low, close, tick volume, spread)
+            indicators_ind: list of indicators to plot
+            forecast_methods: list of forecasting methods
 
         Returns:
-            (dict): graphical result of trade
+            graphical result of trade
         """
         assert len(rates_df.columns), "Rate data is not initialized"
         col_time, col_open, col_high, col_low, col_close = rates_df.columns[:5]

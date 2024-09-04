@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,7 +17,7 @@ pd.options.mode.chained_assignment = None
 class ChatAnalyzer:
     """The ChatAnalyzer object contains functions used for Chat Analyzer tab"""
 
-    def __init__(self, fp="", data=None):
+    def __init__(self, fp: str = "", data: Optional[str] = None):
         """Initialize class attributes
 
         Args:
@@ -119,11 +120,11 @@ class ChatAnalyzer:
         return processed_df, text_df
 
     @staticmethod
-    def get_distribution_of_messages_by_hour(text_df):
+    def get_distribution_of_messages_by_hour(text_df: pd.DataFrame) -> pd.DataFrame:
         """Get distribution of messages by time sent (grouped on daily level)
 
         Args:
-            text_df (pd.DataFrame): text message data
+            text_df: text message data
 
         Returns:
             (pd.DataFrame): data with columns (sender, hour, counts)
@@ -133,29 +134,32 @@ class ChatAnalyzer:
         return hour_df
 
     @staticmethod
-    def get_distribution_of_messages_by_day(text_df):
+    def get_distribution_of_messages_by_day(text_df: pd.DataFrame) -> pd.DataFrame:
         """
         Get distribution of messages by day
 
         Args:
-            text_df (pd.DataFrame): text message data
+            text_df: text message data
 
         Returns:
-            (pd.DataFrame): data with columns (sender, day, counts)
+            data with columns (sender, day, counts)
         """
         day_df = text_df.groupby(["from", "day"]).size().reset_index()
         day_df.columns = ["sender", "day", "counts"]
         return day_df
 
-    def get_time_series_hour_plot(self, text_df):
+    def get_time_series_hour_plot(
+        self, text_df: pd.DataFrame, template: str
+    ) -> go.Figure:
         """Get figure for plot
         Adds plotly.graph_objects charts for line plot
 
         Args:
-            text_df (pd.DataFrame): all chat data where type is message
+            text_df: all chat data where type is message
+            template: template of plot
 
         Returns:
-            (dict)
+            Message count by hour plot
         """
         data = []
         hour_df = self.get_distribution_of_messages_by_hour(text_df)
@@ -174,19 +178,25 @@ class ChatAnalyzer:
             margin=dict(l=50, r=50, t=100, b=30),
             plot_bgcolor="rgba(0,0,0,0)",
             xaxis=dict(tickformat="%I:00 %p"),
-            font=dict(family="Source Sans Pro", size="15"),
+            font=dict(family="Source Sans Pro", size=15),
         )
-        return dict(data=data, layout=layout)
 
-    def get_time_series_day_plot(self, text_df):
+        fig = go.Figure(dict(data=data, layout=layout))
+        fig.update_layout(template=template)
+        return fig
+
+    def get_time_series_day_plot(
+        self, text_df: pd.DataFrame, template: str
+    ) -> go.Figure:
         """Get figure for plot
         Adds plotly.graph_objects charts for line plot
 
         Args:
-            text_df (pd.DataFrame): text message data
+            text_df: text message data
+            template: template of plot
 
         Returns:
-            (dict)
+            Message count by date plot
         """
         data = []
         day_df = self.get_distribution_of_messages_by_day(text_df)
@@ -204,7 +214,7 @@ class ChatAnalyzer:
             margin=dict(l=50, r=50, t=100, b=30),
             plot_bgcolor="rgba(0,0,0,0)",
             xaxis=dict(
-                font=dict(size="12"),
+                tickfont=dict(size=12),
                 rangeslider=dict(visible=True),
                 rangeselector=dict(
                     buttons=list(
@@ -219,22 +229,28 @@ class ChatAnalyzer:
                     )
                 ),
             ),
-            font=dict(family="Source Sans Pro", size="15"),
+            font=dict(family="Source Sans Pro", size=15),
+            template=template,
         )
-        return dict(data=data, layout=layout)
+
+        fig = go.Figure(dict(data=data, layout=layout))
+        fig.update_layout(template=template)
+        return fig
 
     @staticmethod
-    def get_word_cloud(text_df, max_words=100, plotly=True):
+    def get_word_cloud(
+        text_df: pd.DataFrame, max_words: int = 100, plotly: bool = True
+    ) -> html.Img:
         """Get figure for plot
         Adds plotly.graph_objects charts for word cloud plot
 
         Args:
-            text_df (pd.DataFrame): text message data
-            max_words (int): maximum words to consider in word cloud
-            plotly (bool): whether image should be returned to console, defaults to True (hidden from console)
+            text_df: text message data
+            max_words: maximum words to consider in word cloud
+            plotly: whether image should be returned to console, defaults to True (hidden from console)
 
         Returns:
-            (html.Img)
+            Word cloud image
         """
         image = html.Img()
         try:

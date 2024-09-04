@@ -230,7 +230,7 @@ def sidebar_dropdown_event():
     )
 
 
-def app_1():
+def app_1() -> html.Div:
     return html.Div(
         [
             # Top contents
@@ -243,7 +243,7 @@ def app_1():
     )
 
 
-def app_2(pathname):
+def app_2(pathname) -> html.Div:
     return html.Div(
         [
             # Top contents
@@ -275,7 +275,7 @@ def app_2(pathname):
     )
 
 
-def app_event():
+def app_event() -> html.Div:
     return html.Div(
         [
             # Top contents

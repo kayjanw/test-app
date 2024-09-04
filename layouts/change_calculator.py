@@ -4,6 +4,19 @@ from dash_iconify import DashIconify
 from components.helper import dcc_loading, table_css
 from layouts.main import content_header, style_dropdown, style_hidden, style_input
 
+dropdown_x = dcc.Dropdown(
+    id="dropdown-change-x",
+    placeholder="Select column",
+    clearable=False,
+    style=style_dropdown,
+)
+dropdown_y = dcc.Dropdown(
+    id="dropdown-change-y",
+    placeholder="Select column",
+    clearable=False,
+    style=style_dropdown,
+)
+
 
 def change_tab(app):
     return html.Div(
@@ -80,14 +93,7 @@ def change_tab(app):
                                 [
                                     html.P("Select x-axis:"),
                                     html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-change-x",
-                                                placeholder="Select column",
-                                                clearable=False,
-                                                style=style_dropdown,
-                                            ),
-                                        ],
+                                        [dropdown_x],
                                         style=style_input,
                                     ),
                                     html.P("out of"),
@@ -104,14 +110,7 @@ def change_tab(app):
                                 [
                                     html.P("Select y-axis:"),
                                     html.P(
-                                        [
-                                            dcc.Dropdown(
-                                                id="dropdown-change-y",
-                                                placeholder="Select column",
-                                                clearable=False,
-                                                style=style_dropdown,
-                                            ),
-                                        ],
+                                        [dropdown_y],
                                         style=style_input,
                                     ),
                                     html.P("out of"),

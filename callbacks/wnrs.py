@@ -1,4 +1,5 @@
 import json
+from typing import Any, Dict, List, Union
 
 import dash
 from dash import ALL, MATCH, ctx, html
@@ -43,20 +44,20 @@ def register_callbacks(app, print_function):
     def update_wnrs_deck_style(
         trigger_selection,
         trigger_instruction,
-        selection_style,
-        instruction_style,
-        selection_button_style,
-        instruction_button_style,
+        selection_style: Dict[str, str],
+        instruction_style: Dict[str, str],
+        selection_button_style: Dict[str, str],
+        instruction_button_style: Dict[str, str],
     ):
         """Update style of WNRS card selection and card suggestion (visibility)
 
         Args:
             trigger_selection: trigger on button click
             trigger_instruction: trigger on button click
-            selection_style (dict): current style of card selection div
-            instruction_style (dict): current style of instruction div
-            selection_button_style(dict): current style of card selection button
-            instruction_button_style (dict): current style of instruction button
+            selection_style: current style of card selection div
+            instruction_style: current style of instruction div
+            selection_button_style: current style of card selection button
+            instruction_button_style: current style of instruction button
 
         Returns:
             dict: updated style of card selection, instruction and card suggestion div and button
@@ -97,16 +98,16 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_modal_display(trigger_open, trigger_close, is_open):
+    def update_modal_display(trigger_open, trigger_close, is_open: bool) -> bool:
         """Update modal display
 
         Args:
             trigger_open: trigger on button click
             trigger_close: trigger on button click
-            is_open (bool): current state of open
+            is_open: current state of open
 
         Returns:
-            (bool)
+            indicator whether modal is open or not
         """
         if trigger_open or trigger_close:
             return not is_open
@@ -126,16 +127,18 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_wnrs_suggestion_send_email(trigger, card_prompt, additional_info):
+    def update_wnrs_suggestion_send_email(
+        trigger, card_prompt: str, additional_info: str
+    ) -> str:
         """Send email for WNRS card suggestion
 
         Args:
             trigger: trigger on button click
-            card_prompt (str): input for card prompt
-            additional_info (str): input for additional information
+            card_prompt: input for card prompt
+            additional_info: input for additional information
 
         Returns:
-            str: feedback for email sent
+            feedback for email sent
         """
         reply = ""
         if dash.callback_context.triggered:
@@ -158,15 +161,17 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_wnrs_button_style(trigger, current_style):
+    def update_wnrs_button_style(
+        trigger, current_style: Dict[str, str]
+    ) -> Dict[str, str]:
         """Update style of selected WNRS decks (button colour indication)
 
         Args:
             trigger: trigger on button click
-            current_style (dict): current style of button
+            current_style: current style of button
 
         Returns:
-            dict: updated style of button
+            updated style of button
         """
         shaded_colour = "#BE9B89"
         unshaded_colour = "#F0E3DF"
@@ -191,17 +196,19 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_wnrs_list_of_decks(styles, ids, contents, filename):
+    def update_wnrs_list_of_decks(
+        styles: Dict[str, str], ids: Dict[str, str], contents: str, filename: str
+    ) -> Dict[str, str]:
         """Update list of decks selected
 
         Args:
-            styles (dict): current style of all buttons
-            ids (dict): current id of all buttons
-            contents (str): contents of data uploaded, triggers callback
-            filename (str): filename of data uploaded
+            styles: current style of all buttons
+            ids: current id of all buttons
+            contents: contents of data uploaded, triggers callback
+            filename: filename of data uploaded
 
         Returns:
-            dict: updated style of all buttons
+            updated style of all buttons
         """
         shaded_colour = "#BE9B89"
         data = {}
@@ -286,18 +293,18 @@ def register_callbacks(app, print_function):
         trigger_back2,
         trigger_next2,
         trigger_shuffle,
-        style_text,
-        style_background,
-        swatch_text,
-        swatch_background,
+        style_text: Dict[str, str],
+        style_background: Dict[str, str],
+        swatch_text: str,
+        swatch_background: str,
         style_reset,
-        data,
-        data2_ser,
-        card_prompt,
-        current_style,
-        button_back,
-        button_next,
-        theme_ind,
+        data: Dict[str, Any],
+        data2_ser: Dict[str, Any],
+        card_prompt: Union[str, List[str]],
+        current_style: Dict[str, str],
+        button_back: Dict[str, Any],
+        button_next: Dict[str, Any],
+        theme_ind: bool,
     ):
         """Update underlying data, card content and style
 
@@ -307,18 +314,18 @@ def register_callbacks(app, print_function):
             trigger_back2: trigger on button click
             trigger_next2: trigger on button click
             trigger_shuffle: trigger on button click
-            style_text (dict): current style of card text
-            style_background (dict): current style of card background
-            swatch_text (str): input swatch colour of card text
-            swatch_background (str): input swatch colour of card background
+            style_text: current style of card text
+            style_background: current style of card background
+            swatch_text: input swatch colour of card text
+            swatch_background: input swatch colour of card background
             style_reset: trigger on button click
-            data (dict): data of WNRS object, from store data
-            data2_ser (str): serialized data of WNRS object, from saved data
-            card_prompt (str/list): current prompt on card
-            current_style (dict): current style of card
-            button_back (dict): current opacity for back button
-            button_next (dict): current opacity for next button
-            theme_ind (bool): indicator on whether theme is set or not
+            data: data of WNRS object, from store data
+            data2_ser: serialized data of WNRS object, from saved data
+            card_prompt: current prompt on card
+            current_style: current style of card
+            button_back: current opacity for back button
+            button_next: current opacity for next button
+            theme_ind: indicator on whether theme is set or not
 
         Returns:
             str, list, list, list, list str, dict, dict, dict, dict, dict

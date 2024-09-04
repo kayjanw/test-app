@@ -1,4 +1,7 @@
+from typing import List, Union
+
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 from dash import html
 
@@ -8,7 +11,7 @@ class ChangeCalculator:
     Change Calculator and Change Calculator 2 tab"""
 
     @staticmethod
-    def remove_string_values(df, col):
+    def remove_string_values(df: pd.DataFrame, col: Union[str, List[str]]):
         """Remove non-integer values from column(s) in DataFrame
 
         Args:
@@ -31,15 +34,12 @@ class ChangeCalculator:
         return df
 
     @staticmethod
-    def remove_null(df, col):
+    def remove_null(df: pd.DataFrame, col: Union[str, List[str]]) -> pd.DataFrame:
         """Remove null values from column(s) in DataFrame
 
         Args:
-            df (pd.DataFrame): input DataFrame
-            col (str/list): column(s) to remove null values from
-
-        Returns:
-            (pd.DataFrame)
+            df: input DataFrame
+            col: column(s) to remove null values from
         """
         # Handle string values
         if isinstance(col, str):
@@ -49,16 +49,13 @@ class ChangeCalculator:
         return df
 
     @staticmethod
-    def convert_to_float(df, col, col_max):
+    def convert_to_float(df: pd.DataFrame, col: str, col_max: int) -> pd.DataFrame:
         """Convert values to float for column(s) in DataFrame, normalize column if necessary
 
         Args:
-            df (pd.DataFrame): input DataFrame
-            col (str): column to convert values to float
-            col_max (int): maximum value for column, could be None or empty string
-
-        Returns:
-            (pd.DataFrame)
+            df: input DataFrame
+            col: column to convert values to float
+            col_max: maximum value for column, could be None or empty string
         """
         # Convert to float, normalize if necessary
         if col_max:
@@ -68,7 +65,9 @@ class ChangeCalculator:
             df[col] = df[col].astype(float)
         return df
 
-    def compute_change(self, df, x_col, x_max, y_col, y_max):
+    def compute_change(
+        self, df: pd.DataFrame, x_col: str, x_max: int, y_col: str, y_max: int
+    ) -> pd.DataFrame:
         """Compute change between two periods
 
         Performs removing non-integer values, removing null rows and
@@ -76,14 +75,11 @@ class ChangeCalculator:
         column as difference between y_col and x_col
 
         Args:
-            df (pd.DataFrame): input DataFrame
-            x_col (str): column for x-axis
-            x_max (int): maximum value for x-axis, could be None or empty string
-            y_col (str): column for x-axis
-            y_max (int): maximum value for y-axis, could be None or empty string
-
-        Returns:
-            (pd.DataFrame)
+            df: input DataFrame
+            x_col: column for x-axis
+            x_max: maximum value for x-axis, could be None or empty string
+            y_col: column for x-axis
+            y_max: maximum value for y-axis, could be None or empty string
         """
         df = df.copy()
         df = self.remove_string_values(df, [x_col, y_col])

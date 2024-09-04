@@ -1,3 +1,5 @@
+from typing import Dict
+
 import numpy as np
 from dash import html
 
@@ -6,15 +8,17 @@ class RandomGenerator:
     """The RandomGenerator object contains functions used for Random Generator tab"""
 
     @staticmethod
-    def process_result(text, n_items, n_groups, task, style):
+    def process_result(
+        text: str, n_items: int, n_groups: int, task: str, style: Dict[str, str]
+    ):
         """Processing for random generator, selecting or splitting items
 
         Args:
-            text (text): input text
-            n_items (int): number of items
-            n_groups (int): number of groups
-            task (str): task to perform
-            style (dict): current style of results div
+            text: input text
+            n_items: number of items
+            n_groups: number of groups
+            task: task to perform
+            style: current style of results div
 
         Returns:
             3-element tuple

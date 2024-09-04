@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from dash.dependencies import Input, Output, State
 
 from components import MBTI
@@ -11,11 +13,11 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_mbti_words(input_text):
+    def update_mbti_words(input_text: str):
         """Update number of input words in vocabulary
 
         Args:
-            input_text (str): input text
+            input_text: input text
 
         Returns:
             (str)
@@ -38,13 +40,13 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_mbti_result(trigger, input_text, style):
+    def update_mbti_result(trigger, input_text: str, style: Dict[str, Any]):
         """Update results of mbti personality results and graph
 
         Args:
             trigger: trigger on button click
-            input_text (str): input text
-            style (dict): style of graphical result of mbti model
+            input_text: input text
+            style: style of graphical result of mbti model
 
         Returns:
             3-element tuple

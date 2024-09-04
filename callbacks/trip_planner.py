@@ -1,3 +1,5 @@
+from typing import Any, Dict, List
+
 from dash import ctx
 from dash.dependencies import Input, Output, State
 
@@ -21,15 +23,17 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_trip_table(e, trigger_remove, trigger_reset, landmark, data):
+    def update_trip_table(
+        e, trigger_remove, trigger_reset, landmark: str, data: List[Dict[str, Any]]
+    ):
         """Update trip table
 
         Args:
             e (tuple): trigger on map click
             trigger_remove: trigger on button click
             trigger_reset: trigger on button click
-            landmark (str): name of landmark to be added
-            data (list): data of table that displays landmarks information
+            landmark: name of landmark to be added
+            data: data of table that displays landmarks information
 
         Returns:
             3-element tuple
@@ -56,12 +60,12 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_trip_map(data, children):
+    def update_trip_map(data: List[Dict[str, Any]], children: List[Any]):
         """Update trip map to include landmark location pin
 
         Args:
-            data (list): data of table that displays landmarks information, triggers callback
-            children (list): current map children
+            data: data of table that displays landmarks information, triggers callback
+            children: current map children
 
         Returns:
             (list): updated map children
@@ -76,13 +80,13 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_trip_results(trigger_ok, trigger_reset, data):
+    def update_trip_results(trigger_ok, trigger_reset, data: List[Dict[str, Any]]):
         """Update and display trip results
 
         Args:
             trigger_ok: trigger on button click
             trigger_reset: trigger on button click
-            data (list): data of table that displays landmarks information
+            data: data of table that displays landmarks information
 
         Returns:
             (str/list)

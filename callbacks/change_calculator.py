@@ -1,3 +1,5 @@
+from typing import Any, Dict, List
+
 from dash import ctx, dcc, html
 from dash.dependencies import Input, Output, State
 
@@ -35,15 +37,21 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_change_upload(contents, worksheet, sample_data_style, filename, style):
+    def update_change_upload(
+        contents: str,
+        worksheet: str,
+        sample_data_style: Dict[str, str],
+        filename: str,
+        style: Dict[str, str],
+    ):
         """Update change calculator interface when file is uploaded
 
         Args:
-            contents (str): contents of data uploaded, triggers callback
-            worksheet (str): worksheet of excel file, if applicable, triggers callback
-            sample_data_style (dict): current style of sample uploaded data
-            filename (str): filename of data uploaded
-            style (dict): current style of worksheet selector dropdown
+            contents: contents of data uploaded, triggers callback
+            worksheet: worksheet of excel file, if applicable, triggers callback
+            sample_data_style: current style of sample uploaded data
+            filename: filename of data uploaded
+            style: current style of worksheet selector dropdown
 
         Returns:
             5-element tuple
@@ -67,11 +75,11 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_change_dropdown_options(records):
+    def update_change_dropdown_options(records: Dict[str, Any]):
         """Update change calculator column selector dropdown options
 
         Args:
-            records (dict): intermediate data stored in dcc.Store
+            records: intermediate data stored in dcc.Store
 
         Returns:
             2-element tuple
@@ -92,14 +100,16 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_change_dropdown_value(x_options, y_options, x_value, y_value):
+    def update_change_dropdown_value(
+        x_options: List[str], y_options: List[str], x_value: str, y_value: str
+    ):
         """Update change calculator column selector dropdown value
 
         Args:
-            x_options (list): column selector dropdown options for x-axis, triggers callback
-            y_options (list): column selector dropdown options for y-axis, triggers callback
-            x_value (str): current column selector dropdown value for x-axis
-            y_value (str): current column selector dropdown value for y-axis
+            x_options: column selector dropdown options for x-axis, triggers callback
+            y_options: column selector dropdown options for y-axis, triggers callback
+            x_value: current column selector dropdown value for x-axis
+            y_value: current column selector dropdown value for y-axis
 
         Returns:
             2-element tuple
@@ -134,16 +144,18 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_change_result(trigger, records, x_col, x_max, y_col, y_max):
+    def update_change_result(
+        trigger, records: Dict[str, Any], x_col: str, x_max: int, y_col: str, y_max: int
+    ):
         """Update and display change calculator results
 
         Args:
             trigger: trigger on button click
-            records (dict): intermediate data stored in dcc.Store
-            x_col (str): column for x-axis, could be None
-            x_max (int): maximum value for x-axis, could be None or empty string
-            y_col (str): column for x-axis, could be None
-            y_max (int): maximum value for y-axis, could be None or empty string
+            records: intermediate data stored in dcc.Store
+            x_col: column for x-axis, could be None
+            x_max: maximum value for x-axis, could be None or empty string
+            y_col: column for x-axis, could be None
+            y_max: maximum value for y-axis, could be None or empty string
 
         Returns:
             4-element tuple
@@ -208,15 +220,21 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_changes_upload(contents, worksheet, sample_data_style, filename, style):
+    def update_changes_upload(
+        contents: str,
+        worksheet: str,
+        sample_data_style: Dict[str, str],
+        filename: str,
+        style: Dict[str, str],
+    ):
         """Update change calculator 2 interface when file is uploaded
 
         Args:
-            contents (str): contents of data uploaded, triggers callback
-            worksheet (str): worksheet of excel file, if applicable, triggers callback
-            sample_data_style (dict): current style of sample uploaded data
-            filename (str): filename of data uploaded
-            style (dict): current style of worksheet selector dropdown
+            contents: contents of data uploaded, triggers callback
+            worksheet: worksheet of excel file, if applicable, triggers callback
+            sample_data_style: current style of sample uploaded data
+            filename: filename of data uploaded
+            style: current style of worksheet selector dropdown
 
         Returns:
             5-element tuple
@@ -240,11 +258,11 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_changes_dropdown_options(records):
+    def update_changes_dropdown_options(records: Dict[str, Any]):
         """Update change calculator 2 column selector dropdown options
 
         Args:
-            records (dict): intermediate data stored in dcc.Store
+            records: intermediate data stored in dcc.Store
 
         Returns:
             2-element tuple
@@ -265,12 +283,12 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_changes_add_row(trigger, data):
+    def update_changes_add_row(trigger, data: List[Dict[str, str]]):
         """Update and adds additional row to change calculator 2 table
 
         Args:
             trigger: trigger on button click
-            data (list): data of table that stores comparison column information
+            data: data of table that stores comparison column information
 
         Returns:
             list: updated data of table that stores comparison column information
@@ -297,14 +315,16 @@ def register_callbacks(app, print_function):
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_changes_result(trigger, records, col_identifier, data):
+    def update_changes_result(
+        trigger, records: Dict[str, Any], col_identifier: str, data: List[Dict]
+    ):
         """Update and display change calculator 2 results
 
         Args:
             trigger: trigger on button click
-            records (dict): intermediate data stored in dcc.Store
-            col_identifier (str): column for index, could be None
-            data (list): data of table that stores comparison column information
+            records: intermediate data stored in dcc.Store
+            col_identifier: column for index, could be None
+            data: data of table that stores comparison column information
 
         Returns:
             4-element tuple
@@ -362,15 +382,15 @@ def register_callbacks(app, print_function):
         [State("graph-changes-line", "figure")],
     )
     @print_callback(print_function)
-    def update_changes_hover(hover_data, figure):
+    def update_changes_hover(hover_data, figure: Dict[str, Any]) -> Dict[str, Any]:
         """Update layouts of plotly graph on hover
 
         Args:
             hover_data: trigger on hover
-            figure (dict): figure for plot
+            figure: figure for plot
 
         Returns:
-            (dict): updated figure for plot
+            updated figure for plot
         """
         for trace in figure["data"]:
             trace["line"]["width"] = 1

@@ -76,17 +76,21 @@ def register_callbacks(app, print_function):
             Output("graph-chat-result-hour", "figure"),
             Output("chat-result-wordcloud", "children"),
         ],
-        [Input("button-chat-ok", "n_clicks")],
+        [
+            Input("button-chat-ok", "n_clicks"),
+            Input("dropdown-chat-template", "value"),
+        ],
         [State("intermediate-chat-result", "data")],
         prevent_initial_call=True,
     )
     @print_callback(print_function)
-    def update_chat_result(trigger, contents):
+    def update_chat_result(trigger, template: str, contents: str):
         """Update and display chat analyzer results
 
         Args:
             trigger: trigger on button click
-            contents (str): intermediate data stored in dcc.Store
+            template: template of plot
+            contents: intermediate data stored in dcc.Store
 
         Returns:
             6-element tuple
@@ -104,7 +108,7 @@ def register_callbacks(app, print_function):
         fig1 = {}
         fig2 = {}
         fig3 = []
-        if trigger:
+        if trigger or template:
             if not contents:
                 result_error = [return_message["file_not_uploaded"]]
             else:
@@ -116,7 +120,7 @@ def register_callbacks(app, print_function):
                     processed_df, max_rows=len(processed_df), dark=False
                 )
                 result = [html.H5("Chat Breakdown"), message_info_table]
-                fig1 = chat.get_time_series_hour_plot(text_df)
-                fig2 = chat.get_time_series_day_plot(text_df)
+                fig1 = chat.get_time_series_hour_plot(text_df, template)
+                fig2 = chat.get_time_series_day_plot(text_df, template)
                 fig3 = chat.get_word_cloud(text_df)
         return result_error, style, result, fig1, fig2, fig3
