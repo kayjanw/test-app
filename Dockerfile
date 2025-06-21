@@ -16,7 +16,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils \
     && apt-get install -y --no-install-recommends curl \
-    && apt-get install --no-install-recommends libgomp1 \
+    && apt-get install -y --no-install-recommends libgomp1 \
     && rm -rf /var/lib/apt/lists/* \
     && chgrp -R 0 /test-app \
     && chmod -R g=u /test-app \
