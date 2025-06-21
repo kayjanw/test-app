@@ -17,7 +17,7 @@ class TradeSocket:
         """Initialize class attributes"""
         # Parameters
         self.socket = "wss://ws-feed.pro.coinbase.com"
-        self.api_url = "https://api.pro.coinbase.com"
+        self.api_url = "https://api.exchange.coinbase.com"
         self.TIMEFRAME_DICT = {
             "1 min": (60, "1T"),
             "5 min": (300, "5T"),
@@ -62,7 +62,7 @@ class TradeSocket:
         df_historical = pd.DataFrame(
             resp.json(), columns=["Epoch", "Low", "High", "Open", "Close", "Volume"]
         )
-        assert df_historical, f"Empty dataframe returned from {_request}"
+        assert len(df_historical), f"Empty dataframe returned from {_request}"
         df_historical = df_historical.sort_values("Epoch")
         df_historical[self.date_col] = pd.to_datetime(df_historical["Epoch"], unit="s")
         return df_historical[[self.date_col, "Open", "High", "Low", "Close"]]
@@ -140,7 +140,7 @@ class TradeSocket:
             granularity: granularity of candlestick chart
             n_points: number of points on candlestick
         """
-        historical_only = False
+        historical_only = True
 
         if historical_only:
             # Get data
@@ -148,7 +148,7 @@ class TradeSocket:
             df_historical = self.get_historical_data(symbol, granularity, end=end)
         else:
             # Get data
-            # self.run_socket(symbol, granularity)
+            self.run_socket(symbol, granularity)
             assert len(self.df_tick), "No data retrieved"
             end = self.df_tick[self.date_col].max().isoformat()
             df_historical = self.get_historical_data(symbol, granularity, end=end)
