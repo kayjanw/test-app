@@ -28,5 +28,6 @@ RUN apt-get update \
     && ls -lh
 RUN python3 -m unittest discover -s tests/ -p "test_*.py" \
     && ls -lh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
