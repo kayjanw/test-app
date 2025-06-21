@@ -131,7 +131,7 @@ def trade_tab():
                                 ],
                                 className="custom-div-flex",
                             ),
-                            html.P(id="trade-result"),
+                            html.P(id="trade-result", style={"color": "red"}),
                         ],
                         className="custom-div-smaller custom-div-left custom-div-dark",
                     ),

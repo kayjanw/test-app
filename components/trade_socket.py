@@ -62,6 +62,7 @@ class TradeSocket:
         df_historical = pd.DataFrame(
             resp.json(), columns=["Epoch", "Low", "High", "Open", "Close", "Volume"]
         )
+        assert df_historical, f"Empty dataframe returned from {_request}"
         df_historical = df_historical.sort_values("Epoch")
         df_historical[self.date_col] = pd.to_datetime(df_historical["Epoch"], unit="s")
         return df_historical[[self.date_col, "Open", "High", "Low", "Close"]]
@@ -147,7 +148,8 @@ class TradeSocket:
             df_historical = self.get_historical_data(symbol, granularity, end=end)
         else:
             # Get data
-            self.run_socket(symbol, granularity)
+            # self.run_socket(symbol, granularity)
+            assert len(self.df_tick), "No data retrieved"
             end = self.df_tick[self.date_col].max().isoformat()
             df_historical = self.get_historical_data(symbol, granularity, end=end)
 
