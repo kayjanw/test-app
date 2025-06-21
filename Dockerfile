@@ -8,8 +8,8 @@ WORKDIR /test-app
 # COPY data/MetaTrader5/MetaTrader5 /usr/local/lib/python3.8/site-packages/MetaTrader5
 # COPY data/MetaTrader5/MetaTrader5-5.0.37.dist-info /usr/local/lib/python3.8/site-packages/MetaTrader5-5.0.37.dist-info
 ENV PORT=$port
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # EXPOSE $PORT
 
@@ -28,4 +28,5 @@ RUN apt-get update \
     && ls -lh
 RUN python3 -m unittest discover -s tests/ -p "test_*.py" \
     && ls -lh
-CMD gunicorn app:server --bind 0.0.0.0:$PORT --workers 2 --worker-class gevent --preload
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
