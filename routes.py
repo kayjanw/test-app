@@ -19,9 +19,9 @@ def register_routes(app):
             return send_file(
                 buf,
                 mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                attachment_filename="result.xlsx",
                 as_attachment=True,
-                cache_timeout=0,
+                download_name="result.xlsx",
+                max_age=0,
             )
 
     @app.server.route("/download_demo/", methods=["POST"])
@@ -30,9 +30,9 @@ def register_routes(app):
         return send_file(
             buf,
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            attachment_filename="demo.xlsx",
             as_attachment=True,
-            cache_timeout=0,
+            download_name="demo.xlsx",
+            max_age=0,
         )
 
     @app.server.route("/download_dict/", methods=["POST"])
