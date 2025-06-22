@@ -62,7 +62,7 @@ class WNRS:
             else:
                 self.information[deck_type][deck]["levels"] = [1]
 
-    def get_information(self) -> Dict[str, str]:
+    def get_information(self) -> Dict[str, Dict[str, Any]]:
         """Get information (type, description, summary) of all card deck"""
         return self.information
 

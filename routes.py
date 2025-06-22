@@ -44,9 +44,9 @@ def register_routes(app):
             return send_file(
                 buf,
                 mimetype="application/json",
-                attachment_filename="wnrs_progress.json",
                 as_attachment=True,
-                cache_timeout=0,
+                download_name="wnrs_progress.json",
+                max_age=0,
             )
 
     @app.server.route("/<path:path>")
