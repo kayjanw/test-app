@@ -28,7 +28,7 @@ def trade_tab():
                 [
                     html.P(
                         "Users can select their preferred trade and view a candlestick chart, with statistical indicators "
-                        "and forecasts! Candlestick chart refreshes every 1 second."
+                        "and forecasts! Candlestick chart refreshes every 2 seconds."
                     ),
                     html.Br(),
                     html.P("Step 1: Select preferred symbol"),

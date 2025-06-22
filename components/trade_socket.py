@@ -42,27 +42,34 @@ class TradeSocket:
         return symbol_names
 
     def get_historical_data(
-        self, ticker: str, granularity: str, end: Optional[str] = None
+        self,
+        ticker: str,
+        granularity: str,
+        start: Optional[str] = None,
+        end: Optional[str] = None,
     ) -> pd.DataFrame:
         """Get historical data of stock symbol
 
         Args:
             ticker: symbol to display
             granularity: granularity of candlestick chart
+            start: start datetime of historical data
             end: end datetime of historical data
         """
-        _request = (
-            self.api_url
-            + f"/products/{ticker}/candles?end={end}&granularity={self.TIMEFRAME_DICT[granularity][0]}"
-        )
-        resp = requests.get(_request)
+        conditions = [f"granularity={self.TIMEFRAME_DICT[granularity][0]}"]
+        if start:
+            conditions.append(f"start={start}")
+        if end:
+            conditions.append(f"end={end}")
+        url = self.api_url + f"/products/{ticker}/candles?" + "&".join(conditions)
+        resp = requests.get(url)
         assert (
             resp.status_code == 200
         ), f"Request has error of status code {resp.status_code}"
         df_historical = pd.DataFrame(
             resp.json(), columns=["Epoch", "Low", "High", "Open", "Close", "Volume"]
         )
-        assert len(df_historical), f"Empty dataframe returned from {_request}"
+        assert len(df_historical), f"Empty dataframe returned from {url}"
         df_historical = df_historical.sort_values("Epoch")
         df_historical[self.date_col] = pd.to_datetime(df_historical["Epoch"], unit="s")
         return df_historical[[self.date_col, "Open", "High", "Low", "Close"]]
@@ -144,16 +151,27 @@ class TradeSocket:
 
         if historical_only:
             # Get data
-            end = datetime.datetime.now().isoformat()
-            df_historical = self.get_historical_data(symbol, granularity, end=end)
+            end = datetime.datetime.utcnow()
+            start = end - datetime.timedelta(
+                seconds=n_points * self.TIMEFRAME_DICT[granularity][0]
+            )
+            df_historical = self.get_historical_data(
+                symbol, granularity, start=start.isoformat(), end=end.isoformat()
+            )
         else:
             # Get data
             self.run_socket(symbol, granularity)
             assert len(self.df_tick), "No data retrieved"
-            end = self.df_tick[self.date_col].max().isoformat()
-            df_historical = self.get_historical_data(symbol, granularity, end=end)
+            end = self.df_tick[self.date_col].max()
+            start = end - datetime.timedelta(
+                seconds=n_points * self.TIMEFRAME_DICT[granularity][0]
+            )
+            df_historical = self.get_historical_data(
+                symbol, granularity, start=start.isoformat(), end=end.isoformat()
+            )
 
             if self.df_tick[self.date_col][0] in set(df_historical[self.date_col]):
+                # If new data is same minute - replace the latest minute
                 df_new = df_historical[
                     (
                         df_historical[self.date_col]
@@ -177,6 +195,7 @@ class TradeSocket:
                         "price"
                     ].values[0]
             else:
+                # If new data is new minute, create new entry
                 df_new = pd.DataFrame(
                     columns=df_historical.columns,
                     data=[
