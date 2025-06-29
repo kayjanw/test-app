@@ -564,6 +564,15 @@ svg {
     letter-spacing: -0.05rem;
 }
 
+.p-summary {
+    padding-bottom: 10px;
+}
+
+.p-indent {
+    padding-left: 20px;
+    margin-bottom: 0px;
+}
+
 .invisible-button {
     background-color: rgba(0,0,0,0);
     border: none;

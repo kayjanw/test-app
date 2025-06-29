@@ -12,6 +12,7 @@ from components.helper import (
     valid_email,
     violin_plot,
 )
+from cv.layouts import about_me_cv_tab, app_cv, career_tab, education_tab, teaching_tab
 from layouts import (
     about_me_tab,
     app_1,
@@ -48,6 +49,8 @@ def register_callbacks(app, print_function):
             return app_1()
         elif pathname == "/event":
             return app_event()
+        elif pathname == "/cv":
+            return app_cv()
         else:
             return app_2(pathname)
 
@@ -361,6 +364,15 @@ def register_callbacks(app, print_function):
             return rng_tab()
         elif tab == "tab-wnrs":
             return wnrs_tab(app)
+        # CV
+        elif tab == "tab-cv-aboutme":
+            return about_me_cv_tab(app)
+        elif tab == "tab-cv-career":
+            return career_tab(app)
+        elif tab == "tab-cv-teaching":
+            return teaching_tab(app)
+        elif tab == "tab-cv-education":
+            return education_tab(app)
         else:
             return current_content
 
@@ -393,6 +405,14 @@ def register_callbacks(app, print_function):
                 document.title = 'Contact Me'
             } else if (tab_value === 'tab-image') {
                 document.title = 'Image Editing'
+            } else if (tab_value === 'tab-cv-aboutme') {
+                document.title = 'About Me'
+            } else if (tab_value === 'tab-cv-career') {
+                document.title = 'Career'
+            } else if (tab_value === 'tab-cv-teaching') {
+                document.title = 'Teaching'
+            } else if (tab_value === 'tab-cv-education') {
+                document.title = 'Education'
             }
         }
         """,
