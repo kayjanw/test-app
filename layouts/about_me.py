@@ -1,7 +1,7 @@
 from dash import html
 from dash_iconify import DashIconify
 
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 
 def about_me_component(icon_name: str, component_name: str, component_description: str):

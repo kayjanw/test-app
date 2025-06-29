@@ -1,7 +1,8 @@
 from dash import dcc, html
 from dash_iconify import DashIconify
 
-from layouts.main import content_header, style_contact_textarea
+from layouts.main import style_contact_textarea
+from layouts.main_components import content_header
 
 
 def contact_tab():

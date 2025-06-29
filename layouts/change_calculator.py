@@ -2,7 +2,8 @@ from dash import dash_table, dcc, html
 from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, table_css
-from layouts.main import content_header, style_dropdown, style_hidden, style_input
+from layouts.main import style_dropdown, style_hidden, style_input
+from layouts.main_components import content_header
 
 dropdown_x = dcc.Dropdown(
     id="dropdown-change-x",

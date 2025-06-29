@@ -2,7 +2,7 @@ import dash_daq as daq
 from dash import dcc, html
 from dash_canvas import DashCanvas
 
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 
 def image_edit_tab(app):

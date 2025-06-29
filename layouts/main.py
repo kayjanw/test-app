@@ -1,6 +1,7 @@
 from dash import dcc, html
 
 from components.helper import colour_palette, dcc_loading, violin_plot
+from layouts.main_components import banner, content_header, sidebar_header
 from version import __version__
 
 style_dropdown = {"width": "100%", "color": "black"}
@@ -33,19 +34,6 @@ def main_layout():
             ),
         ]
     )
-
-
-def banner():
-    return html.Div(
-        [
-            html.Button("☰", id="button-sidebar"),
-            html.Div(html.H1(dcc.Link("KJ Wong", href="/")), className="banner-center"),
-        ],
-    )
-
-
-def sidebar_header():
-    return html.Div(html.H1(dcc.Link("KJ Wong", href="/")))
 
 
 def sidebar_dropdown():
@@ -287,15 +275,5 @@ def app_event() -> html.Div:
             ),
             # Right contents
             html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
-        ]
-    )
-
-
-def content_header(title, subtitle=None):
-    return html.Div(
-        [
-            html.H2(title, className="content-header"),
-            html.H3(subtitle),
-            html.H4("————————"),
         ]
     )

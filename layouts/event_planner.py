@@ -2,7 +2,8 @@ from dash import dcc, html
 from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, result_download_text
-from layouts.main import content_header, style_checklist, style_hidden
+from layouts.main import style_checklist, style_hidden
+from layouts.main_components import content_header
 
 
 def event_tab(app):

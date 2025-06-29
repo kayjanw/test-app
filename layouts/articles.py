@@ -4,7 +4,7 @@ from dash import html
 from dash_iconify import DashIconify
 
 from layouts.constants import ARTICLE_TOPIC_COLOUR_DICT
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 card_list = [
     (

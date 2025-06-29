@@ -1,6 +1,6 @@
 from dash import html
 
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 
 def keyboard_tab():

@@ -2,7 +2,7 @@ from dash import dcc, html
 from dash_iconify import DashIconify
 
 from components.helper import dcc_loading
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 
 def mbti_tab():

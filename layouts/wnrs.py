@@ -5,7 +5,8 @@ from dash import dcc, html
 
 from components import WNRS
 from components.helper import colour_palette, encode_dict
-from layouts.main import content_header, style_hidden, style_wnrs_text
+from layouts.main import style_hidden, style_wnrs_text
+from layouts.main_components import content_header
 
 
 def modal_palette():

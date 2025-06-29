@@ -2,7 +2,8 @@ from dash import dcc, html
 from dash_iconify import DashIconify
 
 from components import TradeSocket
-from layouts.main import content_header, style_dropdown, style_input, style_p
+from layouts.main import style_dropdown, style_input, style_p
+from layouts.main_components import content_header
 
 
 def trade_tab():

@@ -3,7 +3,7 @@ from dash import dash_table, dcc, html
 from dash_iconify import DashIconify
 
 from components.helper import dcc_loading, table_css
-from layouts.main import content_header
+from layouts.main_components import content_header
 
 
 def trip_tab(app):

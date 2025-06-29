@@ -4,7 +4,8 @@ from dash_iconify import DashIconify
 from mergedeep import merge
 
 from components.helper import dcc_loading, flex_style
-from layouts.main import content_header, style_hidden
+from layouts.main import style_hidden
+from layouts.main_components import content_header
 
 
 def rng_tab():
