@@ -2,7 +2,6 @@ from dash import dcc, html
 
 from common.components.helper import colour_palette, dcc_loading, violin_plot
 from common.layouts.main import banner, content_header, sidebar_header
-from version import __version__
 
 style_dropdown = {"width": "100%", "color": "black"}
 style_p = {"width": "40%"}
@@ -13,25 +12,63 @@ style_contact_textarea = {"width": "70%", "margin-bottom": "5px"}
 style_hidden = {"display": "none"}
 
 
-def main_layout():
+def app_1() -> html.Div:
     return html.Div(
         [
-            dcc.Location(id="url", refresh=False),
-            html.Div(id="page-content"),
-            html.Div(id="blank-output"),
-            html.H6(
+            # Top contents
+            html.Div(banner(), id="banner"),
+            # Left contents
+            html.Div([sidebar_header(), sidebar_dropdown()], id="sidebar"),
+            # Right contents
+            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
+        ]
+    )
+
+
+def app_2(pathname) -> html.Div:
+    return html.Div(
+        [
+            # Top contents
+            html.Div(banner(), id="banner"),
+            # Left contents
+            html.Div([sidebar_header(), dcc.Tabs(id="tabs-parent")], id="sidebar"),
+            # Right contents
+            html.Div(
                 [
-                    html.H6("If you like this, "),
-                    html.A(
-                        "buy me a coffee ☕ ",
-                        href="https://www.buymeacoffee.com/kayjan",
-                        target="_blank",
+                    content_header("Nice try", "Sadly this page does not exist"),
+                    html.Div(
+                        [
+                            html.P(
+                                [
+                                    f"What were you hoping for in {pathname} page?",
+                                    html.Br(),
+                                    "Click ",
+                                    html.A("here", href="/"),
+                                    " to return to home page",
+                                ]
+                            ),
+                        ],
+                        className="custom-div-instruction",
                     ),
-                    "! ",
-                    html.H6(f"(v{__version__})"),
                 ],
-                className="footer",
+                id="tab-content",
             ),
+        ]
+    )
+
+
+def app_event() -> html.Div:
+    return html.Div(
+        [
+            # Top contents
+            html.Div(banner(), id="banner"),
+            # Left contents
+            html.Div(
+                [sidebar_header(), sidebar_dropdown_event()],
+                id="sidebar",
+            ),
+            # Right contents
+            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
         ]
     )
 
@@ -214,66 +251,5 @@ def sidebar_dropdown_event():
                 persistence=True,
                 persistence_type="memory",
             )
-        ]
-    )
-
-
-def app_1() -> html.Div:
-    return html.Div(
-        [
-            # Top contents
-            html.Div(banner(), id="banner"),
-            # Left contents
-            html.Div([sidebar_header(), sidebar_dropdown()], id="sidebar"),
-            # Right contents
-            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
-        ]
-    )
-
-
-def app_2(pathname) -> html.Div:
-    return html.Div(
-        [
-            # Top contents
-            html.Div(banner(), id="banner"),
-            # Left contents
-            html.Div([sidebar_header(), dcc.Tabs(id="tabs-parent")], id="sidebar"),
-            # Right contents
-            html.Div(
-                [
-                    content_header("Nice try", "Sadly this page does not exist"),
-                    html.Div(
-                        [
-                            html.P(
-                                [
-                                    f"What were you hoping for in {pathname} page?",
-                                    html.Br(),
-                                    "Click ",
-                                    html.A("here", href="/"),
-                                    " to return to home page",
-                                ]
-                            ),
-                        ],
-                        className="custom-div-instruction",
-                    ),
-                ],
-                id="tab-content",
-            ),
-        ]
-    )
-
-
-def app_event() -> html.Div:
-    return html.Div(
-        [
-            # Top contents
-            html.Div(banner(), id="banner"),
-            # Left contents
-            html.Div(
-                [sidebar_header(), sidebar_dropdown_event()],
-                id="sidebar",
-            ),
-            # Right contents
-            html.Div(dcc_loading(violin_plot(), dark_bg=False), id="tab-content"),
         ]
     )

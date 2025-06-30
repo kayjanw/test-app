@@ -52,7 +52,7 @@ h4: dash in page title
 h5: card
 h6: version
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-h1, h2, h3, h4, h5, h6, p, span, details, li, textarea {
+h1, h2, h3, h4, h5, h6, p, span, details, li, textarea, tr, td {
     font-family: Source Sans Pro;
 }
 
@@ -89,6 +89,16 @@ h6 {
     display: inline-block;
     font-size: 1em;
     line-height: 1.7;
+}
+
+th {
+    padding: 3px !important;
+    font-size: 15px;
+}
+
+td {
+    padding: 3px !important;
+    font-size: 15px;
 }
 
 .footer h6, .footer a {

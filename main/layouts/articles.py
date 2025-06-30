@@ -232,8 +232,7 @@ def articles_button(topic: str, colour: str):
     """
     button_dict = {
         "variant": "filled",
-        "size": "xs",
-        "compact": True,
+        "size": "md",
         "radius": "lg",
         "style": {"margin": "0px 10px 10px 0px"},
     }

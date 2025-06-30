@@ -67,6 +67,12 @@ def sidebar_dropdown_cv():
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
+                        label="Achievements",
+                        value="tab-cv-achievements",
+                        className="custom-tab-sub",
+                        selected_className="custom-tab-selected",
+                    ),
+                    dcc.Tab(
                         label="Contact Me",
                         value="tab-contact",
                         className="custom-tab p-bold",

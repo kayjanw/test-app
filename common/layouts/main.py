@@ -1,4 +1,30 @@
+import dash_mantine_components as dmc
 from dash import dcc, html
+
+from version import __version__
+
+
+def main_layout():
+    return html.Div(
+        [
+            dcc.Location(id="url", refresh=False),
+            dmc.MantineProvider(html.Div(id="page-content")),
+            html.Div(id="blank-output"),
+            html.H6(
+                [
+                    html.H6("If you like this, "),
+                    html.A(
+                        "buy me a coffee ☕ ",
+                        href="https://www.buymeacoffee.com/kayjan",
+                        target="_blank",
+                    ),
+                    "! ",
+                    html.H6(f"(v{__version__})"),
+                ],
+                className="footer",
+            ),
+        ]
+    )
 
 
 def banner():

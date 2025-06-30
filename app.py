@@ -6,6 +6,7 @@ import gevent.monkey
 gevent.monkey.patch_all()
 
 from common.callbacks.callbacks import register_callbacks
+from common.layouts.main import main_layout
 from main.callbacks.articles import register_callbacks_articles
 from main.callbacks.change_calculator import (
     register_callbacks as register_callbacks_change_calculator,
@@ -21,7 +22,6 @@ from main.callbacks.trip_planner import (
     register_callbacks as register_callbacks_trip_planner,
 )
 from main.callbacks.wnrs import register_callbacks as register_callbacks_wnrs
-from main.layouts.main import main_layout
 from routes import register_routes
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
@@ -61,6 +61,8 @@ meta_tags = [
         "content": "3AcDEhXtFa35ByGGTh-Fy8bDeDY6hUQUqYcrfh0mGso",
     },
 ]
+dash._dash_renderer._set_react_version("18.2.0")
+
 app = dash.Dash(__name__, title="bowwow", update_title=None, meta_tags=meta_tags)
 server = app.server
 app.config.suppress_callback_exceptions = True

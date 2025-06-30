@@ -24,6 +24,7 @@ Order of div
 content-header
 div-with-image, div-with-image-left, div-with-image-right
 div-with-invisible-button
+mantine-Tabs-tabLabel mantine-Button-root
 small-image, medium-image
 image-dark-bg image-vertical-flip image-horizontal-flip image-dark-blue
 
@@ -389,6 +390,21 @@ svg {
 
 .div-with-invisible-button button[id$="-next"] {
     left: 50%;
+}
+
+/* Achievements table
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mantine-Tabs-tabLabel {
+    font-family: Source Sans Pro;
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.mantine-Button-root {
+    margin: 0px;
 }
 
 .medium-image Img {

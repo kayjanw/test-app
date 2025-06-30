@@ -10,7 +10,7 @@ dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-iconify==0.1.2
 dash-leaflet==0.0.9
-dash-mantine-components==0.11.0
+dash-mantine-components==2.0.0
 dash-renderer==1.6.0
 dash-table==5.0.0
 Flask==2.2.5

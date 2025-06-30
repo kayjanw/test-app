@@ -12,7 +12,14 @@ from common.components.helper import (
     valid_email,
     violin_plot,
 )
-from cv.layouts import about_me_cv_tab, app_cv, career_tab, education_tab, teaching_tab
+from cv.layouts import (
+    about_me_cv_tab,
+    achievement_tab,
+    app_cv,
+    career_tab,
+    education_tab,
+    teaching_tab,
+)
 from main.layouts import (
     about_me_tab,
     app_1,
@@ -223,6 +230,8 @@ def register_callbacks(app, print_function):
             return teaching_tab(app)
         elif tab == "tab-cv-education":
             return education_tab(app)
+        elif tab == "tab-cv-achievements":
+            return achievement_tab(app)
         else:
             return current_content
 
@@ -263,6 +272,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Teaching'
             } else if (tab_value === 'tab-cv-education') {
                 document.title = 'Education'
+            } else if (tab_value === 'tab-cv-achievements') {
+                document.title = 'Achievements'
             }
         }
         """,

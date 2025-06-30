@@ -63,8 +63,9 @@ def rng_tab():
                                                 "label": "Split into N groups",
                                             },
                                         ],
-                                        size="sm",
-                                        radius="lg",
+                                        color="#202029",
+                                        size="xl",
+                                        radius="md",
                                         transitionDuration=0,
                                     ),
                                 ]
