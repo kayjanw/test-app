@@ -3,6 +3,6 @@ ignore = E402, E501, W503
 exclude =
     tests/*
 per-file-ignores =
-    components/__init__.py: F401
-    layouts/__init__.py: F401
+    main/components/__init__.py: F401
+    main/layouts/__init__.py: F401
     cv/layouts/__init__.py: F401

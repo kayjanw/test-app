@@ -1,6 +1,6 @@
 from flask import request, send_file
 
-from components.helper import (
+from common.components.helper import (
     create_json_from_dict,
     decode_df,
     decode_dict,

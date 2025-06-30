@@ -1,7 +1,7 @@
 from dash import dcc, html
 from dash_iconify import DashIconify
 
-from layouts.main_components import content_header
+from common.layouts.main import content_header
 
 
 def career_tab(app):

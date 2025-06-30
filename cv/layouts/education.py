@@ -1,7 +1,7 @@
 from dash import html
 from dash_iconify import DashIconify
 
-from layouts.main_components import content_header
+from common.layouts.main import content_header
 
 
 def education_tab(app):

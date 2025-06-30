@@ -1,7 +1,7 @@
 from dash import dcc, html
 
-from components.helper import colour_palette, dcc_loading, violin_plot
-from layouts.main_components import banner, sidebar_header
+from common.components.helper import colour_palette, dcc_loading, violin_plot
+from common.layouts.main import banner, sidebar_header
 
 
 def app_cv() -> html.Div:

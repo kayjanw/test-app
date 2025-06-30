@@ -1,7 +1,7 @@
 from dash import html
 
-from layouts.about_me import about_me_component, about_me_links
-from layouts.main_components import content_header
+from common.layouts.main import content_header
+from main.layouts.about_me import about_me_component, about_me_links
 
 
 def about_me_cv_tab(app):
