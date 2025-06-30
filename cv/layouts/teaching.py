@@ -36,7 +36,7 @@ def teaching_tab(app):
                     html.Br(),
                     html.P(
                         (
-                            "✅ Key accomplishments include having multiple articles of over 100K views"
+                            "🎖️ Key accomplishments include having multiple articles of over 100K views"
                         ),
                         className="p-indent",
                     ),

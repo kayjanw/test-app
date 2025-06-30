@@ -34,7 +34,7 @@ def career_tab(app):
                     > ✔️ Led sprint management and support efforts, addressing queries and resolving issues for
                         Quant Researchers
 
-                    > ✅️ Reduced latency of minutely alpha publication from 26s to 6s
+                    > 🎖️️ Reduced latency of minutely alpha publication from 26s to 6s
                     """
                             ),
                         ],
@@ -64,7 +64,7 @@ def career_tab(app):
                         gathering requirements from end users and scoping the work, ensuring timely delivery
                         ahead of milestones
 
-                    > ✅ Ideated and developed open-source Python package for working with tree data structures,
+                    > 🎖️ Ideated and developed open-source Python package for working with tree data structures,
                         with over 100 GitHub stars to date
                     """
                             ),
@@ -103,7 +103,7 @@ def career_tab(app):
                     > ✔️ Performed predictive analysis with rule-based model as a real-time use case using
                         Adobe IBMB clickstream data
 
-                    > ✅ Published in IJCNN 2020 Personalized Digital Customer Services for Consumer Banking
+                    > 🎖️ Published in IJCNN 2020 Personalized Digital Customer Services for Consumer Banking
                         Call Centre using Neural Networks
                     """
                             ),
@@ -132,10 +132,10 @@ def career_tab(app):
                         time series forecasting methods using Dash and Plotly, and deployed it using Jenkins and
                         OpenShift
 
-                    > ✅ Launched 2 forecasting e-learning courses for bank-wide staff, collaborating with
+                    > 🎖️ Launched 2 forecasting e-learning courses for bank-wide staff, collaborating with
                         Culture and Curriculum team, and have over 1500 user completions to date
 
-                    > ✅ Voted top Reusable Asset (RA) in RA Learning Festival 2020
+                    > 🎖️ Voted top Reusable Asset (RA) in RA Learning Festival 2020
                     """
                             ),
                         ],
@@ -154,7 +154,7 @@ def career_tab(app):
                     > ✔️ Deployed solution on QlikView dashboard within 5 months of project inception, making it
                         the first AI-embedded Control Tower within the bank
 
-                    > ✅ Published in ACM 2022 Improving Operational Efficiency through Predicting Credit Card
+                    > 🎖️ Published in ACM 2022 Improving Operational Efficiency through Predicting Credit Card
                         Application Turnaround Time with Index-based Encoding
                     """
                             ),
@@ -241,15 +241,15 @@ def career_tab(app):
                             html.Summary("Others", className="p-summary"),
                             dcc.Markdown(
                                 """
-                    > ✅ Spot Award recipient for 2021 Feb, Jun, Oct, and 2022 Apr for exemplary work performance
+                    > 🎖️ Spot Award recipient for 2021 Feb, Jun, Oct, and 2022 Apr for exemplary work performance
 
-                    > ✅ Star Award recipient for first half of 2021 for exemplary work performance
+                    > 🎖️ Star Award recipient for first half of 2021 for exemplary work performance
 
-                    > ✅ Second most active Coursera user, based on course completion, in the company in 2018
+                    > 🎖️ Second most active Coursera user, based on course completion, in the company in 2018
 
-                    > ✅ Completed over 100 Coursera courses within the span of 3.5 years
+                    > 🎖️ Completed over 100 Coursera courses within the span of 3.5 years
 
-                    > ✅ Represented Musicians Interest Group in DBS Dinner and Dance 2019 and 2021, playing
+                    > 🎖️ Represented Musicians Interest Group in DBS Dinner and Dance 2019 and 2021, playing
                         keyboard in a live band
                     """
                             ),
@@ -279,7 +279,7 @@ def career_tab(app):
                             > ✔️ Exposed to banking risk management, custody, data analytics, global financial services,
                             prime brokerage, private equity, securitization, treasury and various frameworks
 
-                            > ✅️ Represented Topaz (Team Advisory) in KPMG Sports Carnival 2017, clinching first place
+                            > 🎖️️ Represented Topaz (Team Advisory) in KPMG Sports Carnival 2017, clinching first place
                             in Cheerleading and second place in Touch Rugby, assisting Topaz to secure Overall Champion
                             """
                                     ),
