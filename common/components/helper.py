@@ -17,7 +17,7 @@ import plotly.graph_objects as go
 import sendgrid
 from dash import dash_table, dcc, html
 from plotly.colors import n_colors
-from sendgrid.helpers.mail import Content, Email, Mail, To
+from sendgrid.helpers.mail import Content, Mail
 
 colour_palette = {
     "grey": "#57555A",
@@ -113,7 +113,7 @@ def violin_plot() -> dcc.Graph:
         )
         data.append(trace)
     layout = dict(
-        title="u t i l s . p y",
+        title="a r t. p n g",
         xaxis={
             "showgrid": False,
             "zeroline": False,
@@ -553,13 +553,12 @@ def send_email(
             print("No SENDGRID_API_KEY found")
     try:
         my_sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
-        from_email = Email("kay.jan@hotmail.com")  # verified sender
-        to_email = To(recipient)
+        from_email = "kay.jan@hotmail.com"  # verified sender
+        to_email = recipient
         subject = subject
         content = Content("text/html", email_body.replace("\n", "<br>"))
         mail = Mail(from_email, to_email, subject, content)
-        mail_json = mail.get()
-        response = my_sg.client.mail.send.post(request_body=mail_json)
+        response = my_sg.send(mail)
         if response.status_code == 202:
             return True
         else:
