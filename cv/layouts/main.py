@@ -43,14 +43,14 @@ def sidebar_dropdown_cv():
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
-                        label="CV",
+                        label="Work",
                         value="",
                         className="custom-tab-disabled",
                         disabled=True,
                     ),
                     dcc.Tab(
-                        label="Career",
-                        value="tab-cv-career",
+                        label="Industry",
+                        value="tab-cv-industry",
                         className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
@@ -63,13 +63,19 @@ def sidebar_dropdown_cv():
                     dcc.Tab(
                         label="Education",
                         value="tab-cv-education",
-                        className="custom-tab-sub",
+                        className="custom-tab p-bold",
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
-                        label="Achievements",
-                        value="tab-cv-achievements",
-                        className="custom-tab-sub",
+                        label="Certifications",
+                        value="tab-cv-certifications",
+                        className="custom-tab p-bold",
+                        selected_className="custom-tab-selected",
+                    ),
+                    dcc.Tab(
+                        label="Bookshelf",
+                        value="tab-cv-books",
+                        className="custom-tab p-bold",
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(

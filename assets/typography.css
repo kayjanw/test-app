@@ -715,7 +715,7 @@ svg {
     display: inline-block;
     padding-left: 1vw;
     padding-right: 1.5vw;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
 }
 
 #violin-plot .js-plotly-plot .plotly .cursor-pointer,

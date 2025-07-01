@@ -1,3 +1,60 @@
+from typing import List
+
+import dash_mantine_components as dmc
+from dash import html
+
+
+def create_scrollable_area(data: List[List[str]], columns: List[str], **kwargs):
+    table_kwargs = dict(
+        withTableBorder=False,
+        withColumnBorders=False,
+        withRowBorders=False,
+        highlightOnHover=True,
+        horizontalSpacing="xs",
+        verticalSpacing="xs",
+    )
+    table_kwargs = {**table_kwargs, **kwargs}
+
+    return dmc.TableScrollContainer(
+        dmc.Table(children=create_course_table(data, columns), **table_kwargs),
+        maxHeight=400,
+        minWidth=600,
+        type="scrollarea",
+    )
+
+
+def create_course_table(data: List[List[str]], columns: List[str]):
+    return [
+        html.Thead(html.Tr([html.Th(col) for col in columns])),
+        html.Tbody(
+            [
+                html.Tr(
+                    [
+                        html.Td(_data[0]),
+                        html.Td(_data[1]),
+                    ]
+                    + (
+                        [
+                            html.Td(
+                                html.A(
+                                    dmc.Button("Details", size="md"),
+                                    href=_data[2],
+                                    target="_blank",
+                                )
+                            )
+                            if _data[2].startswith("http")
+                            else html.Td(_data[2])
+                        ]
+                        if len(columns) == 3
+                        else []
+                    )
+                )
+                for _data in data
+            ]
+        ),
+    ]
+
+
 coursera_ai = [
     [
         "Advanced Machine Learning on Google Cloud (5-course specialization)",
@@ -389,5 +446,274 @@ datacamp_ds = [
         "Feature Engineering with PySpark",
         "Course",
         "https://www.datacamp.com/statement-of-accomplishment/course/ddd4fddeb091d9c7f45a847460c6816aa6407cf8",
+    ],
+]
+
+datacamp_coding = [
+    [
+        "Python Programmer (15-course track)",
+        "Career Track",
+        "https://www.datacamp.com/statement-of-accomplishment/track/d5f82ebabc68e0c1616ed1702b7a90caa27fdcc8",
+    ],
+    [
+        "Python Programming (6-course track)",
+        "Track",
+        "https://www.datacamp.com/statement-of-accomplishment/track/e0af9978b5b5bead5c391db0beacbab3f2670473",
+    ],
+    [
+        "Working with the Class System in Python",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/c464bdecc7337da1bb8669d0f260d332b323d086",
+    ],
+    [
+        "Creating Robust Workflows in Python",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/11a3ee596a0e4fe006feb7739d603b3f9f78069a",
+    ],
+    [
+        "Introduction to Scala",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/9aaa94d628ff5316b4cf988de9a82fb961c899e5",
+    ],
+]
+
+professional_certs = [
+    [
+        "Introduction to PyKX",
+        "KX",
+        "2025-01",
+    ],
+    [
+        "KDB+/Q Developer Level 3",
+        "KX",
+        "2024-09",
+    ],
+    [
+        "KDB+/Q Developer Level 2",
+        "KX",
+        "2024-07",
+    ],
+    [
+        "KDB+/Q Developer Level 1",
+        "KX",
+        "2024-06",
+    ],
+    [
+        "Learning Kubernetes",
+        "LinkedIn Learning",
+        "2024-06",
+    ],
+    [
+        "SE100: Responsive Web Development",
+        "Heicoders Academy",
+        "2023-12",
+    ],
+    [
+        "Certified Scrum Developer (CSD)",
+        "Scrum Alliance",
+        "2023-10",
+    ],
+    [
+        "Building Transformer-Based Natural Language Processing Applications",
+        "NVIDIA Deep Learning Institute",
+        "2020-09",
+    ],
+    [
+        "Google Analytics for Beginners",
+        "Google Analytics Academy",
+        "2020-07",
+    ],
+    [
+        "Design Patterns",
+        "NobleProg",
+        "2020-04",
+    ],
+    [
+        "AWS Cloud Practitioner Essentials",
+        "AWS",
+        "2019-08",
+    ],
+    [
+        "Extracting Business Value through Data Analytics",
+        "SMU Academy",
+        "2018-09",
+    ],
+    [
+        "Developer Training for Spark and Hadoop",
+        "Cloudera",
+        "2018-08",
+    ],
+]
+
+skill_certs = [
+    [
+        "Italian, Beginner",
+        "inlingua School of Languages",
+        "2023-09",
+    ],
+    [
+        "Climbing, Level One",
+        "Singapore National Climbing Standards",
+        "2023-09",
+    ],
+    [
+        "Typing Certificate, Platinum (119wpm, 100% accuracy)",
+        "Ratatype",
+        "2017-07",
+    ],
+    [
+        "Diving, Open Water Diver",
+        "Professional Association of Diving Instructors",
+        "2017-03",
+    ],
+    [
+        "Kayaking, Two Star",
+        "Singapore Canoe Federation	",
+        "2016-01",
+    ],
+    [
+        "LCM Electronic Organ, Grade 8 Distinction",
+        "University of West London",
+        "2012-09",
+    ],
+    [
+        "Mental Arithmetic, Class 2",
+        "International Abacus Mathematics Association",
+        "2008-11",
+    ],
+    [
+        "Swimming, Gold",
+        "Singapore Sports Council",
+        "2006-03",
+    ],
+]
+
+books_read_leisure = [
+    [
+        "The Little Prince",
+        "Antoine de Saint-Exupery",
+        "Adventure",
+    ],
+    [
+        "The Girl Who Saved the King of Sweden",
+        "Jonas Jonasson",
+        "Adventure, Satirical",
+    ],
+    [
+        "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
+        "Jonas Jonasson",
+        "Adventure, Satirical",
+    ],
+    [
+        "Hitman Anders and the Meaning of It All",
+        "Jonas Jonasson",
+        "Adventure, Satirical",
+    ],
+    [
+        "Before the Coffee Gets Cold",
+        "Toshikazu Kawaguchi",
+        "Touching",
+    ],
+    [
+        "Ikigai",
+        "Francesc Miralles, Hector Garcia",
+        "Inspiring",
+    ],
+    [
+        "Ichigo Ichie",
+        "Francesc Miralles, Hector Garcia",
+        "Transformative",
+    ],
+]
+
+books_read_self = [
+    [
+        "The Art of Thinking Clearly",
+        "Rolf Dobelli",
+        "★★★★★ Must read",
+    ],
+    [
+        "Difficult Conversations",
+        "Douglas Stone",
+        "★★★★★ Learnt a lot",
+    ],
+    [
+        "Crucial Conversations: Tools for Talking When Stakes are High",
+        "Kerry Patterson, Joseph Grenny, Al Switzler, Ron McMillan",
+        "★★★★★ Not very structured",
+    ],
+    [
+        "The 21 Indispensable Qualities of a Leader",
+        "John C. Maxwell",
+        "★★★★☆ Insightful",
+    ],
+    [
+        "Life Coaching: Change Your Life in 7 Days",
+        "Eileen Mulligan",
+        "★★★☆☆ Not comprehensive",
+    ],
+    [
+        "Rules of Thinking",
+        "Richard Templar",
+        "★★★★☆ Interesting tips",
+    ],
+]
+
+books_read_technical = [
+    [
+        "Software Teaming: A Mob Programming, Whole-Team Approach",
+        "Woody Zuill, Kevin Meadows",
+        "★★★★☆ Practical",
+    ],
+    [
+        "Head First Software Architecture",
+        "Mark Richards, Neal Ford, Raju Gandhi",
+        "★★★★☆ Easy to digest",
+    ],
+    [
+        "The Pragmatic Programmer",
+        "David Thomas, Andrew Hunt",
+        "★★★★★ Awesome tips and reminder",
+    ],
+    [
+        "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
+        "Camille Fournier",
+        "★★★★★ Insightful",
+    ],
+    [
+        "Getting Started In Technical Analysis",
+        "Jack D. Schwager",
+        "★★★☆☆ A little dry",
+    ],
+    [
+        "Refactoring, Second Edition",
+        "Martin Fowler",
+        "★★★☆☆ Straightforward",
+    ],
+]
+
+books_reading_leisure = [
+    [
+        "The Accidental Further Adventures of the Hundred-Year-Old Man",
+        "Jonas Jonasson",
+    ],
+    [
+        "Butter",
+        "Asako Yuzuki",
+    ],
+]
+
+books_reading_self = []
+
+books_reading_technical = [
+    ["Software Engineering at Google", "Titus Winters, Tom Manshreck, Hyrum Wright"]
+]
+
+
+sample = [
+    [
+        "",
+        "",
+        "",
     ],
 ]

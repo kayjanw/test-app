@@ -8,10 +8,10 @@ def teaching_tab(app):
     return html.Div(
         [
             content_header(
-                "Teaching, Writing",
+                "Teaching & Writing",
                 [
                     DashIconify(icon="openmoji:beating-heart", height=40),
-                    "Giving back what I learnt",
+                    "Teaching is my way of learning twice",
                 ],
             ),
             html.Div(

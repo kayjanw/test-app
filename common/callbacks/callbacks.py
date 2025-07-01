@@ -14,10 +14,11 @@ from common.components.helper import (
 )
 from cv.layouts import (
     about_me_cv_tab,
-    achievement_tab,
     app_cv,
-    career_tab,
+    books_tab,
+    certifications_tab,
     education_tab,
+    industry_tab,
     teaching_tab,
 )
 from main.layouts import (
@@ -224,14 +225,16 @@ def register_callbacks(app, print_function):
         # CV
         elif tab == "tab-cv-aboutme":
             return about_me_cv_tab(app)
-        elif tab == "tab-cv-career":
-            return career_tab(app)
+        elif tab == "tab-cv-industry":
+            return industry_tab(app)
         elif tab == "tab-cv-teaching":
             return teaching_tab(app)
         elif tab == "tab-cv-education":
             return education_tab(app)
-        elif tab == "tab-cv-achievements":
-            return achievement_tab(app)
+        elif tab == "tab-cv-certifications":
+            return certifications_tab(app)
+        elif tab == "tab-cv-books":
+            return books_tab(app)
         else:
             return current_content
 
@@ -266,14 +269,16 @@ def register_callbacks(app, print_function):
                 document.title = 'Image Editing'
             } else if (tab_value === 'tab-cv-aboutme') {
                 document.title = 'About Me'
-            } else if (tab_value === 'tab-cv-career') {
-                document.title = 'Career'
+            } else if (tab_value === 'tab-cv-industry') {
+                document.title = 'Industry'
             } else if (tab_value === 'tab-cv-teaching') {
                 document.title = 'Teaching'
             } else if (tab_value === 'tab-cv-education') {
                 document.title = 'Education'
-            } else if (tab_value === 'tab-cv-achievements') {
-                document.title = 'Achievements'
+            } else if (tab_value === 'tab-cv-certifications') {
+                document.title = 'Certifications'
+            } else if (tab_value === 'tab-cv-books') {
+                document.title = 'Bookshelf'
             }
         }
         """,

@@ -1,7 +1,35 @@
+import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
+from cv.layouts.cv_data import (
+    coursera_ai,
+    coursera_big_data,
+    coursera_coding,
+    coursera_ds,
+    coursera_finance,
+    coursera_others,
+    coursera_se,
+    create_scrollable_area,
+    datacamp_coding,
+    datacamp_ds,
+)
+
+coursera_data = [
+    (coursera_ai, "Artificial Intelligence"),
+    (coursera_big_data, "Big Data"),
+    (coursera_coding, "Coding Best Practices"),
+    (coursera_ds, "Data Science"),
+    (coursera_finance, "Finance"),
+    (coursera_se, "Software Engineering"),
+    (coursera_others, "Others"),
+]
+
+datacamp_data = [
+    (datacamp_coding, "Coding Best Practices"),
+    (datacamp_ds, "Data Science"),
+]
 
 
 def education_tab(app):
@@ -43,6 +71,89 @@ def education_tab(app):
                             "✔️ Top performing student for Financial Services focus track"
                         ),
                         className="p-indent",
+                    ),
+                    html.Br(),
+                ],
+                className="custom-div-instruction custom-div-left",
+            ),
+            html.Div(
+                [
+                    html.H5("Coursera, Online Courses"),
+                    html.H6(
+                        [
+                            "133 Courses and 20 Specializations done to date. View my profile ",
+                            html.A(
+                                "here",
+                                href="https://www.coursera.org/user/83789311d9e1811d14aa5fe139b5c6c6",
+                                target="_blank",
+                            ),
+                        ]
+                    ),
+                    dmc.Tabs(
+                        children=[
+                            dmc.TabsList(
+                                [
+                                    dmc.TabsTab(
+                                        course[1],
+                                        value=course[1],
+                                    )
+                                    for course in coursera_data
+                                ]
+                            ),
+                        ]
+                        + [
+                            dmc.TabsPanel(
+                                html.Div(
+                                    create_scrollable_area(
+                                        course[0],
+                                        columns=["Course", "Organization", "Link"],
+                                    )
+                                ),
+                                value=course[1],
+                            )
+                            for course in coursera_data
+                        ],
+                        color="#202029",
+                        variant="default",
+                        radius="md",
+                        orientation="horizontal",
+                    ),
+                    html.Br(),
+                ],
+                className="custom-div-instruction custom-div-left",
+            ),
+            html.Div(
+                [
+                    html.H5("DataCamp, Online Courses"),
+                    html.H6("29 Courses done to date"),
+                    dmc.Tabs(
+                        children=[
+                            dmc.TabsList(
+                                [
+                                    dmc.TabsTab(
+                                        course[1],
+                                        value=course[1],
+                                    )
+                                    for course in datacamp_data
+                                ]
+                            ),
+                        ]
+                        + [
+                            dmc.TabsPanel(
+                                html.Div(
+                                    create_scrollable_area(
+                                        course[0],
+                                        columns=["Course", "Type", "Link"],
+                                    )
+                                ),
+                                value=course[1],
+                            )
+                            for course in datacamp_data
+                        ],
+                        color="#202029",
+                        variant="default",
+                        radius="md",
+                        orientation="horizontal",
                     ),
                     html.Br(),
                 ],

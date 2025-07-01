@@ -4,7 +4,7 @@ from dash_iconify import DashIconify
 from common.layouts.main import content_header
 
 
-def career_tab(app):
+def industry_tab(app):
     return html.Div(
         [
             content_header(
