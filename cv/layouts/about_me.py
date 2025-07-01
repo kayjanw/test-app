@@ -1,3 +1,4 @@
+import dash_mantine_components as dmc
 from dash import html
 
 from common.layouts.main import content_header
@@ -11,10 +12,14 @@ def about_me_cv_tab(app):
             html.Div(
                 [
                     html.P(
-                        "A highly motivated and growth-driven individual with strong interest in coding and people "
-                        "management. Possesses strong analytical, reasoning and problem-solving skills. A forward "
-                        "looking individual with outstanding communication, teamwork and ability to navigate in a "
-                        "global environment."
+                        dmc.Highlight(
+                            "A highly motivated and growth-driven individual with strong interest in coding and people "
+                            "management. Possesses strong analytical, reasoning and problem-solving skills. A forward "
+                            "looking individual with outstanding communication, teamwork and ability to navigate in a "
+                            "global environment.",
+                            highlight=["growth-driven", "analytical"],
+                            style={"fontSize": "inherit"},
+                        ),
                     ),
                     about_me_component(
                         "code-editor",

@@ -1,3 +1,4 @@
+import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
@@ -35,8 +36,10 @@ def teaching_tab(app):
                     html.H6("Jan 2022 - Present"),
                     html.Br(),
                     html.P(
-                        (
-                            "🎖️ Key accomplishments include having multiple articles of over 100K views"
+                        dmc.Highlight(
+                            "🎖️ Key accomplishments include having multiple articles of over 100K views",
+                            highlight="100K views",
+                            style={"fontSize": "inherit"},
                         ),
                         className="p-indent",
                     ),

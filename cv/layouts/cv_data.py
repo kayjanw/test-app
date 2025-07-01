@@ -102,7 +102,11 @@ coursera_ai = [
         "https://www.coursera.org/account/accomplishments/certificate/984GCLL5LGQA",
     ],
     [
-        "Sentiment Analysis with Deep Learning using BERT",
+        dmc.Highlight(
+            "Sentiment Analysis with Deep Learning using BERT",
+            highlight="Sentiment Analysis",
+            style={"fontSize": "inherit"},
+        ),
         "Coursera Project Network",
         "https://www.coursera.org/account/accomplishments/certificate/BHVBXE6YU98D",
     ],
@@ -112,7 +116,11 @@ coursera_ai = [
         "https://www.coursera.org/account/accomplishments/certificate/BGN9GTRC9V6H",
     ],
     [
-        "Anomaly Detection in Time Series Data with Keras",
+        dmc.Highlight(
+            "Anomaly Detection in Time Series Data with Keras",
+            highlight="Anomaly Detection",
+            style={"fontSize": "inherit"},
+        ),
         "Coursera Project Network",
         "https://www.coursera.org/account/accomplishments/certificate/8KNJZPFUSD9Y",
     ],
@@ -124,7 +132,11 @@ coursera_big_data = [
         "https://www.coursera.org/account/accomplishments/certificate/YMSL632YH4GB",
     ],
     [
-        "Hadoop Platform and Application Framework",
+        dmc.Highlight(
+            "Hadoop Platform and Application Framework",
+            highlight="Hadoop",
+            style={"fontSize": "inherit"},
+        ),
         "University of California San Diego",
         "https://www.coursera.org/account/accomplishments/certificate/BS9PJK9QFK5W",
     ],
@@ -331,7 +343,11 @@ coursera_ds = [
         "https://www.coursera.org/account/accomplishments/certificate/EV8EP55X9CLW",
     ],
     [
-        "Practical Time Series Analysis",
+        dmc.Highlight(
+            "Practical Time Series Analysis",
+            highlight="Time Series",
+            style={"fontSize": "inherit"},
+        ),
         "The State University of New York",
         "https://www.coursera.org/account/accomplishments/certificate/5AC2J6QA2DY3",
     ],
@@ -438,12 +454,20 @@ datacamp_ds = [
         "https://www.datacamp.com/statement-of-accomplishment/course/adb779e424170e92352d5e22e0b9aa18a10cb399",
     ],
     [
-        "Introduction to PySpark",
+        dmc.Highlight(
+            "Introduction to PySpark",
+            highlight="PySpark",
+            style={"fontSize": "inherit"},
+        ),
         "Course",
         "https://www.datacamp.com/statement-of-accomplishment/course/ed417c8adcc34cc205e78a34b9bee5384c6ec4c5",
     ],
     [
-        "Feature Engineering with PySpark",
+        dmc.Highlight(
+            "Feature Engineering with PySpark",
+            highlight="PySpark",
+            style={"fontSize": "inherit"},
+        ),
         "Course",
         "https://www.datacamp.com/statement-of-accomplishment/course/ddd4fddeb091d9c7f45a847460c6816aa6407cf8",
     ],
@@ -484,17 +508,29 @@ professional_certs = [
         "2025-01",
     ],
     [
-        "KDB+/Q Developer Level 3",
+        dmc.Highlight(
+            "KDB+/Q Developer Level 3",
+            highlight="KDB+/Q",
+            style={"fontSize": "inherit"},
+        ),
         "KX",
         "2024-09",
     ],
     [
-        "KDB+/Q Developer Level 2",
+        dmc.Highlight(
+            "KDB+/Q Developer Level 2",
+            highlight="KDB+/Q",
+            style={"fontSize": "inherit"},
+        ),
         "KX",
         "2024-07",
     ],
     [
-        "KDB+/Q Developer Level 1",
+        dmc.Highlight(
+            "KDB+/Q Developer Level 1",
+            highlight="KDB+/Q",
+            style={"fontSize": "inherit"},
+        ),
         "KX",
         "2024-06",
     ],
@@ -504,7 +540,11 @@ professional_certs = [
         "2024-06",
     ],
     [
-        "SE100: Responsive Web Development",
+        dmc.Highlight(
+            "SE100: Responsive Web Development",
+            highlight="Web Development",
+            style={"fontSize": "inherit"},
+        ),
         "Heicoders Academy",
         "2023-12",
     ],
@@ -539,7 +579,11 @@ professional_certs = [
         "2018-09",
     ],
     [
-        "Developer Training for Spark and Hadoop",
+        dmc.Highlight(
+            "Developer Training for Spark and Hadoop",
+            highlight="Spark and Hadoop",
+            style={"fontSize": "inherit"},
+        ),
         "Cloudera",
         "2018-08",
     ],
