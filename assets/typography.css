@@ -847,6 +847,16 @@ svg {
     margin-bottom: 0;
 }
 
+.mantine-ColorPicker-swatch {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0;
+}
+
+.mantine-ColorSwatch-root {
+  flex: 0 0 auto !important;
+}
+
 /* Custom id (dropdown)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /*

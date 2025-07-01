@@ -55,6 +55,10 @@ def modal_palette():
                     format="hex",
                     value="",
                     className="custom-div-inline",
+                    fullWidth=True,
+                    styles={
+                        "swatches": {"justifyContent": "center"},
+                    },
                 ),
             ],
             className="custom-div-inline custom-margin-bottom custom-margin-left custom-margin-right",
@@ -75,6 +79,9 @@ def modal_palette():
                     format="hex",
                     value="",
                     className="custom-div-inline",
+                    styles={
+                        "swatches": {"justifyContent": "center"},
+                    },
                 ),
             ],
             className="custom-div-inline custom-margin-bottom custom-margin-left custom-margin-right",
