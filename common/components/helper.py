@@ -554,7 +554,7 @@ def send_email(
     try:
         msg = EmailMessage()
         from_email = "kayjanw@gmail.com"  # verified sender
-        msg.set_content(email_body.replace("\n", "<br>"))
+        msg.set_content(email_body)
         msg["Subject"] = subject
         msg["From"] = from_email
         msg["To"] = recipient
