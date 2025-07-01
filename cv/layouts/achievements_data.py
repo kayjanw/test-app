@@ -217,10 +217,177 @@ coursera_coding = [
     ],
 ]
 
-coursera_sample = [
+coursera_ds = [
     [
-        "",
-        "",
-        "",
+        "Applied Data Science with Python (5-course specialization)",
+        "University of Michigan",
+        "https://www.coursera.org/account/accomplishments/specialization/FZTSGNFCHZAL",
+    ],
+    [
+        "Advanced Business Analytics (5-course specialization)",
+        "University of Colorado Boulder",
+        "https://www.coursera.org/account/accomplishments/specialization/63LDWB945XDM",
+    ],
+    [
+        "An Intuitive Introduction to Probability",
+        "Univerity of Zurich",
+        "https://www.coursera.org/account/accomplishments/certificate/2GBB94PQRLQV",
+    ],
+    [
+        "Basic Statistics",
+        "University of Amsterdam",
+        "https://www.coursera.org/account/accomplishments/certificate/RK6UPM6FM5UZ",
+    ],
+    [
+        "Inferential Statistics",
+        "University of Amsterdam",
+        "https://www.coursera.org/account/accomplishments/certificate/87NYRUQPLQRV",
+    ],
+    [
+        "Statistical Inference",
+        "John Hopkins University",
+        "https://www.coursera.org/account/accomplishments/certificate/J9QQ2T7PG4VE",
+    ],
+    [
+        "Improving Your Statistical Inferences",
+        "Eindhoven University of Technology",
+        "https://www.coursera.org/account/accomplishments/certificate/CUDYXQ7BXVE8",
+    ],
+    [
+        "Data Visualization",
+        "University of Illinois at Urbana-Champaign",
+        "https://www.coursera.org/account/accomplishments/certificate/ST38U6379NSN",
+    ],
+    [
+        "Pattern Discovery in Data Mining",
+        "University of Illinois at Urbana-Champaign",
+        "https://www.coursera.org/account/accomplishments/certificate/PQFWT76KHXMW",
+    ],
+    [
+        "Computer Vision Basics",
+        "University of Buffalo & The State University of New York",
+        "https://www.coursera.org/account/accomplishments/certificate/WKJQFGV6ASTQ",
+    ],
+    [
+        "Image Processing, Features & Segmentation",
+        "University of Buffalo & The State University of New York",
+        "https://www.coursera.org/account/accomplishments/certificate/EV8EP55X9CLW",
+    ],
+    [
+        "Practical Time Series Analysis",
+        "The State University of New York",
+        "https://www.coursera.org/account/accomplishments/certificate/5AC2J6QA2DY3",
+    ],
+]
+
+coursera_finance = [
+    [
+        "Investment and Portfolio Management (5-course specialization)",
+        "Rice University",
+        "https://www.coursera.org/account/accomplishments/specialization/WBKDA55PP22N",
+    ],
+    [
+        "Risk Management (4-course specialization)",
+        "New York Institute of Finance",
+        "https://www.coursera.org/account/accomplishments/specialization/TZ2SBK93CSHX",
+    ],
+    [
+        "Finance for Non-Financial Professionals",
+        "University of California, Irvine",
+        "https://www.coursera.org/account/accomplishments/certificate/VHQQXQ76SHP5",
+    ],
+]
+
+coursera_se = [
+    [
+        "Cloud Application Development Foundations (4-course specialization)",
+        "IBM",
+        "https://www.coursera.org/account/accomplishments/specialization/WFUJK9EG75AG",
+    ],
+    [
+        "Modern Application Development with .NET on AWS (3-course specialization)",
+        "Amazon Web Services",
+        "https://www.coursera.org/account/accomplishments/specialization/85Z4NX6WRNR7",
+    ],
+    [
+        "Scrum Master Certification (4-course specialization)",
+        "LearnQuest",
+        "https://www.coursera.org/account/accomplishments/specialization/4RTEGTZNBKWV",
+    ],
+    [
+        "Six Sigma Yellow Belt (4-course specialization)",
+        "University System of Georgia",
+        "https://www.coursera.org/account/accomplishments/specialization/KT5UYBZPSBKK",
+    ],
+    [
+        "AWS S3 Basics",
+        "Coursera Project Network",
+        "https://www.coursera.org/account/accomplishments/certificate/MCQEKSDQJ7Z2",
+    ],
+    [
+        "Create and run a .NET Core console app in Linux using docker",
+        "Coursera Project Network",
+        "https://www.coursera.org/account/accomplishments/certificate/2WTLMD6SMDXV",
+    ],
+]
+
+coursera_others = [
+    [
+        "Algorithms (4-course specialization)",
+        "Stanford University",
+        "https://www.coursera.org/account/accomplishments/specialization/3722CHEPCCBL",
+    ],
+    [
+        "Blockchain (4-course specialization)",
+        "University at Buffalo",
+        "https://www.coursera.org/account/accomplishments/specialization/GY4BUQB46M8V",
+    ],
+    [
+        "Usable Security",
+        "University of Maryland, College Park",
+        "https://www.coursera.org/account/accomplishments/certificate/R973H9L4BS8C",
+    ],
+    [
+        "Software Security",
+        "University of Maryland, College Park",
+        "https://www.coursera.org/account/accomplishments/certificate/9MXT3LEYCL2Q",
+    ],
+    [
+        "Project Management: Creating the WBS",
+        "Coursera Project Network",
+        "https://www.coursera.org/account/accomplishments/certificate/N3LGV4NNZW7N",
+    ],
+]
+
+datacamp_ds = [
+    [
+        "Machine Learning Fundamentals with Python (4-course track)",
+        "Track",
+        "https://www.datacamp.com/statement-of-accomplishment/track/a964873c9dccc9e846a56e359abe4e31c9e460cf",
+    ],
+    [
+        "Machine Learning for Everyone",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/b53932af06b654da619f9b3b40b450052147e975",
+    ],
+    [
+        "Machine Learning for Time Series Data in Python",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/b53932af06b654da619f9b3b40b450052147e975",
+    ],
+    [
+        "Introduction to Deep Learning in Python",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/adb779e424170e92352d5e22e0b9aa18a10cb399",
+    ],
+    [
+        "Introduction to PySpark",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/ed417c8adcc34cc205e78a34b9bee5384c6ec4c5",
+    ],
+    [
+        "Feature Engineering with PySpark",
+        "Course",
+        "https://www.datacamp.com/statement-of-accomplishment/course/ddd4fddeb091d9c7f45a847460c6816aa6407cf8",
     ],
 ]

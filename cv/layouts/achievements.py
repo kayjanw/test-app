@@ -5,45 +5,59 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.layouts.achievements_data import coursera_ai, coursera_big_data, coursera_coding
-
-table_kwargs = dict(
-    withTableBorder=False,
-    withColumnBorders=False,
-    withRowBorders=False,
-    highlightOnHover=True,
-    horizontalSpacing="xs",
-    verticalSpacing="xs",
-    striped=False,
+from cv.layouts.achievements_data import (
+    coursera_ai,
+    coursera_big_data,
+    coursera_coding,
+    coursera_ds,
+    coursera_finance,
+    coursera_others,
+    coursera_se,
+    datacamp_ds,
 )
 
+coursera_data = [
+    (coursera_ai, "Artificial Intelligence"),
+    (coursera_big_data, "Big Data"),
+    (coursera_coding, "Coding Best Practices"),
+    (coursera_ds, "Data Science"),
+    (coursera_finance, "Finance"),
+    (coursera_se, "Software Engineering"),
+    (coursera_others, "Others"),
+]
 
-def create_scrollable_area(data: List[List[str]]):
+datacamp_data = [
+    (datacamp_ds, "Data Science"),
+]
+
+
+def create_scrollable_area(data: List[List[str]], columns: List[str]):
+    table_kwargs = dict(
+        withTableBorder=False,
+        withColumnBorders=False,
+        withRowBorders=False,
+        highlightOnHover=True,
+        horizontalSpacing="xs",
+        verticalSpacing="xs",
+        striped=False,
+    )
     return dmc.TableScrollContainer(
-        dmc.Table(children=create_coursera_table(data), **table_kwargs),
+        dmc.Table(children=create_course_table(data, columns), **table_kwargs),
         maxHeight=400,
         minWidth=600,
         type="scrollarea",
     )
 
 
-def create_coursera_table(data: List[List[str]]):
+def create_course_table(data: List[List[str]], columns: List[str]):
     return [
-        html.Thead(
-            html.Tr(
-                [
-                    html.Th("Course"),
-                    html.Th("Organization"),
-                    html.Th("Link"),
-                ]
-            )
-        ),
+        html.Thead(html.Tr([html.Th(col) for col in columns])),
         html.Tbody(
             [
                 html.Tr(
                     [
                         html.Td(course),
-                        html.Td(organization),
+                        html.Td(details),
                         html.Td(
                             html.A(
                                 dmc.Button("Details", size="md"),
@@ -53,7 +67,7 @@ def create_coursera_table(data: List[List[str]]):
                         ),
                     ]
                 )
-                for course, organization, link in data
+                for course, details, link in data
             ]
         ),
     ]
@@ -94,50 +108,67 @@ def achievement_tab(app):
                             dmc.TabsList(
                                 [
                                     dmc.TabsTab(
-                                        "Artificial Intelligence",
-                                        value="ai",
-                                    ),
-                                    dmc.TabsTab("Big Data", value="big_data"),
-                                    dmc.TabsTab(
-                                        "Coding Best Practices",
-                                        value="coding",
-                                    ),
-                                    dmc.TabsTab("Data Science", value="Data Science"),
-                                    dmc.TabsTab("Finance", value="Finance"),
-                                    dmc.TabsTab(
-                                        "Software Engineering",
-                                        value="Software Engineering",
-                                    ),
-                                    dmc.TabsTab("Others", value="Others"),
+                                        course[1],
+                                        value=course[1],
+                                    )
+                                    for course in coursera_data
                                 ]
                             ),
+                        ]
+                        + [
                             dmc.TabsPanel(
                                 html.Div(
-                                    [
-                                        html.Br(),
-                                        create_scrollable_area(coursera_ai),
-                                    ]
+                                    create_scrollable_area(
+                                        course[0],
+                                        columns=["Course", "Organization", "Link"],
+                                    )
                                 ),
-                                value="ai",
+                                value=course[1],
+                            )
+                            for course in coursera_data
+                        ],
+                        color="#202029",
+                        variant="default",
+                        radius="md",
+                        orientation="horizontal",
+                    ),
+                    html.Br(),
+                ]
+            ),
+            html.Div(
+                [
+                    html.H5("DataCamp, Online Courses"),
+                    html.H6("29 Courses done to date"),
+                    html.Br(),
+                ],
+                className="custom-div-instruction custom-div-left",
+            ),
+            html.Div(
+                [
+                    dmc.Tabs(
+                        id="achievements-tab",
+                        children=[
+                            dmc.TabsList(
+                                [
+                                    dmc.TabsTab(
+                                        course[1],
+                                        value=course[1],
+                                    )
+                                    for course in datacamp_data
+                                ]
                             ),
+                        ]
+                        + [
                             dmc.TabsPanel(
                                 html.Div(
-                                    [
-                                        html.Br(),
-                                        create_scrollable_area(coursera_big_data),
-                                    ]
+                                    create_scrollable_area(
+                                        course[0],
+                                        columns=["Course", "Type", "Link"],
+                                    )
                                 ),
-                                value="big_data",
-                            ),
-                            dmc.TabsPanel(
-                                html.Div(
-                                    [
-                                        html.Br(),
-                                        create_scrollable_area(coursera_coding),
-                                    ]
-                                ),
-                                value="coding",
-                            ),
+                                value=course[1],
+                            )
+                            for course in datacamp_data
                         ],
                         color="#202029",
                         variant="default",
