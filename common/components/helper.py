@@ -5,6 +5,8 @@ import io
 import json
 import os
 import re
+import smtplib
+from email.message import EmailMessage
 from functools import reduce
 from typing import Any, Dict, List, Optional
 
@@ -14,10 +16,8 @@ import msoffcrypto
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import sendgrid
 from dash import dash_table, dcc, html
 from plotly.colors import n_colors
-from sendgrid.helpers.mail import Content, Mail
 
 colour_palette = {
     "grey": "#57555A",
@@ -531,7 +531,7 @@ def valid_email(email: str) -> bool:
 
 def send_email(
     email_body: str,
-    subject: str = "Email from utils.py Web App",
+    subject: str = "Email from kayjan.fly.dev Web App",
     recipient: str = "kayjanw@gmail.com",
 ) -> bool:
     """Helper function to send email
@@ -545,24 +545,24 @@ def send_email(
         indicator if email is sent
     """
     try:
-        SENDGRID_API_KEY = ENV["SENDGRID_API_KEY"]
+        GOOGLE_APP_PW = ENV["GOOGLE_APP_PW"]
     except NameError:
         try:
-            SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+            GOOGLE_APP_PW = os.environ["GOOGLE_APP_PW"]
         except KeyError:
-            print("No SENDGRID_API_KEY found")
+            print("No GOOGLE_APP_PW found")
     try:
-        my_sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
-        from_email = "kay.jan@hotmail.com"  # verified sender
-        to_email = recipient
-        subject = subject
-        content = Content("text/html", email_body.replace("\n", "<br>"))
-        mail = Mail(from_email, to_email, subject, content)
-        response = my_sg.send(mail)
-        if response.status_code == 202:
-            return True
-        else:
-            return False
+        msg = EmailMessage()
+        from_email = "kayjanw@gmail.com"  # verified sender
+        msg.set_content(email_body.replace("\n", "<br>"))
+        msg["Subject"] = subject
+        msg["From"] = from_email
+        msg["To"] = recipient
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login(from_email, GOOGLE_APP_PW)
+            smtp.send_message(msg)
+        return True
     except Exception:
         return False
 
