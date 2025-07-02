@@ -202,7 +202,7 @@ dbs_details = [
 kpmg_details = [
     "Management Intern, KPMG",
     "Advisory, IT Assurance and Security (ITAS) | May 2017 - Jul 2017",
-    "tabler:school",
+    "mdi:baby-face-outline",
     [
         bullet_point(
             "✔️",
@@ -241,7 +241,7 @@ kpmg_details = [
 db_details = [
     "Campus Ambassador, Deutsche Bank",
     "Aug 2016 - Aug 2017",
-    "tabler:school",
+    "mdi:baby-face-outline",
     [
         bullet_point(
             "✔️",
