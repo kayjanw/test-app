@@ -75,8 +75,8 @@ footer
     }
     #tab-content {
         width: 93vw;
-        margin-top: 60px;
-        margin-left: 4vw;
+        margin-top: 8vh;
+        margin-left: 2vw !important;
     }
     .content-header {
         margin-top: 4vh;
