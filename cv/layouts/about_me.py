@@ -17,7 +17,7 @@ def about_me_cv_tab(app):
                             "management. Possesses strong analytical, reasoning and problem-solving skills. A forward "
                             "looking individual with outstanding communication, teamwork and ability to navigate in a "
                             "global environment.",
-                            highlight=["growth-driven", "analytical"],
+                            highlight=["growth-driven", "problem-solving skills"],
                             style={"fontSize": "inherit"},
                         ),
                     ),
