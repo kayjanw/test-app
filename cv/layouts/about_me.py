@@ -95,5 +95,4 @@ def about_me_cv_tab(app):
                 className="custom-div-instruction custom-div-left",
             ),
         ],
-        className="div-with-image div-with-image-left medium-image",
     )

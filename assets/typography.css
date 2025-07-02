@@ -392,7 +392,31 @@ svg {
     left: 50%;
 }
 
-/* Achievements table
+/* Industry accordian
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mantine-Accordion-control {
+    height: -webkit-fit-content;
+    margin: 0;
+    text-transform: none;
+}
+
+span.mantine-Accordion-label h6 {
+    font-size: 15px;
+    margin: 2px 0px;
+}
+
+.mantine-Accordion-item {
+    border-start-start-radius: var(--accordion-radius);
+    border-start-end-radius: var(--accordion-radius);
+    border-end-start-radius: var(--accordion-radius);
+    border-end-end-radius: var(--accordion-radius);
+}
+
+span p {
+    margin-bottom: 0
+}
+
+/* Certifications table
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .mantine-Tabs-tabLabel {
     font-family: Source Sans Pro;
