@@ -1,3 +1,5 @@
+from cv.layouts.helper import rating_review
+
 books_read_leisure = [
     [
         "The Little Prince",
@@ -35,68 +37,66 @@ books_read_leisure = [
         "Transformative",
     ],
 ]
+
+
 books_read_self = [
     [
         "The Art of Thinking Clearly",
         "Rolf Dobelli",
-        "★★★★★ Must read",
+        rating_review(5, "Must read"),
     ],
     [
         "Difficult Conversations",
         "Douglas Stone",
-        "★★★★★ Learnt a lot",
+        rating_review(5, "Learnt a lot"),
     ],
     [
         "Crucial Conversations: Tools for Talking When Stakes are High",
         "Kerry Patterson, Joseph Grenny, Al Switzler, Ron McMillan",
-        "★★★★★ Not very structured",
+        rating_review(4.33, "Not very structured"),
     ],
     [
         "The 21 Indispensable Qualities of a Leader",
         "John C. Maxwell",
-        "★★★★☆ Insightful",
+        rating_review(4.33, "Insightful"),
     ],
     [
         "Life Coaching: Change Your Life in 7 Days",
         "Eileen Mulligan",
-        "★★★☆☆ Not comprehensive",
+        rating_review(3, "Not comprehensive"),
     ],
-    [
-        "Rules of Thinking",
-        "Richard Templar",
-        "★★★★☆ Interesting tips",
-    ],
+    ["Rules of Thinking", "Richard Templar", rating_review(3.33, "Interesting tips")],
 ]
 books_read_technical = [
     [
         "Software Teaming: A Mob Programming, Whole-Team Approach",
         "Woody Zuill, Kevin Meadows",
-        "★★★★☆ Practical",
+        rating_review(5, "Practical"),
     ],
     [
         "Head First Software Architecture",
         "Mark Richards, Neal Ford, Raju Gandhi",
-        "★★★★☆ Easy to digest",
+        rating_review(4, "Easy to digest"),
     ],
     [
         "The Pragmatic Programmer",
         "David Thomas, Andrew Hunt",
-        "★★★★★ Awesome tips and reminder",
+        rating_review(5, "Awesome tips and reminder"),
     ],
     [
         "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
         "Camille Fournier",
-        "★★★★★ Insightful",
+        rating_review(5, "Insightful"),
     ],
     [
         "Getting Started In Technical Analysis",
         "Jack D. Schwager",
-        "★★★☆☆ A little dry",
+        rating_review(3.33, "A little dry"),
     ],
     [
         "Refactoring, Second Edition",
         "Martin Fowler",
-        "★★★☆☆ Straightforward",
+        rating_review(3, "Straightforward"),
     ],
 ]
 books_reading_leisure = [

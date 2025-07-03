@@ -5,6 +5,12 @@ from dash import html
 from dash_iconify import DashIconify
 
 
+def rating_review(rating: Union[float, int], review: str):
+    return dmc.Group(
+        [dmc.Rating(fractions=3, value=rating, readOnly=True), html.Span(review)]
+    )
+
+
 def bullet_point(icon: str, text: Any):
     return html.Div(
         [
@@ -84,7 +90,7 @@ def create_course_table(data: List[List[str]], columns: List[str]):
                                     target="_blank",
                                 )
                             )
-                            if _data[2].startswith("http")
+                            if isinstance(_data[2], str) and _data[2].startswith("http")
                             else html.Td(_data[2])
                         ]
                         if len(columns) == 3
