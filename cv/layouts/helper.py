@@ -44,3 +44,54 @@ def accordian(
             for detail in details
         ],
     )
+
+
+def create_scrollable_area(data: List[List[str]], columns: List[str], **kwargs):
+    table_kwargs = dict(
+        withTableBorder=False,
+        withColumnBorders=False,
+        withRowBorders=False,
+        highlightOnHover=True,
+        horizontalSpacing="xs",
+        verticalSpacing="xs",
+    )
+    table_kwargs = {**table_kwargs, **kwargs}
+
+    return dmc.TableScrollContainer(
+        dmc.Table(children=create_course_table(data, columns), **table_kwargs),
+        maxHeight=400,
+        minWidth=600,
+        type="scrollarea",
+    )
+
+
+def create_course_table(data: List[List[str]], columns: List[str]):
+    return [
+        html.Thead(html.Tr([html.Th(col) for col in columns])),
+        html.Tbody(
+            [
+                html.Tr(
+                    [
+                        html.Td(_data[0]),
+                        html.Td(_data[1]),
+                    ]
+                    + (
+                        [
+                            html.Td(
+                                html.A(
+                                    dmc.Button("Details", size="md"),
+                                    href=_data[2],
+                                    target="_blank",
+                                )
+                            )
+                            if _data[2].startswith("http")
+                            else html.Td(_data[2])
+                        ]
+                        if len(columns) == 3
+                        else []
+                    )
+                )
+                for _data in data
+            ]
+        ),
+    ]

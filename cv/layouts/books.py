@@ -3,27 +3,8 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.layouts.cv_data import (
-    books_read_leisure,
-    books_read_self,
-    books_read_technical,
-    books_reading_leisure,
-    books_reading_self,
-    books_reading_technical,
-    create_scrollable_area,
-)
-
-book_data = [
-    (books_read_leisure, "Leisure"),
-    (books_read_self, "Self-Improvement"),
-    (books_read_technical, "Technical"),
-]
-
-book_reading_data = [
-    (books_reading_leisure, "Leisure"),
-    (books_reading_self, "Self-Improvement"),
-    (books_reading_technical, "Technical"),
-]
+from cv.data.books import book_data, book_reading_data
+from cv.layouts.helper import create_scrollable_area
 
 
 def books_tab(app):

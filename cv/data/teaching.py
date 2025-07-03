@@ -127,7 +127,18 @@ tutor_details = [
     "teaching-tutor",
 ]
 
-teaching_content_details = [
+teaching_data = [
+    hei_details,
+    writing_details,
+    ga_details,
+    nus_details,
+    cristofori_details,
+    dajin_details,
+    tutor_details,
+]
+
+
+teaching_content_data = [
     html.Div(
         [
             html.H5("Instructor, Heicoders Academy"),

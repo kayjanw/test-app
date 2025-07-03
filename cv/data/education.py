@@ -1,59 +1,4 @@
-from typing import List
-
 import dash_mantine_components as dmc
-from dash import html
-
-
-def create_scrollable_area(data: List[List[str]], columns: List[str], **kwargs):
-    table_kwargs = dict(
-        withTableBorder=False,
-        withColumnBorders=False,
-        withRowBorders=False,
-        highlightOnHover=True,
-        horizontalSpacing="xs",
-        verticalSpacing="xs",
-    )
-    table_kwargs = {**table_kwargs, **kwargs}
-
-    return dmc.TableScrollContainer(
-        dmc.Table(children=create_course_table(data, columns), **table_kwargs),
-        maxHeight=400,
-        minWidth=600,
-        type="scrollarea",
-    )
-
-
-def create_course_table(data: List[List[str]], columns: List[str]):
-    return [
-        html.Thead(html.Tr([html.Th(col) for col in columns])),
-        html.Tbody(
-            [
-                html.Tr(
-                    [
-                        html.Td(_data[0]),
-                        html.Td(_data[1]),
-                    ]
-                    + (
-                        [
-                            html.Td(
-                                html.A(
-                                    dmc.Button("Details", size="md"),
-                                    href=_data[2],
-                                    target="_blank",
-                                )
-                            )
-                            if _data[2].startswith("http")
-                            else html.Td(_data[2])
-                        ]
-                        if len(columns) == 3
-                        else []
-                    )
-                )
-                for _data in data
-            ]
-        ),
-    ]
-
 
 coursera_ai = [
     [
@@ -161,8 +106,6 @@ coursera_big_data = [
         "https://www.coursera.org/account/accomplishments/certificate/QEWCWLD4W69Z",
     ],
 ]
-
-
 coursera_coding = [
     [
         "Python for Everybody (5-course specialization)",
@@ -285,7 +228,6 @@ coursera_coding = [
         "https://www.coursera.org/account/accomplishments/certificate/Q5WVCPNCWUET",
     ],
 ]
-
 coursera_ds = [
     [
         "Applied Data Science with Python (5-course specialization)",
@@ -352,7 +294,6 @@ coursera_ds = [
         "https://www.coursera.org/account/accomplishments/certificate/5AC2J6QA2DY3",
     ],
 ]
-
 coursera_finance = [
     [
         "Investment and Portfolio Management (5-course specialization)",
@@ -370,7 +311,6 @@ coursera_finance = [
         "https://www.coursera.org/account/accomplishments/certificate/VHQQXQ76SHP5",
     ],
 ]
-
 coursera_se = [
     [
         "Cloud Application Development Foundations (4-course specialization)",
@@ -403,7 +343,6 @@ coursera_se = [
         "https://www.coursera.org/account/accomplishments/certificate/2WTLMD6SMDXV",
     ],
 ]
-
 coursera_others = [
     [
         "Algorithms (4-course specialization)",
@@ -431,7 +370,6 @@ coursera_others = [
         "https://www.coursera.org/account/accomplishments/certificate/N3LGV4NNZW7N",
     ],
 ]
-
 datacamp_ds = [
     [
         "Machine Learning Fundamentals with Python (4-course track)",
@@ -472,7 +410,6 @@ datacamp_ds = [
         "https://www.datacamp.com/statement-of-accomplishment/course/ddd4fddeb091d9c7f45a847460c6816aa6407cf8",
     ],
 ]
-
 datacamp_coding = [
     [
         "Python Programmer (15-course track)",
@@ -501,263 +438,17 @@ datacamp_coding = [
     ],
 ]
 
-professional_certs = [
-    [
-        "Introduction to PyKX",
-        "KX",
-        "2025-01",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 3",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
-        "KX",
-        "2024-09",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 2",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
-        "KX",
-        "2024-07",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 1",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
-        "KX",
-        "2024-06",
-    ],
-    [
-        "Learning Kubernetes",
-        "LinkedIn Learning",
-        "2024-06",
-    ],
-    [
-        dmc.Highlight(
-            "SE100: Responsive Web Development",
-            highlight="Web Development",
-            style={"fontSize": "inherit"},
-        ),
-        "Heicoders Academy",
-        "2023-12",
-    ],
-    [
-        "Certified Scrum Developer (CSD)",
-        "Scrum Alliance",
-        "2023-10",
-    ],
-    [
-        "Building Transformer-Based Natural Language Processing Applications",
-        "NVIDIA Deep Learning Institute",
-        "2020-09",
-    ],
-    [
-        "Google Analytics for Beginners",
-        "Google Analytics Academy",
-        "2020-07",
-    ],
-    [
-        "Design Patterns",
-        "NobleProg",
-        "2020-04",
-    ],
-    [
-        "AWS Cloud Practitioner Essentials",
-        "AWS",
-        "2019-08",
-    ],
-    [
-        "Extracting Business Value through Data Analytics",
-        "SMU Academy",
-        "2018-09",
-    ],
-    [
-        dmc.Highlight(
-            "Developer Training for Spark and Hadoop",
-            highlight="Spark and Hadoop",
-            style={"fontSize": "inherit"},
-        ),
-        "Cloudera",
-        "2018-08",
-    ],
+coursera_data = [
+    (coursera_ai, "Artificial Intelligence"),
+    (coursera_big_data, "Big Data"),
+    (coursera_coding, "Coding Best Practices"),
+    (coursera_ds, "Data Science"),
+    (coursera_finance, "Finance"),
+    (coursera_se, "Software Engineering"),
+    (coursera_others, "Others"),
 ]
 
-skill_certs = [
-    [
-        "Italian, Beginner",
-        "inlingua School of Languages",
-        "2023-09",
-    ],
-    [
-        "Climbing, Level One",
-        "Singapore National Climbing Standards",
-        "2023-09",
-    ],
-    [
-        "Typing Certificate, Platinum (119wpm, 100% accuracy)",
-        "Ratatype",
-        "2017-07",
-    ],
-    [
-        "Diving, Open Water Diver",
-        "Professional Association of Diving Instructors",
-        "2017-03",
-    ],
-    [
-        "Kayaking, Two Star",
-        "Singapore Canoe Federation	",
-        "2016-01",
-    ],
-    [
-        "LCM Electronic Organ, Grade 8 Distinction",
-        "University of West London",
-        "2012-09",
-    ],
-    [
-        "Mental Arithmetic, Class 2",
-        "International Abacus Mathematics Association",
-        "2008-11",
-    ],
-    [
-        "Swimming, Gold",
-        "Singapore Sports Council",
-        "2006-03",
-    ],
-]
-
-books_read_leisure = [
-    [
-        "The Little Prince",
-        "Antoine de Saint-Exupery",
-        "Adventure",
-    ],
-    [
-        "The Girl Who Saved the King of Sweden",
-        "Jonas Jonasson",
-        "Adventure, Satirical",
-    ],
-    [
-        "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
-        "Jonas Jonasson",
-        "Adventure, Satirical",
-    ],
-    [
-        "Hitman Anders and the Meaning of It All",
-        "Jonas Jonasson",
-        "Adventure, Satirical",
-    ],
-    [
-        "Before the Coffee Gets Cold",
-        "Toshikazu Kawaguchi",
-        "Touching",
-    ],
-    [
-        "Ikigai",
-        "Francesc Miralles, Hector Garcia",
-        "Inspiring",
-    ],
-    [
-        "Ichigo Ichie",
-        "Francesc Miralles, Hector Garcia",
-        "Transformative",
-    ],
-]
-
-books_read_self = [
-    [
-        "The Art of Thinking Clearly",
-        "Rolf Dobelli",
-        "★★★★★ Must read",
-    ],
-    [
-        "Difficult Conversations",
-        "Douglas Stone",
-        "★★★★★ Learnt a lot",
-    ],
-    [
-        "Crucial Conversations: Tools for Talking When Stakes are High",
-        "Kerry Patterson, Joseph Grenny, Al Switzler, Ron McMillan",
-        "★★★★★ Not very structured",
-    ],
-    [
-        "The 21 Indispensable Qualities of a Leader",
-        "John C. Maxwell",
-        "★★★★☆ Insightful",
-    ],
-    [
-        "Life Coaching: Change Your Life in 7 Days",
-        "Eileen Mulligan",
-        "★★★☆☆ Not comprehensive",
-    ],
-    [
-        "Rules of Thinking",
-        "Richard Templar",
-        "★★★★☆ Interesting tips",
-    ],
-]
-
-books_read_technical = [
-    [
-        "Software Teaming: A Mob Programming, Whole-Team Approach",
-        "Woody Zuill, Kevin Meadows",
-        "★★★★☆ Practical",
-    ],
-    [
-        "Head First Software Architecture",
-        "Mark Richards, Neal Ford, Raju Gandhi",
-        "★★★★☆ Easy to digest",
-    ],
-    [
-        "The Pragmatic Programmer",
-        "David Thomas, Andrew Hunt",
-        "★★★★★ Awesome tips and reminder",
-    ],
-    [
-        "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
-        "Camille Fournier",
-        "★★★★★ Insightful",
-    ],
-    [
-        "Getting Started In Technical Analysis",
-        "Jack D. Schwager",
-        "★★★☆☆ A little dry",
-    ],
-    [
-        "Refactoring, Second Edition",
-        "Martin Fowler",
-        "★★★☆☆ Straightforward",
-    ],
-]
-
-books_reading_leisure = [
-    [
-        "The Accidental Further Adventures of the Hundred-Year-Old Man",
-        "Jonas Jonasson",
-    ],
-    [
-        "Butter",
-        "Asako Yuzuki",
-    ],
-]
-
-books_reading_self = []
-
-books_reading_technical = [
-    ["Software Engineering at Google", "Titus Winters, Tom Manshreck, Hyrum Wright"]
-]
-
-
-sample = [
-    [
-        "",
-        "",
-        "",
-    ],
+datacamp_data = [
+    (datacamp_coding, "Coding Best Practices"),
+    (datacamp_ds, "Data Science"),
 ]

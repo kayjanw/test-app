@@ -3,33 +3,8 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.layouts.cv_data import (
-    coursera_ai,
-    coursera_big_data,
-    coursera_coding,
-    coursera_ds,
-    coursera_finance,
-    coursera_others,
-    coursera_se,
-    create_scrollable_area,
-    datacamp_coding,
-    datacamp_ds,
-)
-
-coursera_data = [
-    (coursera_ai, "Artificial Intelligence"),
-    (coursera_big_data, "Big Data"),
-    (coursera_coding, "Coding Best Practices"),
-    (coursera_ds, "Data Science"),
-    (coursera_finance, "Finance"),
-    (coursera_se, "Software Engineering"),
-    (coursera_others, "Others"),
-]
-
-datacamp_data = [
-    (datacamp_coding, "Coding Best Practices"),
-    (datacamp_ds, "Data Science"),
-]
+from cv.data.education import coursera_data, datacamp_data
+from cv.layouts.helper import create_scrollable_area
 
 
 def education_tab(app):

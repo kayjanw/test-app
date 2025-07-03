@@ -261,6 +261,13 @@ db_details = [
 ]
 
 
+industry_data = [
+    squarepoint_details,
+    gic_details,
+    dbs_details,
+    kpmg_details,
+    db_details,
+]
 squarepoint_content_details = html.Div(
     [
         html.H5("Quantative Developer, Squarepoint"),
@@ -560,7 +567,7 @@ db_content_details = html.Div(
     className="custom-div-instruction custom-div-left",
 )
 
-industry_content_details = [
+industry_content_data = [
     squarepoint_content_details,
     gic_content_details,
     dbs_content_details,

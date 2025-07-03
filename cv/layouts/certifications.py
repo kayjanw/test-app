@@ -2,16 +2,8 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.layouts.cv_data import (
-    books_read_leisure,
-    create_scrollable_area,
-    professional_certs,
-    skill_certs,
-)
-
-book_data = [
-    (books_read_leisure, "Leisure"),
-]
+from cv.data.certifications import professional_certs, skill_certs
+from cv.layouts.helper import create_scrollable_area
 
 
 def certifications_tab(app):

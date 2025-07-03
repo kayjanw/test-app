@@ -2,14 +2,8 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
+from cv.data.industry import industry_data  # industry_content_data
 from cv.layouts.helper import accordian
-from cv.layouts.industry_data import (  # industry_content_details,
-    db_details,
-    dbs_details,
-    gic_details,
-    kpmg_details,
-    squarepoint_details,
-)
 
 
 def industry_tab(app):
@@ -24,17 +18,11 @@ def industry_tab(app):
             ),
             html.Div(
                 accordian(
-                    [
-                        squarepoint_details,
-                        gic_details,
-                        dbs_details,
-                        kpmg_details,
-                        db_details,
-                    ],
+                    industry_data,
                     value=["industry-sqp"],
                 ),
                 className="custom-div-instruction custom-div-left",
             ),
-            # *industry_content_details,
+            # *industry_content_data,
         ]
     )
