@@ -189,9 +189,11 @@ def register_callbacks(app, print_function):
         Returns:
             content of tab
         """
-        available_tabs = [
-            children[idx]["props"]["value"] for idx in range(len(children))
-        ]
+        available_tabs = [tab]
+        if children:
+            available_tabs = [
+                children[idx]["props"]["value"] for idx in range(len(children))
+            ]
         if tab not in available_tabs:
             return dcc_loading(violin_plot(), dark_bg=False)
         if tab == "tab-aboutme":
