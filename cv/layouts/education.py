@@ -4,7 +4,7 @@ from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
 from cv.data.education import coursera_data, datacamp_data
-from cv.layouts.helper import create_scrollable_area
+from cv.layouts.helper import bullet_point, create_scrollable_area
 
 
 def education_tab(app):
@@ -20,7 +20,9 @@ def education_tab(app):
             html.Div(
                 [
                     html.H5("National University of Singapore (NUS)"),
-                    html.H6("Master of Computing, Computer Science"),
+                    html.H6(
+                        "Master of Computing, Computer Science", className="p-bold"
+                    ),
                     html.P("GPA: 4.85 / 5.00, 4 out of 10 modules with A+"),
                     html.Br(),
                 ],
@@ -30,21 +32,59 @@ def education_tab(app):
                 [
                     html.H5("Singapore University of Technology and Design (SUTD)"),
                     html.H6(
-                        "Bachelor of Engineering, Engineering Systems and Design (Financial Services)"
+                        "Bachelor of Engineering, Engineering Systems and Design (Financial Services)",
+                        className="p-bold",
                     ),
                     html.P("Summa Cum Laude (Highest Distinction)"),
-                    html.P(
-                        ("✔️ Asian Leadership Programme Scholarship"),
+                    html.Div(
+                        [
+                            bullet_point(
+                                "🎖️️️", "Asian Leadership Programme Scholarship"
+                            ),
+                            bullet_point("🎖️️️️", "Honours List for Freshmore Terms"),
+                            bullet_point(
+                                "🎖️️️️",
+                                "Top performing student for Financial Services focus track",
+                            ),
+                            bullet_point(
+                                "✔️",
+                                "Represented College in CFA Institute Research Challenge (Season 2017-2018)",
+                            ),
+                        ],
                         className="p-indent",
                     ),
-                    html.P(
-                        ("✔️ Honours List for Freshmore Terms"),
-                        className="p-indent",
-                    ),
-                    html.P(
-                        (
-                            "✔️ Top performing student for Financial Services focus track"
-                        ),
+                    html.P("Clubs and Societies"),
+                    html.Div(
+                        [
+                            bullet_point(
+                                "🎀",
+                                "Vertex Cheerleading, President, Team Manager, and Treasurer | May 2015 - Jun 2017",
+                            ),
+                            bullet_point(
+                                "🎹",
+                                "Bands, Performer, Publicity and Decor Executive | May 2015 - Nov 2016",
+                            ),
+                            bullet_point(
+                                "💼",
+                                "Startups (Entrepreneurship Club), Public Relations Head | Sep 2016 - Dec 2016",
+                            ),
+                            bullet_point(
+                                "🎪",
+                                "Sports Core (Sports Club), Events Executive | Oct 2016 - Mar 2017",
+                            ),
+                            bullet_point(
+                                "🏉",
+                                "Touch Rugby, Competitive Member | Jun 2015 - Sep 2018",
+                            ),
+                            bullet_point(
+                                "☄️",
+                                "Tchoukball, Competitive Member | Jun 2015 - Nov 2015",
+                            ),
+                            bullet_point(
+                                "🏀",
+                                "Basketball, Member | May 2018 - Sep 2018",
+                            ),
+                        ],
                         className="p-indent",
                     ),
                     html.Br(),

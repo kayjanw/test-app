@@ -123,7 +123,7 @@ def about_me_tab(app):
                             ),
                             " / ",
                             about_me_links(
-                                "chrome", "Formal Website", "http://kayjan.github.io/"
+                                "chrome", "Formal Website", "https://kayjan.fly.dev/cv"
                             ),
                             " / ",
                             about_me_links(

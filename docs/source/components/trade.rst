@@ -1,8 +1,8 @@
 Live Trading
 --------------------------
 
-.. automodule:: components.trade
+.. automodule:: main.components.trade
    :members:
 
-.. automodule:: components.trade_socket
+.. automodule:: main.components.trade_socket
    :members:

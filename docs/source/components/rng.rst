@@ -1,5 +1,5 @@
 Random Generator
 --------------------------
 
-.. autoclass:: components.rng.RandomGenerator
+.. autoclass:: main.components.rng.RandomGenerator
    :members:

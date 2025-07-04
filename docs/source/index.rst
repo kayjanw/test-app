@@ -37,7 +37,6 @@ Code Documentation
    components/change-calculator
    components/chat
    components/event-planner
-   components/helper
    components/mbti
    components/rng
    components/trade
@@ -52,9 +51,6 @@ Code Documentation
 
 :doc:`components/event-planner`
     List of functions for Event Planner tab
-
-:doc:`components/helper`
-    List of helper functions
 
 :doc:`components/mbti`
     List of functions for MBTI Personality Test tab

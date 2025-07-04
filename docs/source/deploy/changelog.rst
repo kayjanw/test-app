@@ -7,6 +7,7 @@ Changelog
 ========== ========================================================
 Date       Changes
 ========== ========================================================
+2025-07-04 Added cv extension
 2023-12-28 Refactor: Added constants file and reusable components
 2022-11-27 Added Articles tab
 2022-07-22 Added Live Trading tab (using Coinbase API)
@@ -29,4 +30,4 @@ Date       Changes
 2020-05-11 Added Trip Planner tab
 2020-05-08 First deploy
 2020-04-24 First commit
-========== =====================================================
+========== ========================================================

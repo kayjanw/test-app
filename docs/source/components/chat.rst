@@ -1,5 +1,5 @@
 Chat Analyzer
 --------------------------
 
-.. autoclass:: components.chat.ChatAnalyzer
+.. autoclass:: main.components.chat.ChatAnalyzer
    :members:

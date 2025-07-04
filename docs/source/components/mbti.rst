@@ -1,5 +1,5 @@
 MBTI Personality Test
 --------------------------
 
-.. autoclass:: components.mbti.MBTI
+.. autoclass:: main.components.mbti.MBTI
    :members:

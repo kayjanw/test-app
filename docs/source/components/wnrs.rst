@@ -1,5 +1,5 @@
 We're Not Really Strangers
 --------------------------
 
-.. autoclass:: components.wnrs.WNRS
+.. autoclass:: main.components.wnrs.WNRS
    :members:

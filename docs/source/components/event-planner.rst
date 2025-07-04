@@ -1,5 +1,5 @@
 Event Planner
 --------------------------
 
-.. autoclass:: components.event_planner.EventPlanner
+.. autoclass:: main.components.event_planner.EventPlanner
    :members:

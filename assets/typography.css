@@ -402,7 +402,6 @@ svg {
 
 span.mantine-Accordion-label h6 {
     font-size: 15px;
-    margin: 2px 0px;
 }
 
 .mantine-Accordion-item {
@@ -658,6 +657,11 @@ span p {
 
 .footer a {
     color: #BE9B89;
+}
+
+.footer h6 {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
 /* Custom id

@@ -1,5 +1,5 @@
 Change Calculator
 --------------------------
 
-.. autoclass:: components.change_calculator.ChangeCalculator
+.. autoclass:: main.components.change_calculator.ChangeCalculator
    :members:
