@@ -73,7 +73,7 @@ def education_tab(app):
                                 "Sports Core (Sports Club), Events Executive | Oct 2016 - Mar 2017",
                             ),
                             bullet_point(
-                                "🏉",
+                                "🏈",
                                 "Touch Rugby, Competitive Member | Jun 2015 - Sep 2018",
                             ),
                             bullet_point(
