@@ -4,14 +4,9 @@ import dash
 from dash import ctx, dcc, html
 from dash.dependencies import Input, Output, State
 
-from common.components.helper import (
-    dcc_loading,
-    print_callback,
-    return_message,
-    send_email,
-    valid_email,
-    violin_plot,
-)
+from common.components.email import send_email, valid_email
+from common.components.helper import dcc_loading, print_callback, return_message
+from common.components.landing_page import violin_plot
 from cv.layouts import (
     about_me_cv_tab,
     app_cv,

@@ -4,12 +4,8 @@ import numpy as np
 import pandas as pd
 from dash import html
 
-from common.components.helper import (
-    generate_datatable,
-    return_message,
-    send_email,
-    valid_email,
-)
+from common.components.email import send_email, valid_email
+from common.components.helper import generate_datatable, return_message
 
 
 class EventPlanner:

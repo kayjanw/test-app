@@ -1,6 +1,7 @@
 from dash import dcc, html
 
-from common.components.helper import colour_palette, dcc_loading, violin_plot
+from common.components.helper import colour_palette, dcc_loading
+from common.components.landing_page import violin_plot
 from common.layouts.main import banner, sidebar_header
 
 

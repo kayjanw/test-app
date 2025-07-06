@@ -5,6 +5,7 @@ import dash
 from dash import ALL, MATCH, ctx, html
 from dash.dependencies import Input, Output, State
 
+from common.components.email import send_email
 from common.components.helper import (
     decode_dict,
     encode_dict,
@@ -14,7 +15,6 @@ from common.components.helper import (
     parse_data,
     print_callback,
     return_message,
-    send_email,
     show_button_style,
 )
 from main.components import WNRS
@@ -145,7 +145,9 @@ def register_callbacks(app, print_function):
             if card_prompt is None or card_prompt.strip() == "":
                 reply = return_message["card_not_filled"]
             else:
-                status_code = send_email(f"{card_prompt}\n\n{additional_info}")
+                status_code = send_email(
+                    f"WNRS card prompt: {card_prompt}\n\nAdditional information: {additional_info}"
+                )
                 if status_code:
                     card_prompt = ""
                     additional_info = ""

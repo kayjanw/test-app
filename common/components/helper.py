@@ -3,10 +3,6 @@
 import base64
 import io
 import json
-import os
-import re
-import smtplib
-from email.message import EmailMessage
 from functools import reduce
 from typing import Any, Dict, List, Optional
 
@@ -15,9 +11,7 @@ import matplotlib.pyplot as plt
 import msoffcrypto
 import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
 from dash import dash_table, dcc, html
-from plotly.colors import n_colors
 
 colour_palette = {
     "grey": "#57555A",
@@ -85,69 +79,6 @@ def print_callback(print_function):
         return wrapper
 
     return decorator
-
-
-def violin_plot() -> dcc.Graph:
-    """Get data for plot, return plot
-
-    Adds plotly.graph_objects charts for violin plot at initial loading page
-    """
-    np.random.seed(1)
-    points = (
-        np.linspace(1, 2, 12)[:, None] * np.random.randn(12, 200)
-        + (np.arange(12) + 2 * np.random.random(12))[:, None]
-    )
-    points2 = np.array(
-        [np.concatenate((point, [points.min(), points.max()])) for point in points]
-    )
-    colors = n_colors("rgb(32, 32, 41)", "rgb(190, 155, 137)", 12, colortype="rgb")
-    data = []
-    for data_line, color in zip(points2, colors):
-        trace = go.Violin(
-            x=data_line,
-            line_color=color,
-            side="positive",
-            width=3,
-            points=False,
-            hoverinfo="skip",
-        )
-        data.append(trace)
-    layout = dict(
-        title="a r t. p n g",
-        xaxis={
-            "showgrid": False,
-            "zeroline": False,
-            "visible": False,
-            "fixedrange": True,
-        },
-        yaxis={
-            "showgrid": False,
-            "zeroline": False,
-            "visible": False,
-            "fixedrange": True,
-        },
-        showlegend=False,
-        margin=dict(l=0, r=0, t=80, b=0),
-    )
-    return dcc.Graph(
-        figure=dict(data=data, layout=layout),
-        id="violin-plot",
-        config={
-            "modeBarButtonsToRemove": [
-                "zoom2d",
-                "pan2d",
-                "select2d",
-                "lasso2d",
-                "zoomIn2d",
-                "zoomOut2d",
-                "autoScale2d",
-                "resetScale2d",
-                "toggleSpikelines",
-                "hoverClosestCartesian",
-                "hoverCompareCartesian",
-            ],
-        },
-    )
 
 
 def dcc_loading(children, dark_bg: bool = True) -> dcc.Loading:
@@ -512,59 +443,6 @@ def result_download_text(input_text: str) -> html.Form:
         method="POST",
         action="/download_demo/",
     )
-
-
-def valid_email(email: str) -> bool:
-    """Helper function to validate email address
-
-    Args:
-        email: email address
-
-    Returns:
-        indicator if email is valid
-    """
-    regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
-    if re.fullmatch(regex, email):
-        return True
-    return False
-
-
-def send_email(
-    email_body: str,
-    subject: str = "Email from kayjan.fly.dev Web App",
-    recipient: str = "kayjanw@gmail.com",
-) -> bool:
-    """Helper function to send email
-
-    Args:
-        email_body: email body to be sent
-        subject: email subject to be sent
-        recipient: email recipient to receive email
-
-    Returns:
-        indicator if email is sent
-    """
-    try:
-        GOOGLE_APP_PW = ENV["GOOGLE_APP_PW"]
-    except NameError:
-        try:
-            GOOGLE_APP_PW = os.environ["GOOGLE_APP_PW"]
-        except KeyError:
-            print("No GOOGLE_APP_PW found")
-    try:
-        msg = EmailMessage()
-        from_email = "kayjanw@gmail.com"  # verified sender
-        msg.set_content(email_body)
-        msg["Subject"] = subject
-        msg["From"] = from_email
-        msg["To"] = recipient
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            smtp.login(from_email, GOOGLE_APP_PW)
-            smtp.send_message(msg)
-        return True
-    except Exception:
-        return False
 
 
 def get_excel_from_df(df: pd.DataFrame) -> io.BytesIO:
