@@ -36,6 +36,16 @@ books_read_leisure = [
         "Francesc Miralles, Hector Garcia",
         "Transformative",
     ],
+    [
+        "Strange Pictures",
+        "Uketsu",
+        "Mystery",
+    ],
+    [
+        "Strange Houses",
+        "Uketsu",
+        "Mystery",
+    ],
 ]
 
 
