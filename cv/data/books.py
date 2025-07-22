@@ -46,6 +46,11 @@ books_read_leisure = [
         "Uketsu",
         "Mystery",
     ],
+    [
+        "Hidden Pictures",
+        "Jason Rekulak",
+        "Mystery",
+    ],
 ]
 
 
