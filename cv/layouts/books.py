@@ -10,7 +10,7 @@ from cv.layouts.helper import create_scrollable_area
 
 
 def book_carousel(books: List[Book]):
-    return html.Div(
+    return dmc.Container(
         children=[
             dmc.Carousel(
                 [
@@ -42,6 +42,7 @@ def book_carousel(books: List[Book]):
                 height=550,
             ),
         ],
+        className="container-book",
     )
 
 
