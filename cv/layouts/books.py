@@ -1,10 +1,48 @@
+from typing import List
+
 import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.books import book_data, book_reading_data
+from cv.data.books import Book, book_data, book_reading_data, use_carousel
 from cv.layouts.helper import create_scrollable_area
+
+
+def book_carousel(books: List[Book]):
+    return html.Div(
+        children=[
+            dmc.Carousel(
+                [
+                    dmc.CarouselSlide(
+                        dmc.Card(
+                            children=[
+                                html.Img(src=book.image_url, height=200),
+                                html.Div(
+                                    [
+                                        html.Span(book.title_short),
+                                        book.review,
+                                    ],
+                                    className="card-book-children",
+                                ),
+                            ],
+                            shadow="sm",
+                            padding="md",
+                            radius="md",
+                            className="card-book",
+                        )
+                    )
+                    for book in books
+                ],
+                controlSize=45,
+                slideSize="18%",
+                slideGap="md",
+                withIndicators=True,
+                emblaOptions={"loop": False, "align": "start"},
+                height=550,
+            ),
+        ],
+    )
 
 
 def books_tab(app):
@@ -25,24 +63,24 @@ def books_tab(app):
                             dmc.TabsList(
                                 [
                                     dmc.TabsTab(
-                                        course[1],
-                                        value=course[1],
+                                        book[1],
+                                        value=book[1],
                                     )
-                                    for course in book_data
+                                    for book in book_data
                                 ]
                             ),
                         ]
                         + [
                             dmc.TabsPanel(
-                                html.Div(
-                                    create_scrollable_area(
-                                        course[0],
-                                        columns=["Title", "Author", "Review / Notes"],
-                                    )
+                                book_carousel(book[0])
+                                if use_carousel
+                                else create_scrollable_area(
+                                    book[0],
+                                    columns=["Title", "Author", "Review / Notes"],
                                 ),
-                                value=course[1],
+                                value=book[1],
                             )
-                            for course in book_data
+                            for book in book_data
                         ],
                         value=book_data[0][1],
                         color="#202029",
@@ -62,24 +100,24 @@ def books_tab(app):
                             dmc.TabsList(
                                 [
                                     dmc.TabsTab(
-                                        course[1],
-                                        value=course[1],
+                                        book[1],
+                                        value=book[1],
                                     )
-                                    for course in book_reading_data
+                                    for book in book_reading_data
                                 ]
                             ),
                         ]
                         + [
                             dmc.TabsPanel(
-                                html.Div(
-                                    create_scrollable_area(
-                                        course[0],
-                                        columns=["Title", "Author"],
-                                    )
+                                book_carousel(book[0])
+                                if use_carousel
+                                else create_scrollable_area(
+                                    book[0],
+                                    columns=["Title", "Author"],
                                 ),
-                                value=course[1],
+                                value=book[1],
                             )
-                            for course in book_reading_data
+                            for book in book_reading_data
                         ],
                         value=book_data[0][1],
                         color="#202029",
