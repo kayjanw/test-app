@@ -24,7 +24,9 @@ Order of div
 content-header
 div-with-image, div-with-image-left, div-with-image-right
 div-with-invisible-button
-mantine-Tabs-tabLabel mantine-Button-root
+Industry accordian: mantine-Accordion-control span p
+Certifications table: mantine-Tabs-tabLabel mantine-Button-root
+Book rating: card
 small-image, medium-image
 image-dark-bg image-vertical-flip image-horizontal-flip image-dark-blue
 
@@ -428,6 +430,28 @@ span p {
 
 .mantine-Button-root {
     margin: 0px;
+}
+
+/* Book rating
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.card-book-children {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.card-book {
+    width: 150;
+    margin: 0 auto;
+    height: -webkit-fill-available
+}
+
+.span-book {
+    display: inline-flex;
+    line-height: 100%;
+    font-size: 0.8em;
 }
 
 .medium-image Img {
