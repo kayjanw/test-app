@@ -434,6 +434,10 @@ span p {
 
 /* Book rating
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container-book {
+    --container-size: calc(100rem * var(--mantine-scale))
+}
+
 .card-book-children {
     height: 80px;
     display: flex;
