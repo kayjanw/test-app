@@ -45,7 +45,7 @@ squarepoint_details = [
 
 
 gic_details = [
-    "Senior Software Developer, GIC",
+    "Senior Software Developer, Government of Singapore Investment Corporation (GIC)",
     "Technology Group, Business Partner and Solutions, Total Portfolio | Jul 2022 - May 2024",
     "tabler:briefcase-2",
     [
@@ -84,7 +84,7 @@ gic_details = [
 
 
 dbs_details = [
-    "Data Scientist / Machine Learning Engineer, DBS",
+    "Data Scientist / Machine Learning Engineer, Development Bank of Singapore (DBS)",
     "Transformation Group, Analytics Centre of Excellence (ACOE) | Aug 2018 - Jul 2022",
     "tabler:briefcase-2",
     [
@@ -301,7 +301,9 @@ squarepoint_content_details = html.Div(
 
 gic_content_details = html.Div(
     [
-        html.H5("Senior Software Developer, GIC"),
+        html.H5(
+            "Senior Software Developer, Government of Singapore Investment Corporation (GIC)"
+        ),
         html.H6(
             "Technology Group, Business Partner and Solutions, Total Portfolio | Jul 2022 - May 2024"
         ),
@@ -333,7 +335,9 @@ gic_content_details = html.Div(
 
 dbs_content_details = html.Div(
     [
-        html.H5("Data Scientist / Machine Learning Engineer, DBS"),
+        html.H5(
+            "Data Scientist / Machine Learning Engineer, Development Bank of Singapore (DBS)"
+        ),
         html.H6(
             "Transformation Group, Analytics Centre of Excellence (ACOE) | Aug 2018 - Jul 2022"
         ),
