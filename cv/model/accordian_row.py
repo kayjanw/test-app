@@ -54,7 +54,7 @@ def convert_to_accordian(accordian_data: List[AccordianRow]):
     ]
 
 
-def convert_to_list(accordian_row: AccordianRow):
+def convert_one_row(accordian_row: AccordianRow):
     return html.Div(
         [
             html.H5(accordian_row.title),
@@ -79,3 +79,7 @@ def convert_to_list(accordian_row: AccordianRow):
         ],
         className="custom-div-instruction custom-div-left",
     )
+
+
+def convert_to_list(accordian_data: List[AccordianRow]):
+    return [convert_one_row(industry_row) for industry_row in accordian_data]

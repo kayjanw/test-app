@@ -25,8 +25,6 @@ def industry_tab(app):
                 className="custom-div-instruction custom-div-left",
             )
             if use_accordian
-            else html.Div(
-                [convert_to_list(industry_row) for industry_row in industry_data]
-            ),
+            else html.Div(convert_to_list(industry_data)),
         ]
     )
