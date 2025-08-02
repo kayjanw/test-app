@@ -1,8 +1,24 @@
-from typing import Any, List, Union
+from typing import Any, List, Optional, Union
 
 import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
+
+
+def bullet_point(icon: str, text: Any) -> html.Div:
+    """Bullet point for accordian details
+
+    Args:
+        icon: icon for bullet point
+        text: bullet point text
+    """
+    return html.Div(
+        [
+            html.Span(icon, style={"marginRight": "0.5em"}),
+            html.Span(text, style={"flex": 1}),
+        ],
+        style={"display": "flex", "alignItems": "flex-start", "marginBottom": "0.2em"},
+    )
 
 
 def rating_review(
@@ -27,20 +43,12 @@ def rating_review(
     )
 
 
-def bullet_point(icon: str, text: Any) -> html.Div:
-    """Bullet point for accordian details
-
-    Args:
-        icon: icon for bullet point
-        text: bullet point text
-    """
-    return html.Div(
-        [
-            html.Span(icon, style={"marginRight": "0.5em"}),
-            html.Span(text, style={"flex": 1}),
-        ],
-        style={"display": "flex", "alignItems": "flex-start", "marginBottom": "0.2em"},
-    )
+def highlight_text(
+    text: str, highlight: Optional[Union[str, List[str]]] = None, wrap_p: bool = False
+) -> Union[str, dmc.Highlight]:
+    if highlight:
+        return dmc.Highlight(text, highlight=highlight, style={"fontSize": "inherit"})
+    return html.P(text) if wrap_p else text
 
 
 def accordian(
@@ -120,8 +128,7 @@ def create_scrollable_area(
 
 
 def create_course_table(data: List[List[str]], columns: List[str]) -> List[Any]:
-    """Create a table of 2-3 columns, third column is optional and will display as
-    a button if it is an url.
+    """Create a table
 
     Args:
         data: data to show, each entry is a row
@@ -134,28 +141,8 @@ def create_course_table(data: List[List[str]], columns: List[str]) -> List[Any]:
         html.Thead(html.Tr([html.Th(col) for col in columns])),
         html.Tbody(
             [
-                html.Tr(
-                    [
-                        html.Td(_data[0]),
-                        html.Td(_data[1]),
-                    ]
-                    + (
-                        [
-                            html.Td(
-                                html.A(
-                                    dmc.Button("Details", size="md"),
-                                    href=_data[2],
-                                    target="_blank",
-                                )
-                            )
-                            if isinstance(_data[2], str) and _data[2].startswith("http")
-                            else html.Td(_data[2])
-                        ]
-                        if len(columns) == 3
-                        else []
-                    )
-                )
-                for _data in data
+                html.Tr([html.Td(data_cell) for data_cell in data_row])
+                for data_row in data
             ]
         ),
     ]

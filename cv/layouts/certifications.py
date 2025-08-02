@@ -2,7 +2,7 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.certifications import professional_certs, skill_certs
+from cv.data.certifications import convert_to_table, professional_certs, skill_certs
 from cv.layouts.helper import create_scrollable_area
 
 
@@ -20,7 +20,7 @@ def certifications_tab(app):
                 [
                     html.H5("Professional Certificates"),
                     create_scrollable_area(
-                        professional_certs,
+                        convert_to_table(professional_certs),
                         columns=["Course", "Organization", "Date"],
                     ),
                     html.Br(),
@@ -31,7 +31,7 @@ def certifications_tab(app):
                 [
                     html.H5("Skill Certificates"),
                     create_scrollable_area(
-                        skill_certs,
+                        convert_to_table(skill_certs),
                         columns=["Course", "Organization", "Date"],
                     ),
                     html.Br(),

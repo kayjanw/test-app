@@ -3,8 +3,9 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.education import coursera_data, datacamp_data
-from cv.layouts.helper import bullet_point, create_scrollable_area
+from cv.data.education import convert_to_table, coursera_data, datacamp_data
+from cv.layouts.helper import create_scrollable_area
+from cv.model.accordian_row import bullet_point
 
 
 def education_tab(app):
@@ -120,7 +121,7 @@ def education_tab(app):
                             dmc.TabsPanel(
                                 html.Div(
                                     create_scrollable_area(
-                                        course[0],
+                                        convert_to_table(course[0]),
                                         columns=["Course", "Organization", "Link"],
                                     )
                                 ),
@@ -157,7 +158,7 @@ def education_tab(app):
                             dmc.TabsPanel(
                                 html.Div(
                                     create_scrollable_area(
-                                        course[0],
+                                        convert_to_table(course[0]),
                                         columns=["Course", "Type", "Link"],
                                     )
                                 ),
