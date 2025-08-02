@@ -120,8 +120,7 @@ def create_scrollable_area(
 
 
 def create_course_table(data: List[List[str]], columns: List[str]) -> List[Any]:
-    """Create a table of 2-3 columns, third column is optional and will display as
-    a button if it is an url.
+    """Create a table
 
     Args:
         data: data to show, each entry is a row
@@ -134,28 +133,8 @@ def create_course_table(data: List[List[str]], columns: List[str]) -> List[Any]:
         html.Thead(html.Tr([html.Th(col) for col in columns])),
         html.Tbody(
             [
-                html.Tr(
-                    [
-                        html.Td(_data[0]),
-                        html.Td(_data[1]),
-                    ]
-                    + (
-                        [
-                            html.Td(
-                                html.A(
-                                    dmc.Button("Details", size="md"),
-                                    href=_data[2],
-                                    target="_blank",
-                                )
-                            )
-                            if isinstance(_data[2], str) and _data[2].startswith("http")
-                            else html.Td(_data[2])
-                        ]
-                        if len(columns) == 3
-                        else []
-                    )
-                )
-                for _data in data
+                html.Tr([html.Td(data_cell) for data_cell in data_row])
+                for data_row in data
             ]
         ),
     ]

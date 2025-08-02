@@ -1,132 +1,169 @@
+from typing import List, Optional
+
 import dash_mantine_components as dmc
+from dash import html
+
+
+class Cert:
+    def __init__(
+        self,
+        title: str,
+        organization: str,
+        link_or_date: str,
+        highlight: Optional[str] = None,
+    ):
+        self._title = title
+        self.organization = organization
+        self.link_or_date = link_or_date
+        self.highlight = highlight
+
+    @property
+    def title(self):
+        if self.highlight:
+            return dmc.Highlight(
+                self._title, highlight=self.highlight, style={"fontSize": "inherit"}
+            )
+        return self._title
+
+    @property
+    def link(self):
+        if self.link_or_date.startswith("http"):
+            return self.link_or_date
+
+    @property
+    def link_button(self):
+        if self.link:
+            return html.A(
+                dmc.Button("Details", size="md"),
+                href=self.link,
+                target="_blank",
+            )
+
+    @property
+    def date(self):
+        if not self.link_or_date.startswith("http"):
+            return self.link_or_date
+
+
+def convert_to_table(certs: List[Cert]):
+    return [
+        [
+            cert.title,
+            cert.organization,
+            cert.date,
+        ]
+        for cert in certs
+    ]
+
 
 professional_certs = [
-    [
+    Cert(
         "Introduction to PyKX",
         "KX",
         "2025-01",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 3",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
-        "KX",
-        "2024-09",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 2",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
+    ),
+    Cert("KDB+/Q Developer Level 3", "KX", "2024-09", highlight="KDB+/Q"),
+    Cert(
+        "KDB+/Q Developer Level 2",
         "KX",
         "2024-07",
-    ],
-    [
-        dmc.Highlight(
-            "KDB+/Q Developer Level 1",
-            highlight="KDB+/Q",
-            style={"fontSize": "inherit"},
-        ),
+        highlight="KDB+/Q",
+    ),
+    Cert(
+        "KDB+/Q Developer Level 1",
         "KX",
         "2024-06",
-    ],
-    [
+        highlight="KDB+/Q",
+    ),
+    Cert(
         "Learning Kubernetes",
         "LinkedIn Learning",
         "2024-06",
-    ],
-    [
-        dmc.Highlight(
-            "SE100: Responsive Web Development",
-            highlight="Web Development",
-            style={"fontSize": "inherit"},
-        ),
+    ),
+    Cert(
+        "SE100: Responsive Web Development",
         "Heicoders Academy",
         "2023-12",
-    ],
-    [
+        highlight="Web Development",
+    ),
+    Cert(
         "Certified Scrum Developer (CSD)",
         "Scrum Alliance",
         "2023-10",
-    ],
-    [
+    ),
+    Cert(
         "Building Transformer-Based Natural Language Processing Applications",
         "NVIDIA Deep Learning Institute",
         "2020-09",
-    ],
-    [
+    ),
+    Cert(
         "Google Analytics for Beginners",
         "Google Analytics Academy",
         "2020-07",
-    ],
-    [
+    ),
+    Cert(
         "Design Patterns",
         "NobleProg",
         "2020-04",
-    ],
-    [
+    ),
+    Cert(
         "AWS Cloud Practitioner Essentials",
         "AWS",
         "2019-08",
-    ],
-    [
+    ),
+    Cert(
         "Extracting Business Value through Data Analytics",
         "SMU Academy",
         "2018-09",
-    ],
-    [
-        dmc.Highlight(
-            "Developer Training for Spark and Hadoop",
-            highlight="Spark and Hadoop",
-            style={"fontSize": "inherit"},
-        ),
+    ),
+    Cert(
+        "Developer Training for Spark and Hadoop",
         "Cloudera",
         "2018-08",
-    ],
+        highlight="Spark and Hadoop",
+    ),
 ]
 
+
 skill_certs = [
-    [
+    Cert(
         "Italian, Beginner",
         "inlingua School of Languages",
         "2023-09",
-    ],
-    [
+    ),
+    Cert(
         "Climbing, Level One",
         "Singapore National Climbing Standards",
         "2023-09",
-    ],
-    [
+    ),
+    Cert(
         "Typing Certificate, Platinum (119wpm, 100% accuracy)",
         "Ratatype",
         "2017-07",
-    ],
-    [
+    ),
+    Cert(
         "Diving, Open Water Diver",
         "Professional Association of Diving Instructors",
         "2017-03",
-    ],
-    [
+    ),
+    Cert(
         "Kayaking, Two Star",
         "Singapore Canoe Federation	",
         "2016-01",
-    ],
-    [
+    ),
+    Cert(
         "LCM Electronic Organ, Grade 8 Distinction",
         "University of West London",
         "2012-09",
-    ],
-    [
+    ),
+    Cert(
         "Mental Arithmetic, Class 2",
         "International Abacus Mathematics Association",
         "2008-11",
-    ],
-    [
+    ),
+    Cert(
         "Swimming, Gold",
         "Singapore Sports Council",
         "2006-03",
-    ],
+    ),
 ]

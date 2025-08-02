@@ -240,14 +240,3 @@ book_reading_data = [
     (bookshelf_reading_self, "Self-Improvement"),
     (bookshelf_reading_technical, "Technical"),
 ]
-
-if not use_carousel:
-    book_data = [
-        (convert_to_table(bookshelf_section), book_section)
-        for bookshelf_section, book_section in book_data
-    ]
-
-    book_reading_data = [
-        (convert_to_table(bookshelf_section), book_section)
-        for bookshelf_section, book_section in book_reading_data
-    ]
