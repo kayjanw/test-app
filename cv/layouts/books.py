@@ -27,7 +27,7 @@ def book_carousel(books: List[Book]):
                                 html.Div(
                                     [
                                         html.Span(book.title_short),
-                                        book.review,
+                                        book.review_table,
                                     ],
                                     className="card-book-children",
                                 ),

@@ -1,4 +1,4 @@
-from typing import Any, List, Union
+from typing import Any, List, Optional, Union
 
 import dash_mantine_components as dmc
 from dash import html
@@ -27,20 +27,12 @@ def rating_review(
     )
 
 
-def bullet_point(icon: str, text: Any) -> html.Div:
-    """Bullet point for accordian details
-
-    Args:
-        icon: icon for bullet point
-        text: bullet point text
-    """
-    return html.Div(
-        [
-            html.Span(icon, style={"marginRight": "0.5em"}),
-            html.Span(text, style={"flex": 1}),
-        ],
-        style={"display": "flex", "alignItems": "flex-start", "marginBottom": "0.2em"},
-    )
+def highlight_text(
+    text: str, highlight: Optional[Union[str, List[str]]] = None, wrap_p: bool = False
+) -> Union[str, dmc.Highlight]:
+    if highlight:
+        return dmc.Highlight(text, highlight=highlight, style={"fontSize": "inherit"})
+    return html.P(text) if wrap_p else text
 
 
 def accordian(

@@ -1,6 +1,6 @@
 from typing import List
 
-from cv.data.certifications import Cert
+from cv.model.cert import Cert
 
 
 def convert_to_table(certs: List[Cert]):

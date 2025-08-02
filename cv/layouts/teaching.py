@@ -2,8 +2,9 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.teaching import teaching_data  # teaching_content_data
+from cv.data.teaching import teaching_accordian_data, teaching_data, use_accordian
 from cv.layouts.helper import accordian
+from cv.model.accordian_row import convert_to_accordian
 
 
 def teaching_tab(app):
@@ -17,12 +18,13 @@ def teaching_tab(app):
                 ],
             ),
             html.Div(
-                accordian(teaching_data),
+                accordian(convert_to_accordian(teaching_accordian_data)),
+                className="custom-div-instruction custom-div-left",
+            )
+            if use_accordian
+            else html.Div(
+                teaching_data,
                 className="custom-div-instruction custom-div-left",
             ),
-            # html.Div(
-            #     teaching_content_data,
-            #     className="custom-div-instruction custom-div-left",
-            # ),
         ]
     )

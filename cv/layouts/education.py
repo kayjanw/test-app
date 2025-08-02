@@ -4,7 +4,8 @@ from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
 from cv.data.education import convert_to_table, coursera_data, datacamp_data
-from cv.layouts.helper import bullet_point, create_scrollable_area
+from cv.layouts.helper import create_scrollable_area
+from cv.model.accordian_row import bullet_point
 
 
 def education_tab(app):

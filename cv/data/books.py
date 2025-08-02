@@ -1,32 +1,9 @@
-from typing import List, Optional, Union
-
-from dash import html
+from typing import List
 
 from cv.layouts.helper import rating_review
+from cv.model.book import Book
 
 use_carousel = True
-
-
-class Book:
-    def __init__(
-        self,
-        title: str,
-        title_short: str,
-        authors: str,
-        image_url: str,
-        review: Optional[Union[str, html.Div]] = None,
-    ):
-        self.title = title
-        self.title_short = title_short
-        self.authors = authors
-        self.image_url = image_url
-        self._review = review
-
-    @property
-    def review(self) -> float:
-        if isinstance(self._review, str):
-            return html.Span(self._review, className="span-book")
-        return self._review
 
 
 def convert_to_table(bookshelf: List[Book]):
@@ -34,7 +11,7 @@ def convert_to_table(bookshelf: List[Book]):
         [
             book.title,
             book.authors,
-            book._review,
+            book.review,
         ]
         for book in bookshelf
     ]
