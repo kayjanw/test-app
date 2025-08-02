@@ -5,6 +5,22 @@ from dash import html
 from dash_iconify import DashIconify
 
 
+def bullet_point(icon: str, text: Any) -> html.Div:
+    """Bullet point for accordian details
+
+    Args:
+        icon: icon for bullet point
+        text: bullet point text
+    """
+    return html.Div(
+        [
+            html.Span(icon, style={"marginRight": "0.5em"}),
+            html.Span(text, style={"flex": 1}),
+        ],
+        style={"display": "flex", "alignItems": "flex-start", "marginBottom": "0.2em"},
+    )
+
+
 def rating_review(
     rating: Union[float, int], review: str, carousel: bool = False
 ) -> dmc.Group:

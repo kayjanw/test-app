@@ -1,24 +1,6 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union
 
-from dash import html
-
-from cv.layouts.helper import highlight_text
-
-
-def bullet_point(icon: str, text: Any) -> html.Div:
-    """Bullet point for accordian details
-
-    Args:
-        icon: icon for bullet point
-        text: bullet point text
-    """
-    return html.Div(
-        [
-            html.Span(icon, style={"marginRight": "0.5em"}),
-            html.Span(text, style={"flex": 1}),
-        ],
-        style={"display": "flex", "alignItems": "flex-start", "marginBottom": "0.2em"},
-    )
+from cv.layouts.helper import bullet_point, highlight_text
 
 
 class AccordianDetails:
