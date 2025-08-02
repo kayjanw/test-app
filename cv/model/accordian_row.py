@@ -1,5 +1,7 @@
 from typing import Dict, List, Optional, Union
 
+from dash import dcc, html
+
 from cv.layouts.helper import bullet_point, highlight_text
 
 
@@ -50,3 +52,30 @@ def convert_to_accordian(accordian_data: List[AccordianRow]):
         ]
         for accordian_row in accordian_data
     ]
+
+
+def convert_to_list(accordian_row: AccordianRow):
+    return html.Div(
+        [
+            html.H5(accordian_row.title),
+            html.H6(accordian_row.subtitle),
+            html.Br(),
+            *[
+                html.Details(
+                    [
+                        html.Summary(detail_dept, className="p-summary"),
+                        dcc.Markdown(
+                            "\n\n".join(
+                                f"> {_detail.icon} {_detail.detail}"
+                                for _detail in detail_details
+                            )
+                        ),
+                    ],
+                    title="Expand for details",
+                )
+                for detail_dept, detail_details in accordian_row.details.items()
+            ],
+            html.Br(),
+        ],
+        className="custom-div-instruction custom-div-left",
+    )

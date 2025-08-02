@@ -2,9 +2,9 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.industry import industry_accordian_data  # industry_content_data
+from cv.data.industry import industry_data, use_accordian
 from cv.layouts.helper import accordian
-from cv.model.accordian_row import convert_to_accordian
+from cv.model.accordian_row import convert_to_accordian, convert_to_list
 
 
 def industry_tab(app):
@@ -19,11 +19,14 @@ def industry_tab(app):
             ),
             html.Div(
                 accordian(
-                    convert_to_accordian(industry_accordian_data),
+                    convert_to_accordian(industry_data),
                     value=["industry-sqp"],
                 ),
                 className="custom-div-instruction custom-div-left",
+            )
+            if use_accordian
+            else html.Div(
+                [convert_to_list(industry_row) for industry_row in industry_data]
             ),
-            # *industry_content_data,
         ]
     )
