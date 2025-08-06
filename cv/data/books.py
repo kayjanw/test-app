@@ -180,6 +180,13 @@ bookshelf_read_technical = [
         "https://i.ibb.co/XrkQzQc1/image-2025-08-01-22-40-17.png",
         rating_review(3, "Straightforward", carousel=use_carousel),
     ),
+    Book(
+        "Software Engineering at Google",
+        "Software Engineering at Google",
+        "Titus Winters, Tom Manshreck, Hyrum Wright",
+        "https://i.ibb.co/dsjVRZrL/image-2025-08-02-02-02-26.png",
+        rating_review(3, "Long-winded", carousel=use_carousel),
+    ),
 ]
 
 bookshelf_reading_leisure = [
@@ -198,12 +205,6 @@ bookshelf_reading_leisure = [
 ]
 bookshelf_reading_self = []
 bookshelf_reading_technical = [
-    Book(
-        "Software Engineering at Google",
-        "Software Engineering at Google",
-        "Titus Winters, Tom Manshreck, Hyrum Wright",
-        "https://i.ibb.co/dsjVRZrL/image-2025-08-02-02-02-26.png",
-    ),
     Book(
         "Why Programs Fail, A Guide to Systematic Debugging",
         "Why Programs Fail",
