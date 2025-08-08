@@ -23,7 +23,11 @@ def book_carousel(books: List[Book]):
                     dmc.CarouselSlide(
                         dmc.Card(
                             children=[
-                                html.Img(src=book.image_url, height=200),
+                                html.Img(
+                                    src=book.image_url,
+                                    height=200,
+                                    style={"minWidth": "150px"},
+                                ),
                                 html.Div(
                                     [
                                         html.Span(book.title_short),
