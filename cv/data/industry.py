@@ -284,12 +284,12 @@ db_details = AccordianRow(
         "Ambassador": [
             AccordianDetails(
                 "✔️",
-                "Assist in building networks within campus and with the employer brand and recruitment team at "
+                "Assisted in building networks within campus and with the employer brand and recruitment team at "
                 "Deutsche Bank",
             ),
             AccordianDetails(
                 "✔️",
-                "Influence and shape Deutsche Bank's on-campus marketing activities and recruitment strategies",
+                "Influenced and shaped Deutsche Bank's on-campus marketing activities and recruitment strategies",
             ),
         ]
     },
