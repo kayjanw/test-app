@@ -13,6 +13,7 @@ from cv.layouts import (
     books_tab,
     certifications_tab,
     education_tab,
+    hobby_tab,
     industry_tab,
     teaching_tab,
 )
@@ -232,6 +233,8 @@ def register_callbacks(app, print_function):
             return certifications_tab(app)
         elif tab == "tab-cv-books":
             return books_tab(app)
+        elif tab == "tab-cv-hobby":
+            return hobby_tab(app)
         else:
             return current_content
 
@@ -276,6 +279,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Certifications'
             } else if (tab_value === 'tab-cv-books') {
                 document.title = 'Bookshelf'
+            } else if (tab_value === 'tab-cv-hobby') {
+                document.title = 'Hobbies'
             }
         }
         """,

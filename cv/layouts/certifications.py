@@ -13,7 +13,7 @@ def certifications_tab(app):
                 "Certifications",
                 [
                     DashIconify(icon="openmoji:trophy", height=40),
-                    "Certs, skills, and side quests",
+                    "Skills and side quests",
                 ],
             ),
             html.Div(
