@@ -90,6 +90,7 @@ def hobby_tab(app):
                     ),
                 ],
                 className="custom-div-instruction custom-div-left",
+                style={"min-width": "800px"},
             ),
         ]
     )
