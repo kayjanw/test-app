@@ -75,6 +75,7 @@ def hobby_tab(app):
                     dcc.Graph(
                         figure=get_hobby_plot(pd.DataFrame(hobbies)),
                         config={
+                            "scrollZoom": False,
                             "modeBarButtonsToRemove": [
                                 "zoom2d",
                                 "pan2d",

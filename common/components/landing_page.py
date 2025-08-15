@@ -1,6 +1,7 @@
 import numpy as np
 from _plotly_utils.colors import n_colors
-from dash import dcc
+from dash import dcc, html
+from dash_iconify import DashIconify
 from plotly import graph_objects as go
 
 
@@ -65,3 +66,36 @@ def violin_plot() -> dcc.Graph:
             ],
         },
     )
+
+
+def pixel_art():
+    colour_range = [
+        "deep-red",
+        "red",
+        "deep-orange",
+        "orange",
+        "deep-yellow",
+        "yellow",
+        "green",
+        "deep-green",
+        "blue",
+        "deep-blue",
+        "purple",
+        "deep-purple",
+    ]
+    np.random.seed(1)
+    num_colours = list(map(int, np.random.random(len(colour_range)) * 22))
+    art = []
+    for idx, colour in enumerate(colour_range):
+        art.extend(
+            [
+                DashIconify(
+                    icon=f"openmoji:{colour}-flag",
+                    height=40,
+                    style={"margin": 0, "padding": 0},
+                )
+                for _ in range(num_colours[idx] + 3)
+            ]
+        )
+        art.append(html.Br())
+    return art
