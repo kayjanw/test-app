@@ -48,7 +48,9 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
     fig.add_annotation(x=7.5, y=0.5, text="<b>Growth</b>", **annotation_kwargs)
     fig.add_annotation(x=2.5, y=0.5, text="<b>Low Priority</b>", **annotation_kwargs)
 
-    axis_kwargs = dict(range=[0, 10], showticklabels=False, showgrid=False)
+    axis_kwargs = dict(
+        range=[0, 10], showticklabels=False, showgrid=False, fixedrange=True
+    )
     fig.update_layout(
         xaxis=dict(title="Enjoyment", **axis_kwargs),
         yaxis=dict(title="Proficiency", **axis_kwargs),
