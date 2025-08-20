@@ -187,6 +187,13 @@ bookshelf_read_technical = [
         "https://i.ibb.co/dsjVRZrL/image-2025-08-02-02-02-26.png",
         rating_review(3, "Long-winded", carousel=use_carousel),
     ),
+    Book(
+        "Why Programs Fail, A Guide to Systematic Debugging",
+        "Why Programs Fail",
+        "Andreas Zeller",
+        "https://i.ibb.co/cXkK4hh7/image-2025-08-03-01-07-53.png",
+        rating_review(3, "Long-winded", carousel=use_carousel),
+    ),
 ]
 
 bookshelf_reading_leisure = [
@@ -204,14 +211,7 @@ bookshelf_reading_leisure = [
     ),
 ]
 bookshelf_reading_self = []
-bookshelf_reading_technical = [
-    Book(
-        "Why Programs Fail, A Guide to Systematic Debugging",
-        "Why Programs Fail",
-        "Andreas Zeller",
-        "https://i.ibb.co/cXkK4hh7/image-2025-08-03-01-07-53.png",
-    ),
-]
+bookshelf_reading_technical = []
 
 
 book_data = [
