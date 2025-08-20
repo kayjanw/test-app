@@ -211,8 +211,20 @@ bookshelf_reading_leisure = [
     ),
 ]
 bookshelf_reading_self = []
-bookshelf_reading_technical = []
-
+bookshelf_reading_technical = [
+    Book(
+        "Engineering Management for the Rest of Us",
+        "Engineering Management",
+        "Sarah Drasner",
+        "https://i.ibb.co/nGDM9y8/photo-2025-08-20-22-18-04.jpg",
+    ),
+    Book(
+        "Staff Engineer",
+        "Staff Engineer",
+        "Will Larson",
+        "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
+    )
+]
 
 book_data = [
     (bookshelf_read_leisure, "Leisure"),
