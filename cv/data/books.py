@@ -114,13 +114,6 @@ bookshelf_read_self = [
         rating_review(4.33, "Not very structured", carousel=use_carousel),
     ),
     Book(
-        "The 21 Indispensable Qualities of a Leader",
-        "The 21 Indispensable ...",
-        "John C. Maxwell",
-        "https://i.ibb.co/dJ5kyJYp/image-2025-08-02-01-41-57.png",
-        rating_review(4.33, "Insightful", carousel=use_carousel),
-    ),
-    Book(
         "Life Coaching: Change Your Life in 7 Days",
         "Life Coaching",
         "Eileen Mulligan",
@@ -133,6 +126,24 @@ bookshelf_read_self = [
         "Richard Templar",
         "https://i.ibb.co/N6jyVLVF/image-2025-08-02-01-42-30.png",
         rating_review(3.33, "Interesting tips", carousel=use_carousel),
+    ),
+]
+
+
+bookshelf_read_leadership = [
+    Book(
+        "The 21 Indispensable Qualities of a Leader",
+        "The 21 Indispensable ...",
+        "John C. Maxwell",
+        "https://i.ibb.co/dJ5kyJYp/image-2025-08-02-01-41-57.png",
+        rating_review(4.33, "Insightful", carousel=use_carousel),
+    ),
+    Book(
+        "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
+        "The Manager's Path",
+        "Camille Fournier",
+        "https://i.ibb.co/S7mHwqdy/image-2025-08-01-22-39-53.png",
+        rating_review(5, "Insightful", carousel=use_carousel),
     ),
 ]
 
@@ -158,13 +169,6 @@ bookshelf_read_technical = [
         "David Thomas, Andrew Hunt",
         "https://i.ibb.co/Q7405kMZ/image-2025-08-01-22-38-40.png",
         rating_review(5, "Awesome tips and reminder", carousel=use_carousel),
-    ),
-    Book(
-        "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
-        "The Manager's Path",
-        "Camille Fournier",
-        "https://i.ibb.co/S7mHwqdy/image-2025-08-01-22-39-53.png",
-        rating_review(5, "Insightful", carousel=use_carousel),
     ),
     Book(
         "Getting Started In Technical Analysis",
@@ -211,7 +215,7 @@ bookshelf_reading_leisure = [
     ),
 ]
 bookshelf_reading_self = []
-bookshelf_reading_technical = [
+bookshelf_reading_leadership = [
     Book(
         "Engineering Management for the Rest of Us",
         "Engineering Management",
@@ -225,14 +229,17 @@ bookshelf_reading_technical = [
         "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
     )
 ]
+bookshelf_reading_technical = []
 
 book_data = [
     (bookshelf_read_leisure, "Leisure"),
     (bookshelf_read_self, "Self-Improvement"),
+    (bookshelf_read_leadership, "Leadership"),
     (bookshelf_read_technical, "Technical"),
 ]
 book_reading_data = [
     (bookshelf_reading_leisure, "Leisure"),
     (bookshelf_reading_self, "Self-Improvement"),
+    (bookshelf_reading_leadership, "Leadership"),
     (bookshelf_reading_technical, "Technical"),
 ]
