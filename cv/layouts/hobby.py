@@ -18,7 +18,10 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
             go.Scatter(
                 x=hobby_data_type["enjoyment"],
                 y=hobby_data_type["proficiency"],
-                hoverinfo="skip",
+                hoverinfo="text",
+                hovertext=[
+                    frequency.name for frequency in hobby_data_type["frequency"]
+                ],
                 mode="markers+text",
                 text=hobby_data_type["name"],
                 textposition="top center",
