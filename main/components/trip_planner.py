@@ -401,7 +401,12 @@ class TripPlanner:
         if len(data) < 2:
             return html.P("Please input more landmarks", className="color-red")
         try:
-            landmarks = [x["Landmark"] for x in data]
+            landmarks = [
+                x["Landmark"]
+                if not x["Landmark"].startswith("Landmark")
+                else x["Street"]
+                for x in data
+            ]
             (
                 distance_matrix,
                 duration_matrix,
