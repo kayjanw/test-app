@@ -1,52 +1,7 @@
 from dash import html
-from dash_iconify import DashIconify
 
+from common.layouts.about_me import about_me_component, about_me_links
 from common.layouts.main import content_header
-
-
-def about_me_component(icon_name: str, component_name: str, component_description: str):
-    """Component for about-me tab
-
-    Args:
-        icon_name (str): component icon
-        component_name (str): component title
-        component_description (str): component description
-
-    Returns:
-        (html.Div)
-    """
-    return html.Div(
-        [
-            DashIconify(icon=f"openmoji:{icon_name}", height=40),
-            html.P(component_name, className="p-short p-bold"),
-            html.P(f": {component_description}", className="p-short"),
-        ],
-        className="custom-div-small-space-below",
-    )
-
-
-def about_me_links(icon_name: str, link_title: str, link_url: str):
-    """Link component for about-me tab
-
-    Args:
-        icon_name (str): link icon
-        link_title (str): link title
-        link_url (str): link URL
-
-    Returns:
-        (html.Span)
-    """
-    return html.Span(
-        html.A(
-            [
-                DashIconify(icon=f"openmoji:{icon_name}", height=40),
-                link_title,
-            ],
-            href=link_url,
-            target="_blank",
-        ),
-        title=link_title,
-    )
 
 
 def about_me_audio():

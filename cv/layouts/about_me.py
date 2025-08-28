@@ -1,8 +1,8 @@
 import dash_mantine_components as dmc
 from dash import html
 
+from common.layouts.about_me import about_me_component, about_me_links
 from common.layouts.main import content_header
-from main.layouts.about_me import about_me_component, about_me_links
 
 
 def about_me_cv_tab(app):
