@@ -54,20 +54,6 @@ bookshelf_read_leisure = [
         "Touching",
     ),
     Book(
-        "Ikigai",
-        "Ikigai",
-        "Francesc Miralles, Hector Garcia",
-        "https://i.ibb.co/5W0S3bZG/image-2025-08-02-01-19-54.png",
-        "Inspiring",
-    ),
-    Book(
-        "Ichigo Ichie",
-        "Ichigo Ichie",
-        "Francesc Miralles, Hector Garcia",
-        "https://i.ibb.co/DgHs9mLG/image-2025-08-02-01-20-04.png",
-        "Transformative",
-    ),
-    Book(
         "Strange Pictures",
         "Strange Pictures",
         "Uketsu",
@@ -124,6 +110,27 @@ bookshelf_read_self = [
         "Richard Templar",
         "https://i.ibb.co/N6jyVLVF/image-2025-08-02-01-42-30.png",
         rating_review(3.33, "Interesting tips", carousel=use_carousel),
+    ),
+    Book(
+        "Ikigai",
+        "Ikigai",
+        "Francesc Miralles, Hector Garcia",
+        "https://i.ibb.co/5W0S3bZG/image-2025-08-02-01-19-54.png",
+        rating_review(3.33, "Inspiring", carousel=use_carousel),
+    ),
+    Book(
+        "Ichigo Ichie",
+        "Ichigo Ichie",
+        "Francesc Miralles, Hector Garcia",
+        "https://i.ibb.co/DgHs9mLG/image-2025-08-02-01-20-04.png",
+        rating_review(3.33, "Transformative", carousel=use_carousel),
+    ),
+    Book(
+        "The 48 Laws of Power",
+        "The 48 Laws of Power",
+        "Robert Greene",
+        "https://i.ibb.co/cKR48MQy/image.png",
+        rating_review(3, "Nasty..", carousel=use_carousel),
     ),
 ]
 bookshelf_read_leadership = [
