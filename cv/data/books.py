@@ -89,8 +89,6 @@ bookshelf_read_leisure = [
         "Mystery",
     ),
 ]
-
-
 bookshelf_read_self = [
     Book(
         "The Art of Thinking Clearly",
@@ -128,8 +126,6 @@ bookshelf_read_self = [
         rating_review(3.33, "Interesting tips", carousel=use_carousel),
     ),
 ]
-
-
 bookshelf_read_leadership = [
     Book(
         "The 21 Indispensable Qualities of a Leader",
@@ -146,8 +142,15 @@ bookshelf_read_leadership = [
         rating_review(5, "Insightful", carousel=use_carousel),
     ),
 ]
-
-
+bookshelf_read_finance = [
+    Book(
+        "Getting Started In Technical Analysis",
+        "Getting Started In Technical Analysis",
+        "Jack D. Schwager",
+        "https://i.ibb.co/BHbYPTQR/image-2025-08-01-22-40-05.png",
+        rating_review(3.33, "A little dry", carousel=use_carousel),
+    ),
+]
 bookshelf_read_technical = [
     Book(
         "Software Teaming: A Mob Programming, Whole-Team Approach",
@@ -169,13 +172,6 @@ bookshelf_read_technical = [
         "David Thomas, Andrew Hunt",
         "https://i.ibb.co/Q7405kMZ/image-2025-08-01-22-38-40.png",
         rating_review(5, "Awesome tips and reminder", carousel=use_carousel),
-    ),
-    Book(
-        "Getting Started In Technical Analysis",
-        "Getting Started In Technical Analysis",
-        "Jack D. Schwager",
-        "https://i.ibb.co/BHbYPTQR/image-2025-08-01-22-40-05.png",
-        rating_review(3.33, "A little dry", carousel=use_carousel),
     ),
     Book(
         "Refactoring, Second Edition",
@@ -229,17 +225,27 @@ bookshelf_reading_leadership = [
         "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
     )
 ]
-bookshelf_reading_technical = []
+bookshelf_reading_finance = []
+bookshelf_reading_technical = [
+    Book(
+        "Designing Data-Intensive Applications",
+        "Designing Data-Intensive ...",
+        "Martin Kleppmann, Chris Riccomini",
+        "https://i.ibb.co/W4MkJxj0/download.png",
+    ),
+]
 
 book_data = [
     (bookshelf_read_leisure, "Leisure"),
     (bookshelf_read_self, "Self-Improvement"),
     (bookshelf_read_leadership, "Leadership"),
+    (bookshelf_read_finance, "Finance"),
     (bookshelf_read_technical, "Technical"),
 ]
 book_reading_data = [
     (bookshelf_reading_leisure, "Leisure"),
-    (bookshelf_reading_self, "Self-Improvement"),
+    # (bookshelf_reading_self, "Self-Improvement"),
     (bookshelf_reading_leadership, "Leadership"),
+    # (bookshelf_reading_finance, "Finance"),
     (bookshelf_reading_technical, "Technical"),
 ]
