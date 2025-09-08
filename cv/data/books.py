@@ -236,6 +236,12 @@ bookshelf_reading_leadership = [
 bookshelf_reading_finance = []
 bookshelf_reading_technical = [
     Book(
+        "Storytelling with Data",
+        "Storytelling with Data",
+        "Cole Nussbaumer Knaflic",
+        "https://i.ibb.co/DDfGdbSJ/image.jpg",
+    ),
+    Book(
         "Designing Data-Intensive Applications",
         "Designing Data-Intensive ...",
         "Martin Kleppmann, Chris Riccomini",
