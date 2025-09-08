@@ -139,7 +139,7 @@ bookshelf_read_leadership = [
         "The 21 Indispensable ...",
         "John C. Maxwell",
         "https://i.ibb.co/dJ5kyJYp/image-2025-08-02-01-41-57.png",
-        rating_review(4.33, "Insightful", carousel=use_carousel),
+        rating_review(4.33, "Informative", carousel=use_carousel),
     ),
     Book(
         "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
@@ -147,6 +147,13 @@ bookshelf_read_leadership = [
         "Camille Fournier",
         "https://i.ibb.co/S7mHwqdy/image-2025-08-01-22-39-53.png",
         rating_review(5, "Insightful", carousel=use_carousel),
+    ),
+    Book(
+        "Staff Engineer",
+        "Staff Engineer",
+        "Will Larson",
+        "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
+        rating_review(5, "Practical", carousel=use_carousel),
     ),
 ]
 bookshelf_read_finance = [
@@ -225,12 +232,6 @@ bookshelf_reading_leadership = [
         "Sarah Drasner",
         "https://i.ibb.co/nGDM9y8/photo-2025-08-20-22-18-04.jpg",
     ),
-    Book(
-        "Staff Engineer",
-        "Staff Engineer",
-        "Will Larson",
-        "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
-    )
 ]
 bookshelf_reading_finance = []
 bookshelf_reading_technical = [
