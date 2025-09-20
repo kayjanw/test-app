@@ -48,7 +48,7 @@ def book_carousel(books: List[Book]):
                 slideSize="18%",
                 slideGap="md",
                 withIndicators=True,
-                emblaOptions={"loop": False, "align": "start", "slidesToScroll": 3},
+                emblaOptions={"loop": False, "align": "start", "slidesToScroll": 2},
                 height=550,
                 classNames={
                     "root": "dmc-root",
