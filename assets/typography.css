@@ -434,6 +434,29 @@ span p {
 
 /* Book rating
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.dmc-root {
+  &:hover {
+    .dmc-controls {
+      opacity: 1;
+    }
+  }
+}
+.dmc-controls {
+    transition: opacity 150ms ease;
+    opacity: 0;
+}
+.dmc-control {
+    & svg {
+        margin: 0;
+    }
+}
+.dmc-indicator {
+    background-color: #444;
+    &[data-active] {
+        background-color: #777;
+    }
+}
+
 .container-book {
     --container-size: calc(100rem * var(--mantine-scale))
 }
