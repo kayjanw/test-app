@@ -208,6 +208,12 @@ bookshelf_read_technical = [
         "https://i.ibb.co/cXkK4hh7/image-2025-08-03-01-07-53.png",
         rating_review(3, "Long-winded", carousel=use_carousel),
     ),
+    Book(
+        "Storytelling with Data",
+        "Storytelling with Data",
+        "Cole Nussbaumer Knaflic",
+        "https://i.ibb.co/DDfGdbSJ/image.jpg",
+    ),
 ]
 
 bookshelf_reading_leisure = [
@@ -235,12 +241,6 @@ bookshelf_reading_leadership = [
 ]
 bookshelf_reading_finance = []
 bookshelf_reading_technical = [
-    Book(
-        "Storytelling with Data",
-        "Storytelling with Data",
-        "Cole Nussbaumer Knaflic",
-        "https://i.ibb.co/DDfGdbSJ/image.jpg",
-    ),
     Book(
         "Designing Data-Intensive Applications",
         "Designing Data-Intensive ...",
