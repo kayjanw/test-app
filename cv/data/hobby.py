@@ -4,9 +4,9 @@ from typing import Union
 
 
 class Frequency(Enum):
-    RARELY = 0.4
-    ANNUALLY = 0.6
-    MONTHLY = 0.8
+    RARELY = 0.2
+    ANNUALLY = 0.5
+    MONTHLY = 0.7
     WEEKLY = 1
 
 

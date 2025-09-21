@@ -20,13 +20,28 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
                 y=hobby_data_type["proficiency"],
                 hoverinfo="text",
                 hovertext=[
-                    frequency.name for frequency in hobby_data_type["frequency"]
+                    frequency.name.capitalize()
+                    for frequency in hobby_data_type["frequency"]
                 ],
                 mode="markers+text",
                 text=hobby_data_type["name"],
                 textposition="top center",
                 name=_type.name.capitalize(),
                 marker=dict(size=12, color=_type.value, opacity=opacities),
+                showlegend=False,
+                legendgroup=_type.name.capitalize(),
+            )
+        )
+
+        # Dummy plot to show marker with full opacity
+        fig.add_trace(
+            go.Scatter(
+                x=[None],
+                y=[None],
+                mode="markers",
+                name=_type.name.capitalize(),
+                marker=dict(size=12, color=_type.value, opacity=1.0),
+                legendgroup=_type.name.capitalize(),  # legend links to data
             )
         )
 
@@ -59,6 +74,7 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
         yaxis=dict(title="Proficiency", **axis_kwargs),
         plot_bgcolor="white",
         margin=dict(t=10, b=10, r=5, l=5),
+        legend=dict(x=0.5, y=1, xanchor="center", yanchor="bottom", orientation="h"),
     )
     return fig
 
