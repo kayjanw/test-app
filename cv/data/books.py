@@ -213,6 +213,7 @@ bookshelf_read_technical = [
         "Storytelling with Data",
         "Cole Nussbaumer Knaflic",
         "https://i.ibb.co/DDfGdbSJ/image.jpg",
+        rating_review(4, "Easy to follow", carousel=use_carousel),
     ),
 ]
 
