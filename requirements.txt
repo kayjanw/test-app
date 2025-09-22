@@ -64,7 +64,7 @@ tomli==1.2.3
 tqdm==4.66.3
 typed-ast==1.5.4
 urllib3==1.26.19
-Werkzeug==3.0.3
+Werkzeug==3.0.6
 wincertstore==0.2
 wordcloud==1.9.3
 wrapt==1.12.1
