@@ -75,6 +75,15 @@ bookshelf_read_leisure = [
         "Mystery",
     ),
 ]
+bookshelf_read_puzzle = [
+    Book(
+        "Think Twice",
+        "Think Twice",
+        "Alex Bellos",
+        "https://i.ibb.co/7PKKtyk/image.jpg",
+        "Fun",
+    ),
+]
 bookshelf_read_self = [
     Book(
         "The Art of Thinking Clearly",
@@ -252,6 +261,7 @@ bookshelf_reading_technical = [
 
 book_data = [
     (bookshelf_read_leisure, "Leisure"),
+    (bookshelf_read_puzzle, "Puzzle"),
     (bookshelf_read_self, "Self-Improvement"),
     (bookshelf_read_leadership, "Leadership"),
     (bookshelf_read_finance, "Finance"),
