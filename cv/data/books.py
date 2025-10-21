@@ -240,7 +240,14 @@ bookshelf_reading_leisure = [
         "https://i.ibb.co/7xLWM9cr/image-2025-08-02-02-02-36.png",
     ),
 ]
-bookshelf_reading_self = []
+bookshelf_reading_self = [
+    Book(
+        "How To Break Up With Your Phone",
+        "How To Break Up With Your Phone",
+        "Catherine Price",
+        "https://i.ibb.co/s926RQn6/image.jpg",
+    ),
+]
 bookshelf_reading_leadership = [
     Book(
         "Engineering Management for the Rest of Us",
@@ -269,8 +276,10 @@ book_data = [
 ]
 book_reading_data = [
     (bookshelf_reading_leisure, "Leisure"),
-    # (bookshelf_reading_self, "Self-Improvement"),
+    (bookshelf_reading_self, "Self-Improvement"),
     (bookshelf_reading_leadership, "Leadership"),
-    # (bookshelf_reading_finance, "Finance"),
+    (bookshelf_reading_finance, "Finance"),
     (bookshelf_reading_technical, "Technical"),
 ]
+book_data = [x for x in book_data if x[0]]
+book_reading_data = [x for x in book_reading_data if x[0]]
