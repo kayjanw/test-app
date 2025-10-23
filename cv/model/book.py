@@ -1,5 +1,6 @@
 from typing import Optional, Union
 
+import dash_mantine_components as dmc
 from dash import html
 
 
@@ -10,7 +11,7 @@ class Book:
         title_short: str,
         authors: str,
         image_url: str,
-        review: Optional[Union[str, html.Div]] = None,
+        review: Optional[Union[str, dmc.Group]] = None,
     ):
         self.title = title
         self.title_short = title_short
