@@ -164,6 +164,13 @@ bookshelf_read_leadership = [
         "https://i.ibb.co/Q7nRHncd/photo-2025-08-20-22-18-00.jpg",
         rating_review(5, "Practical", carousel=use_carousel),
     ),
+    Book(
+        "Engineering Management for the Rest of Us",
+        "Engineering Management",
+        "Sarah Drasner",
+        "https://i.ibb.co/nGDM9y8/photo-2025-08-20-22-18-04.jpg",
+        rating_review(4.33, "Helpful", carousel=use_carousel),
+    ),
 ]
 bookshelf_read_finance = [
     Book(
@@ -248,14 +255,7 @@ bookshelf_reading_self = [
         "https://i.ibb.co/s926RQn6/image.jpg",
     ),
 ]
-bookshelf_reading_leadership = [
-    Book(
-        "Engineering Management for the Rest of Us",
-        "Engineering Management",
-        "Sarah Drasner",
-        "https://i.ibb.co/nGDM9y8/photo-2025-08-20-22-18-04.jpg",
-    ),
-]
+bookshelf_reading_leadership = []
 bookshelf_reading_finance = []
 bookshelf_reading_technical = [
     Book(
