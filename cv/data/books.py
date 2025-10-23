@@ -74,6 +74,13 @@ bookshelf_read_leisure = [
         "https://i.ibb.co/8nn5QGYL/image-2025-08-02-01-20-33.png",
         "Mystery",
     ),
+    Book(
+        "The Boring Book",
+        "The Boring Book",
+        "Shinsuke Yoshitake",
+        "https://i.ibb.co/bMvJFXSg/image.jpg",
+        "Fun",
+    ),
 ]
 bookshelf_read_puzzle = [
     Book(
