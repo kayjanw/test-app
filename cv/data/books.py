@@ -36,7 +36,7 @@ bookshelf_read_leisure = [
         "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
         "The Hundred-Year-Old Man Who ...",
         "Jonas Jonasson",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-21-1.png",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/719zo5utsfl._ac_uf10001000_ql80_.jpg",
         "Adventure, Satirical",
     ),
     Book(
@@ -184,7 +184,7 @@ bookshelf_read_finance = [
         "Getting Started In Technical Analysis",
         "Getting Started In Technical Analysis",
         "Jack D. Schwager",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-40-05-1.png",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/715khkxn-ll.jpg?w=678",
         rating_review(3.33, "A little dry", carousel=use_carousel),
     ),
 ]
@@ -193,14 +193,14 @@ bookshelf_read_technical = [
         "Software Teaming: A Mob Programming, Whole-Team Approach",
         "Software Teaming",
         "Woody Zuill, Kevin Meadows",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-38-52.png",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/71zbcvmyuzl._uf10001000_ql80_.jpg",
         rating_review(5, "Practical", carousel=use_carousel),
     ),
     Book(
         "Head First Software Architecture",
         "Head First Software Architecture",
         "Mark Richards, Neal Ford, Raju Gandhi",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-39-22-1-2.png",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/81drluswxkl-1.jpg?w=886",
         rating_review(4, "Easy to digest", carousel=use_carousel),
     ),
     Book(
