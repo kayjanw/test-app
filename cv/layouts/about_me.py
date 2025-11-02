@@ -29,7 +29,7 @@ def about_me_cv_tab(app):
                     about_me_component(
                         "wrench",
                         "Frameworks and Tools",
-                        "Airflow, Kedro, MLflow, Docker, Jenkins, Kubernetes, OpenShift",
+                        "Airflow, Docker, Jenkins, Kedro, Kubernetes, MLflow, OpenShift, Prefect",
                     ),
                     about_me_component(
                         "bar-chart",
