@@ -21,7 +21,7 @@ hei_details = AccordianRow(
 
 writing_details = AccordianRow(
     "Content Writer, Various Publishers",
-    "Jan 2022 - Present",
+    "Jan 2022 - Mar 2025",
     "tabler:pencil",
     {
         "Writing": [

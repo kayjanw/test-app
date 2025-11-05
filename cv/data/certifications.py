@@ -16,6 +16,11 @@ def convert_to_table(certs: List[Cert]):
 
 professional_certs = [
     Cert(
+        "kdb+ Bootcamp",
+        "Data Intellect",
+        "2025-11",
+    ),
+    Cert(
         "Introduction to PyKX",
         "KX",
         "2025-01",
