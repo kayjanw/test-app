@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from cv.layouts.helper import rating_review
 from cv.model.book import Book
@@ -17,7 +17,7 @@ def convert_to_table(bookshelf: List[Book]):
     ]
 
 
-bookshelf_read_leisure = [
+bookshelf_leisure = [
     Book(
         "The Little Prince",
         "The Little Prince",
@@ -81,8 +81,21 @@ bookshelf_read_leisure = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.jpg",
         "Fun",
     ),
+    Book(
+        "Butter",
+        "Butter",
+        "Asako Yuzuki",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-36.png",
+        "Literary Fiction",
+    ),
+    Book(
+        "The Accidental Further Adventures of the Hundred-Year-Old Man",
+        "The Accidental Further Adventures ...",
+        "Jonas Jonasson",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
+    ),
 ]
-bookshelf_read_puzzle = [
+bookshelf_puzzle = [
     Book(
         "Think Twice",
         "Think Twice",
@@ -91,7 +104,7 @@ bookshelf_read_puzzle = [
         "Fun",
     ),
 ]
-bookshelf_read_self = [
+bookshelf_self = [
     Book(
         "The Art of Thinking Clearly",
         "The Art of Thinking Clearly",
@@ -148,8 +161,14 @@ bookshelf_read_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image.png",
         rating_review(3, "Nasty..", carousel=use_carousel),
     ),
+    Book(
+        "How To Break Up With Your Phone",
+        "How To Break Up With Your Phone",
+        "Catherine Price",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
+    ),
 ]
-bookshelf_read_leadership = [
+bookshelf_leadership = [
     Book(
         "The 21 Indispensable Qualities of a Leader",
         "The 21 Indispensable ...",
@@ -179,7 +198,7 @@ bookshelf_read_leadership = [
         rating_review(4.33, "Helpful", carousel=use_carousel),
     ),
 ]
-bookshelf_read_finance = [
+bookshelf_finance = [
     Book(
         "Getting Started In Technical Analysis",
         "Getting Started In Technical Analysis",
@@ -188,7 +207,7 @@ bookshelf_read_finance = [
         rating_review(3.33, "A little dry", carousel=use_carousel),
     ),
 ]
-bookshelf_read_technical = [
+bookshelf_technical = [
     Book(
         "Software Teaming: A Mob Programming, Whole-Team Approach",
         "Software Teaming",
@@ -238,33 +257,6 @@ bookshelf_read_technical = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2.jpg",
         rating_review(4, "Easy to follow", carousel=use_carousel),
     ),
-]
-
-bookshelf_reading_leisure = [
-    Book(
-        "The Accidental Further Adventures of the Hundred-Year-Old Man",
-        "The Accidental Further Adventures ...",
-        "Jonas Jonasson",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
-    ),
-    Book(
-        "Butter",
-        "Butter",
-        "Asako Yuzuki",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-36.png",
-    ),
-]
-bookshelf_reading_self = [
-    Book(
-        "How To Break Up With Your Phone",
-        "How To Break Up With Your Phone",
-        "Catherine Price",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
-    ),
-]
-bookshelf_reading_leadership = []
-bookshelf_reading_finance = []
-bookshelf_reading_technical = [
     Book(
         "Designing Data-Intensive Applications",
         "Designing Data-Intensive ...",
@@ -273,20 +265,23 @@ bookshelf_reading_technical = [
     ),
 ]
 
+
+books_data: List[Tuple[List[Book], str]] = [
+    (bookshelf_leisure, "Leisure"),
+    (bookshelf_puzzle, "Puzzle"),
+    (bookshelf_self, "Self-Improvement"),
+    (bookshelf_leadership, "Leadership"),
+    (bookshelf_finance, "Finance"),
+    (bookshelf_technical, "Technical"),
+]
+# Split into read and reading
 book_data = [
-    (bookshelf_read_leisure, "Leisure"),
-    (bookshelf_read_puzzle, "Puzzle"),
-    (bookshelf_read_self, "Self-Improvement"),
-    (bookshelf_read_leadership, "Leadership"),
-    (bookshelf_read_finance, "Finance"),
-    (bookshelf_read_technical, "Technical"),
+    ([book for book in books if book.review], theme) for books, theme in books_data
 ]
 book_reading_data = [
-    (bookshelf_reading_leisure, "Leisure"),
-    (bookshelf_reading_self, "Self-Improvement"),
-    (bookshelf_reading_leadership, "Leadership"),
-    (bookshelf_reading_finance, "Finance"),
-    (bookshelf_reading_technical, "Technical"),
+    ([book for book in books if not book.review], theme) for books, theme in books_data
 ]
+
+# Remove empty themes
 book_data = [x for x in book_data if x[0]]
 book_reading_data = [x for x in book_reading_data if x[0]]
