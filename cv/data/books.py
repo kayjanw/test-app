@@ -103,6 +103,12 @@ bookshelf_puzzle = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1-1.jpg",
         "Fun",
     ),
+    Book(
+        "Think Again!",
+        "Think Again!",
+        "John Pinkney",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-13-at-2.32.04-pm.png",
+    ),
 ]
 bookshelf_self = [
     Book(
@@ -196,6 +202,13 @@ bookshelf_leadership = [
         "Sarah Drasner",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/photo-2025-08-20-22-18-04.jpg",
         rating_review(4.33, "Helpful", carousel=use_carousel),
+    ),
+    Book(
+        "The Five Dysfunctions of a Team",
+        "The Five Dysfunctions of a Team",
+        "Patrick Lencioni",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
+        rating_review(5, "Engaging and insightful", carousel=use_carousel),
     ),
 ]
 bookshelf_finance = [

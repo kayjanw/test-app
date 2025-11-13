@@ -461,6 +461,10 @@ span p {
     --container-size: calc(100rem * var(--mantine-scale))
 }
 
+.card-book-image {
+    height: 200px;
+    min-width: 120px;
+}
 .card-book-children {
     height: 80px;
     display: flex;

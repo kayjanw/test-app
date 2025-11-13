@@ -25,8 +25,7 @@ def book_carousel(books: List[Book]):
                             children=[
                                 html.Img(
                                     src=book.image_url,
-                                    height=200,
-                                    style={"minWidth": "150px"},
+                                    className="card-book-image",
                                 ),
                                 html.Div(
                                     [
