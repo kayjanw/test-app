@@ -98,6 +98,12 @@ def about_me_tab(app):
                                 "PickMe Telegram Bot",
                                 "https://t.me/pickme_bot",
                             ),
+                            " / ",
+                            about_me_links(
+                                "heart-exclamation",
+                                "Support Me!",
+                                "https://buymeacoffee.com/kayjan",
+                            ),
                         ]
                     ),
                 ],

@@ -57,6 +57,14 @@ def contact_tab():
                         ),
                         title="GitHub",
                     ),
+                    html.Span(
+                        html.A(
+                            DashIconify(icon="openmoji:heart-exclamation", height=40),
+                            href="https://buymeacoffee.com/kayjan/",
+                            target="_blank",
+                        ),
+                        title="GitHub",
+                    ),
                 ],
                 className="custom-div-instruction custom-div-left",
             ),
