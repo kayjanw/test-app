@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Union
+
 import dash_bootstrap_components as dbc
 import dash_daq as daq
 import dash_mantine_components as dmc
@@ -121,6 +124,77 @@ def modal_contribute():
     ]
 
 
+@dataclass
+class Deck:
+    button_text: str
+    button_id: str
+    button_style: Optional[Dict[str, str]] = None
+
+
+def create_deck_rows(app, decks_data, wnrs_information, deck_type) -> List[html.Div]:
+    """Create rows of deck for a single deck type"""
+    return [
+        html.Div(
+            [
+                html.Span(
+                    [
+                        deck_name,
+                        html.Sup(deck_info.get("blinker", ""), className="blinker"),
+                    ],
+                    className="span-short",
+                ),
+                html.Img(
+                    src=app.get_asset_url("info.svg"),
+                    id=deck_name + "-help",
+                ),
+                dbc.Tooltip(
+                    wnrs_information[deck_type][deck_name]["description"],
+                    placement="right",
+                    target=deck_name + "-help",
+                    className="tooltip",
+                ),
+                html.Div(
+                    [
+                        dbc.Button(
+                            deck.button_text,
+                            id={"type": "wnrs-deck-button", "id": deck.button_id},
+                            style=deck.button_style,
+                            className="button-wnrs",
+                        )
+                        for deck in deck_info["decks"]
+                    ],
+                    className="wnrs-level",
+                ),
+            ],
+            className="custom-div-flex div-with-image div-with-image-left small-image",
+        )
+        for deck_name, deck_info in decks_data.items()
+    ]
+
+
+def create_decks_div(
+    app, all_decks_data, wnrs_information
+) -> List[Union[html.P, html.Div, html.Br]]:
+    """Create rows of deck for all deck types"""
+    return [
+        _item
+        for _deck_type_data in [
+            [
+                html.P(
+                    [
+                        deck_type,
+                        html.Sup(decks_data.get("blinker", ""), className="blinker"),
+                    ],
+                    style=style_wnrs_text,
+                ),
+                *create_deck_rows(app, decks_data["data"], wnrs_information, deck_type),
+            ]
+            for deck_type, decks_data in all_decks_data.items()
+        ]
+        for _item in _deck_type_data
+    ] + [html.Br()]
+
+
 def wnrs_tab(app):
     wnrs_game = WNRS()
     list_of_deck = ["Main Deck 1"]
@@ -129,958 +203,207 @@ def wnrs_tab(app):
     data_store = wnrs_game.convert_to_store_format()
     data_save = wnrs_game.convert_to_save_format()
 
-    main_deck = html.Div(
-        [
-            html.Span("Main Deck", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="main-deck-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Main Deck"]["Main Deck"]["description"],
-                placement="right",
-                target="main-deck-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Main Deck 1"},
-                        style={"background-color": colour_palette["dark_pink"]},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Main Deck 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Main Deck 3"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Final Card",
-                        id={"type": "wnrs-deck-button", "id": "Main Deck Final"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    crossover_bumble_bff = html.Div(
-        [
-            html.Span("Bumble x BFF Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="bumble-bff-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Crossover"]["Bumble x BFF Edition"]["description"],
-                placement="right",
-                target="bumble-bff-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Bumble x BFF Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    crossover_bumble_bizz = html.Div(
-        [
-            html.Span("Bumble Bizz Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="bumble-bizz-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Crossover"]["Bumble Bizz Edition"]["description"],
-                placement="right",
-                target="bumble-bizz-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Bizz Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    crossover_bumble_date = html.Div(
-        [
-            html.Span("Bumble Date Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="bumble-date-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Crossover"]["Bumble Date Edition"]["description"],
-                placement="right",
-                target="bumble-date-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Bumble Date Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    crossover_cann = html.Div(
-        [
-            html.Span(
-                [
-                    "Cann Edition",
-                    html.Sup("Drinking", className="blinker"),
-                ],
-                className="span-short",
-            ),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="cann-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Crossover"]["Cann Edition"]["description"],
-                placement="right",
-                target="cann-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Cann Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Cann Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Cann Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    crossover_valentino = html.Div(
-        [
-            html.Span(
-                [
-                    "Valentino Edition",
-                    html.Sup("Reflect", className="blinker"),
-                ],
-                className="span-short",
-            ),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="valentino-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Crossover"]["Valentino Edition"]["description"],
-                placement="right",
-                target="valentino-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Valentino Edition 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    expansion_honest_dating = html.Div(
-        [
-            html.Span("Honest Dating Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="dating-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Expansion"]["Honest Dating Edition"]["description"],
-                placement="right",
-                target="dating-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Honest Dating Edition 1",
-                        },
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Honest Dating Edition 2",
-                        },
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Honest Dating Edition 3",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    expansion_inner_circle = html.Div(
-        [
-            html.Span("Inner Circle Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="inner-circle-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Expansion"]["Inner Circle Edition"]["description"],
-                placement="right",
-                target="inner-circle-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Inner Circle Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    expansion_own_it = html.Div(
-        [
-            html.Span("Own It Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="own-it-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Expansion"]["Own It Edition"]["description"],
-                placement="right",
-                target="own-it-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Own It Edition 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    expansion_relationship = html.Div(
-        [
-            html.Span("Relationship Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="relationship-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Expansion"]["Relationship Edition"]["description"],
-                placement="right",
-                target="relationship-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Relationship Edition 3"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    online_race_privilege = html.Div(
-        [
-            html.Span(
-                "Race and Privilege Edition",
-                className="span-short",
-            ),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="race-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Online"]["Race and Privilege Edition"]["description"],
-                placement="right",
-                target="race-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Race and Privilege Edition 1",
-                        },
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Race and Privilege Edition 2",
-                        },
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Race and Privilege Edition 3",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    online_quarantine = html.Div(
-        [
-            html.Span("Quarantine Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="quarantine-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Online"]["Quarantine Edition"]["description"],
-                placement="right",
-                target="quarantine-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 2",
-                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 2"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Level 3",
-                        id={"type": "wnrs-deck-button", "id": "Quarantine Edition 3"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Final Card",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Quarantine Edition Final",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    online_voting = html.Div(
-        [
-            html.Span("Voting Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="voting-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Online"]["Voting Edition"]["description"],
-                placement="right",
-                target="voting-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Voting Edition 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_breakup = html.Div(
-        [
-            html.Span("Breakup Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="breakup-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Breakup Edition"]["description"],
-                placement="right",
-                target="breakup-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Breakup Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "ChatGPT",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Breakup Edition ChatGPT",
-                        },
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Final Card",
-                        id={"type": "wnrs-deck-button", "id": "Breakup Edition Final"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_existential = html.Div(
-        [
-            html.Span(
-                [
-                    "Existential Crisis Edition",
-                    html.Sup("Mine", className="blinker"),
-                ],
-                className="span-short",
-            ),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="crisis-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Existential Crisis Edition"][
-                    "description"
-                ],
-                placement="right",
-                target="crisis-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Existential Crisis Edition 1",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_forgiveness = html.Div(
-        [
-            html.Span("Forgiveness Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="forgiveness-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Forgiveness Edition"]["description"],
-                placement="right",
-                target="forgiveness-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Forgiveness Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "ChatGPT",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Forgiveness Edition ChatGPT",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_healing = html.Div(
-        [
-            html.Span("Healing Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="healing-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Healing Edition"]["description"],
-                placement="right",
-                target="healing-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Healing Edition 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_self_love = html.Div(
-        [
-            html.Span("Self-Love Edition", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="love-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Self-Love Edition"]["description"],
-                placement="right",
-                target="love-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Self-Love Edition 1"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Final Card",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Self-Love Edition Final",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    single_self_reflection = html.Div(
-        [
-            html.Span(
-                "Self-Reflection Edition",
-                className="span-short",
-            ),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="reflection-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Single-Player"]["Self-Reflection Edition"][
-                    "description"
-                ],
-                placement="right",
-                target="reflection-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Self-Reflection Edition 1",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottman_love_maps = html.Div(
-        [
-            html.Span("Love Maps", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="love-maps-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Gotmann"]["Love Maps"]["description"],
-                placement="right",
-                target="love-maps-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Love Maps 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottman_open_ended = html.Div(
-        [
-            html.Span("Open Ended Questions", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="open-ended-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Gotmann"]["Open Ended Questions"]["description"],
-                placement="right",
-                target="open-ended-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Open Ended Questions 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottman_rituals = html.Div(
-        [
-            html.Span("Rituals of Connection", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="rituals-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Gotmann"]["Rituals of Connection"]["description"],
-                placement="right",
-                target="rituals-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={
-                            "type": "wnrs-deck-button",
-                            "id": "Rituals of Connection 1",
-                        },
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottman_opportunity = html.Div(
-        [
-            html.Span("Opportunity", className="span-short"),
-            html.Img(
-                src=app.get_asset_url("info.svg"),
-                id="opportunity-help",
-            ),
-            dbc.Tooltip(
-                wnrs_information["Gotmann"]["Opportunity"]["description"],
-                placement="right",
-                target="opportunity-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Level 1",
-                        id={"type": "wnrs-deck-button", "id": "Opportunity 1"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottman_couple = html.Div(
-        [
-            html.Span("Couple Questions", className="span-short"),
-            html.Img(src=app.get_asset_url("info.svg"), id="rs-help"),
-            dbc.Tooltip(
-                wnrs_information["Relationship Edition"]["Couple"]["description"],
-                placement="right",
-                target="rs-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Ice Breaker",
-                        id={"type": "wnrs-deck-button", "id": "Couple IceBreaker"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Family and Childhood",
-                        id={"type": "wnrs-deck-button", "id": "Couple Childhood"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Relationship",
-                        id={"type": "wnrs-deck-button", "id": "Couple Relationship"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Sex and Kids",
-                        id={"type": "wnrs-deck-button", "id": "Couple Sex&Kids"},
-                        className="button-wnrs",
-                    ),
-                    dbc.Button(
-                        "Marriage",
-                        id={"type": "wnrs-deck-button", "id": "Couple Marriage"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    gottmann_work = html.Div(
-        [
-            html.Span("Work Questions", className="span-short"),
-            html.Img(src=app.get_asset_url("info.svg"), id="work-help"),
-            dbc.Tooltip(
-                wnrs_information["Work Edition"]["Team"]["description"],
-                placement="right",
-                target="work-help",
-                className="tooltip",
-            ),
-            html.Div(
-                [
-                    dbc.Button(
-                        "Creative",
-                        id={"type": "wnrs-deck-button", "id": "Team Creative"},
-                        className="button-wnrs",
-                    ),
-                ],
-                className="wnrs-level",
-            ),
-        ],
-        className="custom-div-flex div-with-image div-with-image-left small-image",
-    )
-
-    # sample_section = html.Div(
-    #     [
-    #         html.Span("Section Head", className="span-short"),
-    #         html.Img(src=app.get_asset_url("info.svg"), id="section-help"),
-    #         dbc.Tooltip(
-    #             wnrs_information["<excel Type>"]["<excel SheetName>"]["description"],
-    #             placement="right",
-    #             target="section-help",
-    #             className="tooltip",
-    #         ),
-    #         html.Div(
-    #             [
-    #                 dbc.Button(
-    #                     "Custom Level",
-    #                     id={"type": "wnrs-deck-button", "id": "<excel SheetName> <excel Level>"},
-    #                     className="button-wnrs",
-    #                 ),
-    #             ],
-    #             className="wnrs-level",
-    #         ),
-    #     ],
-    #     className="custom-div-flex div-with-image div-with-image-left small-image",
-    # )
+    # sample_data = {
+    #     "deck_name": {
+    #         "decks": [
+    #             Deck("Level 1", "gagG Edition 1"),
+    #             Deck("Level 2", "gagag Edition 2"),
+    #             Deck("Level 3", "gaga Edition 3"),
+    #         ],
+    #     },
+    # }
 
     def modal_deck():
-        return [
-            html.P("Main Deck", style=style_wnrs_text),
-            main_deck,
-            html.P("Crossover", style=style_wnrs_text),
-            crossover_bumble_bff,
-            crossover_bumble_bizz,
-            crossover_bumble_date,
-            crossover_cann,
-            crossover_valentino,
-            html.P("Expansion", style=style_wnrs_text),
-            expansion_honest_dating,
-            expansion_inner_circle,
-            expansion_own_it,
-            expansion_relationship,
-            html.P("Online", style=style_wnrs_text),
-            online_race_privilege,
-            online_quarantine,
-            online_voting,
-            html.P("Single-Player", style=style_wnrs_text),
-            single_breakup,
-            single_existential,
-            single_forgiveness,
-            single_healing,
-            single_self_love,
-            single_self_reflection,
-            html.P(
-                [
-                    "Gotmann Card Deck",
-                    html.Sup("improve relationship", className="blinker"),
-                ],
-                style=style_wnrs_text,
-            ),
-            gottman_love_maps,
-            gottman_open_ended,
-            gottman_rituals,
-            gottman_opportunity,
-            gottman_couple,
-            gottmann_work,
-            html.Br(),
-        ]
+        all_decks_data = {
+            "Main Deck": {
+                "data": {
+                    "Main Deck": {
+                        "decks": [
+                            Deck(
+                                "Level 1",
+                                "Main Deck 1",
+                                {"background-color": colour_palette["dark_pink"]},
+                            ),
+                            Deck("Level 2", "Main Deck 2"),
+                            Deck("Level 3", "Main Deck 3"),
+                            Deck("Final Card", "Main Deck Final"),
+                        ],
+                    },
+                }
+            },
+            "Crossover": {
+                "data": {
+                    "Bumble x BFF Edition": {
+                        "decks": [
+                            Deck("Level 1", "Bumble x BFF Edition 1"),
+                            Deck("Level 2", "Bumble x BFF Edition 2"),
+                            Deck("Level 3", "Bumble x BFF Edition 3"),
+                        ],
+                    },
+                    "Bumble Bizz Edition": {
+                        "decks": [
+                            Deck("Level 1", "Bumble Bizz Edition 1"),
+                            Deck("Level 2", "Bumble Bizz Edition 2"),
+                            Deck("Level 3", "Bumble Bizz Edition 3"),
+                        ],
+                    },
+                    "Bumble Date Edition": {
+                        "decks": [
+                            Deck("Level 1", "Bumble Date Edition 1"),
+                            Deck("Level 2", "Bumble Date Edition 2"),
+                            Deck("Level 3", "Bumble Date Edition 3"),
+                        ],
+                    },
+                    "Cann Edition": {
+                        "blinker": "Drinking",
+                        "decks": [
+                            Deck("Level 1", "Cann Edition 1"),
+                            Deck("Level 2", "Cann Edition 2"),
+                            Deck("Level 3", "Cann Edition 3"),
+                        ],
+                    },
+                    "Valentino Edition": {
+                        "blinker": "Reflect",
+                        "decks": [
+                            Deck("Level 1", "Valentino Edition 1"),
+                        ],
+                    },
+                }
+            },
+            "Expansion": {
+                "data": {
+                    "Honest Dating Edition": {
+                        "decks": [
+                            Deck("Level 1", "Honest Dating Edition 1"),
+                            Deck("Level 2", "Honest Dating Edition 2"),
+                            Deck("Level 3", "Honest Dating Edition 3"),
+                        ],
+                    },
+                    "Inner Circle Edition": {
+                        "decks": [
+                            Deck("Level 1", "Inner Circle Edition 1"),
+                            Deck("Level 2", "Inner Circle Edition 2"),
+                            Deck("Level 3", "Inner Circle Edition 3"),
+                        ],
+                    },
+                    "Own It Edition": {
+                        "decks": [
+                            Deck("Level 1", "Own It Edition 1"),
+                        ],
+                    },
+                    "Relationship Edition": {
+                        "decks": [
+                            Deck("Level 1", "Relationship Edition 1"),
+                            Deck("Level 2", "Relationship Edition 2"),
+                            Deck("Level 3", "Relationship Edition 3"),
+                        ],
+                    },
+                }
+            },
+            "Online": {
+                "data": {
+                    "Race and Privilege Edition": {
+                        "decks": [
+                            Deck("Level 1", "Race and Privilege Edition 1"),
+                            Deck("Level 2", "Race and Privilege Edition 2"),
+                            Deck("Level 3", "Race and Privilege Edition 3"),
+                        ],
+                    },
+                    "Quarantine Edition": {
+                        "decks": [
+                            Deck("Level 1", "Quarantine Edition 1"),
+                            Deck("Level 2", "Quarantine Edition 2"),
+                            Deck("Level 3", "Quarantine Edition 3"),
+                            Deck("Final Card", "Quarantine Edition Final"),
+                        ],
+                    },
+                    "Voting Edition": {
+                        "decks": [
+                            Deck("Level 1", "Voting Edition 1"),
+                        ],
+                    },
+                }
+            },
+            "Single-Player": {
+                "data": {
+                    "Breakup Edition": {
+                        "decks": [
+                            Deck("Level 1", "Breakup Edition 1"),
+                            Deck("ChatGPT", "Breakup Edition ChatGPT"),
+                            Deck("Final Card", "Breakup Edition Final"),
+                        ],
+                    },
+                    "Existential Crisis Edition": {
+                        "blinker": "Mine",
+                        "decks": [
+                            Deck("Level 1", "Existential Crisis Edition 1"),
+                        ],
+                    },
+                    "Forgiveness Edition": {
+                        "decks": [
+                            Deck("Level 1", "Forgiveness Edition 1"),
+                            Deck("ChatGPT", "Forgiveness Edition ChatGPT"),
+                        ],
+                    },
+                    "Healing Edition": {
+                        "decks": [
+                            Deck("Level 1", "Healing Edition 1"),
+                        ],
+                    },
+                    "Self-Love Edition": {
+                        "decks": [
+                            Deck("Level 1", "Self-Love Edition 1"),
+                            Deck("Final Card", "Self-Love Edition Final"),
+                        ],
+                    },
+                    "Self-Reflection Edition": {
+                        "decks": [
+                            Deck("Level 1", "Self-Reflection Edition 1"),
+                        ],
+                    },
+                }
+            },
+            "Gotmann": {
+                "blinker": "improve relationship",
+                "data": {
+                    "Love Maps": {
+                        "decks": [
+                            Deck("Level 1", "Love Maps 1"),
+                        ],
+                    },
+                    "Open Ended Questions": {
+                        "decks": [
+                            Deck("Level 1", "Open Ended Questions 1"),
+                        ],
+                    },
+                    "Rituals of Connection": {
+                        "decks": [
+                            Deck("Level 1", "Rituals of Connection 1"),
+                        ],
+                    },
+                    "Opportunity": {
+                        "decks": [
+                            Deck("Level 1", "Opportunity 1"),
+                        ],
+                    },
+                    "Couple Questions": {
+                        "decks": [
+                            Deck("Ice Breaker", "Couple Questions IceBreaker"),
+                            Deck("Family and Childhood", "Couple Questions Childhood"),
+                            Deck("Relationship", "Couple Questions Relationship"),
+                            Deck("Sex and Kids", "Couple Questions Sex&Kids"),
+                            Deck("Marriage", "Couple Questions Marriage"),
+                        ],
+                    },
+                    "Work Questions": {
+                        "decks": [
+                            Deck("Creative", "Work Questions Creative"),
+                        ],
+                    },
+                },
+            },
+        }
+        return create_decks_div(app, all_decks_data, wnrs_information)
 
     def modal_help():
         return [
@@ -1181,28 +504,6 @@ def wnrs_tab(app):
                     ),
                 ],
                 "",
-            ),
-            html.Button(
-                "Select deck",
-                id="button-wnrs-show-ok",
-                title="Show/hide deck selection",
-                style={"display": "none"},
-            ),
-            html.Button(
-                " + Instructions",
-                id="button-wnrs-instruction-ok",
-                title="How to play",
-                style={"display": "none"},
-            ),
-            html.Div(
-                id="div-wnrs-instruction",
-                className="custom-div-full custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%", "margin-top": "20px"},
-            ),
-            html.Div(
-                id="div-wnrs-selection",
-                className="custom-div-full custom-div-dark image-dark-bg",
-                style={"display": "none", "width": "90%", "margin-top": "20px"},
             ),
             html.Div(
                 [

@@ -63,7 +63,7 @@ def contact_tab():
                             href="https://buymeacoffee.com/kayjan/",
                             target="_blank",
                         ),
-                        title="GitHub",
+                        title="Support me!",
                     ),
                 ],
                 className="custom-div-instruction custom-div-left",

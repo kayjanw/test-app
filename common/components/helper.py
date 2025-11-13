@@ -24,8 +24,8 @@ colour_palette = {
 inline_style = {"display": "inline-block"}
 flex_style = {"display": "flex"}
 hide_style = {"display": "none"}
-show_button_style = {"background-color": "#BE9B89"}
-hide_button_style = {"background-color": "#F0E3DF"}
+# show_button_style = {"background-color": "#BE9B89"}
+# hide_button_style = {"background-color": "#F0E3DF"}
 
 return_message = {
     "card_not_filled": "Please fill in a card prompt (required field)",

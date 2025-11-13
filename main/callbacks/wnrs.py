@@ -9,85 +9,14 @@ from common.components.email import send_email
 from common.components.helper import (
     decode_dict,
     encode_dict,
-    hide_button_style,
-    hide_style,
-    inline_style,
     parse_data,
     print_callback,
     return_message,
-    show_button_style,
 )
 from main.components import WNRS
 
 
 def register_callbacks(app, print_function):
-    @app.callback(
-        [
-            Output("div-wnrs-selection", "style"),
-            Output("div-wnrs-instruction", "style"),
-            Output("button-wnrs-show-ok", "style"),
-            Output("button-wnrs-instruction-ok", "style"),
-        ],
-        [
-            Input("button-wnrs-show-ok", "n_clicks"),
-            Input("button-wnrs-instruction-ok", "n_clicks"),
-        ],
-        [
-            State("div-wnrs-selection", "style"),
-            State("div-wnrs-instruction", "style"),
-            State("button-wnrs-show-ok", "style"),
-            State("button-wnrs-instruction-ok", "style"),
-        ],
-        prevent_initial_call=True,
-    )
-    @print_callback(print_function)
-    def update_wnrs_deck_style(
-        trigger_selection,
-        trigger_instruction,
-        selection_style: Dict[str, str],
-        instruction_style: Dict[str, str],
-        selection_button_style: Dict[str, str],
-        instruction_button_style: Dict[str, str],
-    ):
-        """Update style of WNRS card selection and card suggestion (visibility)
-
-        Args:
-            trigger_selection: trigger on button click
-            trigger_instruction: trigger on button click
-            selection_style: current style of card selection div
-            instruction_style: current style of instruction div
-            selection_button_style: current style of card selection button
-            instruction_button_style: current style of instruction button
-
-        Returns:
-            dict: updated style of card selection, instruction and card suggestion div and button
-        """
-        if dash.callback_context.triggered:
-            if ctx.triggered_id == "button-wnrs-show-ok":
-                if selection_style["display"] == "inline-block":
-                    selection_style.update(hide_style)
-                    selection_button_style.update(hide_button_style)
-                else:
-                    selection_style.update(inline_style)
-                    selection_button_style.update(show_button_style)
-                instruction_style.update(hide_style)
-                instruction_button_style.update(hide_button_style)
-            elif ctx.triggered_id == "button-wnrs-instruction-ok":
-                if instruction_style["display"] == "inline-block":
-                    instruction_style.update(hide_style)
-                    instruction_button_style.update(hide_button_style)
-                else:
-                    instruction_style.update(inline_style)
-                    instruction_button_style.update(show_button_style)
-                selection_style.update(hide_style)
-                selection_button_style.update(hide_button_style)
-        return (
-            selection_style,
-            instruction_style,
-            selection_button_style,
-            instruction_button_style,
-        )
-
     @app.callback(
         Output({"type": "modal-wnrs", "index": MATCH}, "is_open"),
         [
