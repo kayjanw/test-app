@@ -217,7 +217,7 @@ bookshelf_leadership = [
     ),
     Book(
         "The Five Dysfunctions of a Team",
-        "The Five Dysfunctions of a Team",
+        "The Five Dysfunctions of ...",
         "Patrick Lencioni",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
         rating_review(5, "Engaging and insightful", carousel=use_carousel),
