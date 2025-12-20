@@ -115,6 +115,12 @@ bookshelf_puzzle = [
         "John Pinkney",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-13-at-2.32.04-pm.png",
     ),
+    Book(
+        "KGB Killer Puzzzles Dossier",
+        "KGB Killer Puzzzles Dossier",
+        "Dmitry Raskolnikov",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/kgb-killer-puzzles.jpg",
+    ),
 ]
 bookshelf_self = [
     Book(
