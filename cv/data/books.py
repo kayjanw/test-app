@@ -89,16 +89,17 @@ bookshelf_leisure = [
         "Literary Fiction",
     ),
     Book(
-        "The Accidental Further Adventures of the Hundred-Year-Old Man",
-        "The Accidental Further Adventures ...",
-        "Jonas Jonasson",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
-    ),
-    Book(
         "Last Night at the Telegraph Club",
         "Last Night at the Telegraph Club",
         "Malinda Lo",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/last-night-at-the-telegraph-club.png",
+        "Romance",
+    ),
+    Book(
+        "The Accidental Further Adventures of the Hundred-Year-Old Man",
+        "The Accidental Further Adventures ...",
+        "Jonas Jonasson",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
     ),
 ]
 bookshelf_puzzle = [
