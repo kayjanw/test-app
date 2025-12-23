@@ -6,6 +6,16 @@ from cv.model.book import Book
 use_carousel = True
 
 
+rating_system = {
+    5: "Must read",
+    4.5: "Must read, but not as good",
+    4: "Good to read",
+    3.5: "Can read if you want",
+    3: "Do not bother",
+    2: "It is bad",
+}
+
+
 def convert_to_table(bookshelf: List[Book]):
     return [
         [
@@ -164,27 +174,28 @@ bookshelf_self = [
         "Ikigai",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-54.png",
-        rating_review(3.33, "Inspiring", carousel=use_carousel),
+        rating_review(3, "Inspiring", carousel=use_carousel),
     ),
     Book(
         "Ichigo Ichie",
         "Ichigo Ichie",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-04.png",
-        rating_review(3.33, "Transformative", carousel=use_carousel),
+        rating_review(3, "Transformative", carousel=use_carousel),
     ),
     Book(
         "The 48 Laws of Power",
         "The 48 Laws of Power",
         "Robert Greene",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image.png",
-        rating_review(3, "Nasty..", carousel=use_carousel),
+        rating_review(2, "Nasty..", carousel=use_carousel),
     ),
     Book(
         "How To Break Up With Your Phone",
         "How To Break Up With Your Phone",
         "Catherine Price",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
+        rating_review(3.33, "Good tips", carousel=use_carousel),
     ),
 ]
 bookshelf_leadership = [
@@ -222,6 +233,13 @@ bookshelf_leadership = [
         "Patrick Lencioni",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
         rating_review(5, "Engaging and insightful", carousel=use_carousel),
+    ),
+    Book(
+        "The First 90 Days",
+        "The First 90 Days",
+        "Michael D. Watkins",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
+        rating_review(3.33, "Easy to read, generic", carousel=use_carousel),
     ),
 ]
 bookshelf_finance = [
