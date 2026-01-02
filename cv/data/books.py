@@ -306,6 +306,7 @@ bookshelf_technical = [
         "Designing Data-Intensive ...",
         "Martin Kleppmann, Chris Riccomini",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/download.png",
+        rating_review(4, "Detailed", carousel=use_carousel),
     ),
 ]
 
