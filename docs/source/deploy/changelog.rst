@@ -7,6 +7,7 @@ Changelog
 ========== ========================================================
 Date       Changes
 ========== ========================================================
+2026-01-03 Bump from Python 3.8 to Python 3.10
 2025-07-04 Added cv extension
 2023-12-28 Refactor: Added constants file and reusable components
 2022-11-27 Added Articles tab
