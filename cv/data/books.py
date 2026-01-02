@@ -239,7 +239,7 @@ bookshelf_leadership = [
         "The First 90 Days",
         "Michael D. Watkins",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
-        rating_review(3.33, "Easy to read, generic", carousel=use_carousel),
+        rating_review(3.33, "Not very generic", carousel=use_carousel),
     ),
 ]
 bookshelf_finance = [
