@@ -6,6 +6,16 @@ from cv.model.book import Book
 use_carousel = True
 
 
+rating_system = {
+    5: "Must read",
+    4.5: "Must read, but not as good",
+    4: "Good to read",
+    3.5: "Can read if you want",
+    3: "Do not bother",
+    2: "It is bad",
+}
+
+
 def convert_to_table(bookshelf: List[Book]):
     return [
         [
@@ -89,16 +99,17 @@ bookshelf_leisure = [
         "Literary Fiction",
     ),
     Book(
-        "The Accidental Further Adventures of the Hundred-Year-Old Man",
-        "The Accidental Further Adventures ...",
-        "Jonas Jonasson",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
-    ),
-    Book(
         "Last Night at the Telegraph Club",
         "Last Night at the Telegraph Club",
         "Malinda Lo",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/last-night-at-the-telegraph-club.png",
+        "Romance",
+    ),
+    Book(
+        "The Accidental Further Adventures of the Hundred-Year-Old Man",
+        "The Accidental Further Adventures ...",
+        "Jonas Jonasson",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
     ),
 ]
 bookshelf_puzzle = [
@@ -114,6 +125,12 @@ bookshelf_puzzle = [
         "Think Again!",
         "John Pinkney",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-13-at-2.32.04-pm.png",
+    ),
+    Book(
+        "KGB Killer Puzzzles Dossier",
+        "KGB Killer Puzzzles Dossier",
+        "Dmitry Raskolnikov",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/kgb-killer-puzzles.jpg",
     ),
 ]
 bookshelf_self = [
@@ -157,27 +174,28 @@ bookshelf_self = [
         "Ikigai",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-54.png",
-        rating_review(3.33, "Inspiring", carousel=use_carousel),
+        rating_review(3, "Inspiring", carousel=use_carousel),
     ),
     Book(
         "Ichigo Ichie",
         "Ichigo Ichie",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-04.png",
-        rating_review(3.33, "Transformative", carousel=use_carousel),
+        rating_review(3, "Transformative", carousel=use_carousel),
     ),
     Book(
         "The 48 Laws of Power",
         "The 48 Laws of Power",
         "Robert Greene",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image.png",
-        rating_review(3, "Nasty..", carousel=use_carousel),
+        rating_review(2, "Nasty..", carousel=use_carousel),
     ),
     Book(
         "How To Break Up With Your Phone",
         "How To Break Up With Your Phone",
         "Catherine Price",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
+        rating_review(3.33, "Good tips", carousel=use_carousel),
     ),
 ]
 bookshelf_leadership = [
@@ -211,10 +229,17 @@ bookshelf_leadership = [
     ),
     Book(
         "The Five Dysfunctions of a Team",
-        "The Five Dysfunctions of a Team",
+        "The Five Dysfunctions of ...",
         "Patrick Lencioni",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
         rating_review(5, "Engaging and insightful", carousel=use_carousel),
+    ),
+    Book(
+        "The First 90 Days",
+        "The First 90 Days",
+        "Michael D. Watkins",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
+        rating_review(3.33, "Not very generic", carousel=use_carousel),
     ),
 ]
 bookshelf_finance = [
@@ -281,6 +306,7 @@ bookshelf_technical = [
         "Designing Data-Intensive ...",
         "Martin Kleppmann, Chris Riccomini",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/download.png",
+        rating_review(4, "Detailed", carousel=use_carousel),
     ),
 ]
 
