@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.10-slim
 ARG port
 
 USER root
@@ -14,13 +14,15 @@ ENV PYTHONUNBUFFERED=1
 # EXPOSE $PORT
 
 RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential python3-dev libevent-dev \
     && apt-get install -y --no-install-recommends apt-utils \
     && apt-get install -y --no-install-recommends curl \
     && apt-get install -y --no-install-recommends libgomp1 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && chgrp -R 0 /test-app \
-    && chmod -R g=u /test-app \
-    && pip install pip --upgrade \
+    && chmod -R g=u /test-app
+RUN pip install pip --upgrade \
     && pip install -U -r requirements.txt \
     && python3 -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet'); nltk.download('omw-1.4'); nltk.download('punkt_tab')" \
     && cp -r /root/nltk_data /usr/local/share/ \
