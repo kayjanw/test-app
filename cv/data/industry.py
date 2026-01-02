@@ -4,7 +4,7 @@ use_accordian = True
 
 squarepoint_details = AccordianRow(
     "Quantative Developer, Squarepoint",
-    "Commodities and Other Mandates | May 2024 - Present",
+    "Commodities and Other Mandates | May 2024 - Dec 2025",
     "tabler:briefcase-2",
     {
         "Technical": [
@@ -57,7 +57,7 @@ gic_details = AccordianRow(
             ),
             AccordianDetails(
                 "🎖️",
-                "Ideated and developed open-source Python package for working with tree data structures, with over 100 "
+                "Ideated and developed open-source Python package for working with tree data structures, with over 200 "
                 "GitHub stars to date",
                 highlight="open-source Python package",
             ),
