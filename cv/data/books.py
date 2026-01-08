@@ -197,6 +197,12 @@ bookshelf_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
         rating_review(3.33, "Good tips", carousel=use_carousel),
     ),
+    Book(
+        "The Sleep Fix",
+        "The Sleep Fix",
+        "Diane Macedo",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-sleep-fix.jpg",
+    ),
 ]
 bookshelf_leadership = [
     Book(
