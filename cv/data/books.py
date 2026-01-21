@@ -106,6 +106,13 @@ bookshelf_leisure = [
         "Romance",
     ),
     Book(
+        "Foundryside",
+        "Foundryside",
+        "Robert Jackson Bennett",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/foundryside.jpg",
+        "Science Fiction",
+    ),
+    Book(
         "The Accidental Further Adventures of the Hundred-Year-Old Man",
         "The Accidental Further Adventures ...",
         "Jonas Jonasson",
