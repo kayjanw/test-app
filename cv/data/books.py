@@ -117,6 +117,7 @@ bookshelf_leisure = [
         "The Accidental Further Adventures ...",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
+        "Adventure, Satirical",
     ),
 ]
 bookshelf_puzzle = [
