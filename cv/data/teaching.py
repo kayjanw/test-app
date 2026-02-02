@@ -81,7 +81,7 @@ cristofori_details = AccordianRow(
         "Teaching": [
             AccordianDetails(
                 "✔️",
-                "Conduct electronic keyboard lessons for under-privileged children at Providence Care Centre",
+                "Conducted electronic keyboard lessons for under-privileged children at Providence Care Centre",
             )
         ],
     },
@@ -117,7 +117,7 @@ tutor_details = AccordianRow(
         "Teaching": [
             AccordianDetails(
                 "✔️",
-                "Provide one-to-one private tuition for Junior College Mathematics and Primary School English, "
+                "Provided one-to-one private tuition for Junior College Mathematics and Primary School English, "
                 "Mathematics and Science",
             )
         ],
