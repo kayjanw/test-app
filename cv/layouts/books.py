@@ -135,7 +135,7 @@ def books_tab(app):
                             )
                             for book in book_reading_data
                         ],
-                        value=book_data[0][1],
+                        value=book_reading_data[0][1],
                         color="#202029",
                         variant="default",
                         radius="md",
