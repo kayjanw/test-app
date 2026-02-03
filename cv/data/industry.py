@@ -2,6 +2,21 @@ from cv.model.accordian_row import AccordianDetails, AccordianRow
 
 use_accordian = True
 
+hrt_details = AccordianRow(
+    "Data Production Engineer, Hudson River Trading",
+    "Data Tech | Jan 2026 - Present",
+    "tabler:briefcase-2",
+    {
+        "Data Tech": [
+            AccordianDetails(
+                "✔️",
+                "Write tools to classify, onboard, and reconcile data, ensuring high data quality and reliability",
+            )
+        ]
+    },
+    "industry-hrt",
+)
+
 squarepoint_details = AccordianRow(
     "Quantative Developer, Squarepoint",
     "Commodities and Other Mandates | May 2024 - Dec 2025",
@@ -298,6 +313,7 @@ db_details = AccordianRow(
 
 
 industry_data = [
+    hrt_details,
     squarepoint_details,
     gic_details,
     dbs_details,

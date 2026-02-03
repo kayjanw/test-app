@@ -11,7 +11,7 @@ def industry_tab(app):
     return html.Div(
         [
             content_header(
-                "Quantitative Developer, Data Scientist",
+                "Data Engineer, Quantitative Developer, Data Scientist",
                 [
                     DashIconify(icon="openmoji:woman-technologist", height=40),
                     "I love all things math + coding",
@@ -20,7 +20,7 @@ def industry_tab(app):
             html.Div(
                 accordian(
                     convert_to_accordian(industry_data),
-                    value=["industry-sqp"],
+                    value=[industry_data[0].accordian_id],
                 ),
                 className="custom-div-instruction custom-div-left",
             )
