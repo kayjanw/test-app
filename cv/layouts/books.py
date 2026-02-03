@@ -5,14 +5,9 @@ from dash import html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
-from cv.data.books import (
-    Book,
-    book_data,
-    book_reading_data,
-    convert_to_table,
-    use_carousel,
-)
+from cv.data.books import Book, book_data, book_reading_data, convert_to_table
 from cv.layouts.helper import create_scrollable_area
+from cv.model.book import use_carousel
 
 
 def book_carousel(books: List[Book]):
@@ -30,7 +25,7 @@ def book_carousel(books: List[Book]):
                                 html.Div(
                                     [
                                         html.Span(book.title_short),
-                                        book.review_table,
+                                        book.review.div,
                                     ],
                                     className="card-book-children",
                                 ),
@@ -142,7 +137,9 @@ def books_tab(app):
                         orientation="horizontal",
                     ),
                     html.Br(),
-                ],
+                ]
+                if book_reading_data
+                else [],
                 className="custom-div-instruction custom-div-left",
             ),
         ]

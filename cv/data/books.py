@@ -1,10 +1,6 @@
 from typing import List, Tuple
 
-from cv.layouts.helper import rating_review
-from cv.model.book import Book
-
-use_carousel = True
-
+from cv.model.book import Book, Review
 
 rating_system = {
     5: "Must read",
@@ -33,91 +29,97 @@ bookshelf_leisure = [
         "The Little Prince",
         "Antoine de Saint-Exupery",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-18-56.png",
-        "Adventure",
+        Review("Children's Fiction"),
     ),
     Book(
         "The Girl Who Saved the King of Sweden",
         "The Girl Who Saved the King of Sweden",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-09.png",
-        "Adventure, Satirical",
+        Review("Humorous Fiction"),
     ),
     Book(
         "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
         "The Hundred-Year-Old Man Who ...",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/719zo5utsfl._ac_uf10001000_ql80_.jpg",
-        "Adventure, Satirical",
+        Review("Humorous Fiction"),
     ),
     Book(
         "Hitman Anders and the Meaning of It All",
         "Hitman Anders and the ...",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-34-1.png",
-        "Adventure, Satirical",
+        Review("Humorous Fiction"),
     ),
     Book(
         "Before the Coffee Gets Cold",
         "Before the Coffee Gets Cold",
         "Toshikazu Kawaguchi",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-45-1.png",
-        "Touching",
+        Review("Time Travel Fiction"),
     ),
     Book(
         "Strange Pictures",
         "Strange Pictures",
         "Uketsu",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-14-1.png",
-        "Mystery",
+        Review("Mystery"),
     ),
     Book(
         "Strange Houses",
         "Strange Houses",
         "Uketsu",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-23.png",
-        "Mystery",
+        Review("Mystery"),
     ),
     Book(
         "Hidden Pictures",
         "Hidden Pictures",
         "Jason Rekulak",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-33-1.png",
-        "Mystery",
+        Review("Mystery"),
     ),
     Book(
         "The Boring Book",
         "The Boring Book",
         "Shinsuke Yoshitake",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.jpg",
-        "Fun",
+        Review("Children's Fiction"),
     ),
     Book(
         "Butter",
         "Butter",
         "Asako Yuzuki",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-36.png",
-        "Literary Fiction",
+        Review("Literary Fiction"),
     ),
     Book(
         "Last Night at the Telegraph Club",
         "Last Night at the Telegraph Club",
         "Malinda Lo",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/last-night-at-the-telegraph-club.png",
-        "Romance",
+        Review("Romance"),
     ),
     Book(
         "Foundryside",
         "Foundryside",
         "Robert Jackson Bennett",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/foundryside.jpg",
-        "Science Fiction",
+        Review("Science Fiction"),
     ),
     Book(
         "The Accidental Further Adventures of the Hundred-Year-Old Man",
         "The Accidental Further Adventures ...",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
-        "Adventure, Satirical",
+        Review("Humorous Fiction"),
+    ),
+    Book(
+        "Sweet Sweet Revenge Ltd.",
+        "Sweet Sweet Revenge Ltd.",
+        "Jonas Jonasson",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
     ),
 ]
 bookshelf_puzzle = [
@@ -126,7 +128,7 @@ bookshelf_puzzle = [
         "Think Twice",
         "Alex Bellos",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1-1.jpg",
-        "Fun",
+        Review("Fun"),
     ),
     Book(
         "Think Again!",
@@ -147,70 +149,70 @@ bookshelf_self = [
         "The Art of Thinking Clearly",
         "Rolf Dobelli",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-24.png",
-        rating_review(5, "Must read", carousel=use_carousel),
+        Review("Must read", 5),
     ),
     Book(
         "Difficult Conversations",
         "Difficult Conversations",
         "Douglas Stone",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-37.png",
-        rating_review(5, "Learnt a lot", carousel=use_carousel),
+        Review("Learnt a lot", 5),
     ),
     Book(
         "Crucial Conversations: Tools for Talking When Stakes are High",
         "Crucial Conversations",
         "Kerry Patterson, Joseph Grenny, Al Switzler, Ron McMillan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-46.png",
-        rating_review(4.33, "Not very structured", carousel=use_carousel),
+        Review("Not very structured", 4.33),
     ),
     Book(
         "Life Coaching: Change Your Life in 7 Days",
         "Life Coaching",
         "Eileen Mulligan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-42-14.png",
-        rating_review(3, "Not comprehensive", carousel=use_carousel),
+        Review("Not comprehensive", 3),
     ),
     Book(
         "Rules of Thinking",
         "Rules of Thinking",
         "Richard Templar",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-42-30.png",
-        rating_review(3.33, "Interesting tips", carousel=use_carousel),
+        Review("Interesting tips", 3.33),
     ),
     Book(
         "Ikigai",
         "Ikigai",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-54.png",
-        rating_review(3, "Inspiring", carousel=use_carousel),
+        Review("Inspiring", 3),
     ),
     Book(
         "Ichigo Ichie",
         "Ichigo Ichie",
         "Francesc Miralles, Hector Garcia",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-04.png",
-        rating_review(3, "Transformative", carousel=use_carousel),
+        Review("Transformative", 3),
     ),
     Book(
         "The 48 Laws of Power",
         "The 48 Laws of Power",
         "Robert Greene",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image.png",
-        rating_review(2, "Nasty..", carousel=use_carousel),
+        Review("Nasty..", 2),
     ),
     Book(
         "How To Break Up With Your Phone",
         "How To Break Up With Your Phone",
         "Catherine Price",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
-        rating_review(3.33, "Good tips", carousel=use_carousel),
+        Review("Good tips", 3.33),
     ),
     Book(
         "The Sleep Fix",
         "The Sleep Fix",
         "Diane Macedo",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-sleep-fix.jpg",
-        rating_review(4, "Good to know", carousel=use_carousel),
+        Review("Good to know", 4),
     ),
 ]
 bookshelf_leadership = [
@@ -219,42 +221,42 @@ bookshelf_leadership = [
         "The 21 Indispensable ...",
         "John C. Maxwell",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-57-1.png",
-        rating_review(4.33, "Informative", carousel=use_carousel),
+        Review("Informative", 4.33),
     ),
     Book(
         "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
         "The Manager's Path",
         "Camille Fournier",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-39-53.png",
-        rating_review(5, "Insightful", carousel=use_carousel),
+        Review("Insightful", 5),
     ),
     Book(
         "Staff Engineer",
         "Staff Engineer",
         "Will Larson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/photo-2025-08-20-22-18-00.jpg",
-        rating_review(5, "Practical", carousel=use_carousel),
+        Review("Practical", 5),
     ),
     Book(
         "Engineering Management for the Rest of Us",
         "Engineering Management",
         "Sarah Drasner",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/photo-2025-08-20-22-18-04.jpg",
-        rating_review(4.33, "Helpful", carousel=use_carousel),
+        Review("Helpful", 4.33),
     ),
     Book(
         "The Five Dysfunctions of a Team",
         "The Five Dysfunctions of ...",
         "Patrick Lencioni",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
-        rating_review(5, "Engaging and insightful", carousel=use_carousel),
+        Review("Engaging and insightful", 5),
     ),
     Book(
         "The First 90 Days",
         "The First 90 Days",
         "Michael D. Watkins",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
-        rating_review(3.33, "Not very generic", carousel=use_carousel),
+        Review("Not very generic", 3.33),
     ),
 ]
 bookshelf_finance = [
@@ -263,7 +265,7 @@ bookshelf_finance = [
         "Getting Started In Technical Analysis",
         "Jack D. Schwager",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/715khkxn-ll.jpg?w=678",
-        rating_review(3.33, "A little dry", carousel=use_carousel),
+        Review("A little dry", 3.33),
     ),
 ]
 bookshelf_technical = [
@@ -272,74 +274,76 @@ bookshelf_technical = [
         "Software Teaming",
         "Woody Zuill, Kevin Meadows",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/71zbcvmyuzl._uf10001000_ql80_.jpg",
-        rating_review(5, "Practical", carousel=use_carousel),
+        Review("Practical", 5),
     ),
     Book(
         "Head First Software Architecture",
         "Head First Software Architecture",
         "Mark Richards, Neal Ford, Raju Gandhi",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/81drluswxkl-1.jpg?w=886",
-        rating_review(4, "Easy to digest", carousel=use_carousel),
+        Review("Easy to digest", 4),
     ),
     Book(
         "The Pragmatic Programmer",
         "The Pragmatic Programmer",
         "David Thomas, Andrew Hunt",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-38-40.png",
-        rating_review(5, "Awesome tips and reminder", carousel=use_carousel),
+        Review("Awesome tips and reminder", 5),
     ),
     Book(
         "Refactoring, Second Edition",
         "Refactoring, Second Edition",
         "Martin Fowler",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-01-22-40-17.png",
-        rating_review(3, "Straightforward", carousel=use_carousel),
+        Review("Straightforward", 3),
     ),
     Book(
         "Software Engineering at Google",
         "Software Engineering at Google",
         "Titus Winters, Tom Manshreck, Hyrum Wright",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-26.png",
-        rating_review(3, "Long-winded", carousel=use_carousel),
+        Review("Long-winded", 3),
     ),
     Book(
         "Why Programs Fail, A Guide to Systematic Debugging",
         "Why Programs Fail",
         "Andreas Zeller",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-03-01-07-53.png",
-        rating_review(3, "Long-winded", carousel=use_carousel),
+        Review("Long-winded", 3),
     ),
     Book(
         "Storytelling with Data",
         "Storytelling with Data",
         "Cole Nussbaumer Knaflic",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2.jpg",
-        rating_review(4, "Easy to follow", carousel=use_carousel),
+        Review("Easy to follow", 4),
     ),
     Book(
         "Designing Data-Intensive Applications",
         "Designing Data-Intensive ...",
         "Martin Kleppmann, Chris Riccomini",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/download.png",
-        rating_review(4, "Detailed", carousel=use_carousel),
+        Review("Detailed", 4),
     ),
 ]
 
 
 books_data: List[Tuple[List[Book], str]] = [
-    (bookshelf_leisure, "Leisure"),
-    (bookshelf_puzzle, "Puzzle"),
-    (bookshelf_self, "Self-Improvement"),
-    (bookshelf_leadership, "Leadership"),
-    (bookshelf_finance, "Finance"),
-    (bookshelf_technical, "Technical"),
+    (sorted(bookshelf_leisure), "Leisure"),
+    (sorted(bookshelf_puzzle), "Puzzle"),
+    (sorted(bookshelf_self), "Self-Improvement"),
+    (sorted(bookshelf_leadership), "Leadership"),
+    (sorted(bookshelf_finance), "Finance"),
+    (sorted(bookshelf_technical), "Technical"),
 ]
 # Split into read and reading
 book_data = [
-    ([book for book in books if book.review], theme) for books, theme in books_data
+    ([book for book in books if book.review.genre_or_review], theme)
+    for books, theme in books_data
 ]
 book_reading_data = [
-    ([book for book in books if not book.review], theme) for books, theme in books_data
+    ([book for book in books if not book.review.genre_or_review], theme)
+    for books, theme in books_data
 ]
 
 # Remove empty themes

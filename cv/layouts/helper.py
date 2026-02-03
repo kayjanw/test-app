@@ -21,28 +21,6 @@ def bullet_point(icon: str, text: Any) -> html.Div:
     )
 
 
-def rating_review(
-    rating: Union[float, int], review: str, carousel: bool = False
-) -> dmc.Group:
-    """Rating and review for table cell
-
-    Args:
-        rating: rating
-        review: review details
-        carousel: whether display is for carousel card
-    """
-    if carousel:
-        return html.Div(
-            [
-                dmc.Rating(fractions=3, value=rating, readOnly=True),
-                html.Span(review, className="span-book"),
-            ]
-        )
-    return dmc.Group(
-        [dmc.Rating(fractions=3, value=rating, readOnly=True), html.Span(review)]
-    )
-
-
 def highlight_text(
     text: str, highlight: Optional[Union[str, List[str]]] = None, wrap_p: bool = False
 ) -> Union[str, dmc.Highlight]:
