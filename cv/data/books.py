@@ -116,6 +116,12 @@ bookshelf_leisure = [
         Review("Humorous Fiction"),
     ),
     Book(
+        "Welcome to the Hyunam-Dong Bookshop",
+        "Welcome to the Hyunam-Dong Bookshop",
+        "Hwang Bo-Reum",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/02/welcome-to-the-hyunam-dong-bookshop.jpg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
