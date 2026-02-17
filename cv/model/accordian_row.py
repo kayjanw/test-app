@@ -1,6 +1,8 @@
 from typing import Dict, List, Optional, Union
 
+import dash_mantine_components as dmc
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from cv.layouts.helper import bullet_point, highlight_text
 
@@ -41,17 +43,68 @@ class AccordianRow:
         ]
 
 
-def convert_to_accordian(accordian_data: List[AccordianRow]):
-    return [
-        [
-            accordian_row.title,
-            accordian_row.subtitle,
-            accordian_row.icon,
-            accordian_row.accordian_details,
-            accordian_row.accordian_id,
-        ]
-        for accordian_row in accordian_data
-    ]
+def split_title(title: str):
+    if "," in title:
+        return title.split(",")[0], ", " + ",".join(title.split(",")[1:])
+    return title, ""
+
+
+def accordian(
+    details: List[AccordianRow],
+    value: Union[str, List[str]] = [],
+) -> dmc.Accordion:
+    """Display details in accordian layout
+
+    Args:
+        details: details of a single accordian
+        value: value(s) of active accordian id
+
+    Returns:
+        Accordian item
+    """
+    return dmc.Accordion(
+        chevron=DashIconify(icon="ant-design:down-outlined"),
+        chevronPosition="right",
+        variant="separated",
+        radius=15,
+        multiple=True,
+        value=value,
+        children=[
+            dmc.AccordionItem(
+                [
+                    dmc.AccordionControl(
+                        children=[
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.H5(split_title(detail.title)[0]),
+                                            html.H5(
+                                                split_title(detail.title)[1],
+                                                className="p-normal",
+                                            ),
+                                        ],
+                                        className="custom-div-flex-only",
+                                    ),
+                                    html.H6(detail.subtitle),
+                                ]
+                            )
+                        ],
+                        icon=DashIconify(
+                            icon=detail.icon,
+                            color="#202029",
+                            width=20,
+                        ),
+                    ),
+                    dmc.AccordionPanel(
+                        detail.accordian_details, style={"padding": "0px 10px"}
+                    ),
+                ],
+                value=detail.accordian_id,
+            )
+            for detail in details
+        ],
+    )
 
 
 def convert_one_row(accordian_row: AccordianRow):

@@ -561,6 +561,10 @@ span p {
     display: inline-block;
 }
 
+.custom-div-flex-only {
+    display: flex;
+}
+
 .custom-div-flex {
     display: flex;
     vertical-align: middle;
@@ -651,6 +655,10 @@ span p {
     display: contents;
     padding: 0;
     margin: 0;
+}
+
+.p-normal {
+    font-weight: normal;
 }
 
 .p-bold {

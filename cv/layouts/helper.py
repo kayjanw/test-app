@@ -2,7 +2,6 @@ from typing import Any, List, Optional, Union
 
 import dash_mantine_components as dmc
 from dash import html
-from dash_iconify import DashIconify
 
 
 def bullet_point(icon: str, text: Any) -> html.Div:
@@ -27,51 +26,6 @@ def highlight_text(
     if highlight:
         return dmc.Highlight(text, highlight=highlight, style={"fontSize": "inherit"})
     return html.P(text) if wrap_p else text
-
-
-def accordian(
-    details: List[List[Union[str, List[str]]]],
-    value: Union[str, List[str]] = [],
-) -> dmc.Accordion:
-    """Display details in accordian layout
-
-    Args:
-        details: details consisting of
-            - title
-            - subtitle
-            - accordian icon
-            - detail
-            - accordian id
-        value: value(s) of active accordian id
-
-    Returns:
-        Accordian item
-    """
-    return dmc.Accordion(
-        chevron=DashIconify(icon="ant-design:down-outlined"),
-        chevronPosition="right",
-        variant="separated",
-        radius=15,
-        multiple=True,
-        value=value,
-        children=[
-            dmc.AccordionItem(
-                [
-                    dmc.AccordionControl(
-                        children=[html.Div([html.H5(detail[0]), html.H6(detail[1])])],
-                        icon=DashIconify(
-                            icon=detail[2],
-                            color="#202029",
-                            width=20,
-                        ),
-                    ),
-                    dmc.AccordionPanel(detail[3], style={"padding": "0px 10px"}),
-                ],
-                value=detail[4],
-            )
-            for detail in details
-        ],
-    )
 
 
 def create_scrollable_area(
