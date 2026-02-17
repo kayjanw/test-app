@@ -11,7 +11,11 @@ hrt_details = AccordianRow(
             AccordianDetails(
                 "✔️",
                 "Write tools to classify, onboard, and reconcile data, ensuring high data quality and reliability",
-            )
+            ),
+            # AccordianDetails(
+            #     "🔧",
+            #     "Tools: AWS, Phabricator, Tailscale, VSCode",
+            # ),
         ]
     },
     "industry-hrt",
@@ -43,6 +47,10 @@ squarepoint_details = AccordianRow(
                 "Reduced latency of minutely alpha publication from 26s to 6s",
                 highlight="Reduced latency",
             ),
+            # AccordianDetails(
+            #     "🔧",
+            #     "Tools: ArgoCD, Docker, GitLab CI/CD, Grafana, Helm, Kubernetes, Prefect, Prometheus, VSCode",
+            # ),
         ]
     },
     "industry-sqp",
@@ -76,6 +84,10 @@ gic_details = AccordianRow(
                 "GitHub stars to date",
                 highlight="open-source Python package",
             ),
+            # AccordianDetails(
+            #     "🔧",
+            #     "Tools: GitLab CI/CD, GitHub Actions, PyCharm",
+            # ),
         ]
     },
     "industry-gic",
@@ -254,6 +266,10 @@ dbs_details = AccordianRow(
                 "Represented Musicians Interest Group in DBS Dinner and Dance 2019 and 2021, playing keyboard in a "
                 "live band",
             ),
+            # AccordianDetails(
+            #     "🔧",
+            #     "Tools: Airflow, Bitbucket, Cloudera Science Workbench, Jenkins, Kedro, MLflow, OpenShift",
+            # ),
         ],
     },
     "industry-dbs",

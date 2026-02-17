@@ -24,7 +24,7 @@ def about_me_cv_tab(app):
                     about_me_component(
                         "code-editor",
                         "Languages",
-                        "Python, Pyspark, SQL, KDB+/Q",
+                        "Python, Pyspark, SQL, Bash, KDB+/Q",
                     ),
                     about_me_component(
                         "wrench",

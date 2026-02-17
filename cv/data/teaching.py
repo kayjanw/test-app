@@ -12,7 +12,8 @@ sutd_details = AccordianRow(
         "Teaching": [
             AccordianDetails(
                 "✔️",
-                "Responsible for instructing 10.022 Modelling Uncertainty",
+                "Responsible for instructing 10.022 Modelling Uncertainty, a core module for Term 3 Freshmore students",
+                highlight="10.022 Modelling Uncertainty",
             )
         ],
     },
@@ -28,6 +29,7 @@ hei_details = AccordianRow(
             AccordianDetails(
                 "✔️",
                 "Responsible for instructing AI200 Applied Machine Learning course",
+                highlight="AI200 Applied Machine Learning",
             )
         ],
     },
@@ -62,6 +64,7 @@ ga_details = AccordianRow(
             AccordianDetails(
                 "✔️",
                 "Responsible for grading assignments for Software Engineering Immersive Flex (SEIF) course",
+                highlight="Software Engineering Immersive Flex (SEIF)",
             )
         ]
     },
@@ -79,6 +82,7 @@ nus_details = AccordianRow(
                 "Equipped over 300 NUS Executive and Administrative staff with working knowledge of AI and experience "
                 "in structuring projects with CRISP-DM framework under the Artificial Intelligence Competency Course "
                 "(AICC)",
+                highlight="Artificial Intelligence Competency Course (AICC)",
             ),
             AccordianDetails(
                 "✔️",
@@ -98,6 +102,7 @@ cristofori_details = AccordianRow(
             AccordianDetails(
                 "✔️",
                 "Conducted electronic keyboard lessons for under-privileged children at Providence Care Centre",
+                highlight="electronic keyboard lessons",
             )
         ],
     },
