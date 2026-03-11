@@ -220,16 +220,16 @@ def get_summary_statistics(
         cols: column(s) to get summary statistic for
         dark: if table is loaded in dark background, defaults to True
     """
-    param_name = [
-        "Number of values",
-        "Mean",
-        "Std. Dev",
-        "Min, 0%",
-        "25%",
-        "Median, 50%",
-        "75%",
-        "Max, 100%",
-    ]
+    param_name = {
+        "Number of values": "count",
+        "Mean": "mean",
+        "Std. Dev": "std",
+        "Min, 0%": "min",
+        "25%": "25%",
+        "Median, 50%": "50%",
+        "75%": "75%",
+        "Max, 100%": "max",
+    }
     style_header, style_cell, style_table, css = table_css(dark=dark)
     return dash_table.DataTable(
         columns=[{"name": "Parameter", "id": "Parameter"}]
@@ -239,13 +239,13 @@ def get_summary_statistics(
                 lambda a, b: dict(a, **b),
                 [
                     {
-                        "Parameter": param_name[idx],
-                        col: np.round(df[col].describe()[idx], 2),
+                        "Parameter": param_k,
+                        col: np.round(df[col].describe()[param_v], 2),
                     }
                     for col in cols
                 ],
             )
-            for idx in range(len(param_name))
+            for param_k, param_v in param_name.items()
         ],
         style_as_list_view=True,
         style_header=style_header,
@@ -262,7 +262,8 @@ def encode_df(df: pd.DataFrame) -> str:
     Args:
         df: input DataFrame
     """
-    df_ser = df.to_json(orient="split", date_format="iso")
+    df_ser = json.dumps(df.to_dict(orient="records"))
+    # df_ser = df.to_json(orient="split", date_format="iso")
     return df_ser
 
 
@@ -272,8 +273,9 @@ def decode_df(df_ser: str) -> pd.DataFrame:
     Args:
         df_ser: input serialized DataFrame
     """
-    df = pd.read_json(df_ser, orient="split")
-    df.columns = df.columns.astype(str)
+    df = pd.DataFrame(json.loads(df_ser))
+    # df = pd.read_json(df_ser, orient="split")
+    # df.columns = df.columns.astype(str)
     return df
 
 
@@ -454,7 +456,7 @@ def get_excel_from_df(df: pd.DataFrame) -> io.BytesIO:
     buf = io.BytesIO()
     excel_writer = pd.ExcelWriter(buf, engine="xlsxwriter")
     df.to_excel(excel_writer, sheet_name="Sheet1", index=False)
-    excel_writer.save()
+    excel_writer._save()
     excel_data = buf.getvalue()  # noqa: F841
     buf.seek(0)
     return buf

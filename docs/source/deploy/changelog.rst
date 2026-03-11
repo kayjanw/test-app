@@ -4,9 +4,10 @@ Changelog
 
 .. note::  This changelog records the milestone progress, and does not include any hotfix made
 
-========== ========================================================
+========== ========================================================================
 Date       Changes
-========== ========================================================
+========== ========================================================================
+2026-03-12 Bump from Python 3.10 to Python 3.11 for fly and venv, upgrade packages
 2026-01-03 Bump from Python 3.8 to Python 3.10
 2025-07-04 Added cv extension
 2023-12-28 Refactor: Added constants file and reusable components
