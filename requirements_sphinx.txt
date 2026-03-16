@@ -5,7 +5,7 @@ Babel>=2.10
 cryptography==42.0.4
 pockets==0.9.1
 Pygments==2.15.0
-pyOpenSSL==19.1.0
+pyOpenSSL==26.0.0
 pyparsing>=3
 PySocks==1.7.1
 snowballstemmer==2.0.0
