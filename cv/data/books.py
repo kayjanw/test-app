@@ -120,6 +120,7 @@ bookshelf_leisure = [
         "Welcome to the Hyunam-Dong Bookshop",
         "Hwang Bo-Reum",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/02/welcome-to-the-hyunam-dong-bookshop.jpg",
+        Review("Cozy Fiction"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
