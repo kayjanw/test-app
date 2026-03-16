@@ -128,6 +128,12 @@ bookshelf_leisure = [
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
     ),
+    Book(
+        "Vegetarian",
+        "Vegetarian",
+        "Han Kang",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/vegetarian.jpg",
+    ),
 ]
 bookshelf_puzzle = [
     Book(
