@@ -135,6 +135,12 @@ bookshelf_leisure = [
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
     ),
+    Book(
+        "How to Solve Your Own Murder",
+        "How to Solve Your Own Murder",
+        "Kristen Perrin",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/how-to-solve-your-own-murder.jpg?w=678",
+    ),
 ]
 bookshelf_puzzle = [
     Book(
