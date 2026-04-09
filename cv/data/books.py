@@ -52,6 +52,7 @@ bookshelf_leisure = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-34-1.png",
         Review("Humorous Fiction"),
     ),
+    # 2025
     Book(
         "Before the Coffee Gets Cold",
         "Before the Coffee Gets Cold",
@@ -101,6 +102,7 @@ bookshelf_leisure = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/last-night-at-the-telegraph-club.png",
         Review("Romance"),
     ),
+    # 2026
     Book(
         "Foundryside",
         "Foundryside",
@@ -144,6 +146,7 @@ bookshelf_leisure = [
     ),
 ]
 bookshelf_puzzle = [
+    # 2025
     Book(
         "Think Twice",
         "Think Twice",
@@ -157,6 +160,7 @@ bookshelf_puzzle = [
         "John Pinkney",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-13-at-2.32.04-pm.png",
     ),
+    # 2026
     Book(
         "KGB Killer Puzzzles Dossier",
         "KGB Killer Puzzzles Dossier",
@@ -200,6 +204,7 @@ bookshelf_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-42-30.png",
         Review("Interesting tips", 3.33),
     ),
+    # 2025
     Book(
         "Ikigai",
         "Ikigai",
@@ -228,6 +233,7 @@ bookshelf_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
         Review("Good tips", 3.33),
     ),
+    # 2026
     Book(
         "The Sleep Fix",
         "The Sleep Fix",
@@ -250,6 +256,7 @@ bookshelf_leadership = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-57-1.png",
         Review("Informative", 4.33),
     ),
+    # 2024
     Book(
         "The Manager's Path: A Guide for Tech Leaders Navigating Growth and Change",
         "The Manager's Path",
@@ -271,6 +278,7 @@ bookshelf_leadership = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/photo-2025-08-20-22-18-04.jpg",
         Review("Helpful", 4.33),
     ),
+    # 2025
     Book(
         "The Five Dysfunctions of a Team",
         "The Five Dysfunctions of ...",
@@ -296,6 +304,7 @@ bookshelf_finance = [
     ),
 ]
 bookshelf_technical = [
+    # 2024
     Book(
         "Software Teaming: A Mob Programming, Whole-Team Approach",
         "Software Teaming",
@@ -352,6 +361,7 @@ bookshelf_technical = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/download.png",
         Review("Detailed", 4),
     ),
+    # 2026
 ]
 
 
