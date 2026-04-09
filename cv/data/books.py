@@ -235,6 +235,12 @@ bookshelf_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-sleep-fix.jpg",
         Review("Good to know", 4),
     ),
+    Book(
+        "Having People Over",
+        "Having People Over",
+        "Chelsea Fagan",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/having-people-over.jpg",
+    ),
 ]
 bookshelf_leadership = [
     Book(
