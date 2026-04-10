@@ -246,6 +246,7 @@ bookshelf_self = [
         "Having People Over",
         "Chelsea Fagan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/having-people-over.jpg",
+        Review("Quick read", 4),
     ),
 ]
 bookshelf_leadership = [
