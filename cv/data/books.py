@@ -139,6 +139,12 @@ bookshelf_leisure = [
         Review("Mystery"),
     ),
     Book(
+        "A Short Stay in Hell",
+        "A Short Stay in Hell",
+        "Steven L. Peck",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/a-short-stay-in-hell.jpg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
