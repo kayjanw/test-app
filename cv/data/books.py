@@ -174,6 +174,12 @@ bookshelf_puzzle = [
         "Dmitry Raskolnikov",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/kgb-killer-puzzles.jpg",
     ),
+    Book(
+        "Logical Brain Games",
+        "Logical Brain Games",
+        "Dr Gareth Moore",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image.jpeg",
+    ),
 ]
 bookshelf_self = [
     Book(
