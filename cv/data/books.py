@@ -118,6 +118,13 @@ bookshelf_leisure = [
         Review("Humorous Fiction"),
     ),
     Book(
+        "Strange Buildings",
+        "Strange Buildings",
+        "Uketsu",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2480.jpeg",
+        Review("Mystery"),
+    ),
+    Book(
         "Welcome to the Hyunam-Dong Bookshop",
         "Welcome to the Hyunam-Dong ...",
         "Hwang Bo-Reum",
