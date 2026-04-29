@@ -143,7 +143,14 @@ bookshelf_leisure = [
         "A Short Stay in Hell",
         "Steven L. Peck",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/a-short-stay-in-hell.jpg",
-        Review("Philosophical Fiction"),
+        Review("Philosophical Horror"),
+    ),
+    Book(
+        "Small Boat",
+        "Small Boat",
+        "Vincent Delecroix",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2479.jpeg",
+        Review("Psychological Fiction"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
