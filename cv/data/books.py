@@ -160,6 +160,13 @@ bookshelf_leisure = [
         Review("Psychological Fiction"),
     ),
     Book(
+        "The Waiter",
+        "The Waiter",
+        "Kwan Ann Tan",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2578.jpeg",
+        "Interactive Fiction",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
