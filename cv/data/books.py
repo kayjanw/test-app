@@ -164,7 +164,7 @@ bookshelf_leisure = [
         "The Waiter",
         "Kwan Ann Tan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2578.jpeg",
-        "Interactive Fiction",
+        Review("Interactive Fiction"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
