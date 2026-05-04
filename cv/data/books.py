@@ -282,6 +282,13 @@ bookshelf_self = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/having-people-over.jpg",
         Review("Quick read", 4),
     ),
+    Book(
+        "Poisonous People",
+        "Poisonous People",
+        "Leanne ten Brinke",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.png",
+        Review("Good read", 3.33),
+    ),
 ]
 bookshelf_leadership = [
     Book(
