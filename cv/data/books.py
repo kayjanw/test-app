@@ -287,7 +287,7 @@ bookshelf_self = [
         "Poisonous People",
         "Leanne ten Brinke",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.png",
-        Review("Good read", 3.33),
+        Review("Not useful", 2.33),
     ),
 ]
 bookshelf_leadership = [
