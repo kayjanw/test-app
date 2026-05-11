@@ -167,6 +167,12 @@ bookshelf_leisure = [
         Review("Interactive Fiction"),
     ),
     Book(
+        "Julie Chan is Dead",
+        "Julie Chan is Dead",
+        "Liann Zhang",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/julie-chan-is-dead.jpg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
