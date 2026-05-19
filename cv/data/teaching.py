@@ -147,7 +147,7 @@ tutor_details = AccordianRow(
 )
 
 teaching_accordian_data = [
-    # sutd_details,
+    sutd_details,
     hei_details,
     writing_details,
     ga_details,
