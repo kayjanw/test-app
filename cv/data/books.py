@@ -167,6 +167,12 @@ bookshelf_leisure = [
         Review("Interactive Fiction"),
     ),
     Book(
+        "Never Lie",
+        "Never Lie",
+        "Freida McFadden",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/never-lie.jpg",
+    ),
+    Book(
         "Julie Chan is Dead",
         "Julie Chan is Dead",
         "Liann Zhang",
