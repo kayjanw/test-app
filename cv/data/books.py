@@ -171,6 +171,7 @@ bookshelf_leisure = [
         "Never Lie",
         "Freida McFadden",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/never-lie.jpg",
+        Review("Suspense"),
     ),
     Book(
         "Julie Chan is Dead",
