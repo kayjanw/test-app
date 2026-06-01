@@ -16,6 +16,11 @@ def convert_to_table(certs: List[Cert]):
 
 professional_certs = [
     Cert(
+        "Profitable Stock Trading with Technical Analysis",
+        "Heicoders Academy",
+        "2026-05",
+    ),
+    Cert(
         "Advanced Certificate in Learning and Performance (ACLP)",
         "Institute for Adult Learning (IAL)",
         "2025-11",
