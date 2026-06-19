@@ -178,6 +178,7 @@ bookshelf_leisure = [
         "Julie Chan is Dead",
         "Liann Zhang",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/julie-chan-is-dead.jpg",
+        Review("Suspense"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
