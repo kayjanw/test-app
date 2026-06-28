@@ -181,6 +181,12 @@ bookshelf_leisure = [
         Review("Suspense"),
     ),
     Book(
+        "There Are Rivers In The Sky",
+        "There Are Rivers In The Sky",
+        "Elif Shafak",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/img_3256.jpeg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
