@@ -465,6 +465,7 @@ span p {
     height: 200px;
     min-width: 120px;
 }
+
 .card-book-children {
     height: 80px;
     display: flex;
@@ -483,6 +484,19 @@ span p {
     display: inline-flex;
     line-height: 100%;
     font-size: 0.8em;
+}
+
+@keyframes crown-pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.crown-pulse {
+  display: inline-block;
+  animation: crown-pulse 1.2s ease-in-out infinite;
+  transform-origin: center;
+  line-height: 1;
 }
 
 .medium-image Img {

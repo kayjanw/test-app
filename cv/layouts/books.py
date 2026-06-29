@@ -18,7 +18,7 @@ def card_carousel(book: Book) -> Union[dmc.Indicator, dmc.Card]:
             inline=True,
             color="rgba(0,0,0,0)",
             size=24,
-            label=dmc.Text(label, size="3em"),
+            label=dmc.Text(label, size="3em", className="crown-pulse"),
             offset=0,
             styles={
                 "indicator": {
