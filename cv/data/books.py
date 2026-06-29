@@ -65,7 +65,7 @@ bookshelf_leisure = [
         "Strange Pictures",
         "Uketsu",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-14-1.png",
-        Review("Mystery"),
+        Review("Mystery", "👑"),
     ),
     Book(
         "Strange Houses",
@@ -143,14 +143,14 @@ bookshelf_leisure = [
         "How to Solve Your Own Murder",
         "Kristen Perrin",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/how-to-solve-your-own-murder.jpg?w=678",
-        Review("Mystery"),
+        Review("Mystery", "👍"),
     ),
     Book(
         "A Short Stay in Hell",
         "A Short Stay in Hell",
         "Steven L. Peck",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/a-short-stay-in-hell.jpg",
-        Review("Philosophical Horror"),
+        Review("Philosophical Horror", "👑"),
     ),
     Book(
         "Small Boat",

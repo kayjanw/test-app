@@ -6,15 +6,21 @@ from dash import html
 use_carousel = True
 
 
+def is_numeric_rating(rating: Union[None, float, int, str]):
+    return isinstance(rating, int) or isinstance(rating, float)
+
+
 class Review:
-    def __init__(self, genre_or_review: str, rating: Union[None, float, int] = None):
+    def __init__(
+        self, genre_or_review: str, rating: Union[None, float, int, str] = None
+    ):
         self.genre_or_review = genre_or_review
         self.rating = rating
 
     @property
     def div(self) -> Union[html.Span, html.Div, dmc.Group]:
         if use_carousel:
-            if self.rating is None:
+            if not is_numeric_rating(self.rating):
                 return html.Span(self.genre_or_review, className="span-book")
             return html.Div(
                 [
@@ -47,6 +53,8 @@ class Book:
 
     def __lt__(self, other: "Book"):
         # Sort based on rating (descending order) or genre_or_review (ascending order)
-        if self.review.rating is not None and other.review.rating is not None:
+        if is_numeric_rating(self.review.rating) and is_numeric_rating(
+            other.review.rating
+        ):
             return self.review.rating > other.review.rating
         return self.review.genre_or_review < other.review.genre_or_review

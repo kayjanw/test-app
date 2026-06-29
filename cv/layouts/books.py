@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 import dash_mantine_components as dmc
 from dash import html
@@ -10,34 +10,54 @@ from cv.layouts.helper import create_scrollable_area
 from cv.model.book import use_carousel
 
 
+def card_carousel(book: Book) -> Union[dmc.Indicator, dmc.Card]:
+    def wrap_card(_card: dmc.Card, label: str) -> dmc.Indicator:
+        return dmc.Indicator(
+            _card,
+            position="top-end",
+            inline=True,
+            color="rgba(0,0,0,0)",
+            size=24,
+            label=dmc.Text(label, size="3em"),
+            offset=0,
+            styles={
+                "indicator": {
+                    "transform": "translate(0%, 50%)",
+                }
+            },
+        )
+
+    def _generate_card(_book: Book) -> dmc.Card:
+        return dmc.Card(
+            children=[
+                html.Img(
+                    src=_book.image_url,
+                    className="card-book-image",
+                ),
+                html.Div(
+                    [
+                        html.Span(_book.title_short),
+                        _book.review.div,
+                    ],
+                    className="card-book-children",
+                ),
+            ],
+            shadow="sm",
+            padding="md",
+            radius="md",
+            className="card-book",
+        )
+
+    if isinstance(book.review.rating, str):
+        return wrap_card(_generate_card(book), label=book.review.rating)
+    return _generate_card(book)
+
+
 def book_carousel(books: List[Book]):
     return dmc.Container(
         children=[
             dmc.Carousel(
-                [
-                    dmc.CarouselSlide(
-                        dmc.Card(
-                            children=[
-                                html.Img(
-                                    src=book.image_url,
-                                    className="card-book-image",
-                                ),
-                                html.Div(
-                                    [
-                                        html.Span(book.title_short),
-                                        book.review.div,
-                                    ],
-                                    className="card-book-children",
-                                ),
-                            ],
-                            shadow="sm",
-                            padding="md",
-                            radius="md",
-                            className="card-book",
-                        )
-                    )
-                    for book in books
-                ],
+                [dmc.CarouselSlide(card_carousel(book)) for book in books],
                 controlSize=45,
                 slideSize="18%",
                 slideGap="md",
