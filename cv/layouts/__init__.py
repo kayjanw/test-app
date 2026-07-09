@@ -5,4 +5,5 @@ from .education import education_tab
 from .hobby import hobby_tab
 from .industry import industry_tab
 from .main import app_cv
+from .shows import shows_tab
 from .teaching import teaching_tab

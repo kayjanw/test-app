@@ -7,10 +7,11 @@ from dash_iconify import DashIconify
 from common.layouts.main import content_header
 from cv.data.books import Book, book_data, book_reading_data, convert_to_table
 from cv.layouts.helper import create_scrollable_area
-from cv.model.book import use_carousel
+from cv.model.review import use_carousel
+from cv.model.show import Show
 
 
-def card_carousel(book: Book) -> Union[dmc.Indicator, dmc.Card]:
+def card_carousel(item: Union[Book, Show]) -> Union[dmc.Indicator, dmc.Card]:
     def wrap_card(_card: dmc.Card, label: str) -> dmc.Indicator:
         return dmc.Indicator(
             _card,
@@ -27,17 +28,17 @@ def card_carousel(book: Book) -> Union[dmc.Indicator, dmc.Card]:
             },
         )
 
-    def _generate_card(_book: Book) -> dmc.Card:
+    def _generate_card(_item: Union[Book, Show]) -> dmc.Card:
         return dmc.Card(
             children=[
                 html.Img(
-                    src=_book.image_url,
+                    src=_item.image_url,
                     className="card-book-image",
                 ),
                 html.Div(
                     [
-                        html.Span(_book.title_short),
-                        _book.review.div,
+                        html.Span(_item.title_short),
+                        _item.review.div,
                     ],
                     className="card-book-children",
                 ),
@@ -48,9 +49,9 @@ def card_carousel(book: Book) -> Union[dmc.Indicator, dmc.Card]:
             className="card-book",
         )
 
-    if isinstance(book.review.rating, str):
-        return wrap_card(_generate_card(book), label=book.review.rating)
-    return _generate_card(book)
+    if isinstance(item.review.rating, str):
+        return wrap_card(_generate_card(item), label=item.review.rating)
+    return _generate_card(item)
 
 
 def book_carousel(books: List[Book]):

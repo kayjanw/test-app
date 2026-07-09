@@ -15,6 +15,7 @@ from cv.layouts import (
     education_tab,
     hobby_tab,
     industry_tab,
+    shows_tab,
     teaching_tab,
 )
 from main.layouts import (
@@ -233,6 +234,8 @@ def register_callbacks(app, print_function):
             return certifications_tab(app)
         elif tab == "tab-cv-books":
             return books_tab(app)
+        elif tab == "tab-cv-shows":
+            return shows_tab(app)
         elif tab == "tab-cv-hobby":
             return hobby_tab(app)
         else:
