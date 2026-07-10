@@ -49,7 +49,7 @@ def shows_tab(app):
     return html.Div(
         [
             content_header(
-                "Theatre",
+                "Shows",
                 [
                     DashIconify(icon="openmoji:film-projector", height=40),
                     "No Work and All Plays",
@@ -57,7 +57,6 @@ def shows_tab(app):
             ),
             html.Div(
                 [
-                    html.H5("Theatre"),
                     dmc.Tabs(
                         children=[
                             dmc.TabsList(
