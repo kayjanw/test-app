@@ -359,7 +359,6 @@ orchestra = [
     ),
 ]
 others = [
-    #
     Show(
         "Cirque du Soleil Kooza",
         "Cirque du Soleil Kooza",
