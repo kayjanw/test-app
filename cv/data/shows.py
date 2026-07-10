@@ -121,7 +121,7 @@ musicals = [
         "-",
         "2024-08-27 20:00",
         "Sands Theatre",
-        "-",
+        "Door 4, Stalls Center, JJ-(29-30)",
         Review("Little boring", 2.33),
     ),
     Show(
@@ -231,7 +231,16 @@ musicals = [
         "-",
         "2026-09-02 20:00",
         "Sands Theatre",
+        "<seat>",
+    ),
+    Show(
+        "CATS",
+        "CATS",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/cats.jpg?w=1024",
         "-",
+        "2026-11-10 20:00",
+        "Sands Theatre",
+        "<seat>",
     ),
     Show(
         "Moulin Rouge!",
