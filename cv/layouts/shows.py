@@ -33,6 +33,18 @@ def show_carousel(shows: List[Show]):
     )
 
 
+def show_splash(shows: List[Show]):
+    return html.Div(
+        children=[
+            dmc.Card(
+                [card_carousel(show) for show in shows],
+                className="card-show",
+            ),
+        ],
+        className="container-show",
+    )
+
+
 def shows_tab(app):
     return html.Div(
         [
@@ -60,7 +72,7 @@ def shows_tab(app):
                         ]
                         + [
                             dmc.TabsPanel(
-                                show_carousel(show[0]),
+                                show_splash(show[0]),
                                 value=show[1],
                             )
                             for show in shows_data

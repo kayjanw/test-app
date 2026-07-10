@@ -461,12 +461,31 @@ span p {
     --container-size: calc(100rem * var(--mantine-scale))
 }
 
-.card-book-image {
-    height: 200px;
-    min-width: 120px;
+.container-show {
+    column-count: 3;
+    column-gap: 1rem;
 }
 
-.card-book-children {
+@media (max-width: 1400px) {
+    .container-show {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 1100px) {
+    .container-show {
+        column-count: 1;
+    }
+}
+
+.card-carousel-image {
+    min-height: 180px;
+    max-height: 200px;
+    min-width: 120px;
+    object-fit: contain;
+}
+
+.card-carousel-children {
     height: 80px;
     display: flex;
     flex-direction: column;
@@ -474,16 +493,27 @@ span p {
     margin-top: 10px;
 }
 
-.card-book {
+.card-carousel {
     width: 150;
     margin: 0 auto;
-    height: -webkit-fill-available
+    height: -webkit-fill-available;
+    break-inside: avoid;
 }
 
-.span-book {
+.span-review {
     display: inline-flex;
     line-height: 100%;
     font-size: 0.8em;
+}
+
+.card-show {
+    display: contents;
+    contain-intrinsic-size: 400px;
+}
+
+.card-show .card-carousel {
+    height: -webkit-fit-content;
+    margin-bottom: 1rem;
 }
 
 @keyframes crown-pulse {

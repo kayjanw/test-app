@@ -33,20 +33,20 @@ def card_carousel(item: Union[Book, Show]) -> Union[dmc.Indicator, dmc.Card]:
             children=[
                 html.Img(
                     src=_item.image_url,
-                    className="card-book-image",
+                    className="card-carousel-image",
                 ),
                 html.Div(
                     [
                         html.Span(_item.title_short),
                         _item.review.div,
                     ],
-                    className="card-book-children",
+                    className="card-carousel-children",
                 ),
             ],
             shadow="sm",
             padding="md",
             radius="md",
-            className="card-book",
+            className="card-carousel",
         )
 
     if isinstance(item.review.rating, str):

@@ -74,21 +74,27 @@ def sidebar_dropdown_cv():
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
+                        label="Fun",
+                        value="",
+                        className="custom-tab-disabled",
+                        disabled=True,
+                    ),
+                    dcc.Tab(
                         label="Bookshelf",
                         value="tab-cv-books",
-                        className="custom-tab p-bold",
+                        className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
                         label="Shows",
                         value="tab-cv-shows",
-                        className="custom-tab p-bold",
+                        className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
                         label="Hobbies",
                         value="tab-cv-hobby",
-                        className="custom-tab p-bold",
+                        className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
                     dcc.Tab(
