@@ -4,10 +4,10 @@ from cv.model.book import Review
 from cv.model.show import Show
 
 rating_system = {
-    5: "Must read",
-    4.5: "Must read, but not as good",
-    4: "Good to read",
-    3.5: "Can read if you want",
+    5: "Must go",
+    4.5: "Must go, but not as good",
+    4: "Good to go",
+    3.5: "Can go if you want",
     3: "Do not bother",
     2: "It is bad",
 }
@@ -52,7 +52,7 @@ theatres = [
         "2026-06-07 17:00",
         "Esplanade Theatre Studio (Level 4)",
         "General Admission",
-        Review("Fun, weird", 3),
+        Review("Fun, weird", 2.33),
     ),
     Show(
         "The Trials",
@@ -62,7 +62,7 @@ theatres = [
         "2026-06-20 20:00",
         "Singapore Repertoire Theatre",
         "Cat 1, E-15",
-        Review("Good idea, poor execution", 3),
+        Review("Good idea, poor execution", 2.33),
     ),
     Show(
         "Girls Girls Girls",
@@ -122,7 +122,7 @@ musicals = [
         "2024-08-27 20:00",
         "Sands Theatre",
         "-",
-        Review("Little boring", 3),
+        Review("Little boring", 2.33),
     ),
     Show(
         "The Book of Mormon",
@@ -252,6 +252,7 @@ comedy = [
         "2023-07-13 20:00",
         "Sands Theatre",
         "Door 19, D Reserve Grand Circle, P-(12-14)",
+        Review("Crude", 3),
     ),
     Show(
         "Kumar: Uncut",
@@ -261,6 +262,7 @@ comedy = [
         "2024-07-18 20:00",
         "Sands Theatre",
         "Door 5, Stalls, Stalls Center, JJ-(22-25)",
+        Review("Crude but with lipsync", 3),
     ),
     Show(
         "Atsuko Okatsuka: Full Grown",
@@ -270,6 +272,7 @@ comedy = [
         "2024-07-22 20:00",
         "Esplanade Theatre",
         "Door 11, Circle 3, DD-(51-52)",
+        Review("Dumb humour", 3),
     ),
     Show(
         "Matt Rife: Stay Golden",
@@ -279,6 +282,7 @@ comedy = [
         "2026-02-07 20:00",
         "Singapore Indoor Stadium",
         "Section 221, Row 20, Seat 6",
+        Review("Engaging, funny", 4),
     ),
     Show(
         "New York Comedy Club @ East Village",
@@ -288,6 +292,7 @@ comedy = [
         "2026-03-02 20:00",
         "85 East 4th Street",
         "-",
+        Review("Funny", 3.33),
     ),
     Show(
         "Always Be Comedy",
@@ -297,6 +302,7 @@ comedy = [
         "2026-04-16 20:00",
         "The Trafalgar, Chelsea, SW3 5UA",
         "-",
+        Review("Funny comics, cosy venue", 4),
     ),
     Show(
         "Rhys James: Work In Progress",
@@ -306,6 +312,7 @@ comedy = [
         "2026-04-21 20:00",
         "The Bill Murray, London",
         "-",
+        Review("Witty humour", 4),
     ),
     Show(
         "Boom Chicago: Sunday Night Live",
@@ -315,6 +322,7 @@ comedy = [
         "2026-04-26 17:30",
         "Boom Chicago, Amsterdam, North Holland 1016 LV",
         "-",
+        Review("Hilarious!", 5),
     ),
     Show(
         "Kanan Gill: Not This Again",
