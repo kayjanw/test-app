@@ -508,7 +508,6 @@ span p {
 
 .card-show {
     display: contents;
-    contain-intrinsic-size: 400px;
 }
 
 .card-show .card-carousel {
