@@ -382,8 +382,17 @@ others = [
         "Dracula",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/dracula-singapore-onsaleassets-584x268px_0.png",
         "BIG Live Pte Ltd",
-        "2026-07-15",
+        "2026-07-15 20:00",
         "Esplanade Theatre",
+        "<seat>",
+    ),
+    Show(
+        "The Nutcracker",
+        "The Nutcracker",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-nutcracker.jpg?w=1024",
+        "State Ballet of Georgia",
+        "2026-11-26 19:30",
+        "Sands Theatre",
         "<seat>",
     ),
 ]
