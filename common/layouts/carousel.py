@@ -1,7 +1,7 @@
-import html
 from typing import Union
 
 import dash_mantine_components as dmc
+from dash import html
 
 from cv.data.books import Book
 from cv.model.show import Show
