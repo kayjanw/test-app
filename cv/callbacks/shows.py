@@ -1,9 +1,19 @@
 import dash_mantine_components as dmc
+from dash import html
 from dash.dependencies import Input, Output
 
 from common.components.helper import print_callback
 from cv.data.shows import shows_data
-from cv.layouts.shows import show_splash
+from cv.model.show import Show
+
+
+def divide_cols(shows: list[Show], n_cols: int):
+    shows_cols = [shows[i::n_cols] for i in range(n_cols)]
+    return dmc.Group(
+        [html.Div([show.div for show in shows_col]) for shows_col in shows_cols],
+        align="flex-start",
+        grow=True,
+    )
 
 
 def register_callbacks_shows(app, print_function):
@@ -28,7 +38,12 @@ def register_callbacks_shows(app, print_function):
             ),
         ] + [
             dmc.TabsPanel(
-                show_splash(show[0], n_cols=n_cols),
+                [
+                    dmc.Card(
+                        divide_cols(show[0], n_cols),
+                        className="card-show",
+                    ),
+                ],
                 value=show[1],
             )
             for show in shows_data
