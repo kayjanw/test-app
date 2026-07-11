@@ -282,6 +282,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Certifications'
             } else if (tab_value === 'tab-cv-books') {
                 document.title = 'Bookshelf'
+            } else if (tab_value === 'tab-cv-shows') {
+                document.title = 'Shows'
             } else if (tab_value === 'tab-cv-hobby') {
                 document.title = 'Hobbies'
             }
