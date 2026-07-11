@@ -17,7 +17,7 @@ def convert_to_table(bookshelf: List[Book]):
         [
             book.title,
             book.authors,
-            book.review,
+            book.review.div,
         ]
         for book in bookshelf
     ]

@@ -19,19 +19,17 @@ class Review:
 
     @property
     def div(self) -> Union[html.Span, html.Div, dmc.Group]:
+        div_class = dmc.Group
+        kwargs = {}
         if use_carousel:
-            if not is_numeric_rating(self.rating):
-                return html.Span(self.genre_or_review, className="span-review")
-            return html.Div(
-                [
-                    dmc.Rating(fractions=3, value=self.rating, readOnly=True),
-                    html.Span(self.genre_or_review, className="span-review"),
-                ]
-            )
-        return dmc.Group(
+            div_class = html.Div
+            kwargs["className"] = "span-review"
+        if not is_numeric_rating(self.rating):
+            return html.Span(self.genre_or_review, **kwargs)
+        return div_class(
             [
                 dmc.Rating(fractions=3, value=self.rating, readOnly=True),
-                html.Span(self.genre_or_review),
+                html.Span(self.genre_or_review, **kwargs),
             ]
         )
 

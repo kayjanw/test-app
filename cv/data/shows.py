@@ -341,6 +341,15 @@ orchestra = [
 ]
 others = [
     Show(
+        "Baby Queen",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/baby-queen-singapore-first-drag-queen-film-1.png?w=1024",
+        "",
+        "2023-06-02 20:00",
+        "The Projector",
+        "",
+        Review("Heartwarming drag show", 3.33),
+    ),
+    Show(
         "Cirque du Soleil Kooza",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-30-at-6.10.55-pm.png",
         "MAST Entertainment SG, Lushington Entertainments",
