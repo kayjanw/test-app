@@ -52,7 +52,7 @@ def shows_tab(app):
                 "Shows",
                 [
                     DashIconify(icon="openmoji:film-projector", height=40),
-                    "No Work and All Plays",
+                    "No work and all plays",
                 ],
             ),
             html.Div(

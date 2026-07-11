@@ -68,35 +68,9 @@ def about_me_tab(app):
                     html.P(
                         [
                             about_me_links(
-                                "linkedin",
-                                "LinkedIn",
-                                "https://www.linkedin.com/in/kayjan/",
-                            ),
-                            " / ",
-                            about_me_links(
-                                "github", "GitHub", "https://www.github.com/kayjan/"
-                            ),
-                            " / ",
-                            about_me_links(
-                                "chrome", "Formal Website", "https://kayjan.fly.dev/cv"
-                            ),
-                            " / ",
-                            about_me_links(
-                                "newspaper",
-                                "Medium Articles",
-                                "https://kayjanwong.medium.com/",
-                            ),
-                            " / ",
-                            about_me_links(
-                                "package",
-                                "bigtree Python Package",
-                                "https://bigtree.readthedocs.io/",
-                            ),
-                            " / ",
-                            about_me_links(
-                                "robot",
-                                "PickMe Telegram Bot",
-                                "https://t.me/pickme_bot",
+                                "add-contact",
+                                "Formal Website",
+                                "https://kayjan.fly.dev/cv",
                             ),
                             " / ",
                             about_me_links(

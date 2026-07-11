@@ -85,8 +85,8 @@ def hobby_tab(app):
             content_header(
                 "Hobbies",
                 [
-                    DashIconify(icon="openmoji:sunglasses", height=40),
-                    "All fun and play",
+                    DashIconify(icon="openmoji:person-cartwheeling", height=40),
+                    "Trying my best",
                 ],
             ),
             html.Div(

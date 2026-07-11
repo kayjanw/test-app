@@ -152,7 +152,7 @@ musicals = [
         "2026-02-27 19:30",
         "John Golden Theatre, New York",
         "Left Orchestra, K-5",
-        Review("Funny", 4),
+        Review("Funny, some parts touching", 4),
     ),
     Show(
         "Maybe Happy Ending",
