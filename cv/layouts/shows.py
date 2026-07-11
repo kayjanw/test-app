@@ -4,33 +4,10 @@ import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
+from common.layouts.carousel import card_carousel
 from common.layouts.main import content_header
 from cv.data.shows import shows_data
-from cv.layouts.books import card_carousel
 from cv.model.show import Show
-
-
-def show_carousel(shows: List[Show]):
-    return dmc.Container(
-        children=[
-            dmc.Carousel(
-                [dmc.CarouselSlide(card_carousel(show)) for show in shows],
-                controlSize=45,
-                slideSize="18%",
-                slideGap="md",
-                withIndicators=True,
-                emblaOptions={"loop": False, "align": "start", "slidesToScroll": 2},
-                height=550,
-                classNames={
-                    "root": "dmc-root",
-                    "controls": "dmc-controls",
-                    "control": "dmc-control",
-                    "indicator": "dmc-indicator",
-                },
-            ),
-        ],
-        className="container-book",
-    )
 
 
 def show_splash(shows: List[Show]):
