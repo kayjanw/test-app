@@ -33,7 +33,7 @@ def card_carousel(item: Union[Book, Show]) -> Union[dmc.Indicator, dmc.Card]:
                 ),
                 html.Div(
                     [
-                        html.Span(_item.title_short),
+                        html.Span(_item.title_short, className="card-carousel-title"),
                         _item.review.div,
                     ],
                     className="card-carousel-children",

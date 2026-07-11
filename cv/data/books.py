@@ -40,14 +40,14 @@ bookshelf_leisure = [
     ),
     Book(
         "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
-        "The Hundred-Year-Old Man Who ...",
+        "The Hundred-Year-Old Man Who Climbed Out the Window and Disappeared",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/719zo5utsfl._ac_uf10001000_ql80_.jpg",
         Review("Humorous Fiction"),
     ),
     Book(
         "Hitman Anders and the Meaning of It All",
-        "Hitman Anders and the ...",
+        "Hitman Anders and the Meaning of It All",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-19-34-1.png",
         Review("Humorous Fiction"),
@@ -112,7 +112,7 @@ bookshelf_leisure = [
     ),
     Book(
         "The Accidental Further Adventures of the Hundred-Year-Old Man",
-        "The Accidental Further Adventures ...",
+        "The Accidental Further Adventures of the Hundred-Year-Old Man",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
         Review("Humorous Fiction"),
@@ -126,7 +126,7 @@ bookshelf_leisure = [
     ),
     Book(
         "Welcome to the Hyunam-Dong Bookshop",
-        "Welcome to the Hyunam-Dong ...",
+        "Welcome to the Hyunam-Dong Bookshop",
         "Hwang Bo-Reum",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/02/welcome-to-the-hyunam-dong-bookshop.jpg",
         Review("Cozy Fiction"),
@@ -313,7 +313,7 @@ bookshelf_self = [
 bookshelf_leadership = [
     Book(
         "The 21 Indispensable Qualities of a Leader",
-        "The 21 Indispensable ...",
+        "The 21 Indispensable Qualities of a Leader",
         "John C. Maxwell",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-57-1.png",
         Review("Informative", 4.33),
@@ -343,7 +343,7 @@ bookshelf_leadership = [
     # 2025
     Book(
         "The Five Dysfunctions of a Team",
-        "The Five Dysfunctions of ...",
+        "The Five Dysfunctions of a Team",
         "Patrick Lencioni",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-five-dysfunctions-of-a-team.jpg",
         Review("Engaging and insightful", 5),
@@ -418,7 +418,7 @@ bookshelf_technical = [
     ),
     Book(
         "Designing Data-Intensive Applications",
-        "Designing Data-Intensive ...",
+        "Designing Data-Intensive Applications",
         "Martin Kleppmann, Chris Riccomini",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/download.png",
         Review("Detailed", 4),
