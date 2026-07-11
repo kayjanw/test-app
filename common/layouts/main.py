@@ -10,6 +10,7 @@ def main_layout():
             dcc.Location(id="url", refresh=False),
             dmc.MantineProvider(html.Div(id="page-content")),
             html.Div(id="blank-output"),
+            html.Div(id="resize-trigger", style={"display": "none"}),
             html.H6(
                 [
                     html.H6("If you like this, "),

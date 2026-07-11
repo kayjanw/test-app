@@ -9,11 +9,21 @@ from cv.data.shows import shows_data
 from cv.model.show import Show
 
 
-def show_splash(shows: List[Show]):
+def divide_cols(shows: list[Show], n_cols: int):
+    shows_cols = [shows[i::n_cols] for i in range(n_cols)]
+    return dmc.Group(
+        [html.Div([show.div for show in shows_col]) for shows_col in shows_cols],
+        align="flex-start",
+        grow=True,
+    )
+
+
+def show_splash(shows: List[Show], n_cols: int):
     return html.Div(
         children=[
             dmc.Card(
-                [show.div for show in shows],
+                divide_cols(shows, n_cols),
+                # [show.div for show in shows],
                 className="card-show",
             ),
         ],
@@ -34,29 +44,13 @@ def shows_tab(app):
             html.Div(
                 [
                     dmc.Tabs(
-                        children=[
-                            dmc.TabsList(
-                                [
-                                    dmc.TabsTab(
-                                        show[1],
-                                        value=show[1],
-                                    )
-                                    for show in shows_data
-                                ]
-                            ),
-                        ]
-                        + [
-                            dmc.TabsPanel(
-                                show_splash(show[0]),
-                                value=show[1],
-                            )
-                            for show in shows_data
-                        ],
+                        children=[],
                         value=shows_data[0][1],
                         color="#202029",
                         variant="default",
                         radius="md",
                         orientation="horizontal",
+                        id="shows-tab",
                     ),
                     html.Br(),
                 ],

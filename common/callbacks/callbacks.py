@@ -292,3 +292,26 @@ def register_callbacks(app, print_function):
         Output("blank-output", "children"),
         [Input("tabs-parent", "value")],
     )
+
+    app.clientside_callback(
+        """
+        function(trigger) {
+            if (!window.hasResizeListener) {
+                window.hasResizeListener = true;
+
+                // Debounce function to prevent overloading Dash callbacks
+                let timeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        const triggerEl = document.getElementById('resize-trigger');
+                        if (triggerEl) triggerEl.click();
+                    }, 150); // Fires 150ms after user stops resizing
+                });
+            }
+            return window.innerWidth;
+        }
+        """,
+        Output("resize-trigger", "children"),
+        Input("resize-trigger", "n_clicks"),
+    )
