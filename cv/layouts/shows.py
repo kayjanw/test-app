@@ -4,7 +4,6 @@ import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
-from common.layouts.carousel import card_carousel
 from common.layouts.main import content_header
 from cv.data.shows import shows_data
 from cv.model.show import Show
@@ -14,7 +13,7 @@ def show_splash(shows: List[Show]):
     return html.Div(
         children=[
             dmc.Card(
-                [card_carousel(show) for show in shows],
+                [show.div for show in shows],
                 className="card-show",
             ),
         ],

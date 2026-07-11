@@ -34,3 +34,9 @@ class Review:
                 html.Span(self.genre_or_review),
             ]
         )
+
+    def __lt__(self, other: "Review"):
+        # Sort based on rating (descending order) or genre_or_review (ascending order)
+        if is_numeric_rating(self.rating) and is_numeric_rating(other.rating):
+            return self.rating > other.rating
+        return self.genre_or_review < other.genre_or_review

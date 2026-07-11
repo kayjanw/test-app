@@ -16,7 +16,6 @@ rating_system = {
 theatres = [
     Show(
         "Psychobitch",
-        "Psychobitch",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/xlmotbp0unnr838md9dv.jpg",
         "Wild Rice",
         "2023-08-15 19:30",
@@ -25,7 +24,6 @@ theatres = [
         Review("Good storytelling, one-woman show", 5),
     ),
     Show(
-        "See You, Anniversary",
         "See You, Anniversary",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/kvbanner.jpg",
         "Wild Rice",
@@ -36,7 +34,6 @@ theatres = [
     ),
     Show(
         "Roald Dahl's The BFG",
-        "BFG",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/5118f2cd637571b38bd1c5a631d0617d8819296904a929fcacaaecb4bd122b13.webp",
         "Singapore Repertory Theatre",
         "2026-05-07 19:00",
@@ -46,7 +43,6 @@ theatres = [
     ),
     Show(
         "Der Lauf (The Way Things Go)",
-        "Der Lauf",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/der-lauf-the-way-things-go-01.jpg",
         "Les Velocimanes Associes (Belgium)",
         "2026-06-07 17:00",
@@ -55,7 +51,6 @@ theatres = [
         Review("Fun, weird", 2.33),
     ),
     Show(
-        "The Trials",
         "The Trials",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/tyc-the-trials-webpage.jpg",
         "Singapore Repertory Theatre",
@@ -66,7 +61,6 @@ theatres = [
     ),
     Show(
         "Girls Girls Girls",
-        "Girls Girls Girls",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/ggg-2000x1000-rating.jpg",
         "Wild Rice",
         "2026-06-21 13:30",
@@ -75,7 +69,6 @@ theatres = [
         Review("Just storytelling", 3.33),
     ),
     Show(
-        "And Then There Were None",
         "And Then There Were None",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/250630-00047.jpeg",
         "The Winterplayers",
@@ -86,7 +79,6 @@ theatres = [
     ),
     Show(
         "A Mirror",
-        "A Mirror",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/6a2f612bb937a-scaled.jpg.webp?w=2048",
         "Pangdemonium!",
         "2026-07-12 15:00",
@@ -94,7 +86,6 @@ theatres = [
         "Section A, AE-(18-19)",
     ),
     Show(
-        "Everything but the Brain",
         "Everything but the Brain",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/260425-00003.jpeg",
         "-",
@@ -106,7 +97,6 @@ theatres = [
 musicals = [
     Show(
         "Hamilton",
-        "Hamilton",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/s4uvyajv1lld3c2mtbob.jpg",
         "-",
         "2024-05-04 20:00",  # 2026-05-11 22:00
@@ -115,7 +105,6 @@ musicals = [
         Review("Good music and lyrics", 4.33),
     ),
     Show(
-        "Ms Saigon",
         "Ms Saigon",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/misssaigonmusicalatsandstheatreinsingapore.jpg",
         "-",
@@ -126,7 +115,6 @@ musicals = [
     ),
     Show(
         "The Book of Mormon",
-        "The Book of Mormon",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/event-list-image_35231.jpg.webp",
         "-",
         "2024-12-11 19:30",
@@ -135,7 +123,6 @@ musicals = [
         Review("Amazing, funny", 4.33),
     ),
     Show(
-        "Wicked",
         "Wicked",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/wickedmusicalatsandstheatreinsingapore.jpg",
         "-",
@@ -146,7 +133,6 @@ musicals = [
     ),
     Show(
         "Operation Mincemeat",
-        "Operation Mincemeat",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/caption.jpg",
         "-",
         "2026-02-27 19:30",
@@ -155,7 +141,6 @@ musicals = [
         Review("Funny, some parts touching", 4),
     ),
     Show(
-        "Maybe Happy Ending",
         "Maybe Happy Ending",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/images-1.jpeg",
         "-",
@@ -166,7 +151,6 @@ musicals = [
     ),
     Show(
         "Hadestown",
-        "Hadestown",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/ht-facebook.jpg",
         "-",
         "2026-03-04 19:00",
@@ -175,7 +159,6 @@ musicals = [
         Review("Bad casting", 2.33),
     ),
     Show(
-        "Cabaret",
         "Cabaret",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/images-2.jpeg",
         "-",
@@ -186,7 +169,6 @@ musicals = [
     ),
     Show(
         "The Producers",
-        "The Producers",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-producers-london-theatre-direct-1920x1080-1.jpg",
         "-",
         "2026-04-20 19:00",
@@ -195,7 +177,6 @@ musicals = [
         Review("So absurd, so good", 5),
     ),
     Show(
-        "Come Alive! The Greatest Showman Circus Spectacular",
         "Come Alive! The Greatest Showman Circus Spectacular",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/ca_ttg_assets_x5_oct24_1600x1200.jpg",
         "-",
@@ -206,7 +187,6 @@ musicals = [
     ),
     Show(
         "Les Miserables: The Arena Spectacular",
-        "Les Miserables: The Arena Spectacular",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/images-3.jpeg",
         "-",
         "2026-05-06 20:00",
@@ -215,7 +195,6 @@ musicals = [
         Review("Singing without acting", 1.33),
     ),
     Show(
-        "Charlie and the Chocolate Factory",
         "Charlie and the Chocolate Factory",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/mdhdh2tbd2ehhczomeat.jpg",
         "-",
@@ -226,7 +205,6 @@ musicals = [
     ),
     Show(
         "Jesus Christ Superstar",
-        "Jesus Christ Superstar",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-23-at-1.50.18-pm.png.webp",
         "-",
         "2026-09-02 20:00",
@@ -235,7 +213,6 @@ musicals = [
     ),
     Show(
         "CATS",
-        "CATS",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/cats.jpg?w=1024",
         "-",
         "2026-11-10 20:00",
@@ -243,7 +220,6 @@ musicals = [
         "<seat>",
     ),
     Show(
-        "Moulin Rouge!",
         "Moulin Rouge!",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2026-04-22-at-11.00.02-am.png",
         "-",
@@ -255,7 +231,6 @@ musicals = [
 comedy = [
     Show(
         "Kumar: Guilty",
-        "Kumar: Guilty",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/images-4.jpeg",
         "-",
         "2023-07-13 20:00",
@@ -264,7 +239,6 @@ comedy = [
         Review("Crude", 3),
     ),
     Show(
-        "Kumar: Uncut",
         "Kumar: Uncut",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/kumaruncut.jpg",
         "-",
@@ -275,7 +249,6 @@ comedy = [
     ),
     Show(
         "Atsuko Okatsuka: Full Grown",
-        "Atsuko Okatsuka: Full Grown",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/atsuko-okatsuka.jpg.webp",
         "-",
         "2024-07-22 20:00",
@@ -284,7 +257,6 @@ comedy = [
         Review("Dumb humour", 3),
     ),
     Show(
-        "Matt Rife: Stay Golden",
         "Matt Rife: Stay Golden",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/images-5.jpeg",
         "-",
@@ -295,7 +267,6 @@ comedy = [
     ),
     Show(
         "New York Comedy Club @ East Village",
-        "New York Comedy Club @ East Village",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/1920x0.jpg",
         "New York Comedy Club",
         "2026-03-02 20:00",
@@ -304,7 +275,6 @@ comedy = [
         Review("Funny", 3.33),
     ),
     Show(
-        "Always Be Comedy",
         "Always Be Comedy",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/cc33eb_cdeaa1e3745b4cae861e474b3b80c872mv2.png",
         "Always Be Comedy",
@@ -315,7 +285,6 @@ comedy = [
     ),
     Show(
         "Rhys James: Work In Progress",
-        "Rhys James: Work In Progress",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/rhys-james-1-jpg.webp",
         "Chuckle Busters",
         "2026-04-21 20:00",
@@ -325,7 +294,6 @@ comedy = [
     ),
     Show(
         "Boom Chicago: Sunday Night Live",
-        "Boom Chicago: Sunday Night Live",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/bc_website_vignettes3_2_v2_4.jpg.webp",
         "Boom Chicago",
         "2026-04-26 17:30",
@@ -334,7 +302,6 @@ comedy = [
         Review("Hilarious!", 5),
     ),
     Show(
-        "Kanan Gill: Not This Again",
         "Kanan Gill: Not This Again",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/26sg_kanangill_2d70c06f284a8d105f3dae213cd04c31.jpg",
         "Atlas Live Touring Co.",
@@ -346,7 +313,6 @@ comedy = [
 orchestra = [
     Show(
         "Candlelight Orchestra: Tribute to Joe Hisaishi",
-        "Candlelight: Tribute to Joe Hisaishi",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/cjoe_h.jpg",
         "Fever",
         "2023-03-23 21:00",
@@ -356,7 +322,6 @@ orchestra = [
     ),
     Show(
         "La La Land",
-        "La La Land",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/la-la-land-in-concert-2025-01.jpg",
         "Singapore Street Festival Limited",
         "2025-03-19 20:00",
@@ -365,7 +330,6 @@ orchestra = [
         Review("Live movie", 3.33),
     ),
     Show(
-        "Pixar in Concert",
         "Pixar in Concert",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/251211-00004.jpeg",
         "-",
@@ -378,7 +342,6 @@ orchestra = [
 others = [
     Show(
         "Cirque du Soleil Kooza",
-        "Cirque du Soleil Kooza",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/screenshot-2025-11-30-at-6.10.55-pm.png",
         "MAST Entertainment SG, Lushington Entertainments",
         "2026-02-11 20:00",
@@ -388,7 +351,6 @@ others = [
     ),
     Show(
         "Dracula",
-        "Dracula",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/dracula-singapore-onsaleassets-584x268px_0.png",
         "BIG Live Pte Ltd",
         "2026-07-15 20:00",
@@ -396,7 +358,6 @@ others = [
         "<seat>",
     ),
     Show(
-        "The Nutcracker",
         "The Nutcracker",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-nutcracker.jpg?w=1024",
         "State Ballet of Georgia",

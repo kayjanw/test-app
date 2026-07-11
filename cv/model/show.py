@@ -1,13 +1,13 @@
 import datetime as dt
 
+from cv.model.base_item import BaseItem
 from cv.model.review import Review
 
 
-class Show:
+class Show(BaseItem):
     def __init__(
         self,
         title: str,
-        title_short: str,
         image_url: str,
         production: str,
         date: str | dt.datetime,
@@ -15,14 +15,8 @@ class Show:
         seat: str = "",
         review: Review = Review(""),
     ):
-        self.title = title
-        self.title_short = title_short
-        self.image_url = image_url
+        super().__init__(title, image_url, review)
         self.production = production
         self.date = date
         self.location = location
         self.seat = seat
-        self.review = review
-
-    def __lt__(self, other: "Show") -> bool:
-        return self.review.rating > other.review.rating

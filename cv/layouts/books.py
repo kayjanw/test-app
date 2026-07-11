@@ -4,7 +4,6 @@ import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
-from common.layouts.carousel import card_carousel
 from common.layouts.main import content_header
 from cv.data.books import Book, book_data, book_reading_data, convert_to_table
 from cv.layouts.helper import create_scrollable_area
@@ -15,7 +14,7 @@ def book_carousel(books: List[Book]):
     return dmc.Container(
         children=[
             dmc.Carousel(
-                [dmc.CarouselSlide(card_carousel(book)) for book in books],
+                [dmc.CarouselSlide(book.div) for book in books],
                 controlSize=45,
                 slideSize="18%",
                 slideGap="md",
