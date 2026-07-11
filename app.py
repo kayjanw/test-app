@@ -1,6 +1,9 @@
 import warnings
 
 import dash
+import gevent.monkey
+
+gevent.monkey.patch_all()
 
 from common.callbacks.callbacks import register_callbacks
 from common.layouts.main import main_layout
@@ -21,11 +24,6 @@ from main.callbacks.trip_planner import (
 )
 from main.callbacks.wnrs import register_callbacks as register_callbacks_wnrs
 from routes import register_routes
-
-# import gevent.monkey
-#
-# gevent.monkey.patch_all()
-
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
