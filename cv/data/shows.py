@@ -29,7 +29,7 @@ theatres = [
         "Wild Rice",
         "2025-02-23 15:00",
         "Ngee Ann Kongsi Theatre, Funan",
-        "-",
+        "Stalls, A-(31-32)",
         Review("Touching", 4),
     ),
     Show(
