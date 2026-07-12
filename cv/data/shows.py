@@ -84,6 +84,7 @@ theatres = [
         "2026-07-12 15:00",
         "Singtel Waterfront Theatre",
         "Section A, AE-(18-19)",
+        Review("Suspenseful, agitational, masterpiece", 5),
     ),
     Show(
         "Everything but the Brain",
