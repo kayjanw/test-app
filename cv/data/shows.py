@@ -341,6 +341,24 @@ orchestra = [
 ]
 others = [
     Show(
+        "Shanghai ERA Intersection of Time",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/0cdd3a57-a82f-422b-a7aa-19217f6bc90a.jpg",
+        "",
+        "2016-05-19",
+        "Shanghai Circus World",
+        "",
+        Review("Cirque du Soleil on steroids", 5),
+    ),
+    Show(
+        '"O" by Cirque du Soleil',
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/o-by-cirque-du-soleil.jpg",
+        "",
+        "2023-04-27",
+        "Bellagio Las Vegas",
+        "",
+        Review("Feast for the eyes", 4.33),
+    ),
+    Show(
         "Baby Queen",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/baby-queen-singapore-first-drag-queen-film-1.png?w=1024",
         "",
