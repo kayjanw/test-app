@@ -29,7 +29,7 @@ theatres = [
         "Wild Rice",
         "2025-02-23 15:00",
         "Ngee Ann Kongsi Theatre, Funan",
-        "-",
+        "Stalls, A-(31-32)",
         Review("Touching", 4),
     ),
     Show(
@@ -84,6 +84,7 @@ theatres = [
         "2026-07-12 15:00",
         "Singtel Waterfront Theatre",
         "Section A, AE-(18-19)",
+        Review("Suspenseful, immersive, masterpiece", 5),
     ),
     Show(
         "Everything but the Brain",
