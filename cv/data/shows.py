@@ -384,6 +384,7 @@ others = [
         "2026-07-15 20:00",
         "Esplanade Theatre",
         "Door 2, Stalls, C-18",
+        Review("Elegant and good creepy", 4),
     ),
     Show(
         "The Nutcracker",
