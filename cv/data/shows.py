@@ -383,7 +383,7 @@ others = [
         "BIG Live Pte Ltd",
         "2026-07-15 20:00",
         "Esplanade Theatre",
-        "<seat>",
+        "Door 2, Stalls, C-18",
     ),
     Show(
         "The Nutcracker",
