@@ -94,6 +94,14 @@ theatres = [
         "The Arts House at the Old Parliament, Play Den",
         "General Admission",
     ),
+    Show(
+        "The Parting Glass",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/image.png",
+        "Gateway Arts Limited",
+        "2026-09-13 17:00",
+        "The Blackbird Singapore (Gilman Barracks)",
+        "General Admission",
+    ),
 ]
 musicals = [
     Show(
