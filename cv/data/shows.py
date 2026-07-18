@@ -99,7 +99,7 @@ theatres = [
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/image.png",
         "Gateway Arts Limited",
         "2026-09-13 17:00",
-        "The Blackbird Singapore (Gilman Barracks)",
+        "The Blackbird Singapore (Gillman Barracks)",
         "General Admission",
     ),
 ]
