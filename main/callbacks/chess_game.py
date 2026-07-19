@@ -72,9 +72,8 @@ def register_callbacks_chess(app, print_function):
         Returns:
             board display, history record, status of game
         """
-        error_status = ""
+        error_status = state.get("error", "")
         if "error" in state:
-            error_status = state["error"]
             state = None
 
         chess_game = ChessGame(state)

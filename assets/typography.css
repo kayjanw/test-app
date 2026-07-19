@@ -967,7 +967,16 @@ span p {
     margin-bottom: 0;
 }
 
-.chess-button {
+.chess-squares {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: min(50vw, 720px);
+    max-width: 720px;
+    border: 4px solid #333;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.chess-square {
     width: 100%;
     height: unset;
     aspect-ratio: 1/1;
@@ -980,7 +989,6 @@ span p {
     justify-content: center;
     cursor: pointer;
 }
-
 .chess-history {
     display: flex;
     gap: 8px;

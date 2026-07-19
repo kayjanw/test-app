@@ -20,6 +20,14 @@ class ChessGame:
 
     @classmethod
     def from_moves(cls, moves: list[str]):
+        """Recreate chess game state from list of moves
+
+        Args:
+            moves: list of moves in uci format
+
+        Returns:
+            reconstructed state of chess game
+        """
         instance = ChessGame()
         for move_uci in moves:
             move = chess.Move.from_uci(move_uci)
@@ -213,18 +221,7 @@ class ChessGame:
                     )
                 )
 
-        return html.Div(
-            squares,
-            style={
-                "display": "grid",
-                "gridTemplateColumns": "repeat(8, 1fr)",
-                "width": "min(80vw, 720px)",
-                "maxWidth": "720px",
-                "border": "4px solid #333",
-                "borderRadius": "6px",
-                "overflow": "hidden",
-            },
-        )
+        return html.Div(squares, className="chess-squares")
 
     @staticmethod
     def _render_square(
@@ -253,7 +250,7 @@ class ChessGame:
             id={"type": "chess-square", "square": square},
             n_clicks=0,
             style={"backgroundColor": background},
-            className="chess-button",
+            className="chess-square",
         )
 
     @staticmethod
