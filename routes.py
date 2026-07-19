@@ -49,6 +49,20 @@ def register_routes(app):
                 max_age=0,
             )
 
+    @app.server.route("/download_chess/", methods=["POST"])
+    def download_chess():
+        d_ser = request.form.get("result")
+        d = decode_dict(d_ser)
+        if d:
+            buf = create_json_from_dict(d)
+            return send_file(
+                buf,
+                mimetype="application/json",
+                as_attachment=True,
+                download_name="chess.json",
+                max_age=0,
+            )
+
     @app.server.route("/<path:path>")
     def serve_sphinx_docs(path="index.html"):
         return app.server.send_static_file(path)

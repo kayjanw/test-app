@@ -981,6 +981,13 @@ span p {
     cursor: pointer;
 }
 
+.chess-history {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+    font-family: monospace;
+}
+
 .mantine-ColorPicker-swatch {
   width: 20px !important;
   height: 20px !important;

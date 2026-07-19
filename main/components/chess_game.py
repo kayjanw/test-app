@@ -7,6 +7,7 @@ import chess.polyglot
 from dash import html
 from dash_iconify import DashIconify
 
+from common.components.helper import encode_dict
 from main.model.chess_game import PIECE_UNICODE, PIECE_VALUES, ChessConfig
 
 CONFIG = ChessConfig(depth=2)
@@ -17,6 +18,14 @@ class ChessGame:
         self.board = chess.Board(state["fen"]) if state else chess.Board()
         self.state = state or self.get_initial_state()
 
+    @classmethod
+    def from_moves(cls, moves: list[str]):
+        instance = ChessGame()
+        for move_uci in moves:
+            move = chess.Move.from_uci(move_uci)
+            instance._move(move)
+        return instance
+
     def get_initial_state(self) -> dict:
         """Get initial chess game
 
@@ -26,7 +35,6 @@ class ChessGame:
         return {
             "fen": self.board.fen(),
             "selected_square": None,
-            "last_move": None,
             "history": [],
         }
 
@@ -42,7 +50,7 @@ class ChessGame:
         if self.board.is_game_over():
             return
 
-        # If the computer controls the current side, human should not be able to move.
+        # If the computer controls the current side, human should not be able to move
         if (
             CONFIG.computer_color is not None
             and self.board.turn == CONFIG.computer_color
@@ -68,8 +76,7 @@ class ChessGame:
             to_square=clicked_square,
         )
 
-        # Handle promotion automatically as a queen.
-        # You can later replace this with a promotion modal.
+        # Promote to queen
         if (
             self.board.piece_at(selected_square)
             and self.board.piece_at(selected_square).piece_type == chess.PAWN
@@ -81,18 +88,18 @@ class ChessGame:
                 promotion=chess.QUEEN,
             )
 
-        # If the attempted move is illegal:
-        # - Clicking another own piece selects that piece instead.
-        # - Otherwise clear the selection.
         if move not in self.board.legal_moves:
             clicked_piece = self.board.piece_at(clicked_square)
+            # Clicking another own piece selects that piece instead
             if clicked_piece is not None and clicked_piece.color == self.board.turn:
                 self.state["selected_square"] = clicked_square
-                return
-            self.state["selected_square"] = None
-            return
+            else:
+                self.state["selected_square"] = None
+        else:
+            self._move(move)
 
-        # Human move
+    def _move(self, move: chess.Move):
+        """Handle chess move"""
         san = self.board.san(move)
         captured_piece = self.board.piece_at(move.to_square)
         self.board.push(move)
@@ -106,20 +113,17 @@ class ChessGame:
             ),
             "fen": self.board.fen(),
         }
-
         history = [
             *self.state.get("history", []),
             history_entry,
         ]
-
         self.state = {
             **self.state,
             "fen": self.board.fen(),
             "selected_square": None,
-            "last_move": move.uci(),
             "history": history,
         }
-        #
+
         # # Computer move
         # if (
         #         CONFIG.computer_color is not None
@@ -163,12 +167,30 @@ class ChessGame:
         #         new_state = {
         #             **new_state,
         #             "fen": board.fen(),
-        #             "last_move": computer_move.uci(),
         #             "history": [
         #                 *history,
         #                 computer_history_entry,
         #             ],
         #         }
+
+    def undo(self) -> None:
+        """Handle undo
+
+        Returns:
+            update state to previous state of chess game
+        """
+        history = self.state.get("history", [])
+        if history:
+            history.pop()
+        board = chess.Board()
+        for move in history:
+            board.push_san(move["uci"])
+        self.board = board
+        self.state = {
+            "fen": self.board.fen(),
+            "selected_square": None,
+            "history": history,
+        }
 
     def render(self, selected_square: Optional[int] = None) -> html.Div:
         """Render the chessboard from White's perspective"""
@@ -279,18 +301,14 @@ class ChessGame:
 
         for index in range(0, len(history), 2):
             white_move = history[index]
-
             black_move = history[index + 1] if index + 1 < len(history) else None
-
             rows.append(
                 html.Div(
                     [
                         html.Span(
                             f"{index // 2 + 1}.",
-                            style={
-                                "width": "32px",
-                                "fontWeight": "bold",
-                            },
+                            style={"width": "32px"},
+                            className="p-bold",
                         ),
                         html.Span(
                             white_move["san"],
@@ -301,16 +319,20 @@ class ChessGame:
                             style={"width": "80px"},
                         ),
                     ],
-                    style={
-                        "display": "flex",
-                        "gap": "8px",
-                        "padding": "4px 0",
-                        "fontFamily": "monospace",
-                    },
+                    className="chess-history",
                 )
             )
 
         return rows
+
+    def convert_to_save_format(self) -> dict:
+        return encode_dict(
+            {
+                "moves": ",".join(
+                    history["uci"] for history in self.state.get("history", [])
+                )
+            }
+        )
 
 
 def evaluate_board(board: chess.Board) -> int:
