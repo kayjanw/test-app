@@ -26,7 +26,8 @@ def register_callbacks_chess(app, print_function):
 
         chess_game = ChessGame(state)
         clicked_square = ctx.triggered_id["square"]
-        return chess_game.compute_new_state(clicked_square)
+        chess_game.move(clicked_square)
+        return chess_game.state
 
     @app.callback(
         Output("chess-container", "children"),

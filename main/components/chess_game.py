@@ -15,7 +15,7 @@ CONFIG = ChessConfig(depth=2)
 class ChessGame:
     def __init__(self, state: dict[str, Any] | None = None):
         self.board = chess.Board(state["fen"]) if state else chess.Board()
-        self.state = state
+        self.state = state or self.get_initial_state()
 
     def get_initial_state(self) -> dict:
         """Get initial chess game
@@ -30,17 +30,17 @@ class ChessGame:
             "history": [],
         }
 
-    def compute_new_state(self, clicked_square: chess.Square) -> dict:
+    def move(self, clicked_square: chess.Square) -> None:
         """Handles selecting a piece, moving a selected piece, PC response
 
         Args:
             clicked_square: current clicked square
 
         Returns:
-            new state of chess game
+            update state to new state of chess game
         """
         if self.board.is_game_over():
-            return self.state
+            return
 
         # If the computer controls the current side, human should not be able to move.
         if (
@@ -48,21 +48,19 @@ class ChessGame:
             and self.board.turn == CONFIG.computer_color
         ):
             # TODO: Compute next step for computer
-            return self.state
+            return
 
         # Nothing is selected yet - colour the square yellow
         selected_square = self.state.get("selected_square")
         if selected_square is None:
             piece = self.board.piece_at(clicked_square)
             if piece is None:
-                return self.state
+                return
             if CONFIG.computer_color is not None:
                 if piece.color == CONFIG.computer_color:
-                    return self.state
-            return {
-                **self.state,
-                "selected_square": clicked_square,
-            }
+                    return
+            self.state["selected_square"] = clicked_square
+            return
 
         # Something is selected
         move = chess.Move(
@@ -89,8 +87,10 @@ class ChessGame:
         if move not in self.board.legal_moves:
             clicked_piece = self.board.piece_at(clicked_square)
             if clicked_piece is not None and clicked_piece.color == self.board.turn:
-                return {**self.state, "selected_square": clicked_square}
-            return {**self.state, "selected_square": None}
+                self.state["selected_square"] = clicked_square
+                return
+            self.state["selected_square"] = None
+            return
 
         # Human move
         san = self.board.san(move)
@@ -112,7 +112,7 @@ class ChessGame:
             history_entry,
         ]
 
-        new_state = {
+        self.state = {
             **self.state,
             "fen": self.board.fen(),
             "selected_square": None,
@@ -169,8 +169,6 @@ class ChessGame:
         #                 computer_history_entry,
         #             ],
         #         }
-
-        return new_state
 
     def render(self, selected_square: Optional[int] = None) -> html.Div:
         """Render the chessboard from White's perspective"""
