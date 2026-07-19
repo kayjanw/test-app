@@ -258,19 +258,15 @@ class ChessGame:
 
     @staticmethod
     def history_to_components(history: list[dict]) -> list:
-        """
-        Display the captured moves.
-
-        Each history entry contains:
-
-            {
-                "move": "e4",
-                "uci": "e2e4",
-                "from": "e2",
-                "to": "e4",
-                "captured": None,
-                "fen": "...",
-            }
+        """Display the captured moves. Each history entry contains:
+        {
+            "move": "e4",
+            "uci": "e2e4",
+            "from": "e2",
+            "to": "e4",
+            "captured": None,
+            "fen": "...",
+        }
         """
 
         if not history:
