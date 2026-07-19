@@ -17,12 +17,7 @@ def register_callbacks_chess(app, print_function):
     )
     @print_callback(print_function)
     def handle_move(square_clicks, new_game_clicks, square_ids, state):
-        """Board is always reconstructed from the FEN stored in dcc.Store. Handles:
-        1. New game
-        2. Selecting a piece
-        3. Moving a selected piece
-        4. Computer's response
-        """
+        """Board is always reconstructed from the FEN stored in dcc.Store"""
         if ctx.triggered_id == "chess-new-game":
             return ChessGame().get_initial_state()
 
@@ -41,6 +36,14 @@ def register_callbacks_chess(app, print_function):
     )
     @print_callback(print_function)
     def update_display(state):
+        """Update display of UI components
+
+        Args:
+            state: updated state of chess game
+
+        Returns:
+            board display, history record, status of game
+        """
         chess_game = ChessGame(state)
         board = chess_game.board
         board_component = chess_game.render(
@@ -66,8 +69,4 @@ def register_callbacks_chess(app, print_function):
             else:
                 status = f"{side} to move"
 
-        return (
-            board_component,
-            history_component,
-            status,
-        )
+        return board_component, history_component, status
