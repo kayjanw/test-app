@@ -174,6 +174,12 @@ def sidebar_dropdown():
                         className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
+                    dcc.Tab(
+                        label="Chess",
+                        value="tab-chess",
+                        className="custom-tab-sub",
+                        selected_className="custom-tab-selected",
+                    ),
                     # dcc.Tab(
                     #     label="Go to events!",
                     #     value="tab-others",

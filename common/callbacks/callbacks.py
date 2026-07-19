@@ -27,6 +27,7 @@ from main.layouts import (
     change_tab,
     changes_tab,
     chat_tab,
+    chess_tab,
     contact_tab,
     event_tab,
     image_edit_tab,
@@ -221,6 +222,8 @@ def register_callbacks(app, print_function):
             return rng_tab()
         elif tab == "tab-wnrs":
             return wnrs_tab(app)
+        elif tab == "tab-chess":
+            return chess_tab(app)
         # CV
         elif tab == "tab-cv-aboutme":
             return about_me_cv_tab(app)
@@ -266,6 +269,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Random Generator'
             } else if (tab_value === 'tab-wnrs') {
                 document.title = 'WNRS Card Game'
+            } else if (tab_value === 'tab-chess') {
+                document.title = 'Chess'
             } else if (tab_value === 'tab-contact') {
                 document.title = 'Contact Me'
             } else if (tab_value === 'tab-image') {

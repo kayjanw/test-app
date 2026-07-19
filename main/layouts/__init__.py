@@ -2,6 +2,7 @@ from .about_me import about_me_tab
 from .articles import articles_tab
 from .change_calculator import change_tab, changes_tab
 from .chat import chat_tab
+from .chess_game import chess_tab
 from .contact import contact_tab
 from .event_planner import event_tab
 from .image_edit import image_edit_tab

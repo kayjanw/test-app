@@ -69,6 +69,9 @@ wrapt==1.12.1
 xlrd==1.2.0
 XlsxWriter==1.2.8
 
+#Chess
+python-chess
+
 #Trading
 #MetaTrader5==5.0.37; platform_system  == "Windows"
 #yfinance==0.1.70

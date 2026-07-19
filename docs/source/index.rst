@@ -42,6 +42,7 @@ Code Documentation
    components/trade
    components/trip-planner
    components/wnrs
+   components/chess-game
 
 :doc:`components/change-calculator`
     List of functions for Change Calculator tab
@@ -66,6 +67,9 @@ Code Documentation
 
 :doc:`components/wnrs`
     List of functions for WNRS tab
+
+:doc:`components/chess-game`
+    List of functions for Chess tab
 
 Indices and tables
 ==================
