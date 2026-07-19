@@ -6,7 +6,7 @@ from common.components.helper import print_callback
 from main.components import TradeSocket
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_trade(app, print_function):
     @app.callback(
         [Output("trade-result", "children"), Output("graph-trade", "figure")],
         Input("interval-trade", "n_intervals"),

@@ -13,7 +13,7 @@ from common.components.helper import (
 from main.components import ChatAnalyzer
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_chat(app, print_function):
 
     # @app.callback(Output('text-chat-loading', 'children'),
     #               [Input('upload-chat', 'contents')])

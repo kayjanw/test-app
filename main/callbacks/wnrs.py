@@ -16,7 +16,7 @@ from common.components.helper import (
 from main.components import WNRS
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_wnrs(app, print_function):
     @app.callback(
         Output({"type": "modal-wnrs", "index": MATCH}, "is_open"),
         [

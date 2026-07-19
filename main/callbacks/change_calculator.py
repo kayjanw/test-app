@@ -16,7 +16,7 @@ from common.components.helper import (
 from main.components import ChangeCalculator
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_change_calculator(app, print_function):
     @app.callback(
         [
             Output("dropdown-change-worksheet", "options"),

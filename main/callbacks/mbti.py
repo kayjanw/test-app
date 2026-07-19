@@ -6,7 +6,7 @@ from common.components.helper import print_callback
 from main.components import MBTI
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_mbti(app, print_function):
     @app.callback(
         Output("text-mbti-words", "children"),
         [Input("input-mbti", "value")],

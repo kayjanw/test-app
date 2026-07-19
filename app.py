@@ -9,20 +9,15 @@ from common.callbacks.callbacks import register_callbacks
 from common.layouts.main import main_layout
 from cv.callbacks.shows import register_callbacks_shows
 from main.callbacks.articles import register_callbacks_articles
-from main.callbacks.change_calculator import (
-    register_callbacks as register_callbacks_change_calculator,
-)
-from main.callbacks.chat import register_callbacks as register_callbacks_chat
-from main.callbacks.event_planner import (
-    register_callbacks as register_callbacks_event_planner,
-)
-from main.callbacks.mbti import register_callbacks as register_callbacks_mbti
-from main.callbacks.rng import register_callbacks as register_callbacks_rng
-from main.callbacks.trade import register_callbacks as register_callbacks_trade
-from main.callbacks.trip_planner import (
-    register_callbacks as register_callbacks_trip_planner,
-)
-from main.callbacks.wnrs import register_callbacks as register_callbacks_wnrs
+from main.callbacks.change_calculator import register_callbacks_change_calculator
+from main.callbacks.chat import register_callbacks_chat
+from main.callbacks.chess_game import register_callbacks_chess
+from main.callbacks.event_planner import register_callbacks_event_planner
+from main.callbacks.mbti import register_callbacks_mbti
+from main.callbacks.rng import register_callbacks_rng
+from main.callbacks.trade import register_callbacks_trade
+from main.callbacks.trip_planner import register_callbacks_trip_planner
+from main.callbacks.wnrs import register_callbacks_wnrs
 from routes import register_routes
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
@@ -110,6 +105,7 @@ register_callbacks_rng(app, print_function)
 register_callbacks_trade(app, print_function)
 register_callbacks_trip_planner(app, print_function)
 register_callbacks_wnrs(app, print_function)
+register_callbacks_chess(app, print_function)
 register_callbacks_shows(app, print_function)
 register_routes(app)
 

@@ -12,7 +12,7 @@ from common.components.helper import (
 from main.components import RandomGenerator
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_rng(app, print_function):
     @app.callback(
         [
             Output("div-rng-select", "style"),

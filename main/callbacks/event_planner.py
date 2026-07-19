@@ -15,7 +15,7 @@ from common.components.helper import (
 from main.components import EventPlanner
 
 
-def register_callbacks(app, print_function):
+def register_callbacks_event_planner(app, print_function):
     @app.callback(
         [
             Output("text-event-confirm", "children"),
