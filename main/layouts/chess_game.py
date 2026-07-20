@@ -89,6 +89,7 @@ def chess_tab(app):
                     html.Div("History", style={"fontSize": "1.3em"}),
                     html.Div(id="chess-history"),
                 ],
+                id="chess-history-container",
                 className="custom-div-inline custom-div-center custom-margin-left custom-margin-right",
             ),
             dcc.Store(

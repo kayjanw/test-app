@@ -75,6 +75,9 @@ footer
         display: none;
         width: 85vw;
     }
+    #chess-history-container {
+        display: none;
+    }
     #tab-content {
         width: 93vw;
         margin-top: 8vh;
@@ -159,6 +162,9 @@ footer
     #sidebar {
         display: inline-block;
         width: 16vw;
+    }
+    #chess-history-container {
+        display: inline-block;
     }
     #tab-content {
         width: 80vw;
@@ -973,9 +979,9 @@ span p {
 }
 .chess-squares {
     display: grid;
-    grid-template-columns: repeat(8, 0.8fr);
-    width: min(64vw, 720px);
-    max-width: 720px;
+    grid-template-columns: repeat(8, 1fr);
+    width: min(85vw, 720px);
+    max-width: 650px;
     border: 4px solid #333;
     border-radius: 6px;
     overflow: hidden;
