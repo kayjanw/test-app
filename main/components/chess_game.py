@@ -10,32 +10,36 @@ from dash_iconify import DashIconify
 from common.components.helper import encode_dict
 from main.model.chess_game import PIECE_UNICODE, PIECE_VALUES, ChessConfig
 
-CONFIG = ChessConfig(depth=2)
+CONFIG = ChessConfig(computer_color=chess.BLACK, depth=2)
 
 
 class ChessGame:
-    def __init__(self, state: dict[str, Any] | None = None):
+    def __init__(self, state: dict[str, Any] | None = None, computer: bool = False):
         self.board = chess.Board(state["fen"]) if state else chess.Board()
-        self.state = state or self.get_initial_state()
+        self.state = state or self.get_initial_state(computer)
 
     @classmethod
-    def from_moves(cls, moves: list[str]):
+    def from_moves(cls, moves: list[str], computer: bool):
         """Recreate chess game state from list of moves
 
         Args:
             moves: list of moves in uci format
+            computer: whether computer is playing
 
         Returns:
             reconstructed state of chess game
         """
-        instance = ChessGame()
+        instance = ChessGame(computer=computer)
         for move_uci in moves:
             move = chess.Move.from_uci(move_uci)
             instance._move(move)
         return instance
 
-    def get_initial_state(self) -> dict:
+    def get_initial_state(self, computer: bool) -> dict:
         """Get initial chess game
+
+        Args:
+            computer: whether computer is playing
 
         Returns:
             initial state of chess game
@@ -44,10 +48,11 @@ class ChessGame:
             "fen": self.board.fen(),
             "selected_square": None,
             "history": [],
+            "computer": computer,
         }
 
     def move(self, clicked_square: chess.Square) -> None:
-        """Handles selecting a piece, moving a selected piece, PC response
+        """Handles selecting a piece, moving a selected piece, computer response (if applicable)
 
         Args:
             clicked_square: current clicked square
@@ -58,23 +63,12 @@ class ChessGame:
         if self.board.is_game_over():
             return
 
-        # If the computer controls the current side, human should not be able to move
-        if (
-            CONFIG.computer_color is not None
-            and self.board.turn == CONFIG.computer_color
-        ):
-            # TODO: Compute next step for computer
-            return
-
         # Nothing is selected yet - colour the square yellow
         selected_square = self.state.get("selected_square")
         if selected_square is None:
             piece = self.board.piece_at(clicked_square)
-            if piece is None:
+            if piece is None or piece.color != self.board.turn:
                 return
-            if CONFIG.computer_color is not None:
-                if piece.color == CONFIG.computer_color:
-                    return
             self.state["selected_square"] = clicked_square
             return
 
@@ -103,8 +97,23 @@ class ChessGame:
                 self.state["selected_square"] = clicked_square
             else:
                 self.state["selected_square"] = None
-        else:
-            self._move(move)
+            return
+
+        # Human move
+        self._move(move)
+
+        # Computer move
+        if (
+            self.state.get("computer")
+            and not self.board.is_game_over()
+            and self.board.turn == CONFIG.computer_color
+        ):
+            computer_move = choose_move(
+                board=self.board,
+                player=CONFIG.computer_color,
+                depth=CONFIG.depth,
+            )
+            self._move(computer_move)
 
     def _move(self, move: chess.Move):
         """Handle chess move"""
@@ -132,55 +141,6 @@ class ChessGame:
             "history": history,
         }
 
-        # # Computer move
-        # if (
-        #         CONFIG.computer_color is not None
-        #         and not board.is_game_over()
-        #         and board.turn == CONFIG.computer_color
-        # ):
-        #     print("computer move!")
-        #
-        #     computer_move = choose_computer_move(
-        #         board=board,
-        #         computer_color=CONFIG.computer_color,
-        #         depth=CONFIG.computer_depth,
-        #     )
-        #
-        #     if computer_move is not None:
-        #         computer_san = board.san(computer_move)
-        #
-        #         captured_piece = board.piece_at(
-        #             computer_move.to_square
-        #         )
-        #
-        #         board.push(computer_move)
-        #
-        #         computer_history_entry = {
-        #             "san": computer_san,
-        #             "uci": computer_move.uci(),
-        #             "from": chess.square_name(
-        #                 computer_move.from_square
-        #             ),
-        #             "to": chess.square_name(
-        #                 computer_move.to_square
-        #             ),
-        #             "captured": (
-        #                 captured_piece.symbol()
-        #                 if captured_piece is not None
-        #                 else None
-        #             ),
-        #             "fen": board.fen(),
-        #         }
-        #
-        #         new_state = {
-        #             **new_state,
-        #             "fen": board.fen(),
-        #             "history": [
-        #                 *history,
-        #                 computer_history_entry,
-        #             ],
-        #         }
-
     def undo(self) -> None:
         """Handle undo
 
@@ -190,11 +150,14 @@ class ChessGame:
         history = self.state.get("history", [])
         if history:
             history.pop()
+            if CONFIG.computer_color is not None:
+                history.pop()
         board = chess.Board()
         for move in history:
             board.push_san(move["uci"])
         self.board = board
         self.state = {
+            **self.state,
             "fen": self.board.fen(),
             "selected_square": None,
             "history": history,
@@ -315,13 +278,15 @@ class ChessGame:
             {
                 "moves": ",".join(
                     history["uci"] for history in self.state.get("history", [])
-                )
+                ),
+                "computer": self.state.get("computer"),
             }
         )
 
 
 def evaluate_board(board: chess.Board) -> int:
-    """Evaluate board for a score based on checkmate, pieces remaining, and mobility. Positive score is good for White."""
+    """Evaluate board for a score based on checkmate, pieces remaining, and mobility. Positive score is good for
+    White."""
 
     if board.is_checkmate():
         # Side to move is checkmated.
@@ -353,12 +318,12 @@ def evaluate_board(board: chess.Board) -> int:
 def minimax(
     board: chess.Board,
     depth: int,
-    alpha: int,
-    beta: int,
+    alpha: int | float,
+    beta: int | float,
     maximizing_player: bool,
 ) -> int:
-    """Standard minimax with alpha-beta pruning. The depth is measured in half-moves / plies. The first move is computed
-    as computer move, second step is human reply, and so on.
+    """Standard minimax with alpha-beta pruning. The depth is measured in half-moves / plies. The first move is
+    computed as computer move, the second step is human reply, and so on.
     """
 
     if depth == 0 or board.is_game_over():
@@ -394,13 +359,13 @@ def minimax(
     return value
 
 
-def choose_computer_move(
+def choose_move(
     board: chess.Board,
-    computer_color: chess.Color,
+    player: chess.Color,
     depth: int,
 ) -> Optional[chess.Move]:
     """
-    Choose the best move for the configured computer side.
+    Choose the best move.
     """
     legal_moves = list(board.legal_moves)
 
@@ -409,7 +374,7 @@ def choose_computer_move(
 
     best_move = None
 
-    if computer_color == chess.WHITE:
+    if player == chess.WHITE:
         best_score = -float("inf")
     else:
         best_score = float("inf")
@@ -422,12 +387,12 @@ def choose_computer_move(
             depth=max(depth - 1, 0),
             alpha=-float("inf"),
             beta=float("inf"),
-            maximizing_player=(computer_color == chess.BLACK),
+            maximizing_player=(player == chess.BLACK),
         )
 
         board.pop()
 
-        if computer_color == chess.WHITE:
+        if player == chess.WHITE:
             if score > best_score:
                 best_score = score
                 best_move = move

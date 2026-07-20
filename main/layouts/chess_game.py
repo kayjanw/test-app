@@ -1,3 +1,4 @@
+import dash_mantine_components as dmc
 from dash import dcc, html
 
 from common.components.helper import encode_dict
@@ -69,6 +70,16 @@ def chess_tab(app):
                             )
                         ],
                         className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
+                    ),
+                    dmc.Switch(
+                        id="chess-switch",
+                        labelPosition="right",
+                        label="Play against computer",
+                        size="lg",
+                        radius="lg",
+                        color="#202029",
+                        style={"vertical-align": "bottom", "margin-bottom": "2px"},
+                        className="vertical-center",
                     ),
                 ],
                 className="custom-div-inline custom-div-center custom-margin-left custom-margin-right",

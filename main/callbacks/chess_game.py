@@ -11,10 +11,15 @@ from main.components.chess_game import CONFIG, ChessGame
 
 def register_callbacks_chess(app, print_function):
     @app.callback(
-        [Output("chess-state", "data"), Output("input-chess", "value")],
+        [
+            Output("chess-state", "data"),
+            Output("input-chess", "value"),
+            Output("chess-switch", "checked"),
+        ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
         Input("chess-new-game", "n_clicks"),
         Input("chess-undo", "n_clicks"),
+        Input("chess-switch", "checked"),
         Input("uploadchess-button", "contents"),
         State("uploadchess-button", "filename"),
         State({"type": "chess-square", "square": ALL}, "id"),
@@ -26,35 +31,58 @@ def register_callbacks_chess(app, print_function):
         square_clicks,
         new_game_clicks,
         undo_clicks,
+        computer_toggle: bool,
         contents: str,
         filename: str,
         square_ids: list[dict[str, Union[str, int]]],
         state: dict,
     ):
-        """Board is always reconstructed from the FEN stored in dcc.Store"""
-        if ctx.triggered_id == "chess-new-game":
+        """Board is always reconstructed from the FEN stored in dcc.Store. There are 5 triggers
+
+        - Click on board
+        - New game
+        - Undo
+        - Toggle play with computer
+        - Upload
+        """
+        if ctx.triggered_id in ["chess-new-game", "chess-switch"]:
             state = None
+
         if ctx.triggered_id == "uploadchess-button":
             if "json" not in filename:
-                return {"error": return_message["file_not_uploaded_json"]}, ""
+                return (
+                    {"error": return_message["file_not_uploaded_json"]},
+                    "",
+                    computer_toggle,
+                )
             try:
                 data = parse_data(contents, filename)
                 data = json.loads(data.decode("utf-8"))
-                chess_game = ChessGame.from_moves(data["moves"].split(","))
+                chess_game = ChessGame.from_moves(
+                    data["moves"].split(","), data["computer"]
+                )
             except (KeyError, chess.InvalidMoveError):
-                return {"error": return_message["wrong_format_json"]}, ""
+                return (
+                    {"error": return_message["wrong_format_json"]},
+                    "",
+                    computer_toggle,
+                )
         else:
             # Game in error state
             if state and "error" in state:
                 return state, ""
-            chess_game = ChessGame(state)
+            chess_game = ChessGame(state, computer=computer_toggle)
 
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
         if isinstance(ctx.triggered_id, dict):
             clicked_square = ctx.triggered_id["square"]
             chess_game.move(clicked_square)
-        return chess_game.state, chess_game.convert_to_save_format()
+        return (
+            chess_game.state,
+            chess_game.convert_to_save_format(),
+            chess_game.state.get("computer"),
+        )
 
     @app.callback(
         Output("chess-container", "children"),
@@ -89,17 +117,14 @@ def register_callbacks_chess(app, print_function):
             winner = "Black" if board.turn == chess.WHITE else "White"
             status = f"Checkmate — {winner} wins"
         elif board.is_stalemate():
-            status = "Stalemate"
+            status = "Draw"
         elif board.is_check():
             side = "White" if board.turn == chess.WHITE else "Black"
             status = f"{side} is in check"
         else:
             side = "White" if board.turn == chess.WHITE else "Black"
-            if (
-                CONFIG.computer_color is not None
-                and board.turn == CONFIG.computer_color
-            ):
-                status = f"{side} computer is thinking..."
+            if chess_game.state.get("computer") and board.turn == CONFIG.computer_color:
+                status = "Computer is thinking..."
             else:
                 status = f"{side} to move"
 

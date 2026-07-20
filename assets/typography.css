@@ -715,7 +715,8 @@ span p {
 
 .vertical-center {
     display: inline-flex;
-    justify-content: center
+    justify-content: center;
+    vertical-align: middle;
 }
 
 .blinker {
