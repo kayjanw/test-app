@@ -274,7 +274,7 @@ class ChessGame:
         return DashIconify(icon=f"openmoji:{unicode_name}", height=35)
 
     @staticmethod
-    def history_to_components(history: list[dict]) -> list:
+    def history_to_components(history: list[dict]) -> html.Div | list[html.Div]:
         """Display the captured moves. Each history entry contains:
         {
             "move": "e4",
@@ -285,44 +285,32 @@ class ChessGame:
             "fen": "...",
         }
         """
-
         if not history:
-            return [
-                html.Div(
-                    "No moves yet.",
-                    style={"opacity": 0.6},
-                )
-            ]
+            return html.Div(
+                "No moves yet.",
+                style={"opacity": 0.6},
+                className="chess-cell",
+            )
 
         rows = []
 
         for index in range(0, len(history), 2):
-            white_move = history[index]
-            black_move = history[index + 1] if index + 1 < len(history) else None
+            white_move = history[index]["san"]
+            black_move = history[index + 1]["san"] if index + 1 < len(history) else ""
             rows.append(
                 html.Div(
                     [
-                        html.Span(
-                            f"{index // 2 + 1}.",
-                            style={"width": "32px"},
-                            className="p-bold",
-                        ),
-                        html.Span(
-                            white_move["san"],
-                            style={"width": "80px"},
-                        ),
-                        html.Span(
-                            black_move["san"] if black_move else "",
-                            style={"width": "80px"},
-                        ),
+                        html.Span(f"{index // 2 + 1}.", className="p-bold chess-cell"),
+                        html.Span(white_move, className="chess-cell"),
+                        html.Span(black_move, className="chess-cell"),
                     ],
-                    className="chess-history",
+                    className="chess-row",
                 )
             )
 
         return rows
 
-    def convert_to_save_format(self) -> dict:
+    def convert_to_save_format(self) -> str:
         return encode_dict(
             {
                 "moves": ",".join(

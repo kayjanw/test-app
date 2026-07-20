@@ -38,7 +38,7 @@ custom-div-smaller, custom-div-small, custom-div-small-medium, custom-div-half,
 custom-div-medium, custom-div-large, custom-div-large-full, custom-div-instruction, custom-div-full
 custom-margin-top, custom-margin-left, custom-margin-right
 
-p-short, p-bold
+p-short, p-bold, p-summary, p-indent
 invisible-button
 vertical-center
 blinker
@@ -967,10 +967,13 @@ span p {
     margin-bottom: 0;
 }
 
+#chess-status {
+    font-size: 1.3em;
+}
 .chess-squares {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    width: min(80vw, 720px);
+    grid-template-columns: repeat(8, 0.8fr);
+    width: min(64vw, 720px);
     max-width: 720px;
     border: 4px solid #333;
     border-radius: 6px;
@@ -989,11 +992,20 @@ span p {
     justify-content: center;
     cursor: pointer;
 }
-.chess-history {
-    display: flex;
-    gap: 8px;
-    padding: 4px 0;
+#chess-history {
+    display: grid;
+    overflow-y: auto;
+    gap: 1px;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+.chess-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     font-family: monospace;
+}
+.chess-cell {
+    padding: 10px;
 }
 
 .mantine-ColorPicker-swatch {
