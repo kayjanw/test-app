@@ -970,7 +970,7 @@ span p {
 .chess-squares {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    width: min(50vw, 720px);
+    width: min(80vw, 720px);
     max-width: 720px;
     border: 4px solid #333;
     border-radius: 6px;
