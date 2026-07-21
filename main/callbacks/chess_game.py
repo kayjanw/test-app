@@ -45,6 +45,9 @@ def register_callbacks_chess(app, print_function):
         - Undo
         - Toggle play with computer
         - Upload
+
+        Returns:
+            game data, game save format, status of game, updated computer toggle
         """
         if ctx.triggered_id in ["chess-new-game", "chess-switch"]:
             state = None
@@ -104,7 +107,7 @@ def register_callbacks_chess(app, print_function):
             state: updated state of chess game
 
         Returns:
-            board display, history record, status of game
+            board display, history, captured pieces
         """
         if "error" in state:
             state = None
