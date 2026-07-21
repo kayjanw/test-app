@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from typing import Any, Optional, Union
 
 import chess
@@ -378,23 +379,18 @@ def choose_move(
     board: chess.Board,
     player: chess.Color,
     depth: int,
-) -> Optional[chess.Move]:
+) -> chess.Move:
     """
-    Choose the best move.
+    Choose the best move
     """
-    legal_moves = list(board.legal_moves)
-
-    if not legal_moves:
-        return None
-
-    best_move = None
+    best_moves = []
 
     if player == chess.WHITE:
         best_score = -float("inf")
     else:
         best_score = float("inf")
 
-    for move in legal_moves:
+    for move in board.legal_moves:
         board.push(move)
 
         score = minimax(
@@ -410,10 +406,11 @@ def choose_move(
         if player == chess.WHITE:
             if score > best_score:
                 best_score = score
-                best_move = move
+                best_moves.append(move)
         else:
             if score < best_score:
                 best_score = score
-                best_move = move
-
-    return best_move
+                best_moves.append(move)
+    if not best_moves:
+        raise ValueError("No best move found")
+    return random.choice(best_moves)
