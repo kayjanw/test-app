@@ -292,30 +292,41 @@ def evaluate_board(board: chess.Board) -> int:
     """Evaluate board for a score based on checkmate, pieces remaining, and mobility. Positive score is good for
     White."""
 
+    # Terminal positions
     if board.is_checkmate():
-        # Side to move is checkmated.
-        # If White is to move and checkmated: Black wins.
+        # Side to move is checkmated
         return -1_000_000 if board.turn == chess.WHITE else 1_000_000
 
-    if board.is_stalemate() or board.is_insufficient_material():
+    if (
+        board.is_stalemate()
+        or board.is_insufficient_material()
+        or board.is_fifty_moves()
+    ):
         return 0
 
-    score = 0
+    # Repetition
+    if board.is_repetition(2):
+        return 0
 
+    # Material
+    score = 0
     for piece_type, value in PIECE_VALUES.items():
         score += len(board.pieces(piece_type, chess.WHITE)) * value
         score -= len(board.pieces(piece_type, chess.BLACK)) * value
 
-    # Small bonus for mobility.
-    # This is optional but makes the engine slightly less material-only.
+    # Mobility (bonus)
     mobility = board.legal_moves.count()
+    if board.turn == chess.WHITE:
+        score += mobility * 2
+    else:
+        score -= mobility * 2
 
-    board.push(chess.Move.null())
-    opponent_mobility = board.legal_moves.count()
-    board.pop()
-
-    score += (mobility - opponent_mobility) * 2
-
+    # Check (bonus)
+    if board.is_check():
+        if board.turn == chess.WHITE:
+            score -= 50
+        else:
+            score += 50
     return score
 
 
