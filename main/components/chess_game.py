@@ -407,10 +407,14 @@ def choose_move(
         if player == chess.WHITE:
             if score > best_score:
                 best_score = score
+                best_moves = [move]
+            elif score == best_score:
                 best_moves.append(move)
         else:
             if score < best_score:
                 best_score = score
+                best_moves = [move]
+            elif score == best_score:
                 best_moves.append(move)
     if not best_moves:
         raise ValueError("No best move found")
