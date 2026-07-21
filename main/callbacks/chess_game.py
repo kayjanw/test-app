@@ -97,7 +97,7 @@ def register_callbacks_chess(app, print_function):
     )
     @print_callback(print_function)
     def update_display(state):
-        """Update display of UI components
+        """Update display of UI components that does not rely on game move history
 
         Args:
             state: updated state of chess game

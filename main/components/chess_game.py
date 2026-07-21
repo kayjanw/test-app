@@ -253,6 +253,7 @@ class ChessGame:
     def _get_piece_icon(
         piece: chess.Piece, use_html: bool = False
     ) -> Union[DashIconify, html.Img]:
+        """Get piece icon to add to chess board"""
         unicode, unicode_name = PIECE_UNICODE[(piece.color, piece.piece_type)]
         if use_html:
             openmoji_base_url = (
@@ -307,6 +308,7 @@ class ChessGame:
         return rows
 
     def convert_to_save_format(self) -> str:
+        """Convert data to save format"""
         return encode_dict(
             {
                 "moves": ",".join(ChessGame._get_moves(self.state)),
