@@ -155,7 +155,8 @@ class ChessGame:
         history = self.state.get("history", [])
         if history:
             history.pop()
-            if self.computer_playing:
+            if self.computer_playing and self.board.turn != CONFIG.computer_color:
+                # Edge case when player wins or draw; only undo twice if it is the players turn
                 history.pop()
         board = chess.Board()
         for move in history:
