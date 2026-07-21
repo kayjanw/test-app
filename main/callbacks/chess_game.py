@@ -6,7 +6,7 @@ from dash import ctx
 from dash.dependencies import ALL, Input, Output, State
 
 from common.components.helper import parse_data, print_callback, return_message
-from main.components.chess_game import CONFIG, ChessGame
+from main.components.chess_game import ChessGame
 
 
 def register_callbacks_chess(app, print_function):
@@ -14,6 +14,7 @@ def register_callbacks_chess(app, print_function):
         [
             Output("chess-state", "data"),
             Output("input-chess", "value"),
+            Output("chess-status", "children"),
             Output("chess-switch", "checked"),
         ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
@@ -50,9 +51,11 @@ def register_callbacks_chess(app, print_function):
 
         if ctx.triggered_id == "uploadchess-button":
             if "json" not in filename:
+                error_message = return_message["file_not_uploaded_json"]
                 return (
-                    {"error": return_message["file_not_uploaded_json"]},
+                    {"error": error_message},
                     "",
+                    error_message,
                     computer_toggle,
                 )
             try:
@@ -62,16 +65,18 @@ def register_callbacks_chess(app, print_function):
                     data["moves"].split(","), data["computer"]
                 )
             except (KeyError, chess.InvalidMoveError):
+                error_message = return_message["wrong_format_json"]
                 return (
-                    {"error": return_message["wrong_format_json"]},
+                    {"error": error_message},
                     "",
+                    error_message,
                     computer_toggle,
                 )
         else:
             # Game in error state
             if state and "error" in state:
                 return state, ""
-            chess_game = ChessGame(state, computer=computer_toggle)
+            chess_game = ChessGame.from_state(state, computer=computer_toggle)
 
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
@@ -81,13 +86,13 @@ def register_callbacks_chess(app, print_function):
         return (
             chess_game.state,
             chess_game.convert_to_save_format(),
+            chess_game.status,
             chess_game.computer_playing,
         )
 
     @app.callback(
         Output("chess-container", "children"),
         Output("chess-history", "children"),
-        Output("chess-status", "children"),
         Input("chess-state", "data"),
     )
     @print_callback(print_function)
@@ -100,32 +105,14 @@ def register_callbacks_chess(app, print_function):
         Returns:
             board display, history record, status of game
         """
-        error_status = state.get("error", "")
         if "error" in state:
             state = None
 
         chess_game = ChessGame(state)
-        board = chess_game.board
         board_component = chess_game.render(
             selected_square=chess_game.state.get("selected_square")
         )
         history_component = chess_game.history_to_components(
             chess_game.state.get("history", [])
         )
-
-        if board.is_checkmate():
-            winner = "Black" if board.turn == chess.WHITE else "White"
-            status = f"Checkmate — {winner} wins"
-        elif board.is_stalemate():
-            status = "Draw"
-        elif board.is_check():
-            side = "White" if board.turn == chess.WHITE else "Black"
-            status = f"{side} is in check"
-        else:
-            side = "White" if board.turn == chess.WHITE else "Black"
-            if chess_game.computer_playing and board.turn == CONFIG.computer_color:
-                status = "Computer is thinking..."
-            else:
-                status = f"{side} to move"
-
-        return board_component, history_component, error_status or status
+        return board_component, history_component

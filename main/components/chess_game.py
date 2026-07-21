@@ -20,6 +20,14 @@ class ChessGame:
         self.state = state or self.get_initial_state(computer)
 
     @classmethod
+    def from_state(cls, state: dict[str, Any] | None = None, computer: bool = False):
+        if state:
+            instance = cls.from_moves(cls._get_moves(state), computer)
+            instance.state = state
+            return instance
+        return cls(state, computer)
+
+    @classmethod
     def from_moves(cls, moves: list[str], computer: bool):
         """Recreate chess game state from list of moves
 
@@ -40,6 +48,27 @@ class ChessGame:
     def computer_playing(self) -> bool:
         return self.state.get("computer")
 
+    @property
+    def status(self) -> str:
+        """Get status of gameplay"""
+        if self.board.is_checkmate():
+            winner = "Black" if self.board.turn == chess.WHITE else "White"
+            status = f"Checkmate — {winner} wins"
+        elif self.board.is_game_over():
+            status = "Draw"
+        elif self.board.is_stalemate():
+            status = "Stalemate"
+        elif self.board.is_check():
+            side = "White" if self.board.turn == chess.WHITE else "Black"
+            status = f"{side} is in check"
+        else:
+            side = "White" if self.board.turn == chess.WHITE else "Black"
+            if self.computer_playing and self.board.turn == CONFIG.computer_color:
+                status = "Computer is thinking..."
+            else:
+                status = f"{side} to move"
+        return status
+
     def get_initial_state(self, computer: bool) -> dict:
         """Get initial chess game
 
@@ -55,6 +84,10 @@ class ChessGame:
             "history": [],
             "computer": computer,
         }
+
+    @staticmethod
+    def _get_moves(state: dict[str, Any]) -> list[str]:
+        return [history["uci"] for history in state.get("history", [])]
 
     def move(self, clicked_square: chess.Square) -> None:
         """Handles selecting a piece, moving a selected piece, computer response (if applicable)
@@ -282,9 +315,7 @@ class ChessGame:
     def convert_to_save_format(self) -> str:
         return encode_dict(
             {
-                "moves": ",".join(
-                    history["uci"] for history in self.state.get("history", [])
-                ),
+                "moves": ",".join(ChessGame._get_moves(self.state)),
                 "computer": self.computer_playing,
             }
         )
