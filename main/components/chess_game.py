@@ -352,6 +352,10 @@ class ChessGame:
         return [history["uci"] for history in state.get("history", [])]
 
 
+DEVELOPMENT = 15
+TOLERANCE = 5
+
+
 def evaluate_board(board: chess.Board) -> int:
     """Evaluate board for a score based on checkmate, pieces remaining, and mobility. Positive score is good for
     White."""
@@ -384,6 +388,16 @@ def evaluate_board(board: chess.Board) -> int:
         score += mobility * 2
     else:
         score -= mobility * 2
+
+    # Development (bonus)
+    if board.piece_at(chess.F3) == chess.Piece(chess.KNIGHT, chess.WHITE):
+        score += DEVELOPMENT
+    if board.piece_at(chess.C3) == chess.Piece(chess.KNIGHT, chess.WHITE):
+        score += DEVELOPMENT
+    if board.piece_at(chess.F6) == chess.Piece(chess.KNIGHT, chess.BLACK):
+        score -= DEVELOPMENT
+    if board.piece_at(chess.C6) == chess.Piece(chess.KNIGHT, chess.BLACK):
+        score -= DEVELOPMENT
 
     # Check (bonus)
     if board.is_check():
@@ -467,16 +481,16 @@ def choose_move(
         board.pop()
 
         if player == chess.WHITE:
-            if score > best_score:
+            if score > best_score + TOLERANCE:
                 best_score = score
                 best_moves = [move]
-            elif score == best_score:
+            elif score >= best_score - TOLERANCE:
                 best_moves.append(move)
         else:
-            if score < best_score:
+            if score < best_score - TOLERANCE:
                 best_score = score
                 best_moves = [move]
-            elif score == best_score:
+            elif score <= best_score + TOLERANCE:
                 best_moves.append(move)
     if not best_moves:
         raise ValueError("No best move found")
