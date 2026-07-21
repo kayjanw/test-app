@@ -79,10 +79,6 @@ class ChessGame:
             "history": [],
         }
 
-    @staticmethod
-    def _get_moves(state: dict[str, Any]) -> list[str]:
-        return [history["uci"] for history in state.get("history", [])]
-
     def move(self, clicked_square: chess.Square) -> None:
         """Handles selecting a piece, moving a selected piece, computer response (if applicable)
 
@@ -157,9 +153,9 @@ class ChessGame:
             "uci": move.uci(),
             "from": chess.square_name(move.from_square),
             "to": chess.square_name(move.to_square),
-            "captured": (
-                captured_piece.symbol() if captured_piece is not None else None
-            ),
+            "captured": (captured_piece.color, captured_piece.piece_type)
+            if captured_piece
+            else None,
             "fen": self.board.fen(),
         }
         history = [
@@ -240,7 +236,7 @@ class ChessGame:
         piece = board.piece_at(square)
         children = []
         if piece is not None:
-            children.append(ChessGame._get_piece_icon(piece))
+            children.append(ChessGame._get_piece_icon(piece.color, piece.piece_type))
         return html.Button(
             children=children,
             id={"type": "chess-square", "square": square},
@@ -251,10 +247,12 @@ class ChessGame:
 
     @staticmethod
     def _get_piece_icon(
-        piece: chess.Piece, use_html: bool = False
+        color: chess.Piece.color,
+        piece_type: chess.Piece.piece_type,
+        use_html: bool = False,
     ) -> Union[DashIconify, html.Img]:
         """Get piece icon to add to chess board"""
-        unicode, unicode_name = PIECE_UNICODE[(piece.color, piece.piece_type)]
+        unicode, unicode_name = PIECE_UNICODE[(color, piece_type)]
         if use_html:
             openmoji_base_url = (
                 "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg"
@@ -307,6 +305,39 @@ class ChessGame:
 
         return rows
 
+    def _get_captured_pieces(
+        self,
+    ) -> list[tuple[chess.Piece.color, chess.Piece.piece_type]]:
+        """Get tuple of white captured pieces and black captured pieces"""
+        return [
+            history["captured"]
+            for history in self.state.get("history", [])
+            if history["captured"]
+        ]
+
+    def render_captured_pieces(self) -> html.Div:
+        """Render white captured pieces and black captured pieces"""
+        captured_pieces = self._get_captured_pieces()
+        captured_pieces_white = [
+            self._get_piece_icon(color, piece_type)
+            for color, piece_type in captured_pieces
+            if color == chess.WHITE
+        ]
+        captured_pieces_black = [
+            self._get_piece_icon(color, piece_type)
+            for color, piece_type in captured_pieces
+            if color == chess.BLACK
+        ]
+        if captured_pieces_white or captured_pieces_black:
+            return html.Div(
+                [
+                    "Captured pieces:",
+                    html.Div(captured_pieces_white),
+                    html.Div(captured_pieces_black),
+                ]
+            )
+        return html.Div()
+
     def convert_to_save_format(self) -> str:
         """Convert data to save format"""
         return encode_dict(
@@ -315,6 +346,10 @@ class ChessGame:
                 "computer": self.computer_playing,
             }
         )
+
+    @staticmethod
+    def _get_moves(state: dict[str, Any]) -> list[str]:
+        return [history["uci"] for history in state.get("history", [])]
 
 
 def evaluate_board(board: chess.Board) -> int:

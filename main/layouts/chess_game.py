@@ -81,6 +81,7 @@ def chess_tab(app):
                         style={"vertical-align": "bottom", "margin-bottom": "2px"},
                         className="vertical-center",
                     ),
+                    html.Div(id="chess-captured", style={"text-align": "left"}),
                 ],
                 className="custom-div-inline custom-div-center custom-margin-left custom-margin-right",
             ),

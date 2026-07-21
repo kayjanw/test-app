@@ -93,6 +93,7 @@ def register_callbacks_chess(app, print_function):
     @app.callback(
         Output("chess-container", "children"),
         Output("chess-history", "children"),
+        Output("chess-captured", "children"),
         Input("chess-state", "data"),
     )
     @print_callback(print_function)
@@ -115,4 +116,5 @@ def register_callbacks_chess(app, print_function):
         history_component = chess_game.history_to_components(
             chess_game.state.get("history", [])
         )
-        return board_component, history_component
+        captured_pieces_component = chess_game.render_captured_pieces()
+        return board_component, history_component, captured_pieces_component
