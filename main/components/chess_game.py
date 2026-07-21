@@ -17,10 +17,12 @@ CONFIG = ChessConfig(computer_color=chess.BLACK, depth=2)
 class ChessGame:
     def __init__(self, state: dict[str, Any] | None = None, computer: bool = False):
         self.board = chess.Board(state["fen"]) if state else chess.Board()
-        self.state = state or self.get_initial_state(computer)
+        self.state = state or self.get_initial_state()
+        self.computer_playing = computer
 
     @classmethod
     def from_state(cls, state: dict[str, Any] | None = None, computer: bool = False):
+        """Recreate chess game state from state, and implement moves"""
         if state:
             instance = cls.from_moves(cls._get_moves(state), computer)
             instance.state = state
@@ -45,10 +47,6 @@ class ChessGame:
         return instance
 
     @property
-    def computer_playing(self) -> bool:
-        return self.state.get("computer")
-
-    @property
     def status(self) -> str:
         """Get status of gameplay"""
         if self.board.is_checkmate():
@@ -69,11 +67,8 @@ class ChessGame:
                 status = f"{side} to move"
         return status
 
-    def get_initial_state(self, computer: bool) -> dict:
+    def get_initial_state(self) -> dict:
         """Get initial chess game
-
-        Args:
-            computer: whether computer is playing
 
         Returns:
             initial state of chess game
@@ -82,7 +77,6 @@ class ChessGame:
             "fen": self.board.fen(),
             "selected_square": None,
             "history": [],
-            "computer": computer,
         }
 
     @staticmethod
