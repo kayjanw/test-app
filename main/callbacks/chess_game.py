@@ -81,7 +81,7 @@ def register_callbacks_chess(app, print_function):
         return (
             chess_game.state,
             chess_game.convert_to_save_format(),
-            chess_game.state.get("computer"),
+            chess_game.computer_playing,
         )
 
     @app.callback(
@@ -123,7 +123,7 @@ def register_callbacks_chess(app, print_function):
             status = f"{side} is in check"
         else:
             side = "White" if board.turn == chess.WHITE else "Black"
-            if chess_game.state.get("computer") and board.turn == CONFIG.computer_color:
+            if chess_game.computer_playing and board.turn == CONFIG.computer_color:
                 status = "Computer is thinking..."
             else:
                 status = f"{side} to move"

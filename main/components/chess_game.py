@@ -35,6 +35,10 @@ class ChessGame:
             instance._move(move)
         return instance
 
+    @property
+    def computer_playing(self) -> bool:
+        return self.state.get("computer")
+
     def get_initial_state(self, computer: bool) -> dict:
         """Get initial chess game
 
@@ -104,7 +108,7 @@ class ChessGame:
 
         # Computer move
         if (
-            self.state.get("computer")
+            self.computer_playing
             and not self.board.is_game_over()
             and self.board.turn == CONFIG.computer_color
         ):
@@ -150,7 +154,7 @@ class ChessGame:
         history = self.state.get("history", [])
         if history:
             history.pop()
-            if CONFIG.computer_color is not None:
+            if self.computer_playing:
                 history.pop()
         board = chess.Board()
         for move in history:
@@ -279,7 +283,7 @@ class ChessGame:
                 "moves": ",".join(
                     history["uci"] for history in self.state.get("history", [])
                 ),
-                "computer": self.state.get("computer"),
+                "computer": self.computer_playing,
             }
         )
 
