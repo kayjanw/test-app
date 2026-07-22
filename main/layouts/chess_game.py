@@ -107,7 +107,9 @@ def chess_tab(app):
                                 radius="lg",
                                 showLabelOnHover=False,
                                 labelAlwaysOn=False,
-                                thumbChildren=DashIconify(icon="mdi:heart", width=14),
+                                thumbChildren=DashIconify(
+                                    icon="fa7-solid:chess-rook", width=14
+                                ),
                                 thumbSize=24,
                             ),
                         ],
