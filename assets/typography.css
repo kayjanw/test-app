@@ -346,9 +346,12 @@ footer
     display: flex;
 }
 
+h3 svg {
+    margin-right: 5px;
+}
+
 svg {
     vertical-align: middle;
-    margin-right: 5px;
 }
 
 .div-with-image Img {
@@ -998,6 +1001,17 @@ span p {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+#chess-difficulty {
+    min-width: 200px;
+    max-width: 250px;
+    margin-left: 20px;
+}
+.mantine-Slider-thumb {
+    box-sizing: content-box;
+}
+.mantine-Slider-label {
+    display: none !important;
 }
 #chess-history {
     display: grid;

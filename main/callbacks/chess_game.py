@@ -15,12 +15,12 @@ def register_callbacks_chess(app, print_function):
             Output("chess-state", "data"),
             Output("input-chess", "value"),
             Output("chess-status", "children"),
-            Output("chess-switch", "checked"),
+            Output("chess-difficulty", "value"),
         ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
         Input("chess-new-game", "n_clicks"),
         Input("chess-undo", "n_clicks"),
-        Input("chess-switch", "checked"),
+        Input("chess-difficulty", "value"),
         Input("uploadchess-button", "contents"),
         State("uploadchess-button", "filename"),
         State({"type": "chess-square", "square": ALL}, "id"),
@@ -32,7 +32,7 @@ def register_callbacks_chess(app, print_function):
         square_clicks,
         new_game_clicks,
         undo_clicks,
-        computer_toggle: bool,
+        computer_difficulty: int,
         contents: str,
         filename: str,
         square_ids: list[dict[str, Union[str, int]]],
@@ -49,8 +49,14 @@ def register_callbacks_chess(app, print_function):
         Returns:
             game data, game save format, status of game, updated computer toggle
         """
-        if ctx.triggered_id in ["chess-new-game", "chess-switch"]:
+        if ctx.triggered_id == "chess-new-game":
             state = None
+
+        if ctx.triggered_id == "chess-difficulty":
+            if (state["computer"] or computer_difficulty) and not (
+                state["computer"] and computer_difficulty
+            ):
+                state = None
 
         if ctx.triggered_id == "uploadchess-button":
             if "json" not in filename:
@@ -59,7 +65,7 @@ def register_callbacks_chess(app, print_function):
                     {"error": error_message},
                     "",
                     error_message,
-                    computer_toggle,
+                    computer_difficulty,
                 )
             try:
                 data = parse_data(contents, filename)
@@ -73,13 +79,13 @@ def register_callbacks_chess(app, print_function):
                     {"error": error_message},
                     "",
                     error_message,
-                    computer_toggle,
+                    computer_difficulty,
                 )
         else:
             # Game in error state
             if state and "error" in state:
                 return state, ""
-            chess_game = ChessGame.from_state(state, computer=computer_toggle)
+            chess_game = ChessGame.from_state(state, computer=computer_difficulty)
 
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
@@ -90,7 +96,7 @@ def register_callbacks_chess(app, print_function):
             chess_game.state,
             chess_game.convert_to_save_format(),
             chess_game.status,
-            chess_game.computer_playing,
+            chess_game.computer_difficulty,
         )
 
     @app.callback(
@@ -121,3 +127,16 @@ def register_callbacks_chess(app, print_function):
         )
         captured_pieces_component = chess_game.render_captured_pieces()
         return board_component, history_component, captured_pieces_component
+
+    @app.callback(
+        Output("chess-difficulty", "color"),
+        Input("chess-difficulty", "value"),
+    )
+    @print_callback(print_function)
+    def update_difficulty_color(value):
+        return {
+            0: "black",
+            1: "green",
+            2: "#FFAA33",
+            3: "#FF0000",
+        }[value]

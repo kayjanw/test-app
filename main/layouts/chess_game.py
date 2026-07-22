@@ -1,5 +1,6 @@
 import dash_mantine_components as dmc
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from common.components.helper import encode_dict
 from common.layouts.main import content_header
@@ -17,68 +18,100 @@ def chess_tab(app):
                 [
                     html.Div(id="chess-status"),
                     html.Div(id="chess-container"),
-                    html.Button(
-                        html.Span(
-                            html.Img(src=app.get_asset_url("undo.svg")),
-                            title="Undo",
-                        ),
-                        id="chess-undo",
-                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                    ),
-                    html.Button(
-                        html.Span(
-                            html.Img(src=app.get_asset_url("new.svg")),
-                            title="New game",
-                        ),
-                        id="chess-new-game",
-                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                    ),
-                    html.Form(
+                    dmc.Group(
                         [
-                            dcc.Input(
-                                value=encode_dict(chess_game.convert_to_save_format()),
-                                name="result",
-                                type="text",
-                                style=style_hidden,
-                                id="input-chess",
+                            html.Button(
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("undo.svg")),
+                                    title="Undo",
+                                ),
+                                id="chess-undo",
+                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                             html.Button(
                                 html.Span(
-                                    html.Img(src=app.get_asset_url("download.svg")),
-                                    title="Save game",
+                                    html.Img(src=app.get_asset_url("new.svg")),
+                                    title="New game",
                                 ),
-                                type="submit",
-                                id="button-chess-download-ok",
+                                id="chess-new-game",
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
-                        ],
-                        method="POST",
-                        action="/download_chess/",
-                        style={"display": "inline-block"},
-                    ),
-                    html.A(
-                        [
-                            dcc.Upload(
+                            html.Form(
                                 [
-                                    html.Span(
-                                        html.Img(src=app.get_asset_url("upload.svg")),
-                                        title="Upload game",
+                                    dcc.Input(
+                                        value=encode_dict(
+                                            chess_game.convert_to_save_format()
+                                        ),
+                                        name="result",
+                                        type="text",
+                                        style=style_hidden,
+                                        id="input-chess",
+                                    ),
+                                    html.Button(
+                                        html.Span(
+                                            html.Img(
+                                                src=app.get_asset_url("download.svg")
+                                            ),
+                                            title="Save game",
+                                        ),
+                                        type="submit",
+                                        id="button-chess-download-ok",
+                                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                                     ),
                                 ],
-                                id="uploadchess-button",
-                                multiple=False,
-                            )
+                                method="POST",
+                                action="/download_chess/",
+                                style={"display": "inline-block"},
+                            ),
+                            html.A(
+                                [
+                                    dcc.Upload(
+                                        [
+                                            html.Span(
+                                                html.Img(
+                                                    src=app.get_asset_url("upload.svg")
+                                                ),
+                                                title="Upload game",
+                                            ),
+                                        ],
+                                        id="uploadchess-button",
+                                        multiple=False,
+                                    )
+                                ],
+                                className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
+                            ),
+                            # dmc.Switch(
+                            #     id="chess-switch",
+                            #     labelPosition="right",
+                            #     label="Play against computer",
+                            #     size="lg",
+                            #     radius="lg",
+                            #     color="#202029",
+                            #     style={"vertical-align": "bottom", "margin-bottom": "2px"},
+                            #     className="vertical-center",
+                            # ),
+                            dmc.Slider(
+                                id="chess-difficulty",
+                                min=0,
+                                max=3,
+                                step=1,
+                                value=0,
+                                marks=[
+                                    {"value": 0, "label": "No computer"},
+                                    {"value": 1, "label": "Easy"},
+                                    {"value": 2, "label": "Medium"},
+                                    {"value": 3, "label": "Hard"},
+                                ],
+                                color="orange",
+                                size="lg",
+                                radius="lg",
+                                showLabelOnHover=False,
+                                labelAlwaysOn=False,
+                                thumbChildren=DashIconify(icon="mdi:heart", width=14),
+                                thumbSize=24,
+                            ),
                         ],
-                        className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
-                    ),
-                    dmc.Switch(
-                        id="chess-switch",
-                        labelPosition="right",
-                        label="Play against computer",
-                        size="lg",
-                        radius="lg",
-                        color="#202029",
-                        style={"vertical-align": "bottom", "margin-bottom": "2px"},
+                        gap=0,
                         className="vertical-center",
                     ),
                     html.Div(id="chess-captured", style={"text-align": "left"}),

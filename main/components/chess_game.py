@@ -15,13 +15,13 @@ CONFIG = ChessConfig(computer_color=chess.BLACK, depth=2)
 
 
 class ChessGame:
-    def __init__(self, state: dict[str, Any] | None = None, computer: bool = False):
+    def __init__(self, state: dict[str, Any] | None = None, computer: int = 0):
         self.board = chess.Board(state["fen"]) if state else chess.Board()
-        self.state = state or self.get_initial_state()
-        self.computer_playing = computer
+        self.state = state or self.get_initial_state(computer)
+        self.computer_difficulty = computer
 
     @classmethod
-    def from_state(cls, state: dict[str, Any] | None = None, computer: bool = False):
+    def from_state(cls, state: dict[str, Any] | None = None, computer: int = 0):
         """Recreate chess game state from state, and implement moves"""
         if state:
             instance = cls.from_moves(cls._get_moves(state), computer)
@@ -30,7 +30,7 @@ class ChessGame:
         return cls(state, computer)
 
     @classmethod
-    def from_moves(cls, moves: list[str], computer: bool):
+    def from_moves(cls, moves: list[str], computer: int):
         """Recreate chess game state from list of moves
 
         Args:
@@ -61,13 +61,13 @@ class ChessGame:
             status = f"{side} is in check"
         else:
             side = "White" if self.board.turn == chess.WHITE else "Black"
-            if self.computer_playing and self.board.turn == CONFIG.computer_color:
+            if self.computer_difficulty and self.board.turn == CONFIG.computer_color:
                 status = "Computer is thinking..."
             else:
                 status = f"{side} to move"
         return status
 
-    def get_initial_state(self) -> dict:
+    def get_initial_state(self, computer: int) -> dict:
         """Get initial chess game
 
         Returns:
@@ -77,6 +77,7 @@ class ChessGame:
             "fen": self.board.fen(),
             "selected_square": None,
             "history": [],
+            "computer": computer,
         }
 
     def move(self, clicked_square: chess.Square) -> None:
@@ -132,7 +133,7 @@ class ChessGame:
 
         # Computer move
         if (
-            self.computer_playing
+            self.computer_difficulty
             and not self.board.is_game_over()
             and self.board.turn == CONFIG.computer_color
         ):
@@ -140,6 +141,7 @@ class ChessGame:
                 board=self.board,
                 player=CONFIG.computer_color,
                 depth=CONFIG.depth,
+                difficulty=self.computer_difficulty,
             )
             self._move(computer_move)
 
@@ -178,7 +180,7 @@ class ChessGame:
         history = self.state.get("history", [])
         if history:
             history.pop()
-            if self.computer_playing and self.board.turn != CONFIG.computer_color:
+            if self.computer_difficulty and self.board.turn != CONFIG.computer_color:
                 # Edge case when player wins or draw; only undo twice if it is the players turn
                 history.pop()
         board = chess.Board()
@@ -343,7 +345,7 @@ class ChessGame:
         return encode_dict(
             {
                 "moves": ",".join(ChessGame._get_moves(self.state)),
-                "computer": self.computer_playing,
+                "computer": self.computer_difficulty,
             }
         )
 
@@ -356,7 +358,7 @@ DEVELOPMENT = 15
 TOLERANCE = 5
 
 
-def evaluate_board(board: chess.Board) -> int:
+def evaluate_board(board: chess.Board, difficulty: int) -> int:
     """Evaluate board for a score based on checkmate, pieces remaining, and mobility. Positive score is good for
     White."""
 
@@ -389,22 +391,24 @@ def evaluate_board(board: chess.Board) -> int:
     else:
         score -= mobility * 2
 
-    # Development (bonus)
-    if board.piece_at(chess.F3) == chess.Piece(chess.KNIGHT, chess.WHITE):
-        score += DEVELOPMENT
-    if board.piece_at(chess.C3) == chess.Piece(chess.KNIGHT, chess.WHITE):
-        score += DEVELOPMENT
-    if board.piece_at(chess.F6) == chess.Piece(chess.KNIGHT, chess.BLACK):
-        score -= DEVELOPMENT
-    if board.piece_at(chess.C6) == chess.Piece(chess.KNIGHT, chess.BLACK):
-        score -= DEVELOPMENT
+    # Development (bonus - only for difficulty >= 2)
+    if difficulty >= 2:
+        if board.piece_at(chess.F3) == chess.Piece(chess.KNIGHT, chess.WHITE):
+            score += DEVELOPMENT
+        if board.piece_at(chess.C3) == chess.Piece(chess.KNIGHT, chess.WHITE):
+            score += DEVELOPMENT
+        if board.piece_at(chess.F6) == chess.Piece(chess.KNIGHT, chess.BLACK):
+            score -= DEVELOPMENT
+        if board.piece_at(chess.C6) == chess.Piece(chess.KNIGHT, chess.BLACK):
+            score -= DEVELOPMENT
 
-    # Check (bonus)
-    if board.is_check():
-        if board.turn == chess.WHITE:
-            score -= 50
-        else:
-            score += 50
+    # Check (bonus - only for difficulty >= 3)
+    if difficulty >= 3:
+        if board.is_check():
+            if board.turn == chess.WHITE:
+                score -= 50
+            else:
+                score += 50
     return score
 
 
@@ -414,13 +418,14 @@ def minimax(
     alpha: int | float,
     beta: int | float,
     maximizing_player: bool,
+    difficulty: int,
 ) -> int:
     """Standard minimax with alpha-beta pruning. The depth is measured in half-moves / plies. The first move is
     computed as computer move, the second step is human reply, and so on.
     """
 
     if depth == 0 or board.is_game_over():
-        return evaluate_board(board)
+        return evaluate_board(board, difficulty)
 
     if maximizing_player:
         value = -float("inf")
@@ -429,7 +434,7 @@ def minimax(
             board.push(move)
             value = max(
                 value,
-                minimax(board, depth - 1, alpha, beta, False),
+                minimax(board, depth - 1, alpha, beta, False, difficulty),
             )
             board.pop()
             alpha = max(alpha, value)
@@ -443,7 +448,7 @@ def minimax(
         board.push(move)
         value = min(
             value,
-            minimax(board, depth - 1, alpha, beta, True),
+            minimax(board, depth - 1, alpha, beta, True, difficulty),
         )
         board.pop()
         beta = min(beta, value)
@@ -456,6 +461,7 @@ def choose_move(
     board: chess.Board,
     player: chess.Color,
     depth: int,
+    difficulty: int,
 ) -> chess.Move:
     """
     Choose the best move
@@ -476,6 +482,7 @@ def choose_move(
             alpha=-float("inf"),
             beta=float("inf"),
             maximizing_player=(player == chess.BLACK),
+            difficulty=difficulty,
         )
 
         board.pop()
