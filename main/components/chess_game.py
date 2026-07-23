@@ -63,6 +63,14 @@ class ChessGame:
         return instance
 
     @property
+    def fen(self) -> chess.Square | None:
+        return self.state.get("fen")
+
+    @fen.setter
+    def fen(self, fen: str) -> None:
+        self.state["fen"] = fen
+
+    @property
     def selected_square(self) -> chess.Square | None:
         return self.state.get("selected_square")
 
@@ -198,16 +206,9 @@ class ChessGame:
             else None,
             "fen": self.board.fen(),
         }
-        history = [
-            *self.state.get("history", []),
-            history_entry,
-        ]
-        self.state = {
-            **self.state,
-            "fen": self.board.fen(),
-            "selected_square": None,
-            "history": history,
-        }
+        self.fen = self.board.fen()
+        self.selected_square = None
+        self.history.append(history_entry)
 
     def undo(self) -> None:
         """Handle undo
@@ -215,7 +216,7 @@ class ChessGame:
         Returns:
             update state to previous state of chess game
         """
-        history = self.state.get("history", [])
+        history = self.history
         if history:
             history.pop()
             if self.computer_difficulty and self.board.turn != CONFIG.computer_color:
@@ -225,12 +226,8 @@ class ChessGame:
         for move in history:
             board.push_san(move["uci"])
         self.board = board
-        self.state = {
-            **self.state,
-            "fen": self.board.fen(),
-            "selected_square": None,
-            "history": history,
-        }
+        self.fen = self.board.fen()
+        self.selected_square = None
 
     def render(self) -> html.Div:
         """Render the chessboard from White's perspective"""
@@ -374,11 +371,7 @@ class ChessGame:
         self,
     ) -> list[tuple[chess.Piece.color, chess.Piece.piece_type]]:
         """Get tuple of white captured pieces and black captured pieces"""
-        return [
-            history["captured"]
-            for history in self.state.get("history", [])
-            if history["captured"]
-        ]
+        return [history["captured"] for history in self.history if history["captured"]]
 
     def convert_to_save_format(self) -> str:
         """Convert data to save format"""
