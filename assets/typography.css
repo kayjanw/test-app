@@ -506,6 +506,10 @@ span p {
     display: contents;
 }
 
+.card-show .card-carousel-image {
+    min-height: 100px;
+}
+
 .card-show .card-carousel-title {
     min-height: 24px;
     -webkit-line-clamp: 1;
