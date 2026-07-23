@@ -15,22 +15,35 @@ CONFIG = ChessConfig(computer_color=chess.BLACK, depth=2)
 
 
 class ChessGame:
-    def __init__(self, state: dict[str, Any] | None = None, computer: int = 0):
+    def __init__(
+        self,
+        state: dict[str, Any] | None = None,
+        computer: int = 0,
+        is_random: bool = False,
+    ):
+        """Initialise chess game
+
+        Args:
+            state: current state of chess game, if applicable
+            computer: whether computer is playing
+            is_random: whether initial board should be randomised
+        """
         if state:
             self.board = chess.Board(state["fen"])
             self.state = state
         else:
             self.board = chess.Board()
-            self.state = ChessGame.get_initial_state(computer)
+            self.state = ChessGame.get_initial_state(computer, is_random)
         self.computer_difficulty = computer
 
     @classmethod
-    def from_state(cls, state: dict[str, Any] | None, computer: int):
+    def from_state(cls, state: dict[str, Any] | None, computer: int, is_random: bool):
         """Recreate chess game state from initial state, and implement moves
 
         Args:
             state: chess state, if applicable
             computer: whether computer is playing
+            is_random: whether initial board should be randomised, used for new game
         """
         if state:
             instance = cls.from_moves(
@@ -38,7 +51,7 @@ class ChessGame:
             )
             instance.state = state
             return instance
-        return cls(state, computer)
+        return cls(state, computer, is_random)
 
     @classmethod
     def from_moves(cls, fen: str, moves: list[str], computer: int = 0):
@@ -53,7 +66,11 @@ class ChessGame:
             reconstructed state of chess game
         """
         instance = cls(
-            state={**ChessGame.get_initial_state(computer), "fen": fen},
+            state={
+                **ChessGame.get_initial_state(computer),
+                "original_fen": fen,
+                "fen": fen,
+            },
             computer=computer,
         )
         for move_uci in moves:
@@ -63,7 +80,11 @@ class ChessGame:
         return instance
 
     @property
-    def fen(self) -> chess.Square | None:
+    def original_fen(self) -> str:
+        return self.state.get("original_fen")
+
+    @property
+    def fen(self) -> str:
         return self.state.get("fen")
 
     @fen.setter
@@ -104,19 +125,41 @@ class ChessGame:
         return status
 
     @staticmethod
-    def get_initial_state(computer: int) -> dict:
+    def get_initial_state(computer: int, is_random: bool = False) -> dict:
         """Get initial chess game
+
+        Args:
+            computer: whether computer is playing
+            is_random: whether initial board should be randomised
 
         Returns:
             initial state of chess game
         """
+        original_fen = chess.Board().fen()
+        if is_random:
+            original_fen = ChessGame.get_random_fen()
         return {
-            "original_fen": chess.Board().fen(),
-            "fen": chess.Board().fen(),
+            "original_fen": original_fen,
+            "fen": original_fen,
             "selected_square": None,
             "history": [],
             "computer": computer,
         }
+
+    @staticmethod
+    def get_random_fen() -> str:
+        """Generate a symmetric random chess variant. Kings remain on e1/e8.
+
+        Returns:
+            starting fen
+        """
+        back_pieces = random.choices(list(("R" * 4 + "N" * 3 + "B" * 3 + "Q" * 4)), k=7)
+        front_pieces = random.choices(list(("P" * 10 + "N" * 4 + "B" * 4)), k=8)
+        wb = "".join(back_pieces[:4] + ["K"] + back_pieces[4:7])
+        wf = "".join(front_pieces)
+        bb = wb.lower()
+        bf = wf.lower()
+        return f"{bb}/{bf}/8/8/8/8/{wf}/{wb} w - - 0 1"
 
     def move(
         self, selected_square: chess.Square | None, clicked_square: chess.Square
@@ -222,7 +265,7 @@ class ChessGame:
             if self.computer_difficulty and self.board.turn != CONFIG.computer_color:
                 # Edge case when player wins or draw; only undo twice if it is the players turn
                 history.pop()
-        board = chess.Board()
+        board = chess.Board(self.original_fen)
         for move in history:
             board.push_san(move["uci"])
         self.board = board

@@ -36,6 +36,14 @@ def chess_tab(app):
                                 id="chess-new-game",
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
+                            html.Button(
+                                html.Span(
+                                    DashIconify(icon="openmoji:party-popper", width=20),
+                                    title="Random game",
+                                ),
+                                id="chess-random-game",
+                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
+                            ),
                             html.Form(
                                 [
                                     dcc.Input(

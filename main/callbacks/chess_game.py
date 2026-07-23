@@ -21,6 +21,7 @@ def register_callbacks_chess(app, print_function):
         ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
         Input("chess-new-game", "n_clicks"),
+        Input("chess-random-game", "n_clicks"),
         Input("chess-undo", "n_clicks"),
         Input("chess-difficulty", "value"),
         Input("uploadchess-button", "contents"),
@@ -33,6 +34,7 @@ def register_callbacks_chess(app, print_function):
     def handle_move(
         square_clicks,
         new_game_clicks,
+        random_game_clicks,
         undo_clicks,
         computer_difficulty: int,
         contents: str,
@@ -51,8 +53,13 @@ def register_callbacks_chess(app, print_function):
         Returns:
             game data, game save format, status of game, updated computer toggle
         """
+        is_random = False
         if ctx.triggered_id == "chess-new-game":
             state = None
+
+        if ctx.triggered_id == "chess-random-game":
+            state = None
+            is_random = True
 
         if ctx.triggered_id == "chess-difficulty":
             if (state["computer"] or computer_difficulty) and not (
@@ -89,7 +96,9 @@ def register_callbacks_chess(app, print_function):
             # Game in error state
             if state and "error" in state:
                 return state, ""
-            chess_game = ChessGame.from_state(state, computer=computer_difficulty)
+            chess_game = ChessGame.from_state(
+                state, computer=computer_difficulty, is_random=is_random
+            )
 
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
