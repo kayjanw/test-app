@@ -16,17 +16,17 @@ CONFIG = ChessConfig(computer_color=chess.BLACK, depth=2)
 
 class ChessGame:
     def __init__(self, state: dict[str, Any] | None = None, computer: int = 0):
-        self.board = chess.Board(state["fen"]) if state else chess.Board()
-        self.state = state or self.get_initial_state(computer)
+        if state:
+            self.board = chess.Board(state["fen"])
+            self.state = state
+        else:
+            self.board = chess.Board()
+            self.state = ChessGame.get_initial_state(computer)
         self.computer_difficulty = computer
 
-    @property
-    def selected_square(self) -> chess.Square | None:
-        self.state.get("selected_square")
-
     @classmethod
-    def from_state(cls, state: dict[str, Any] | None = None, computer: int = 0):
-        """Recreate chess game state from state, and implement moves
+    def from_state(cls, state: dict[str, Any] | None, computer: int):
+        """Recreate chess game state from initial state, and implement moves
 
         Args:
             state: chess state, if applicable
@@ -42,7 +42,7 @@ class ChessGame:
 
     @classmethod
     def from_moves(cls, fen: str, moves: list[str], computer: int = 0):
-        """Recreate chess game state from list of moves
+        """Recreate chess game state from original fen, and implement moves
 
         Args:
             fen: original chess fen
@@ -52,13 +52,18 @@ class ChessGame:
         Returns:
             reconstructed state of chess game
         """
-        instance = ChessGame(computer=computer)
-        instance.board = chess.Board(fen)
+        cls.board = chess.Board(fen)
+        cls.state = ChessGame.get_initial_state(computer)
+        cls.computer_difficulty = computer
         for move_uci in moves:
             from_square = chess.parse_square(move_uci[:2])
             to_square = chess.parse_square(move_uci[2:])
-            instance._move(instance._get_move(from_square, to_square))
-        return instance
+            cls._move(instance._get_move(from_square, to_square))
+        return cls
+    
+    @property
+    def selected_square(self) -> chess.Square | None:
+        self.state.get("selected_square")
 
     @property
     def status(self) -> str:
@@ -81,15 +86,16 @@ class ChessGame:
                 status = f"{side} to move"
         return status
 
-    def get_initial_state(self, computer: int) -> dict:
+    @staticmethod
+    def get_initial_state(computer: int) -> dict:
         """Get initial chess game
 
         Returns:
             initial state of chess game
         """
         return {
-            "original_fen": self.board.fen(),
-            "fen": self.board.fen(),
+            "original_fen": chess.Board().fen(),
+            "fen": chess.Board().fen(),
             "selected_square": None,
             "history": [],
             "computer": computer,
