@@ -20,20 +20,32 @@ class ChessGame:
         self.state = state or self.get_initial_state(computer)
         self.computer_difficulty = computer
 
+    @property
+    def selected_square(self) -> chess.Square | None:
+        self.state.get("selected_square")
+
     @classmethod
     def from_state(cls, state: dict[str, Any] | None = None, computer: int = 0):
-        """Recreate chess game state from state, and implement moves"""
+        """Recreate chess game state from state, and implement moves
+
+        Args:
+            state: chess state, if applicable
+            computer: whether computer is playing
+        """
         if state:
-            instance = cls.from_moves(cls._get_moves(state), computer)
+            instance = cls.from_moves(
+                state["original_fen"], cls._get_moves(state), computer
+            )
             instance.state = state
             return instance
         return cls(state, computer)
 
     @classmethod
-    def from_moves(cls, moves: list[str], computer: int):
+    def from_moves(cls, fen: str, moves: list[str], computer: int = 0):
         """Recreate chess game state from list of moves
 
         Args:
+            fen: original chess fen
             moves: list of moves in uci format
             computer: whether computer is playing
 
@@ -41,9 +53,11 @@ class ChessGame:
             reconstructed state of chess game
         """
         instance = ChessGame(computer=computer)
+        instance.board = chess.Board(fen)
         for move_uci in moves:
-            move = chess.Move.from_uci(move_uci)
-            instance._move(move)
+            from_square = chess.parse_square(move_uci[:2])
+            to_square = chess.parse_square(move_uci[2:])
+            instance._move(instance._get_move(from_square, to_square))
         return instance
 
     @property
@@ -74,17 +88,21 @@ class ChessGame:
             initial state of chess game
         """
         return {
+            "original_fen": self.board.fen(),
             "fen": self.board.fen(),
             "selected_square": None,
             "history": [],
             "computer": computer,
         }
 
-    def move(self, clicked_square: chess.Square) -> None:
+    def move(
+        self, selected_square: chess.Square | None, clicked_square: chess.Square
+    ) -> None:
         """Handles selecting a piece, moving a selected piece, computer response (if applicable)
 
         Args:
-            clicked_square: current clicked square
+            selected_square: from square, previously selected square
+            clicked_square: to square, current clicked square
 
         Returns:
             update state to new state of chess game
@@ -93,7 +111,6 @@ class ChessGame:
             return
 
         # Nothing is selected yet - colour the square yellow
-        selected_square = self.state.get("selected_square")
         if selected_square is None:
             piece = self.board.piece_at(clicked_square)
             if piece is None or piece.color != self.board.turn:
@@ -102,22 +119,7 @@ class ChessGame:
             return
 
         # Something is selected
-        move = chess.Move(
-            from_square=selected_square,
-            to_square=clicked_square,
-        )
-
-        # Promote to queen
-        if (
-            self.board.piece_at(selected_square)
-            and self.board.piece_at(selected_square).piece_type == chess.PAWN
-            and chess.square_rank(clicked_square) in (0, 7)
-        ):
-            move = chess.Move(
-                from_square=selected_square,
-                to_square=clicked_square,
-                promotion=chess.QUEEN,
-            )
+        move = self._get_move(selected_square, clicked_square)
 
         if move not in self.board.legal_moves:
             clicked_piece = self.board.piece_at(clicked_square)
@@ -144,6 +146,27 @@ class ChessGame:
                 difficulty=self.computer_difficulty,
             )
             self._move(computer_move)
+
+    def _get_move(
+        self, selected_square: chess.Square, clicked_square: chess.Square
+    ) -> chess.Move:
+        move = chess.Move(
+            from_square=selected_square,
+            to_square=clicked_square,
+        )
+
+        # Promote to queen
+        if (
+            self.board.piece_at(selected_square)
+            and self.board.piece_at(selected_square).piece_type == chess.PAWN
+            and chess.square_rank(clicked_square) in (0, 7)
+        ):
+            move = chess.Move(
+                from_square=selected_square,
+                to_square=clicked_square,
+                promotion=chess.QUEEN,
+            )
+        return move
 
     def _move(self, move: chess.Move):
         """Handle chess move"""
@@ -344,6 +367,7 @@ class ChessGame:
         """Convert data to save format"""
         return encode_dict(
             {
+                "fen": self.state["original_fen"],
                 "moves": ",".join(ChessGame._get_moves(self.state)),
                 "computer": self.computer_difficulty,
             }

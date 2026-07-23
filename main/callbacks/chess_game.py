@@ -71,7 +71,7 @@ def register_callbacks_chess(app, print_function):
                 data = parse_data(contents, filename)
                 data = json.loads(data.decode("utf-8"))
                 chess_game = ChessGame.from_moves(
-                    data["moves"].split(","), data["computer"]
+                    data["fen"], data["moves"].split(","), data["computer"]
                 )
             except (KeyError, chess.InvalidMoveError):
                 error_message = return_message["wrong_format_json"]
@@ -91,7 +91,7 @@ def register_callbacks_chess(app, print_function):
             chess_game.undo()
         if isinstance(ctx.triggered_id, dict):
             clicked_square = ctx.triggered_id["square"]
-            chess_game.move(clicked_square)
+            chess_game.move(chess_game.selected_square, clicked_square)
         return (
             chess_game.state,
             chess_game.convert_to_save_format(),
