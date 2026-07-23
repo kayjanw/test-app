@@ -8,6 +8,8 @@ from dash.dependencies import ALL, Input, Output, State
 from common.components.helper import parse_data, print_callback, return_message
 from main.components.chess_game import ChessGame
 
+ORIGINAL_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
 
 def register_callbacks_chess(app, print_function):
     @app.callback(
@@ -71,7 +73,9 @@ def register_callbacks_chess(app, print_function):
                 data = parse_data(contents, filename)
                 data = json.loads(data.decode("utf-8"))
                 chess_game = ChessGame.from_moves(
-                    data["fen"], data["moves"].split(","), data["computer"]
+                    data.get("fen", ORIGINAL_FEN),
+                    data["moves"].split(","),
+                    data["computer"],
                 )
             except (KeyError, chess.InvalidMoveError):
                 error_message = return_message["wrong_format_json"]
@@ -119,12 +123,8 @@ def register_callbacks_chess(app, print_function):
             state = None
 
         chess_game = ChessGame(state)
-        board_component = chess_game.render(
-            selected_square=chess_game.state.get("selected_square")
-        )
-        history_component = chess_game.history_to_components(
-            chess_game.state.get("history", [])
-        )
+        board_component = chess_game.render()
+        history_component = chess_game.history_to_components()
         captured_pieces_component = chess_game.render_captured_pieces()
         return board_component, history_component, captured_pieces_component
 

@@ -52,18 +52,27 @@ class ChessGame:
         Returns:
             reconstructed state of chess game
         """
-        cls.board = chess.Board(fen)
-        cls.state = ChessGame.get_initial_state(computer)
-        cls.computer_difficulty = computer
+        instance = cls(
+            state={**ChessGame.get_initial_state(computer), "fen": fen},
+            computer=computer,
+        )
         for move_uci in moves:
             from_square = chess.parse_square(move_uci[:2])
-            to_square = chess.parse_square(move_uci[2:])
-            cls._move(instance._get_move(from_square, to_square))
-        return cls
-    
+            to_square = chess.parse_square(move_uci[2:4])
+            instance._move(instance._get_move(from_square, to_square))
+        return instance
+
     @property
     def selected_square(self) -> chess.Square | None:
-        self.state.get("selected_square")
+        return self.state.get("selected_square")
+
+    @selected_square.setter
+    def selected_square(self, selected_square: chess.Square | None) -> None:
+        self.state["selected_square"] = selected_square
+
+    @property
+    def history(self) -> list[dict[str, Any]]:
+        return self.state.get("history")
 
     @property
     def status(self) -> str:
@@ -121,7 +130,7 @@ class ChessGame:
             piece = self.board.piece_at(clicked_square)
             if piece is None or piece.color != self.board.turn:
                 return
-            self.state["selected_square"] = clicked_square
+            self.selected_square = clicked_square
             return
 
         # Something is selected
@@ -131,9 +140,9 @@ class ChessGame:
             clicked_piece = self.board.piece_at(clicked_square)
             # Clicking another own piece selects that piece instead
             if clicked_piece is not None and clicked_piece.color == self.board.turn:
-                self.state["selected_square"] = clicked_square
+                self.selected_square = clicked_square
             else:
-                self.state["selected_square"] = None
+                self.selected_square = None
             return
 
         # Human move
@@ -223,8 +232,9 @@ class ChessGame:
             "history": history,
         }
 
-    def render(self, selected_square: Optional[int] = None) -> html.Div:
+    def render(self) -> html.Div:
         """Render the chessboard from White's perspective"""
+        selected_square = self.selected_square
         legal_targets = set()
         if selected_square is not None:
             for legal_move in self.board.legal_moves:
@@ -299,8 +309,7 @@ class ChessGame:
             )
         return DashIconify(icon=f"openmoji:{unicode_name}", height=35)
 
-    @staticmethod
-    def history_to_components(history: list[dict]) -> html.Div | list[html.Div]:
+    def history_to_components(self) -> html.Div | list[html.Div]:
         """Display the captured moves. Each history entry contains:
         {
             "move": "e4",
@@ -311,6 +320,8 @@ class ChessGame:
             "fen": "...",
         }
         """
+        history = self.history
+
         if not history:
             return html.Div(
                 "No moves yet.",
@@ -336,16 +347,6 @@ class ChessGame:
 
         return rows
 
-    def _get_captured_pieces(
-        self,
-    ) -> list[tuple[chess.Piece.color, chess.Piece.piece_type]]:
-        """Get tuple of white captured pieces and black captured pieces"""
-        return [
-            history["captured"]
-            for history in self.state.get("history", [])
-            if history["captured"]
-        ]
-
     def render_captured_pieces(self) -> html.Div:
         """Render white captured pieces and black captured pieces"""
         captured_pieces = self._get_captured_pieces()
@@ -368,6 +369,16 @@ class ChessGame:
                 ]
             )
         return html.Div()
+
+    def _get_captured_pieces(
+        self,
+    ) -> list[tuple[chess.Piece.color, chess.Piece.piece_type]]:
+        """Get tuple of white captured pieces and black captured pieces"""
+        return [
+            history["captured"]
+            for history in self.state.get("history", [])
+            if history["captured"]
+        ]
 
     def convert_to_save_format(self) -> str:
         """Convert data to save format"""
