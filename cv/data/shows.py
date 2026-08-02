@@ -93,6 +93,7 @@ theatres = [
         "2026-08-01 19:30",
         "The Arts House at the Old Parliament, Play Den",
         "General Admission",
+        Review("Poetic, physics, family touching", 4),
     ),
     Show(
         "The Parting Glass",

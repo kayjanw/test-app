@@ -162,6 +162,7 @@ bookshelf_leisure = [
         "There Are Rivers In The Sky",
         "Elif Shafak",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/img_3256.jpeg",
+        Review("Historical Fiction"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
