@@ -7,10 +7,7 @@ from common.layouts.main import content_header
 from cv.data.hobby import hobbies
 
 
-def get_hobby_plot(hobby_data: pd.DataFrame):
-    x_max, y_max = 10, 10
-    fig = go.Figure()
-
+def add_markers(hobby_data: pd.DataFrame, fig: go.Figure) -> None:
     for _type in hobby_data["type"].unique():
         hobby_data_type = hobby_data[hobby_data["type"] == _type]
         opacities = [frequency.value for frequency in hobby_data_type["frequency"]]
@@ -45,7 +42,37 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
             )
         )
 
-    # Quadrant
+
+def add_icons(fig: go.Figure) -> None:
+    for hobby in hobbies:
+        fig.add_layout_image(
+            dict(
+                source=hobby.icon_link,
+                x=hobby.enjoyment,
+                y=hobby.proficiency,
+                sizex=1,
+                sizey=1,
+                xref="x",
+                yref="y",
+                xanchor="center",
+                yanchor="middle",
+                layer="above",
+            )
+        )
+    fig.add_trace(
+        go.Scatter(
+            x=[hobby.enjoyment for hobby in hobbies],
+            y=[hobby.proficiency for hobby in hobbies],
+            mode="text",
+            hoverinfo="text",
+            hovertext=[hobby.hovertext for hobby in hobbies],
+        )
+    )
+
+
+def add_quadrant(fig: go.Figure) -> None:
+    x_max, y_max = 10, 10
+
     line_kwargs = dict(
         type="line", opacity=0.7, line=dict(color="gray", width=2, dash="dash")
     )
@@ -66,6 +93,13 @@ def get_hobby_plot(hobby_data: pd.DataFrame):
     fig.add_annotation(x=7.5, y=0.5, text="<b>Growth</b>", **annotation_kwargs)
     fig.add_annotation(x=2.5, y=0.5, text="<b>Low Priority</b>", **annotation_kwargs)
 
+
+def get_hobby_plot():
+    fig = go.Figure()
+    # hobby_data = pd.DataFrame(hobbies)
+    # add_markers(hobby_data, fig)
+    add_icons(fig)
+    add_quadrant(fig)
     axis_kwargs = dict(
         range=[0, 10], showticklabels=False, showgrid=False, fixedrange=True
     )
@@ -92,7 +126,7 @@ def hobby_tab(app):
             html.Div(
                 [
                     dcc.Graph(
-                        figure=get_hobby_plot(pd.DataFrame(hobbies)),
+                        figure=get_hobby_plot(),
                         config={
                             "scrollZoom": False,
                             "modeBarButtonsToRemove": [
