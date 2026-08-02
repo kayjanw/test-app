@@ -35,7 +35,7 @@ class Hobby:
 
     @property
     def icon_link(self) -> str:
-        return f"https://api.iconify.design/{self.icon}.svg?height=100"
+        return f"https://api.iconify.design/{self.icon}.svg?height=500"
 
 
 hobbies = [
