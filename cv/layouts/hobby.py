@@ -106,6 +106,7 @@ def get_hobby_plot():
     fig.update_layout(
         xaxis=dict(title="Enjoyment", **axis_kwargs),
         yaxis=dict(title="Proficiency", **axis_kwargs),
+        dragmode=False,
         plot_bgcolor="white",
         margin=dict(t=10, b=10, r=5, l=5),
         legend=dict(x=0.5, y=1, xanchor="center", yanchor="bottom", orientation="h"),
