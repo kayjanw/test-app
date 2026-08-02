@@ -59,6 +59,6 @@ hobbies = [
     Hobby(
         "Keyboard", 9, 8.7, "openmoji:musical-keyboard", Freq.MONTHLY, Nature.LEISURE
     ),
-    Hobby("Arduino", 6, 7, "openmoji:arduino", Freq.RARELY, Nature.ENRICHMENT),
+    Hobby("Arduino", 4, 6.5, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
     Hobby("Reading", 7, 9.5, "openmoji:books", Freq.WEEKLY, Nature.ENRICHMENT),
 ]
