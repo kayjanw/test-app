@@ -25,7 +25,10 @@ def change_tab(app):
             content_header(
                 "Change Calculator",
                 [
-                    DashIconify(icon="openmoji:abacus", height=40),
+                    DashIconify(
+                        icon="streamline-freehand-color:accounting-calculator",
+                        height=40,
+                    ),
                     "Compare changes over two periods",
                 ],
             ),
@@ -239,7 +242,7 @@ def changes_tab(app):
             content_header(
                 "Change Calculator 2",
                 [
-                    DashIconify(icon="openmoji:abacus", height=40),
+                    DashIconify(icon="flat-color-icons:calculator", height=40),
                     "Compare changes over multiple periods",
                 ],
             ),

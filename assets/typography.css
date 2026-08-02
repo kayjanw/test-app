@@ -903,6 +903,12 @@ span p {
 
 /* Custom id (tabs content)
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.aboutme-span {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+}
+
 #input-mbti, #input-rng {
     width: 100%;
     height: 100px;
@@ -1041,6 +1047,10 @@ span p {
 
 .mantine-ColorSwatch-root {
   flex: 0 0 auto !important;
+}
+
+.mantine-Accordion-icon {
+    margin-inline-end: var(--mantine-spacing-md);
 }
 
 /* Custom id (dropdown)

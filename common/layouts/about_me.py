@@ -25,13 +25,19 @@ def about_me_component(
     )
 
 
-def about_me_links(icon_name: str, link_title: str, link_url: str) -> html.Span:
+def about_me_links(
+    icon_name: str,
+    hovertext: str,
+    link_url: str,
+    size: int = 40,
+) -> html.Span:
     """Link component for about-me tab
 
     Args:
         icon_name: link icon
-        link_title: link title
+        hovertext: link hover text
         link_url: link URL
+        size: icon size
 
     Returns:
         Link component for about-me tab
@@ -39,11 +45,12 @@ def about_me_links(icon_name: str, link_title: str, link_url: str) -> html.Span:
     return html.Span(
         html.A(
             [
-                DashIconify(icon=f"openmoji:{icon_name}", height=40),
-                link_title,
+                DashIconify(icon=f"{icon_name}", height=size),
+                # hovertext,
             ],
             href=link_url,
             target="_blank",
         ),
-        title=link_title,
+        title=hovertext,
+        className="aboutme-span",
     )

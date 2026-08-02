@@ -1,6 +1,6 @@
 from dash import dcc, html
-from dash_iconify import DashIconify
 
+from common.layouts.about_me import about_me_links
 from common.layouts.main import content_header
 from main.layouts.main import style_contact_textarea
 
@@ -41,29 +41,19 @@ def contact_tab():
                     html.Br(),
                     html.Button("Send", id="button-contact-ok"),
                     html.P(id="contact-reply"),
-                    html.Span(
-                        html.A(
-                            DashIconify(icon="openmoji:linkedin", height=40),
-                            href="https://www.linkedin.com/in/kayjan/",
-                            target="_blank",
-                        ),
-                        title="LinkedIn",
+                    about_me_links(
+                        "openmoji:linkedin",
+                        "LinkedIn",
+                        "https://www.linkedin.com/in/kayjan/",
                     ),
-                    html.Span(
-                        html.A(
-                            DashIconify(icon="openmoji:github", height=40),
-                            href="https://www.github.com/kayjan/",
-                            target="_blank",
-                        ),
-                        title="GitHub",
+                    about_me_links(
+                        "openmoji:github", "GitHub", "https://www.github.com/kayjan/"
                     ),
-                    html.Span(
-                        html.A(
-                            DashIconify(icon="openmoji:heart-exclamation", height=40),
-                            href="https://buymeacoffee.com/kayjan/",
-                            target="_blank",
-                        ),
-                        title="Support me!",
+                    about_me_links(
+                        "material-icon-theme:github-sponsors",
+                        "Support me!",
+                        "https://buymeacoffee.com/kayjan/",
+                        size=35,
                     ),
                 ],
                 className="custom-div-instruction custom-div-left",

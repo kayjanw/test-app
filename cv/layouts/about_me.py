@@ -57,37 +57,35 @@ def about_me_cv_tab(app):
                     html.P(
                         [
                             about_me_links(
-                                "linkedin",
+                                "openmoji:linkedin",
                                 "LinkedIn",
                                 "https://www.linkedin.com/in/kayjan/",
                             ),
-                            " / ",
                             about_me_links(
-                                "github", "GitHub", "https://www.github.com/kayjan/"
+                                "openmoji:github",
+                                "GitHub",
+                                "https://www.github.com/kayjan/",
                             ),
-                            " / ",
                             about_me_links(
-                                "woman-student",
+                                "academicons:google-scholar-square",
                                 "Google Scholar",
                                 "https://scholar.google.com/citations?user=ClCErYgAAAAJ/",
                             ),
-                            " / ",
                             about_me_links(
-                                "newspaper",
-                                "Medium Articles",
+                                "lineicons:medium",
+                                "Medium",
                                 "https://kayjanwong.medium.com/",
                             ),
-                            " / ",
                             about_me_links(
-                                "package",
+                                "material-icon-theme:python",
                                 "bigtree Python Package",
                                 "https://bigtree.readthedocs.io/",
                             ),
-                            " / ",
                             about_me_links(
-                                "robot",
+                                "logos:telegram",
                                 "PickMe Telegram Bot",
                                 "https://t.me/pickme_bot",
+                                size=35,
                             ),
                         ]
                     ),

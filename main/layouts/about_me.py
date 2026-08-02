@@ -68,15 +68,16 @@ def about_me_tab(app):
                     html.P(
                         [
                             about_me_links(
-                                "add-contact",
+                                "solar:suitcase-bold",
                                 "Formal Website",
                                 "https://kayjan.fly.dev/cv",
+                                size=35,
                             ),
-                            " / ",
                             about_me_links(
-                                "heart-exclamation",
+                                "material-icon-theme:github-sponsors",
                                 "Support Me!",
                                 "https://buymeacoffee.com/kayjan",
+                                size=35,
                             ),
                         ]
                     ),
