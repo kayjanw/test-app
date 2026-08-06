@@ -76,7 +76,7 @@ hobbies = [
         Freq.ANNUALLY,
         Nature.SPORTS,
     ),
-    Hobby("Skiing", 1, 6.8, "openmoji:skier", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Skiing", 1, 6.8, "openmoji:skis", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
         "Swimming", 7, 6.5, "fluent-emoji-flat:goggles", Freq.ANNUALLY, Nature.SPORTS
     ),
