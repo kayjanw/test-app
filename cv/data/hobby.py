@@ -38,11 +38,36 @@ class Hobby:
         return f"https://api.iconify.design/{self.icon}.svg?height=500"
 
 
+"""
+Scale:
+
+Proficiency
+1: Absolute beginner
+2-3: Tried < 10 times
+4-5: Tried > 10 times
+6-8: Decent at it
+8-10: Good at it
+
+Enjoyment
+4: Not priority
+5-6: If I'm free
+7-8: Happy to do it
+9-10: Anytime
+"""
+
 hobbies = [
+    # Sports
     Hobby("Badminton", 5.8, 9, "openmoji:badminton", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Climbing", 5.5, 6, "openmoji:woman-climbing", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
-        "Climbing", 5.5, 5.5, "openmoji:woman-climbing", Freq.ANNUALLY, Nature.SPORTS
+        "Golf",
+        2,
+        5.5,
+        "streamline-ultimate-color:golf-ball",
+        Freq.MONTHLY,
+        Nature.SPORTS,
     ),
+    Hobby("Gym", 6, 8.2, "icon-park:dumbbell", Freq.WEEKLY, Nature.SPORTS),
     Hobby(
         "Pickleball",
         4,
@@ -51,14 +76,22 @@ hobbies = [
         Freq.ANNUALLY,
         Nature.SPORTS,
     ),
-    Hobby("Skiing", 1.5, 6.8, "openmoji:skier", Freq.ANNUALLY, Nature.SPORTS),
-    Hobby("Swimming", 7, 6, "openmoji:woman-swimming", Freq.ANNUALLY, Nature.SPORTS),
-    Hobby("Squash", 2, 5.5, "mdi:squash", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Skiing", 1, 6.8, "openmoji:skier", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby(
+        "Swimming", 7, 6.5, "fluent-emoji-flat:goggles", Freq.ANNUALLY, Nature.SPORTS
+    ),
+    Hobby("Squash", 2.5, 6, "mdi:squash", Freq.ANNUALLY, Nature.SPORTS),
+    # Leisure
     Hobby("Crochet", 3.5, 8, "openmoji:yarn", Freq.ANNUALLY, Nature.LEISURE),
-    Hobby("Gaming", 6, 4, "openmoji:video-game", Freq.RARELY, Nature.LEISURE),
+    Hobby("Gaming", 6.5, 5.5, "openmoji:video-game", Freq.RARELY, Nature.LEISURE),
     Hobby(
         "Keyboard", 9, 8.7, "openmoji:musical-keyboard", Freq.MONTHLY, Nature.LEISURE
     ),
-    Hobby("Arduino", 4, 6.5, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
-    Hobby("Reading", 7, 9.5, "openmoji:books", Freq.WEEKLY, Nature.ENRICHMENT),
+    Hobby("Netflix", 7, 4.5, "selfhst:netflix", Freq.MONTHLY, Nature.LEISURE),
+    # Enrichment
+    Hobby("Arduino", 3, 6.7, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
+    Hobby(
+        "Reading", 7, 9.5, "streamline-emojis:open-book", Freq.WEEKLY, Nature.ENRICHMENT
+    ),
+    Hobby("Theatre", 7, 8.5, "mdi:theatre", Freq.MONTHLY, Nature.ENRICHMENT),
 ]

@@ -104,6 +104,7 @@ def get_hobby_plot():
         range=[0, 10], showticklabels=False, showgrid=False, fixedrange=True
     )
     fig.update_layout(
+        autosize=True,
         xaxis=dict(title="Enjoyment", **axis_kwargs),
         yaxis=dict(title="Proficiency", **axis_kwargs),
         dragmode=False,
@@ -121,7 +122,7 @@ def hobby_tab(app):
                 "Hobbies",
                 [
                     DashIconify(icon="openmoji:person-cartwheeling", height=40),
-                    "Trying my best",
+                    "Present pastime",
                 ],
             ),
             html.Div(
@@ -147,7 +148,7 @@ def hobby_tab(app):
                     ),
                 ],
                 className="custom-div-instruction custom-div-left",
-                style={"min-width": "800px"},
+                style={"min-width": "600px", "max-width": "1000px", "width": "80vw"},
             ),
         ]
     )
