@@ -27,6 +27,8 @@ def certifications_tab(app):
                 ],
                 className="custom-div-instruction custom-div-left",
             ),
+            html.Br(),
+            html.Br(),
             html.Div(
                 [
                     html.H5("Skill Certificates"),

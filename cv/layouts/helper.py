@@ -70,7 +70,17 @@ def create_course_table(data: List[List[str]], columns: List[str]) -> List[Any]:
         Table data
     """
     return [
-        html.Thead(html.Tr([html.Th(col) for col in columns])),
+        html.Thead(
+            html.Tr(
+                [html.Th(col) for col in columns],
+                style={
+                    "position": "sticky",
+                    "top": 0,
+                    "backgroundColor": "white",
+                    "zIndex": 1,
+                },
+            )
+        ),
         html.Tbody(
             [
                 html.Tr([html.Td(data_cell) for data_cell in data_row])
