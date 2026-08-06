@@ -165,6 +165,11 @@ bookshelf_leisure = [
         Review("Historical Fiction"),
     ),
     Book(
+        "The Tainted Cup",
+        "Robert Jackson Bennett",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/08/tainted-cup-1.jpg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
