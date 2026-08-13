@@ -4,22 +4,6 @@ from cv.model.accordian_row import AccordianDetails, AccordianRow
 
 use_accordian = True
 
-sutd_details = AccordianRow(
-    "Adjunct Lecturer, Singapore University of Technology and Design (SUTD)",
-    "May 2026 - Present",
-    "tabler:code",
-    {
-        "Teaching": [
-            AccordianDetails(
-                "✔️",
-                "Responsible for instructing 10.022 Modelling Uncertainty, a core module for Term 3 Freshmore students",
-                highlight="10.022 Modelling Uncertainty",
-            )
-        ],
-    },
-    "teaching-sutd",
-)
-
 hei_details = AccordianRow(
     "Instructor, Heicoders Academy",
     "Jun 2022 - Present",
@@ -34,6 +18,22 @@ hei_details = AccordianRow(
         ],
     },
     "teaching-hei",
+)
+
+sutd_details = AccordianRow(
+    "Adjunct Lecturer, Singapore University of Technology and Design (SUTD)",
+    "May 2026 - Aug 2026",
+    "tabler:code",
+    {
+        "Teaching": [
+            AccordianDetails(
+                "✔️",
+                "Responsible for instructing 10.022 Modelling Uncertainty, a core module for Term 3 Freshmore students",
+                highlight="10.022 Modelling Uncertainty",
+            )
+        ],
+    },
+    "teaching-sutd",
 )
 
 writing_details = AccordianRow(
@@ -147,8 +147,8 @@ tutor_details = AccordianRow(
 )
 
 teaching_accordian_data = [
-    sutd_details,
     hei_details,
+    sutd_details,
     writing_details,
     ga_details,
     nus_details,
