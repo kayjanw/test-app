@@ -708,6 +708,10 @@ span p {
     font-weight: bold;
 }
 
+.p-italic {
+    font-style: italic;
+}
+
 .p-summary {
     padding-bottom: 10px;
 }

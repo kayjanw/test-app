@@ -4,13 +4,20 @@ import dash_mantine_components as dmc
 from dash import html
 
 
-def bullet_point(icon: str, text: Any) -> html.Div:
+def bullet_point(icon: str, text: Any, sep: str = "|") -> html.Div:
     """Bullet point for accordian details
 
     Args:
         icon: icon for bullet point
         text: bullet point text
     """
+    if isinstance(text, str):
+        text_prefix, *text_suffix = text.split(sep)
+        if text_suffix:
+            text = [
+                html.P(text_prefix + sep, className="p-short"),
+                html.P(text_suffix, className="p-short p-italic"),
+            ]
     return html.Div(
         [
             html.Span(icon, style={"marginRight": "0.5em"}),
