@@ -19,6 +19,7 @@ hrt_details = AccordianRow(
         ]
     },
     "industry-hrt",
+    True,
 )
 
 squarepoint_details = AccordianRow(

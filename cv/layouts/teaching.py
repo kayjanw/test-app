@@ -12,12 +12,19 @@ def teaching_tab(app):
             content_header(
                 "Teaching & Writing",
                 [
-                    DashIconify(icon="openmoji:beating-heart", height=40),
+                    DashIconify(icon="openmoji:woman-teacher", height=40),
                     "Teaching is my way of learning twice",
                 ],
             ),
             html.Div(
-                accordian(teaching_accordian_data),
+                accordian(
+                    teaching_accordian_data,
+                    value=[
+                        teaching.accordian_id
+                        for teaching in teaching_accordian_data
+                        if teaching.open
+                    ],
+                ),
                 className="custom-div-instruction custom-div-left",
             )
             if use_accordian

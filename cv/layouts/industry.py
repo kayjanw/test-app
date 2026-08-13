@@ -19,7 +19,11 @@ def industry_tab(app):
             html.Div(
                 accordian(
                     industry_data,
-                    value=[industry_data[0].accordian_id],
+                    value=[
+                        industry.accordian_id
+                        for industry in industry_data
+                        if industry.open
+                    ],
                 ),
                 className="custom-div-instruction custom-div-left",
             )

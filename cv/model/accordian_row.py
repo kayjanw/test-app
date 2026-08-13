@@ -24,12 +24,14 @@ class AccordianRow:
         icon: str,
         details: Dict[str, List[AccordianDetails]],
         accordian_id: str,
+        open: bool = False,
     ):
         self.title = title
         self.subtitle = subtitle
         self.icon = icon
         self.details = details
         self.accordian_id = accordian_id
+        self.open = open
 
     @property
     def accordian_details(self):
