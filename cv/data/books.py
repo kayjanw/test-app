@@ -162,12 +162,13 @@ bookshelf_leisure = [
         "There Are Rivers In The Sky",
         "Elif Shafak",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/img_3256.jpeg",
-        Review("Historical Fiction"),
+        Review("Historical Fiction", "😘"),
     ),
     Book(
         "The Tainted Cup",
         "Robert Jackson Bennett",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/08/tainted-cup-1.jpg",
+        Review("Fantasy Mystery"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
