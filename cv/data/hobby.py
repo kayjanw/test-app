@@ -23,8 +23,8 @@ class Nature(Enum):
 @dataclass
 class Hobby:
     name: str
-    proficiency: Union[int, float]
-    enjoyment: Union[int, float]
+    enjoyment: Union[int, float]  # x axis
+    proficiency: Union[int, float]  # y axis
     icon: str
     frequency: Freq
     type: Nature
@@ -57,41 +57,42 @@ Enjoyment
 
 hobbies = [
     # Sports
-    Hobby("Badminton", 5.8, 9, "openmoji:badminton", Freq.WEEKLY, Nature.SPORTS),
-    Hobby("Climbing", 5.5, 6, "openmoji:woman-climbing", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Badminton", 9, 5.8, "openmoji:badminton", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Climbing", 6, 5.5, "openmoji:woman-climbing", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
         "Golf",
-        2,
         5.5,
+        2,
         "streamline-ultimate-color:golf-ball",
         Freq.MONTHLY,
         Nature.SPORTS,
     ),
-    Hobby("Gym", 6, 8.2, "icon-park:dumbbell", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Gym", 8.2, 6, "icon-park:dumbbell", Freq.WEEKLY, Nature.SPORTS),
     Hobby(
         "Pickleball",
-        4,
         7.3,
+        4,
         "material-symbols:pickleball",
         Freq.ANNUALLY,
         Nature.SPORTS,
     ),
-    Hobby("Skiing", 1, 6.8, "openmoji:skis", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Skiing", 6.8, 1, "openmoji:skis", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
-        "Swimming", 7, 6.5, "fluent-emoji-flat:goggles", Freq.ANNUALLY, Nature.SPORTS
+        "Swimming", 6.5, 7, "fluent-emoji-flat:goggles", Freq.ANNUALLY, Nature.SPORTS
     ),
-    Hobby("Squash", 2.5, 6, "mdi:squash", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Squash", 6, 2.5, "mdi:squash", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Tennis", 7.5, 2, "openmoji:tennis", Freq.WEEKLY, Nature.SPORTS),
     # Leisure
-    Hobby("Crochet", 3.5, 8, "openmoji:yarn", Freq.ANNUALLY, Nature.LEISURE),
-    Hobby("Gaming", 6.5, 5.5, "openmoji:video-game", Freq.RARELY, Nature.LEISURE),
+    Hobby("Crochet", 8, 3.5, "openmoji:yarn", Freq.ANNUALLY, Nature.LEISURE),
+    Hobby("Gaming", 5.5, 6.5, "openmoji:video-game", Freq.RARELY, Nature.LEISURE),
     Hobby(
-        "Keyboard", 9, 8.7, "openmoji:musical-keyboard", Freq.MONTHLY, Nature.LEISURE
+        "Keyboard", 8.7, 9, "openmoji:musical-keyboard", Freq.MONTHLY, Nature.LEISURE
     ),
-    Hobby("Netflix", 7, 4.5, "selfhst:netflix", Freq.MONTHLY, Nature.LEISURE),
+    Hobby("Netflix", 4.5, 7, "selfhst:netflix", Freq.MONTHLY, Nature.LEISURE),
     # Enrichment
-    Hobby("Arduino", 3, 6.7, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
+    Hobby("Arduino", 6.7, 3, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
     Hobby(
-        "Reading", 7, 9.5, "streamline-emojis:open-book", Freq.WEEKLY, Nature.ENRICHMENT
+        "Reading", 9.5, 7, "streamline-emojis:open-book", Freq.WEEKLY, Nature.ENRICHMENT
     ),
-    Hobby("Theatre", 7, 8.5, "mdi:theatre", Freq.MONTHLY, Nature.ENRICHMENT),
+    Hobby("Theatre", 8.5, 7, "mdi:theatre", Freq.MONTHLY, Nature.ENRICHMENT),
 ]
