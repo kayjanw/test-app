@@ -171,6 +171,11 @@ bookshelf_leisure = [
         Review("Fantasy Mystery"),
     ),
     Book(
+        "A Drop of Corruption",
+        "Robert Jackson Bennett",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/a-drop-of-corruption.jpg",
+    ),
+    Book(
         "Sweet Sweet Revenge Ltd.",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
