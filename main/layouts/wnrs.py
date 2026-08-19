@@ -1,5 +1,4 @@
-from dataclasses import dataclass
-from typing import Dict, List, Optional, Union
+from typing import List, Union
 
 import dash_bootstrap_components as dbc
 import dash_daq as daq
@@ -10,37 +9,10 @@ from common.components.helper import colour_palette, encode_dict
 from common.layouts.main import content_header
 from main.components import WNRS
 from main.layouts.main import style_hidden, style_wnrs_text
+from main.model.wnrs import SWATCHES_BACKGROUND, SWATCHES_TEXT, Deck
 
 
 def modal_palette():
-    # swatches = [
-    #     "#25262b", "#868e96", "#fa5252", "#e64980", "#be4bdb", "#7950f2", "#4c6ef5",
-    #     "#228be6", "#15aabf", "#12b886", "#40c057", "#82c91e", "#fab005", "#fd7e14"
-    # ]
-    swatches_text = [
-        "#FFFFFF",
-        "#FAFAEE",
-        "#F6CA69",
-        "#BE001C",
-        "#1695C8",
-        "#4D1015",
-        "#000000",
-    ]
-    swatches_background = [
-        "#FAFAEE",
-        "#F6CA69",
-        "#EAD2E0",
-        "#EEC4C5",
-        "#EB744C",
-        "#BE001C",
-        "#AF2637",
-        "#275835",
-        "#4598BA",
-        "#5F86b5",
-        "#282C69",
-        "#4D1015",
-        "#000000",
-    ]
     return [
         html.Div(
             [
@@ -52,7 +24,7 @@ def modal_palette():
                 ),
                 dmc.ColorPicker(
                     id="swatches-wnrs-text",
-                    swatches=swatches_text,
+                    swatches=SWATCHES_TEXT,
                     swatchesPerRow=9,
                     withPicker=False,
                     format="hex",
@@ -76,7 +48,7 @@ def modal_palette():
                 ),
                 dmc.ColorPicker(
                     id="swatches-wnrs-background",
-                    swatches=swatches_background,
+                    swatches=SWATCHES_BACKGROUND,
                     swatchesPerRow=9,
                     withPicker=False,
                     format="hex",
@@ -122,13 +94,6 @@ def modal_contribute():
         html.P(id="wnrs-suggestion-reply"),
         html.Br(),
     ]
-
-
-@dataclass
-class Deck:
-    button_text: str
-    button_id: str
-    button_style: Optional[Dict[str, str]] = None
 
 
 def create_deck_rows(app, decks_data, wnrs_information, deck_type) -> List[html.Div]:
