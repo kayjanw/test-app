@@ -47,7 +47,7 @@ def register_callbacks_wordle(app, print_function):
         current_style: list[dict[str, str] | None],
         row_style: list[dict[str, str] | None],
     ):
-        """Handle word guess
+        """Handle word guess and n_letter changes
 
         Returns:
             for n_click, n_submit: tile output, updated state, results, refreshed guess

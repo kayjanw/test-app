@@ -43,6 +43,7 @@ Code Documentation
    components/trip-planner
    components/wnrs
    components/chess-game
+   components/wordle
 
 :doc:`components/change-calculator`
     List of functions for Change Calculator tab
@@ -70,6 +71,9 @@ Code Documentation
 
 :doc:`components/chess-game`
     List of functions for Chess tab
+
+:doc:`components/wordle`
+    List of functions for Wordle tab
 
 Indices and tables
 ==================
