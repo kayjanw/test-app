@@ -2,21 +2,10 @@ from dash import dcc, html
 
 from common.layouts.main import content_header
 from main.components import Wordle
-from main.model.wordle import N_GUESSES, N_LETTERS
-
-
-def create_grid():
-    grid = []
-    for r in range(N_GUESSES):
-        row = []
-        for c in range(N_LETTERS):
-            row.append(html.Div("", id=f"tile-{r}-{c}", className="wordle-tile"))
-        grid.append(html.Div(row, className="wordle-row"))
-    return html.Div(grid, className="wordle-grid")
 
 
 def wordle_tab(app):
-    wordle_game = Wordle(n_letters=N_LETTERS)
+    wordle_game = Wordle()
     return html.Div(
         [
             content_header(["Wordle"], ""),
@@ -24,7 +13,7 @@ def wordle_tab(app):
                 [
                     html.Div(
                         [
-                            create_grid(),
+                            html.Div(Wordle.create_grid(), id="wordle-grid"),
                             html.Div(
                                 [
                                     dcc.Input(
@@ -35,6 +24,14 @@ def wordle_tab(app):
                                     ),
                                     html.Button("Submit", id="button-wordle"),
                                     html.Div(id="wordle-output"),
+                                    dcc.Input(
+                                        id="nletters-wordle",
+                                        type="number",
+                                        value=5,
+                                        min=5,
+                                        max=6,
+                                        style={"display": "none"},
+                                    ),
                                 ],
                                 className="custom-div-space-above",
                             ),

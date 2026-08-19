@@ -1,24 +1,16 @@
 from dash import no_update
-from dash.dependencies import Input, Output, State
+from dash.dependencies import ALL, Input, Output, State
 
 from common.components.helper import print_callback, return_message
 from main.components.wordle import Wordle
-from main.model.wordle import N_GUESSES, N_LETTERS
-
-outputs = []
-states = []
-for r in range(N_GUESSES):
-    for c in range(N_LETTERS):
-        outputs.append(Output(f"tile-{r}-{c}", "children"))
-        outputs.append(Output(f"tile-{r}-{c}", "style"))
-        states.append(State(f"tile-{r}-{c}", "children"))
-        states.append(State(f"tile-{r}-{c}", "style"))
+from main.model.wordle import N_GUESSES
 
 
 def register_callbacks_wordle(app, print_function):
     @app.callback(
         [
-            *outputs,
+            Output({"type": "wordle-tile", "id": ALL}, "children"),
+            Output({"type": "wordle-tile", "id": ALL}, "style"),
             Output("wordle-state", "data"),
             Output("wordle-output", "children"),
             Output("wordle-guess", "value"),
@@ -28,7 +20,10 @@ def register_callbacks_wordle(app, print_function):
         [
             State("wordle-guess", "value"),
             State("wordle-state", "data"),
-            *states,
+            State("nletters-wordle", "value"),
+            State({"type": "wordle-tile", "id": ALL}, "id"),
+            State({"type": "wordle-tile", "id": ALL}, "children"),
+            State({"type": "wordle-tile", "id": ALL}, "style"),
         ],
         prevent_initial_call=True,
     )
@@ -38,7 +33,10 @@ def register_callbacks_wordle(app, print_function):
         n_submit,
         guess_word: int,
         state: dict,
-        *current_tiles: list[dict[str, str]],
+        n_letters: int,
+        current_tile_ids: list[str],
+        current_tiles: list[str | None],
+        current_style: list[dict[str, str] | None],
     ):
         """Handle word guess
 
@@ -46,19 +44,19 @@ def register_callbacks_wordle(app, print_function):
             tile output, updated state, results, refreshed guess
         """
         if not guess_word:
-            return *current_tiles, state, no_update, no_update
+            return current_tiles, current_style, state, no_update, no_update
 
-        wordle_game = Wordle.from_store(state)
-        current_tiles = list(current_tiles)
+        wordle_game = Wordle.from_store(state, n_letters)
+        ids_order = [tile["id"] for tile in current_tile_ids]
         msg = ""
 
         if wordle_game.is_gameover:
-            return *current_tiles, state, no_update, no_update
+            return current_tiles, current_style, state, no_update, no_update
 
         try:
             results = wordle_game.make_guess(guess_word)
         except ValueError as e:
-            return *current_tiles, state, str(e), no_update
+            return current_tiles, current_style, state, str(e), no_update
 
         if wordle_game.is_win:
             msg = return_message["wordle_win"]
@@ -66,20 +64,35 @@ def register_callbacks_wordle(app, print_function):
             msg = return_message["wordle_lose"].format(word=wordle_game.word)
 
         n_guesses = len(wordle_game.guesses)
-        tile_range = range(
-            (n_guesses - 1) * wordle_game.n_letters * 2,
-            n_guesses * wordle_game.n_letters * 2,
-            2,
-        )
-
-        for guess_letter, result_colour, tile_counter in zip(
-            wordle_game.guesses[-1], results, tile_range
+        for tile_count, (guess_letter, result_colour) in enumerate(
+            zip(wordle_game.guesses[-1], results)
         ):
+            tile_counter = ids_order.index(f"{n_guesses-1}-{tile_count}")
             current_tiles[tile_counter] = guess_letter
-            current_tiles[tile_counter + 1] = {
+            current_style[tile_counter] = {
                 "backgroundColor": result_colour,
                 "border": f"2px solid {result_colour}",
                 "color": "#ffffff",
             }
         print(wordle_game.to_store())
-        return *current_tiles, wordle_game.to_store(), msg, ""
+        return current_tiles, current_style, wordle_game.to_store(), msg, ""
+
+    @app.callback(
+        Output("wordle-grid", "children"),
+        Output("wordle-guess", "maxLength"),
+        Output("wordle-guess", "placeholder"),
+        [Output({"type": "wordle-row", "id": ALL}, "style")],
+        Input("nletters-wordle", "value"),
+        State({"type": "wordle-row", "id": ALL}, "style"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_letters(n_letters, current_style: list[dict[str, str] | None]):
+        """Update number of letters for Wordle"""
+        new_grid = Wordle.create_grid(N_GUESSES, n_letters)
+        placeholder = f"Enter {n_letters} letters"
+        row_style = {"grid-template-columns": f"repeat({n_letters}, 1fr)"}
+        new_style = []
+        for style in current_style:
+            new_style.append(style.update(row_style) if style else row_style)
+        return new_grid, n_letters, placeholder, new_style

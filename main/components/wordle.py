@@ -1,6 +1,7 @@
 import random
 
 import pandas as pd
+from dash import html
 
 from main.model.wordle import N_GUESSES, N_LETTERS, Guess
 
@@ -19,14 +20,19 @@ class Wordle:
         self.guesses = []
 
     @classmethod
-    def from_store(cls, store: dict[str, str | list[str]]):
+    def from_store(cls, store: dict[str, str | list[str]], n_letters: int = N_LETTERS):
         """Recreate wordle game state from dict
 
         Args:
             store: wordle game state
+            n_letters: number of letters in word
         """
-        instance = cls(word=store["word"])
-        instance.guesses = store["guesses"]
+        if n_letters != len(store["word"]):
+            # Create new game
+            instance = cls(n_letters=n_letters)
+        else:
+            instance = cls(n_letters=n_letters, word=store["word"])
+            instance.guesses = store["guesses"]
         return instance
 
     def to_store(self) -> dict[str, str | list[str]]:
@@ -35,6 +41,26 @@ class Wordle:
             "word": self.word,
             "guesses": self.guesses,
         }
+
+    @staticmethod
+    def create_grid(n_guesses: int = N_GUESSES, n_letters: int = N_LETTERS):
+        grid = []
+        for r in range(n_guesses):
+            row = []
+            for c in range(n_letters):
+                row.append(
+                    html.Div(
+                        "",
+                        id={"type": "wordle-tile", "id": f"{r}-{c}"},
+                        className="wordle-tile",
+                    )
+                )
+            grid.append(
+                html.Div(
+                    row, id={"type": "wordle-row", "id": r}, className="wordle-row"
+                )
+            )
+        return grid
 
     @staticmethod
     def _get_words():

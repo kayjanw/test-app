@@ -1060,7 +1060,7 @@ span p {
     grid-template-columns: repeat(5, 1fr);
     gap: 5px;
 }
-.wordle-grid {
+#wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     max-width: 350px;
