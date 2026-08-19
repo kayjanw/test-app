@@ -1043,6 +1043,42 @@ span p {
     padding: 10px;
 }
 
+.wordle-tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #d3d6da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: sans-serif;
+}
+.wordle-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+.wordle-grid {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    max-width: 350px;
+    margin: 0 auto;
+    gap: 5px;
+}
+#wordle-guess {
+   margin-right: 10px;
+}
+#button-wordle {
+    margin: 0;
+    border: 2px black;
+}
+#wordle-output {
+    margin-top: 15px;
+    color: red;
+}
+
 .mantine-ColorPicker-swatch {
   width: 20px !important;
   height: 20px !important;

@@ -7,3 +7,4 @@ from .trade import Trade
 from .trade_socket import TradeSocket
 from .trip_planner import TripPlanner
 from .wnrs import WNRS
+from .wordle import Wordle

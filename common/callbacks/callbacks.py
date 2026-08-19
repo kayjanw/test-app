@@ -36,6 +36,7 @@ from main.layouts import (
     trade_tab,
     trip_tab,
     wnrs_tab,
+    wordle_tab,
 )
 
 
@@ -224,6 +225,8 @@ def register_callbacks(app, print_function):
             return wnrs_tab(app)
         elif tab == "tab-chess":
             return chess_tab(app)
+        elif tab == "tab-wordle":
+            return wordle_tab(app)
         # CV
         elif tab == "tab-cv-aboutme":
             return about_me_cv_tab(app)
@@ -271,6 +274,8 @@ def register_callbacks(app, print_function):
                 document.title = 'WNRS Card Game'
             } else if (tab_value === 'tab-chess') {
                 document.title = 'Chess'
+            } else if (tab_value === 'tab-wordle') {
+                document.title = 'Wordle'
             } else if (tab_value === 'tab-contact') {
                 document.title = 'Contact Me'
             } else if (tab_value === 'tab-image') {

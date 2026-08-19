@@ -18,6 +18,7 @@ from main.callbacks.rng import register_callbacks_rng
 from main.callbacks.trade import register_callbacks_trade
 from main.callbacks.trip_planner import register_callbacks_trip_planner
 from main.callbacks.wnrs import register_callbacks_wnrs
+from main.callbacks.wordle import register_callbacks_wordle
 from routes import register_routes
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
@@ -106,6 +107,7 @@ register_callbacks_trade(app, print_function)
 register_callbacks_trip_planner(app, print_function)
 register_callbacks_wnrs(app, print_function)
 register_callbacks_chess(app, print_function)
+register_callbacks_wordle(app, print_function)
 register_callbacks_shows(app, print_function)
 register_routes(app)
 

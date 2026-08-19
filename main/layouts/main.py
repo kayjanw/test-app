@@ -180,6 +180,12 @@ def sidebar_dropdown():
                         className="custom-tab-sub",
                         selected_className="custom-tab-selected",
                     ),
+                    dcc.Tab(
+                        label="Wordle",
+                        value="tab-wordle",
+                        className="custom-tab-sub",
+                        selected_className="custom-tab-selected",
+                    ),
                     # dcc.Tab(
                     #     label="Go to events!",
                     #     value="tab-others",

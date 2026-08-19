@@ -12,3 +12,4 @@ from .rng import rng_tab
 from .trade import trade_tab
 from .trip_planner import trip_tab
 from .wnrs import wnrs_tab
+from .wordle import wordle_tab

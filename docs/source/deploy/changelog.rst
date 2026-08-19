@@ -7,6 +7,7 @@ Changelog
 ========== ========================================================================
 Date       Changes
 ========== ========================================================================
+2026-08-20 Added Wordle tab
 2026-07-19 Added Chess tab
 2026-07-11 Added Shows tab
 2026-03-12 Bump from Python 3.10 to Python 3.11 for fly and venv, upgrade packages
