@@ -1,7 +1,7 @@
 from dash import dcc, html
 
 from common.layouts.main import content_header
-from main.components import Wordle
+from main.components.wordle import Wordle, create_grid
 
 
 def wordle_tab(app):
@@ -13,7 +13,7 @@ def wordle_tab(app):
                 [
                     html.Div(
                         [
-                            html.Div(Wordle.create_grid(), id="wordle-grid"),
+                            html.Div(create_grid(), id="wordle-grid"),
                             html.Div(
                                 [
                                     dcc.Input(
