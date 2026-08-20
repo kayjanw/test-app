@@ -1,11 +1,36 @@
 from dash import ctx, no_update
-from dash.dependencies import ALL, Input, Output, State
+from dash.dependencies import ALL, MATCH, Input, Output, State
 
 from common.components.helper import print_callback
 from main.components.wordle import Wordle, create_grid, get_tile_style
 
 
 def register_callbacks_wordle(app, print_function):
+    @app.callback(
+        Output({"type": "modal-wordle", "index": MATCH}, "is_open"),
+        [
+            Input({"type": "button-modal-wordle", "index": MATCH}, "n_clicks"),
+            Input({"type": "button-close-modal-wordle", "index": MATCH}, "n_clicks"),
+        ],
+        State({"type": "modal-wordle", "index": MATCH}, "is_open"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_modal_display(trigger_open, trigger_close, is_open: bool) -> bool:
+        """Update modal display
+
+        Args:
+            trigger_open: trigger on button click
+            trigger_close: trigger on button click
+            is_open: current state of open
+
+        Returns:
+            indicator whether modal is open or not
+        """
+        if trigger_open or trigger_close:
+            return not is_open
+        return is_open
+
     @app.callback(
         [
             # Change on n_clicks, n_submit
