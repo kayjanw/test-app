@@ -19,10 +19,10 @@ def register_callbacks_wordle(app, print_function):
             Output("wordle-guess", "maxLength"),
             Output("wordle-guess", "placeholder"),
         ],
-        Input("submit-wordle", "n_clicks"),
+        Input("button-wordle-submit", "n_clicks"),
         Input("wordle-guess", "n_submit"),
-        Input("redo-wordle", "n_clicks"),
-        Input("switch-wordle", "n_clicks"),
+        Input("button-wordle-icon-redo", "n_clicks"),
+        Input("button-wordle-icon-switch", "n_clicks"),
         [
             State("wordle-guess", "value"),
             State("wordle-state", "data"),
@@ -55,8 +55,8 @@ def register_callbacks_wordle(app, print_function):
         n_letters_results = no_update, no_update, no_update
 
         n_letters = len(state["word"])
-        if triggered_id in ["switch-wordle", "redo-wordle"]:
-            if triggered_id == "switch-wordle":
+        if triggered_id in ["button-wordle-icon-switch", "button-wordle-icon-redo"]:
+            if triggered_id == "button-wordle-icon-switch":
                 n_letters += 1 if n_letters == 5 else -1
             placeholder = f"Enter {n_letters} letters"
 

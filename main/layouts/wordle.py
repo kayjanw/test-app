@@ -14,7 +14,11 @@ def wordle_tab(app):
                 [
                     html.Div(
                         [
-                            html.Div(create_grid(), id="wordle-grid"),
+                            html.Div(
+                                create_grid(),
+                                id="wordle-grid",
+                                className="justify-space-around",
+                            ),
                             html.Div(
                                 [
                                     dcc.Input(
@@ -25,8 +29,8 @@ def wordle_tab(app):
                                     ),
                                     html.Button(
                                         "Submit",
-                                        id="submit-wordle",
-                                        className="button-wordle button-outline-wordle",
+                                        id="button-wordle-submit",
+                                        className="button-outline-wordle",
                                     ),
                                     html.Button(
                                         html.Span(
@@ -35,8 +39,7 @@ def wordle_tab(app):
                                             ),
                                             title="Replay",
                                         ),
-                                        id="redo-wordle",
-                                        className="button-wordle button-wordle-icon",
+                                        id="button-wordle-icon-redo",
                                     ),
                                     html.Button(
                                         html.Span(
@@ -45,8 +48,7 @@ def wordle_tab(app):
                                             ),
                                             title="Switch difficulty",
                                         ),
-                                        id="switch-wordle",
-                                        className="button-wordle button-wordle-icon",
+                                        id="button-wordle-icon-switch",
                                     ),
                                     dcc.Input(
                                         id="nletters-wordle",
@@ -57,7 +59,7 @@ def wordle_tab(app):
                                         style={"display": "none"},
                                     ),
                                 ],
-                                className="custom-div-space-above wordle-strip",
+                                className="custom-div-flex-only custom-div-space-above justify-space-around",
                             ),
                             html.Div(id="wordle-output"),
                         ],

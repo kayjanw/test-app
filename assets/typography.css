@@ -113,7 +113,7 @@ footer
     .zoom:hover {
         transform: scale(1.1);
     }
-    [id^="button-wnrs"], [id^="uploadbutton-"], .button-wnrs {
+    [id^="button-wnrs"], .button-wnrs {
         padding: 0px 10px;
         margin-right: 5px;
         font-size: 10px;
@@ -199,7 +199,7 @@ footer
     .zoom:hover {
         transform: scale(1.2);
     }
-    [id^="button-wnrs"], [id^="uploadbutton-"], .button-wnrs {
+    [id^="button-wnrs"], .button-wnrs {
         padding: 0px 30px;
         margin-right: 10px;
         font-size: 80%;
@@ -730,6 +730,10 @@ span p {
     margin: 0 5px;
 }
 
+.justify-space-around {
+    justify-content: space-around;
+}
+
 .vertical-center {
     display: inline-flex;
     justify-content: center;
@@ -877,17 +881,21 @@ span p {
     margin-bottom: 10px;
 }
 
-[id^="uploadbutton-"] {
-    border-radius: 15px;
-    color: #202029;
-    display: inline-block;
-    line-height: 28px;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: .1rem;
-}
-
 [id^="uploadwnrs-"] {
+    padding: 0;
+}
+[id^="uploadchess-"] {
+    height: 28px;
+}
+[id^="button-wordle"] {
+    height: 38px;
+    margin: 0 5px 0 0;
+    border-radius: unset;
+}
+[id^="button-wordle"] Span {
+    display: flex;
+}
+[id^="button-wordle-icon"] {
     padding: 0;
 }
 
@@ -1062,27 +1070,11 @@ span p {
 #wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
-    justify-content: space-around;
     margin: 0 auto;
     gap: 5px;
 }
-.wordle-strip {
-    display: flex;
-    justify-content: space-around;
-}
 .button-outline-wordle {
     border: 1px solid rgb(209, 209, 209);
-}
-.button-wordle {
-    height: 38px;
-    margin: 0 5px 0 0;
-    border-radius: unset;
-}
-.button-wordle Span {
-    display: flex;
-}
-.button-wordle-icon {
-    padding: 0;
 }
 #wordle-output {
     margin-top: 15px;
