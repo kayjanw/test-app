@@ -1057,18 +1057,18 @@ span p {
 }
 .wordle-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 5px;
 }
 #wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
-    max-width: 350px;
+    justify-content: space-around;
     margin: 0 auto;
     gap: 5px;
 }
 .wordle-strip {
     display: flex;
+    justify-content: space-around;
 }
 .button-outline-wordle {
     border: 1px solid rgb(209, 209, 209);
