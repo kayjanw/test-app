@@ -55,7 +55,7 @@ return_message = {
     "accordingly",
     "wrong_format_json": "Please upload a valid JSON file. Data is not in the correct format",
     "wrong_file_type": "File type not supported. Please upload another file",
-    "wordle_win": "Splendid! You won!",
+    "wordle_win": "Splendid! You solved it in {n} steps!",
     "wordle_lose": "Game Over! The word was {word}.",
 }
 

@@ -1067,12 +1067,22 @@ span p {
     margin: 0 auto;
     gap: 5px;
 }
-#wordle-guess {
-   margin-right: 10px;
+.wordle-strip {
+    display: flex;
 }
-#button-wordle {
-    margin: 0;
-    border: 2px black;
+.button-outline-wordle {
+    border: 1px solid rgb(209, 209, 209);
+}
+.button-wordle {
+    height: 38px;
+    margin: 0 5px 0 0;
+    border-radius: unset;
+}
+.button-wordle Span {
+    display: flex;
+}
+.button-wordle-icon {
+    padding: 0;
 }
 #wordle-output {
     margin-top: 15px;
@@ -1080,13 +1090,13 @@ span p {
 }
 
 .mantine-ColorPicker-swatch {
-  width: 20px !important;
-  height: 20px !important;
-  padding: 0;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0;
 }
 
 .mantine-ColorSwatch-root {
-  flex: 0 0 auto !important;
+    flex: 0 0 auto !important;
 }
 
 .mantine-Accordion-icon {

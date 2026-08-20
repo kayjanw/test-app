@@ -3,6 +3,7 @@ import random
 import pandas as pd
 from dash import html
 
+from common.components.helper import return_message
 from main.model.wordle import N_GUESSES, N_LETTERS, Guess
 
 
@@ -21,7 +22,7 @@ def create_grid(n_guesses: int = N_GUESSES, n_letters: int = N_LETTERS):
             html.Div(
                 row,
                 id={"type": "wordle-row", "id": r},
-                style={},
+                style={"grid-template-columns": f"repeat({n_letters}, 1fr)"},
                 className="wordle-row",
             )
         )
@@ -77,6 +78,14 @@ class Wordle:
     @property
     def is_win(self) -> bool:
         return self.guesses and self.guesses[-1] == self.word
+
+    @property
+    def state(self) -> str:
+        if self.is_win:
+            return return_message["wordle_win"].format(n=len(self.guesses))
+        if self.is_gameover:
+            return return_message["wordle_lose"].format(word=self.word)
+        return ""
 
     @classmethod
     def from_store(cls, store: dict[str, str | list[str]], n_letters: int = N_LETTERS):

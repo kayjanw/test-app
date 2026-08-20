@@ -1,4 +1,5 @@
 from dash import dcc, html
+from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
 from main.components.wordle import Wordle, create_grid
@@ -22,8 +23,31 @@ def wordle_tab(app):
                                         maxLength=5,
                                         placeholder="Enter 5 letters",
                                     ),
-                                    html.Button("Submit", id="button-wordle"),
-                                    html.Div(id="wordle-output"),
+                                    html.Button(
+                                        "Submit",
+                                        id="submit-wordle",
+                                        className="button-wordle button-outline-wordle",
+                                    ),
+                                    html.Button(
+                                        html.Span(
+                                            DashIconify(
+                                                icon="material-symbols:replay", width=20
+                                            ),
+                                            title="Replay",
+                                        ),
+                                        id="redo-wordle",
+                                        className="button-wordle button-wordle-icon",
+                                    ),
+                                    html.Button(
+                                        html.Span(
+                                            DashIconify(
+                                                icon="tabler:switch-3", width=20
+                                            ),
+                                            title="Switch difficulty",
+                                        ),
+                                        id="switch-wordle",
+                                        className="button-wordle button-wordle-icon",
+                                    ),
                                     dcc.Input(
                                         id="nletters-wordle",
                                         type="number",
@@ -33,8 +57,9 @@ def wordle_tab(app):
                                         style={"display": "none"},
                                     ),
                                 ],
-                                className="custom-div-space-above",
+                                className="custom-div-space-above wordle-strip",
                             ),
+                            html.Div(id="wordle-output"),
                         ],
                         id="div-wordle",
                         className="custom-div-center",
