@@ -103,19 +103,14 @@ class Wordle:
         return ""
 
     @classmethod
-    def from_store(cls, store: dict[str, str | list[str]], n_letters: int = N_LETTERS):
+    def from_store(cls, store: dict[str, str | list[str]]):
         """Recreate wordle game state from dict
 
         Args:
             store: wordle game state
-            n_letters: number of letters in word
         """
-        if n_letters != len(store["word"]):
-            # Create new game
-            instance = cls(n_letters=n_letters)
-        else:
-            instance = cls(n_letters=n_letters, word=store["word"])
-            instance.guesses = store["guesses"]
+        instance = cls(n_letters=len(store["word"]), word=store["word"])
+        instance.guesses = store["guesses"]
         return instance
 
     def to_store(self) -> dict[str, str | list[str]]:

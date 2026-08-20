@@ -3,7 +3,6 @@ from dash.dependencies import ALL, Input, Output, State
 
 from common.components.helper import print_callback
 from main.components.wordle import Wordle, create_grid, get_tile_style
-from main.model.wordle import N_GUESSES
 
 
 def register_callbacks_wordle(app, print_function):
@@ -62,12 +61,12 @@ def register_callbacks_wordle(app, print_function):
             placeholder = f"Enter {n_letters} letters"
 
             # Reset existing game
-            new_grid = create_grid(N_GUESSES, n_letters)
+            new_grid = create_grid(n_letters=n_letters)
             wordle_game = Wordle(n_letters=n_letters)
             n_letters_results = new_grid, n_letters, placeholder
         else:
             # Play game
-            wordle_game = Wordle.from_store(state, n_letters)
+            wordle_game = Wordle.from_store(state)
             ids_order = [tile["id"] for tile in current_tile_ids]
 
             if not guess_word or wordle_game.is_gameover:
