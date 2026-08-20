@@ -39,14 +39,29 @@ def get_guess_result(word, guess) -> list[str]:
     Returns:
         colour of the results
     """
+    word_letter_count = {}
+    for letter in word:
+        word_letter_count[letter] = word_letter_count.get(letter, 0) + 1
+
     result = []
+    # First pass: Mark exact matches
     for letter, guess_letter in zip(word, guess):
         if letter == guess_letter:
             result.append(Guess.correct)
-        elif guess_letter in word:
-            result.append(Guess.present)
+            word_letter_count[letter] -= 1
         else:
             result.append(Guess.absent)
+
+    # Second pass: Handle remaining valid letters
+    for idx, (letter, guess_letter) in enumerate(zip(word, guess)):
+        if (
+            guess_letter in word
+            and word_letter_count[guess_letter]
+            and result[idx] != Guess.correct
+        ):
+            result[idx] = Guess.present
+            word_letter_count[guess_letter] -= 1
+
     return result
 
 
