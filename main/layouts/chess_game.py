@@ -38,14 +38,6 @@ def chess_tab(app):
                             ),
                             html.Button(
                                 html.Span(
-                                    html.Img(src=app.get_asset_url("palette.png")),
-                                    title="Random game",
-                                ),
-                                id="chess-style",
-                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                            ),
-                            html.Button(
-                                html.Span(
                                     DashIconify(icon="openmoji:party-popper", width=20),
                                     title="Random game",
                                 ),
@@ -74,6 +66,14 @@ def chess_tab(app):
                                         id="button-chess-download-ok",
                                         className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                                     ),
+                                     html.Button(
+                                         html.Span(
+                                         html.Img(src=app.get_asset_url("palette.png")),
+                                         title="Random game",
+                                     ),
+                                     id="chess-style",
+                                     className="div-with-image small-image image-dark-blue invisible-button vertical-center",
+                                     ),
                                 ],
                                 method="POST",
                                 action="/download_chess/",
