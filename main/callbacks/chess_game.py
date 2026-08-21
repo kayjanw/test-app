@@ -21,6 +21,7 @@ def register_callbacks_chess(app, print_function):
         ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
         Input("chess-new-game", "n_clicks"),
+        Input("chess-style", "n_clicks"),
         Input("chess-random-game", "n_clicks"),
         Input("chess-undo", "n_clicks"),
         Input("chess-difficulty", "value"),
@@ -34,6 +35,7 @@ def register_callbacks_chess(app, print_function):
     def handle_move(
         square_clicks,
         new_game_clicks,
+        style_clicks,
         random_game_clicks,
         undo_clicks,
         computer_difficulty: int,
@@ -83,6 +85,7 @@ def register_callbacks_chess(app, print_function):
                     data.get("fen", ORIGINAL_FEN),
                     data["moves"].split(","),
                     data["computer"],
+                    data.get("style", "normal"),
                 )
             except (KeyError, chess.InvalidMoveError):
                 error_message = return_message["wrong_format_json"]
@@ -102,6 +105,18 @@ def register_callbacks_chess(app, print_function):
 
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
+        if ctx.triggered_id == "chess-style":
+            styles = [
+                "normal",
+                "yellow",
+                "people_knight",
+                "dot",
+                "blue",
+                "chess",
+                "normal",
+            ]
+            current_style = chess_game.state["style"]
+            chess_game.state["style"] = styles[styles.index(current_style) + 1]
         if isinstance(ctx.triggered_id, dict):
             clicked_square = ctx.triggered_id["square"]
             chess_game.move(chess_game.selected_square, clicked_square)
@@ -132,9 +147,9 @@ def register_callbacks_chess(app, print_function):
             state = None
 
         chess_game = ChessGame(state)
-        board_component = chess_game.render()
+        board_component = chess_game.render(app)
         history_component = chess_game.history_to_components()
-        captured_pieces_component = chess_game.render_captured_pieces()
+        captured_pieces_component = chess_game.render_captured_pieces(app)
         return board_component, history_component, captured_pieces_component
 
     @app.callback(

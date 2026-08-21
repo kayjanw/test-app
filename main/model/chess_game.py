@@ -19,18 +19,33 @@ class ChessConfig:
 
 
 PIECE_UNICODE = {
-    (chess.WHITE, chess.KING): ("2654", "white-chess-king"),
-    (chess.WHITE, chess.QUEEN): ("2655", "white-chess-queen"),
-    (chess.WHITE, chess.ROOK): ("2656", "white-chess-rook"),
-    (chess.WHITE, chess.BISHOP): ("2657", "white-chess-bishop"),
-    (chess.WHITE, chess.KNIGHT): ("2658", "white-chess-knight"),
-    (chess.WHITE, chess.PAWN): ("2659", "white-chess-pawn"),
-    (chess.BLACK, chess.KING): ("265A", "black-chess-king"),
-    (chess.BLACK, chess.QUEEN): ("265B", "black-chess-queen"),
-    (chess.BLACK, chess.ROOK): ("265C", "black-chess-rook"),
-    (chess.BLACK, chess.BISHOP): ("265D", "black-chess-bishop"),
-    (chess.BLACK, chess.KNIGHT): ("265E", "black-chess-knight"),
-    (chess.BLACK, chess.PAWN): ("265F", "chess-pawn"),
+    (chess.WHITE, chess.KING): ("2654", "white-chess-king", "king", "king"),
+    (chess.WHITE, chess.QUEEN): ("2655", "white-chess-queen", "queen", "queen"),
+    (chess.WHITE, chess.ROOK): ("2656", "white-chess-rook", "rook", "rook"),
+    (chess.WHITE, chess.BISHOP): ("2657", "white-chess-bishop", "bishop", "bishop"),
+    (chess.WHITE, chess.KNIGHT): ("2658", "white-chess-knight", "knight", "horse"),
+    (chess.WHITE, chess.PAWN): ("2659", "white-chess-pawn", "pawn", "pawn"),
+    (chess.BLACK, chess.KING): ("265A", "black-chess-king", "black-king", "black-king"),
+    (chess.BLACK, chess.QUEEN): (
+        "265B",
+        "black-chess-queen",
+        "black-queen",
+        "black-queen",
+    ),
+    (chess.BLACK, chess.ROOK): ("265C", "black-chess-rook", "black-rook", "black-rook"),
+    (chess.BLACK, chess.BISHOP): (
+        "265D",
+        "black-chess-bishop",
+        "black-bishop",
+        "black-bishop",
+    ),
+    (chess.BLACK, chess.KNIGHT): (
+        "265E",
+        "black-chess-knight",
+        "black-knight",
+        "black-horse",
+    ),
+    (chess.BLACK, chess.PAWN): ("265F", "chess-pawn", "black-pawn", "black-pawn"),
 }
 
 PIECE_VALUES = {

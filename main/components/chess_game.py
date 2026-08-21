@@ -54,13 +54,16 @@ class ChessGame:
         return cls(state, computer, is_random)
 
     @classmethod
-    def from_moves(cls, fen: str, moves: list[str], computer: int = 0):
+    def from_moves(
+        cls, fen: str, moves: list[str], computer: int = 0, style: str = "normal"
+    ):
         """Recreate chess game state from original fen, and implement moves
 
         Args:
             fen: original chess fen
             moves: list of moves in uci format
             computer: whether computer is playing
+            style: chess piece style
 
         Returns:
             reconstructed state of chess game
@@ -70,6 +73,7 @@ class ChessGame:
                 **ChessGame.get_initial_state(computer),
                 "original_fen": fen,
                 "fen": fen,
+                "style": style,
             },
             computer=computer,
         )
@@ -144,6 +148,7 @@ class ChessGame:
             "selected_square": None,
             "history": [],
             "computer": computer,
+            "style": "normal",
         }
 
     @staticmethod
@@ -272,7 +277,7 @@ class ChessGame:
         self.fen = self.board.fen()
         self.selected_square = None
 
-    def render(self) -> html.Div:
+    def render(self, app) -> html.Div:
         """Render the chessboard from White's perspective"""
         selected_square = self.selected_square
         legal_targets = set()
@@ -287,10 +292,12 @@ class ChessGame:
                 square = chess.square(file, rank)
                 squares.append(
                     ChessGame._render_square(
+                        app=app,
                         board=self.board,
                         square=square,
                         selected_square=selected_square,
                         legal_targets=legal_targets,
+                        style=self.state["style"],
                     )
                 )
 
@@ -298,10 +305,12 @@ class ChessGame:
 
     @staticmethod
     def _render_square(
+        app,
         board: chess.Board,
         square: chess.Square,
         selected_square: Optional[int],
         legal_targets: set[int],
+        style: str,
     ) -> html.Button:
         """Render one square of the board"""
         rank = chess.square_rank(square)
@@ -317,7 +326,9 @@ class ChessGame:
         piece = board.piece_at(square)
         children = []
         if piece is not None:
-            children.append(ChessGame._get_piece_icon(piece.color, piece.piece_type))
+            children.append(
+                ChessGame._get_piece_icon(app, piece.color, piece.piece_type, style)
+            )
         return html.Button(
             children=children,
             id={"type": "chess-square", "square": square},
@@ -328,13 +339,14 @@ class ChessGame:
 
     @staticmethod
     def _get_piece_icon(
+        app,
         color: chess.Piece.color,
         piece_type: chess.Piece.piece_type,
-        use_html: bool = False,
+        style: str,
     ) -> Union[DashIconify, html.Img]:
         """Get piece icon to add to chess board"""
-        unicode, unicode_name = PIECE_UNICODE[(color, piece_type)]
-        if use_html:
+        unicode, dashicon, flaticon, flaticon_horse = PIECE_UNICODE[(color, piece_type)]
+        if style == "html":
             openmoji_base_url = (
                 "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg"
             )
@@ -347,7 +359,20 @@ class ChessGame:
                     "pointerEvents": "none",
                 },
             )
-        return DashIconify(icon=f"openmoji:{unicode_name}", height=35)
+        elif style == "normal":
+            return DashIconify(icon=f"openmoji:{dashicon}", height=35)
+        else:
+            folder = style.split("_")[0]
+            icon = flaticon if style.endswith("knight") else flaticon_horse
+            return html.Img(
+                src=app.get_asset_url(f"chess/{folder}/{icon}.png"),
+                style={
+                    "width": "70%",
+                    "height": "70%",
+                    "objectFit": "contain",
+                    "pointerEvents": "none",
+                },
+            )
 
     def history_to_components(self) -> html.Div | list[html.Div]:
         """Display the captured moves. Each history entry contains:
@@ -387,16 +412,16 @@ class ChessGame:
 
         return rows
 
-    def render_captured_pieces(self) -> html.Div:
+    def render_captured_pieces(self, app) -> html.Div:
         """Render white captured pieces and black captured pieces"""
         captured_pieces = self._get_captured_pieces()
         captured_pieces_white = [
-            self._get_piece_icon(color, piece_type)
+            self._get_piece_icon(app, color, piece_type, self.state["style"])
             for color, piece_type in captured_pieces
             if color == chess.WHITE
         ]
         captured_pieces_black = [
-            self._get_piece_icon(color, piece_type)
+            self._get_piece_icon(app, color, piece_type, self.state["style"])
             for color, piece_type in captured_pieces
             if color == chess.BLACK
         ]
@@ -423,6 +448,7 @@ class ChessGame:
                 "fen": self.state["original_fen"],
                 "moves": ",".join(ChessGame._get_moves(self.state)),
                 "computer": self.computer_difficulty,
+                "style": self.state["style"],
             }
         )
 
