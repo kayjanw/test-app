@@ -20,6 +20,28 @@ Dark pink #BE9B89
 Light pink #F0E3DF
 Pinkish grey #D6CAC7
 
+Chess pieces (chess)
+Blue base 5593D8 / 383848
+Blue outline 2673C6 / 202029
+Blue light 65A3E0 / 57555A
+Orange FFB743 / D6CAC7
+Light orange FFDA99 / D28F7A
+Dark orange FF8243 / B3A7A5
+White FFEBDC
+
+Chess pieces (dot)
+Base 5993AF / 57555A / F0E3DF
+Highlight C0D4DF / D6CAC7 / BE9B89
+Outline black / 202029
+
+Chess pieces (blue)
+Base 365E7D / 57555A / F0E3DF
+Shadow 2B4D66 / 353337 / BE9B89
+Lighter base 4A80AA / D6CAC7 / D6CAC7
+Darker base 407093 / 514D4C / F0E3DF
+Highlight 25475B / 413F44 / A68879
+Outline black / black / 202029
+
 Order of div
 content-header
 div-with-image, div-with-image-left, div-with-image-right
@@ -1024,6 +1046,12 @@ span p {
     justify-content: center;
     cursor: pointer;
 }
+.chess-piece {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    pointer-events: none;
+}
 #chess-difficulty {
     min-width: 150px;
     max-width: 200px;
@@ -1049,6 +1077,10 @@ span p {
 }
 .chess-cell {
     padding: 10px;
+}
+#chess-captured .chess-piece {
+    max-height: 40px;
+    max-width: 40px;
 }
 
 .wordle-tile {

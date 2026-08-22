@@ -56,3 +56,13 @@ PIECE_VALUES = {
     chess.QUEEN: 900,
     chess.KING: 20_000,
 }
+
+CHESS_THEMES = [
+    "normal",
+    "dottheme",
+    "yellow",
+    "people_knight",
+    "bluetheme",
+    "chesstheme",
+    "normal",
+]

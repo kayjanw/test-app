@@ -7,6 +7,7 @@ from dash.dependencies import ALL, Input, Output, State
 
 from common.components.helper import parse_data, print_callback, return_message
 from main.components.chess_game import ChessGame
+from main.model.chess_game import CHESS_THEMES
 
 ORIGINAL_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
@@ -111,15 +112,7 @@ def register_callbacks_chess(app, print_function):
         if ctx.triggered_id == "chess-undo":
             chess_game.undo()
         if ctx.triggered_id == "chess-style":
-            styles = [
-                "normal",
-                "yellow",
-                "people_knight",
-                "dot",
-                "blue",
-                "chess",
-                "normal",
-            ]
+            styles = CHESS_THEMES
             current_style = chess_game.state["style"]
             chess_game.state["style"] = styles[styles.index(current_style) + 1]
         if isinstance(ctx.triggered_id, dict):

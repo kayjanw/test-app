@@ -372,12 +372,7 @@ class ChessGame:
             icon = flaticon if style.endswith("knight") else flaticon_horse
             return html.Img(
                 src=app.get_asset_url(f"chess/{folder}/{icon}.png"),
-                style={
-                    "width": "70%",
-                    "height": "70%",
-                    "objectFit": "contain",
-                    "pointerEvents": "none",
-                },
+                className="chess-piece",
             )
 
     def history_to_components(self) -> html.Div | list[html.Div]:
