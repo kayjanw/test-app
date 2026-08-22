@@ -7,6 +7,7 @@ from dash import dcc, html
 
 from common.components.helper import colour_palette, encode_dict
 from common.layouts.main import content_header
+from common.layouts.modal import info_button, modal_popup
 from main.components import WNRS
 from main.layouts.main import style_hidden, style_wnrs_text
 from main.model.wnrs import SWATCHES_BACKGROUND, SWATCHES_TEXT, Deck
@@ -389,7 +390,6 @@ def wnrs_tab(app):
                 ],
                 className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
             ),
-            html.Br(),
             html.P(
                 "Wildcards",
                 style={"margin-top": "20px"},
@@ -401,7 +401,6 @@ def wnrs_tab(app):
                     "otherwise stated. These cards can appear at any moment during the game!"
                 ],
             ),
-            html.Br(),
             html.P(
                 "Save your Progress",
                 style={"margin-top": "20px"},
@@ -417,7 +416,6 @@ def wnrs_tab(app):
                 ],
                 className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
             ),
-            html.Br(),
             html.P(
                 "Customize Theme",
                 style={"margin-top": "20px"},
@@ -432,7 +430,6 @@ def wnrs_tab(app):
                 ],
                 className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
             ),
-            html.Br(),
             html.P(
                 "Want to Contribute?",
                 style={"margin-top": "20px"},
@@ -459,14 +456,7 @@ def wnrs_tab(app):
             content_header(
                 [
                     "We're Not Really Strangers",
-                    html.Button(
-                        html.Span(
-                            html.Img(src=app.get_asset_url("help.png")),
-                            title="How to play",
-                        ),
-                        id={"type": "button-modal-wnrs", "index": "modal-help"},
-                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                    ),
+                    info_button(app, "modal-wnrs"),
                 ],
                 "",
             ),
@@ -622,45 +612,9 @@ def wnrs_tab(app):
                             ),
                         ]
                     ),
-                    dbc.Modal(
-                        [
-                            dbc.ModalHeader(dbc.ModalTitle("Instructions")),
-                            dbc.ModalBody(
-                                modal_help(),
-                            ),
-                            dbc.ModalFooter(
-                                dbc.Button(
-                                    "Close",
-                                    id={
-                                        "type": "button-close-modal-wnrs",
-                                        "index": "modal-help",
-                                    },
-                                )
-                            ),
-                        ],
-                        id={"type": "modal-wnrs", "index": "modal-help"},
-                        is_open=False,
-                        centered=True,
-                        size="lg",
-                    ),
-                    dbc.Modal(
-                        [
-                            dbc.ModalHeader(dbc.ModalTitle("Select Deck")),
-                            dbc.ModalBody(modal_deck()),
-                            dbc.ModalFooter(
-                                dbc.Button(
-                                    "Close",
-                                    id={
-                                        "type": "button-close-modal-wnrs",
-                                        "index": "modal-select",
-                                    },
-                                )
-                            ),
-                        ],
-                        id={"type": "modal-wnrs", "index": "modal-select"},
-                        is_open=False,
-                        centered=True,
-                        size="lg",
+                    modal_popup(modal_help(), "modal-wnrs"),
+                    modal_popup(
+                        modal_deck(), "modal-wnrs", "Select Deck", "modal-select"
                     ),
                     dbc.Modal(
                         [
@@ -689,24 +643,11 @@ def wnrs_tab(app):
                         centered=True,
                         size="lg",
                     ),
-                    dbc.Modal(
-                        [
-                            dbc.ModalHeader(dbc.ModalTitle("Contribute")),
-                            dbc.ModalBody(modal_contribute()),
-                            dbc.ModalFooter(
-                                dbc.Button(
-                                    "Close",
-                                    id={
-                                        "type": "button-close-modal-wnrs",
-                                        "index": "modal-contribute",
-                                    },
-                                )
-                            ),
-                        ],
-                        id={"type": "modal-wnrs", "index": "modal-contribute"},
-                        is_open=False,
-                        centered=True,
-                        size="lg",
+                    modal_popup(
+                        modal_contribute(),
+                        "modal-wnrs",
+                        "Contribute",
+                        "modal-contribute",
                     ),
                 ],
                 className="custom-container custom-div-space-above custom-div-space-below",

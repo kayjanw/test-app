@@ -1,8 +1,8 @@
-import dash_bootstrap_components as dbc
 from dash import dcc, html
 from dash_iconify import DashIconify
 
 from common.layouts.main import content_header
+from common.layouts.modal import info_button, modal_popup
 from main.components.wordle import Wordle, create_grid
 
 replay_symbol = html.Span(
@@ -30,7 +30,6 @@ def modal_help():
                 "guess, the colour of the tiles will change to show how close your guess was "
                 "to the word.",
                 html.Br(),
-                html.Br(),
                 "Select ",
                 replay_symbol,
                 " to restart game or ",
@@ -38,7 +37,6 @@ def modal_help():
                 " to toggle between a five-letter or six-letter word.",
             ],
         ),
-        html.Br(),
         html.P(
             "Tile Colour Meaning",
             style={"margin-top": "20px"},
@@ -53,7 +51,6 @@ def modal_help():
                 "Gray: The letter is not in the hidden word",
             ],
         ),
-        html.Br(),
         html.P(
             html.P("Have fun!", className="rainbow"),
             style={"margin-top": "20px"},
@@ -70,14 +67,7 @@ def wordle_tab(app):
             content_header(
                 [
                     "Wordle",
-                    html.Button(
-                        html.Span(
-                            html.Img(src=app.get_asset_url("help.png")),
-                            title="How to play",
-                        ),
-                        id={"type": "button-modal-wordle", "index": "modal-help"},
-                        className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                    ),
+                    info_button(app, "modal-wordle"),
                 ],
                 "",
             ),
@@ -135,26 +125,6 @@ def wordle_tab(app):
             dcc.Store(
                 id="wordle-state", storage_type="memory", data=wordle_game.to_store()
             ),
-            dbc.Modal(
-                [
-                    dbc.ModalHeader(dbc.ModalTitle("Instructions")),
-                    dbc.ModalBody(
-                        modal_help(),
-                    ),
-                    dbc.ModalFooter(
-                        dbc.Button(
-                            "Close",
-                            id={
-                                "type": "button-close-modal-wordle",
-                                "index": "modal-help",
-                            },
-                        )
-                    ),
-                ],
-                id={"type": "modal-wordle", "index": "modal-help"},
-                is_open=False,
-                centered=True,
-                size="lg",
-            ),
+            modal_popup(modal_help(), "modal-wordle"),
         ]
     )

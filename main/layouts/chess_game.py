@@ -4,16 +4,97 @@ from dash_iconify import DashIconify
 
 from common.components.helper import encode_dict
 from common.layouts.main import content_header
+from common.layouts.modal import info_button, modal_popup
 from main.components.chess_game import ChessGame
 from main.layouts.main import style_hidden
+
+
+def new_symbol(app):
+    return html.Span(
+        html.Img(src=app.get_asset_url("new.svg")),
+        title="New game",
+    )
+
+
+random_symbol = html.Span(
+    DashIconify(icon="openmoji:party-popper", width=20),
+    title="Random game",
+)
+
+
+def download_symbol(app):
+    return html.Span(
+        html.Img(src=app.get_asset_url("download.svg")),
+        title="Save game",
+    )
+
+
+def palette_symbol(app):
+    return html.Span(
+        html.Img(src=app.get_asset_url("palette.png")),
+        title="Change style",
+    )
 
 
 def chess_tab(app):
     chess_game = ChessGame()
 
+    def modal_help():
+        return [
+            html.P(
+                "How to Play (1-2 players)",
+                className="p-short p-bold neucha-font",
+            ),
+            html.P(
+                [
+                    "The game is played on a single device. Select ",
+                    new_symbol(app),
+                    " to start a new game or ",
+                    random_symbol,
+                    " to play randomised chess!",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                "Save your Progress",
+                style={"margin-top": "20px"},
+                className="p-short p-bold neucha-font",
+            ),
+            html.P(
+                [
+                    "Couldn't finish the game? Save your progress",
+                    download_symbol(app),
+                    "and load the game next time to pick up "
+                    "exactly where you left off.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                "Customize Theme",
+                style={"margin-top": "20px"},
+                className="p-short p-bold neucha-font",
+            ),
+            html.P(
+                [
+                    "Select ",
+                    palette_symbol(app),
+                    " to customize the chess pieces! "
+                    "You can change the style of chess "
+                    "pieces anytime during the game.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                html.P("Have fun!", className="rainbow"),
+                style={"margin-top": "20px"},
+                className="custom-div-center p-short p-bold",
+            ),
+            html.Br(),
+        ]
+
     return html.Div(
         [
-            content_header("Chess"),
+            content_header(["Chess", info_button(app, "modal-chess")]),
             html.Div(
                 [
                     html.Div(id="chess-status"),
@@ -29,18 +110,12 @@ def chess_tab(app):
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                             html.Button(
-                                html.Span(
-                                    html.Img(src=app.get_asset_url("new.svg")),
-                                    title="New game",
-                                ),
+                                new_symbol(app),
                                 id="chess-new-game",
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                             html.Button(
-                                html.Span(
-                                    DashIconify(icon="openmoji:party-popper", width=20),
-                                    title="Random game",
-                                ),
+                                random_symbol,
                                 id="chess-random-game",
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
@@ -56,12 +131,7 @@ def chess_tab(app):
                                         id="input-chess",
                                     ),
                                     html.Button(
-                                        html.Span(
-                                            html.Img(
-                                                src=app.get_asset_url("download.svg")
-                                            ),
-                                            title="Save game",
-                                        ),
+                                        download_symbol(app),
                                         type="submit",
                                         id="button-chess-download-ok",
                                         className="div-with-image small-image image-dark-blue invisible-button vertical-center",
@@ -89,10 +159,7 @@ def chess_tab(app):
                                 className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
                             html.Button(
-                                html.Span(
-                                    html.Img(src=app.get_asset_url("palette.png")),
-                                    title="Change style",
-                                ),
+                                palette_symbol(app),
                                 id="chess-style",
                                 className="div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
@@ -149,5 +216,6 @@ def chess_tab(app):
                 storage_type="memory",
                 data=chess_game.state,
             ),
+            modal_popup(modal_help(), "modal-chess"),
         ]
     )

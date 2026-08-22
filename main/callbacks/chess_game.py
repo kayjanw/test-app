@@ -3,7 +3,7 @@ from typing import Union
 
 import chess
 from dash import ctx
-from dash.dependencies import ALL, Input, Output, State
+from dash.dependencies import ALL, MATCH, Input, Output, State
 
 from common.components.helper import parse_data, print_callback, return_message
 from main.components.chess_game import ChessGame
@@ -13,6 +13,31 @@ ORIGINAL_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 
 def register_callbacks_chess(app, print_function):
+    @app.callback(
+        Output({"type": "modal-chess", "index": MATCH}, "is_open"),
+        [
+            Input({"type": "button-modal-chess", "index": MATCH}, "n_clicks"),
+            Input({"type": "button-close-modal-chess", "index": MATCH}, "n_clicks"),
+        ],
+        State({"type": "modal-chess", "index": MATCH}, "is_open"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_modal_display(trigger_open, trigger_close, is_open: bool) -> bool:
+        """Update modal display
+
+        Args:
+            trigger_open: trigger on button click
+            trigger_close: trigger on button click
+            is_open: current state of open
+
+        Returns:
+            indicator whether modal is open or not
+        """
+        if trigger_open or trigger_close:
+            return not is_open
+        return is_open
+
     @app.callback(
         [
             Output("chess-state", "data"),
