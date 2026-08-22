@@ -83,6 +83,10 @@ class Poker:
             self.result = "You do not have any chips left to play."
             self.game_over = True
             return
+        if not self.chips_cpu:
+            self.result = "CPU does not have any chips left to play."
+            self.game_over = True
+            return
         deck = DECK.copy()
         random.shuffle(deck)
         # Update card
