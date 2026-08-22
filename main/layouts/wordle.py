@@ -33,7 +33,7 @@ def modal_help():
                 html.Br(),
                 "Select ",
                 replay_symbol,
-                " to restart game and ",
+                " to restart game or ",
                 switch_symbol,
                 " to toggle between a five-letter or six-letter word.",
             ],
