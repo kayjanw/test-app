@@ -56,6 +56,8 @@ def register_callbacks_chess(app, print_function):
             game data, game save format, status of game, updated computer toggle
         """
         is_random = False
+        current_style = state["style"]
+
         if ctx.triggered_id == "chess-new-game":
             state = None
 
@@ -100,7 +102,10 @@ def register_callbacks_chess(app, print_function):
             if state and "error" in state:
                 return state, ""
             chess_game = ChessGame.from_state(
-                state, computer=computer_difficulty, is_random=is_random
+                state,
+                computer=computer_difficulty,
+                is_random=is_random,
+                style=current_style,
             )
 
         if ctx.triggered_id == "chess-undo":

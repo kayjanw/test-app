@@ -37,26 +37,32 @@ class ChessGame:
         self.computer_difficulty = computer
 
     @classmethod
-    def from_state(cls, state: dict[str, Any] | None, computer: int, is_random: bool):
+    def from_state(
+        cls, state: dict[str, Any] | None, computer: int, is_random: bool, style: str
+    ):
         """Recreate chess game state from initial state, and implement moves
 
         Args:
             state: chess state, if applicable
             computer: whether computer is playing
             is_random: whether initial board should be randomised, used for new game
+            style: chess piece style
         """
         if state:
             instance = cls.from_moves(
-                state["original_fen"], cls._get_moves(state), computer
+                state["original_fen"],
+                cls._get_moves(state),
+                computer,
+                style,
             )
             instance.state = state
             return instance
-        return cls(state, computer, is_random)
+        instance = cls(state, computer, is_random)
+        instance.state["style"] = style
+        return instance
 
     @classmethod
-    def from_moves(
-        cls, fen: str, moves: list[str], computer: int = 0, style: str = "normal"
-    ):
+    def from_moves(cls, fen: str, moves: list[str], computer: int, style: str):
         """Recreate chess game state from original fen, and implement moves
 
         Args:

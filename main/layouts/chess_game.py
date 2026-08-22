@@ -38,14 +38,6 @@ def chess_tab(app):
                             ),
                             html.Button(
                                 html.Span(
-                                    html.Img(src=app.get_asset_url("palette.png")),
-                                    title="Random game",
-                                ),
-                                id="chess-style",
-                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
-                            ),
-                            html.Button(
-                                html.Span(
                                     DashIconify(icon="openmoji:party-popper", width=20),
                                     title="Random game",
                                 ),
@@ -96,6 +88,14 @@ def chess_tab(app):
                                 ],
                                 className="custom-div-center div-with-image small-image image-dark-blue invisible-button vertical-center",
                             ),
+                            html.Button(
+                                html.Span(
+                                    html.Img(src=app.get_asset_url("palette.png")),
+                                    title="Change style",
+                                ),
+                                id="chess-style",
+                                className="div-with-image small-image image-dark-blue invisible-button vertical-center",
+                            ),
                             # dmc.Switch(
                             #     id="chess-switch",
                             #     labelPosition="right",
@@ -111,7 +111,7 @@ def chess_tab(app):
                                 min=0,
                                 max=3,
                                 step=1,
-                                value=0,
+                                value=1,
                                 marks=[
                                     {"value": 0, "label": "No computer"},
                                     {"value": 1, "label": "Easy"},
