@@ -72,6 +72,9 @@ XlsxWriter==1.2.8
 #Chess
 python-chess
 
+#Poker
+pokerlib
+
 #Trading
 #MetaTrader5==5.0.37; platform_system  == "Windows"
 #yfinance==0.1.70
