@@ -108,7 +108,7 @@ def player_cards(state):
                     ),
                     html.Br(),
                     html.Button(
-                        "Bet / Raise",
+                        "Raise",
                         style={"display": "none"},
                         className="button-outline",
                         id="button-poker-raise",

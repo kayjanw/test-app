@@ -75,7 +75,14 @@ class Poker:
             render_card(visible_cards),
         )
 
+    def advance_stage(self):
+        self.stage = STAGES[STAGES.index(self.stage) + 1]
+
     def new_game(self) -> str:
+        if not self.chips_user:
+            self.result = "You do not have any chips left to play."
+            self.game_over = True
+            return
         deck = DECK.copy()
         random.shuffle(deck)
         # Update card
@@ -84,16 +91,17 @@ class Poker:
         self.card_board = [deck.pop() for _ in range(5)]
 
         # Update pot
-        chips_user = max(0, self.chips_user - BLIND)
-        chips_cpu = max(0, self.chips_cpu - BLIND)
-        self.pot = (self.chips_user + self.chips_cpu) - (chips_user + chips_cpu)
-        self.chips_user = chips_user
-        self.chips_cpu = chips_cpu
+        user_blind = min(self.chips_user, BLIND)
+        cpu_blind = min(self.chips_cpu, BLIND)
+        self.pot = user_blind + cpu_blind
+        self.chips_user -= user_blind
+        self.chips_cpu -= cpu_blind
 
         # Update interface
         self.stage = STAGES[1]
         self.to_call = 0
         self.result = return_message["poker_new_game"].format(blind=BLIND)
+        self.player_moved = False
         self.game_over = False
 
     def fold(self):
@@ -113,24 +121,23 @@ class Poker:
                 p1="You", amount=self.to_call
             )
             self.to_call = 0
-            # Call advances stage
-            self.stage = STAGES[STAGES.index(self.stage) + 1]
+            self.advance_stage()
         else:
             self.result = return_message["poker_check"].format(p1="You")
             self.player_moved = True
 
-    def bet_or_raise(self, amount: int):
-        if amount <= 0:
+    def bet_or_raise(self, raise_by: int):
+        if raise_by <= 0:
             self.result = return_message["poker_zero_raise"]
             return
-        total_amount = self.to_call + amount
+        total_amount = self.to_call + raise_by
         if total_amount > self.chips_user:
             self.result = return_message["poker_insufficient_raise"]
             return
         self.chips_user -= total_amount
         self.pot += total_amount
-        self.to_call = amount
-        self.result = return_message["poker_raise"].format(p1="You", amount=amount)
+        self.to_call = raise_by
+        self.result = return_message["poker_raise"].format(p1="You", amount=raise_by)
         self.player_moved = True
 
     @staticmethod
@@ -204,7 +211,7 @@ class Poker:
 
     def cpu_check(self):
         self.result += return_message["poker_check"].format(p1="CPU")
-        self.stage = STAGES[STAGES.index(self.stage) + 1]
+        self.advance_stage()
 
     def cpu_call(self):
         self.to_call = min(self.to_call, self.chips_cpu)
@@ -214,20 +221,21 @@ class Poker:
             p1="CPU", amount=self.to_call
         )
         self.to_call = 0
-        self.stage = STAGES[STAGES.index(self.stage) + 1]
+        self.advance_stage()
 
-    def cpu_raise(self, cpu_amount):
+    def cpu_raise(self, raise_by):
         if self.to_call >= self.chips_cpu:
             self.cpu_call()
-        total_amount = min(self.to_call + cpu_amount, self.chips_cpu)
-        cpu_amount = total_amount - self.to_call
+            return
+        total_amount = min(self.to_call + raise_by, self.chips_cpu)
+        raise_by = total_amount - self.to_call
         self.chips_cpu -= total_amount
-        self.pot += cpu_amount
-        self.to_call = cpu_amount
-        self.result = return_message["poker_raise"].format(p1="CPU", amount=cpu_amount)
+        self.pot += raise_by
+        self.to_call = raise_by
+        self.result = return_message["poker_raise"].format(p1="CPU", amount=raise_by)
 
     def cpu_move(self):
-        """Implement CPU move"""
+        """Plan and implement CPU move"""
         self.player_moved = False
         cpu_action, cpu_amount = self.choose_move()
         if cpu_action == "fold":
