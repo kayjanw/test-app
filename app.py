@@ -14,6 +14,7 @@ from main.callbacks.chat import register_callbacks_chat
 from main.callbacks.chess_game import register_callbacks_chess
 from main.callbacks.event_planner import register_callbacks_event_planner
 from main.callbacks.mbti import register_callbacks_mbti
+from main.callbacks.poker import register_callbacks_poker
 from main.callbacks.rng import register_callbacks_rng
 from main.callbacks.trade import register_callbacks_trade
 from main.callbacks.trip_planner import register_callbacks_trip_planner
@@ -108,6 +109,7 @@ register_callbacks_trip_planner(app, print_function)
 register_callbacks_wnrs(app, print_function)
 register_callbacks_chess(app, print_function)
 register_callbacks_wordle(app, print_function)
+register_callbacks_poker(app, print_function)
 register_callbacks_shows(app, print_function)
 register_routes(app)
 

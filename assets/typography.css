@@ -928,6 +928,12 @@ span p {
 [id^="button-wordle-icon"] {
     padding: 0;
 }
+[id^="button-poker"] {
+    height: 38px;
+    margin: 0 5px 0 0;
+    padding: 0px 20px;
+    border-radius: unset;
+}
 
 [class^="tooltip"] {
 
@@ -1109,12 +1115,34 @@ span p {
     margin: 0 auto;
     gap: 5px;
 }
-.button-outline-wordle {
+.button-outline {
     border: 1px solid rgb(209, 209, 209);
 }
 #wordle-output {
     margin-top: 15px;
     color: red;
+}
+
+.poker-card {
+    display: flex;
+    width: 70px;
+    height: 100px;
+    background-color: white;
+    border-radius: 8px;
+    border: 2px solid #333;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.poker-card-hidden {
+    background-color: #2f4f8f;
+    color: white;
+    border: 2px solid white;
+}
+#poker-raise {
+    max-width: 80px;
 }
 
 .mantine-ColorPicker-swatch {

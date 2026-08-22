@@ -91,7 +91,7 @@ def wordle_tab(app):
                                     html.Button(
                                         "Submit",
                                         id="button-wordle-submit",
-                                        className="button-outline-wordle",
+                                        className="button-outline",
                                     ),
                                     html.Button(
                                         replay_symbol, id="button-wordle-icon-redo"

@@ -32,6 +32,7 @@ from main.layouts import (
     event_tab,
     image_edit_tab,
     mbti_tab,
+    poker_tab,
     rng_tab,
     trade_tab,
     trip_tab,
@@ -227,6 +228,8 @@ def register_callbacks(app, print_function):
             return chess_tab(app)
         elif tab == "tab-wordle":
             return wordle_tab(app)
+        elif tab == "tab-poker":
+            return poker_tab(app)
         # CV
         elif tab == "tab-cv-aboutme":
             return about_me_cv_tab(app)
@@ -276,6 +279,8 @@ def register_callbacks(app, print_function):
                 document.title = 'Chess'
             } else if (tab_value === 'tab-wordle') {
                 document.title = 'Wordle'
+            } else if (tab_value === 'tab-poker') {
+                document.title = 'Poker'
             } else if (tab_value === 'tab-contact') {
                 document.title = 'Contact Me'
             } else if (tab_value === 'tab-image') {

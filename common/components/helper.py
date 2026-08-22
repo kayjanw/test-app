@@ -57,6 +57,13 @@ return_message = {
     "wrong_file_type": "File type not supported. Please upload another file",
     "wordle_win": "Splendid! You solved it in {n} steps!",
     "wordle_lose": "Game Over! The word was {word}.",
+    "poker_new_game": "New hand dealt. Both players posted ${blind}.\nIt's your move.",
+    "poker_fold": "{p1} fold. {p2} take the pot.",
+    "poker_check": "{p1} checked. ",
+    "poker_call": "{p1} called ${amount}. ",
+    "poker_raise": "{p1} raise by ${amount}. ",
+    "poker_zero_raise": "Raise amount must be greater than zero.",
+    "poker_insufficient_raise": "Insufficient chips for that raise.",
 }
 
 
