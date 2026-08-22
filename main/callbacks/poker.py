@@ -61,7 +61,7 @@ def register_callbacks_poker(app, print_function):
         if poker_game.player_moved and not poker_game.game_over:
             poker_game.cpu_move()
 
-        if poker_game.stage == STAGES[-1]:
+        if poker_game.stage == STAGES[-1] and not poker_game.game_over:
             poker_game.showdown()
 
         # Button display
