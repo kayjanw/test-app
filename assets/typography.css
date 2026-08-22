@@ -174,6 +174,10 @@ footer
     #button-wnrs-back, #button-wnrs-next {
         width: 20vw;
     }
+    #chess-captured .chess-piece {
+        max-height: 30px;
+        max-width: 30px;
+    }
 }
 
 /* For devices larger than 800px */
@@ -256,6 +260,10 @@ footer
     }
     #button-wnrs-back, #button-wnrs-next {
         width: 10vw;
+    }
+    #chess-captured .chess-piece {
+        max-height: 40px;
+        max-width: 40px;
     }
 }
 
@@ -1077,10 +1085,6 @@ span p {
 }
 .chess-cell {
     padding: 10px;
-}
-#chess-captured .chess-piece {
-    max-height: 40px;
-    max-width: 40px;
 }
 
 .wordle-tile {
