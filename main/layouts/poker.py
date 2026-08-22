@@ -116,7 +116,7 @@ def player_cards(state):
                     dcc.Input(
                         id="poker-raise",
                         type="number",
-                        value=0,
+                        value=20,
                         min=0,
                         step=10,
                         style={"display": "none"},
