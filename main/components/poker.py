@@ -75,8 +75,10 @@ class Poker:
             render_card(visible_cards),
         )
 
-    def advance_stage(self):
+    def advance_stage(self, announce: bool = False):
         self.stage = STAGES[STAGES.index(self.stage) + 1]
+        if announce:
+            self.result += f"\nMoving to {self.stage}."
 
     def new_game(self) -> str:
         if not self.chips_user:
@@ -125,7 +127,7 @@ class Poker:
                 p1="You", amount=self.to_call
             )
             self.to_call = 0
-            self.advance_stage()
+            self.advance_stage(announce=True)
         else:
             self.result = return_message["poker_check"].format(p1="You")
             self.player_moved = True
@@ -228,15 +230,18 @@ class Poker:
         self.advance_stage()
 
     def cpu_raise(self, raise_by):
+        if not self.chips_cpu:
+            self.cpu_check()
+            return
         if self.to_call >= self.chips_cpu:
             self.cpu_call()
             return
         total_amount = min(self.to_call + raise_by, self.chips_cpu)
         raise_by = total_amount - self.to_call
         self.chips_cpu -= total_amount
-        self.pot += raise_by
+        self.pot += total_amount
         self.to_call = raise_by
-        self.result = return_message["poker_raise"].format(p1="CPU", amount=raise_by)
+        self.result += return_message["poker_raise"].format(p1="CPU", amount=raise_by)
 
     def cpu_move(self):
         """Plan and implement CPU move"""
