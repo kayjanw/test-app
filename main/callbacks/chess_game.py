@@ -101,7 +101,7 @@ def register_callbacks_chess(app, print_function):
             if "json" not in filename:
                 error_message = return_message["file_not_uploaded_json"]
                 return (
-                    {"error": error_message},
+                    {"error": error_message, "style": current_style},
                     "",
                     error_message,
                     computer_difficulty,
@@ -118,7 +118,7 @@ def register_callbacks_chess(app, print_function):
             except (KeyError, chess.InvalidMoveError):
                 error_message = return_message["wrong_format_json"]
                 return (
-                    {"error": error_message},
+                    {"error": error_message, "style": current_style},
                     "",
                     error_message,
                     computer_difficulty,
@@ -126,7 +126,7 @@ def register_callbacks_chess(app, print_function):
         else:
             # Game in error state
             if state and "error" in state:
-                return state, ""
+                return state, "", state["error"], computer_difficulty
             chess_game = ChessGame.from_state(
                 state,
                 computer=computer_difficulty,
@@ -166,10 +166,12 @@ def register_callbacks_chess(app, print_function):
         Returns:
             board display, history, captured pieces
         """
+        current_style = state["style"]
         if "error" in state:
             state = None
 
         chess_game = ChessGame(state)
+        chess_game.state["style"] = current_style
         board_component = chess_game.render(app)
         history_component = chess_game.history_to_components()
         captured_pieces_component = chess_game.render_captured_pieces(app)
