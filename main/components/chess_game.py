@@ -38,15 +38,19 @@ class ChessGame:
 
     @classmethod
     def from_state(
-        cls, state: dict[str, Any] | None, computer: int, is_random: bool, style: str
+        cls,
+        state: dict[str, Any] | None,
+        computer: int,
+        style: str,
+        is_random: bool = False,
     ):
         """Recreate chess game state from initial state, and implement moves
 
         Args:
             state: chess state, if applicable
             computer: whether computer is playing
-            is_random: whether initial board should be randomised, used for new game
             style: chess piece style
+            is_random: whether initial board should be randomised, used for new game
         """
         if state:
             instance = cls.from_moves(
@@ -174,7 +178,7 @@ class ChessGame:
 
     def move(
         self, selected_square: chess.Square | None, clicked_square: chess.Square
-    ) -> None:
+    ) -> str | None:
         """Handles selecting a piece, moving a selected piece, computer response (if applicable)
 
         Args:
@@ -211,6 +215,7 @@ class ChessGame:
         self._move(move)
 
         # Computer move
+        computer_move = None
         if (
             self.computer_difficulty
             and not self.board.is_game_over()
@@ -222,7 +227,8 @@ class ChessGame:
                 depth=CONFIG.depth,
                 difficulty=self.computer_difficulty,
             )
-            self._move(computer_move)
+            # self._move(computer_move)
+        return computer_move
 
     def _get_move(
         self, selected_square: chess.Square, clicked_square: chess.Square
@@ -245,8 +251,10 @@ class ChessGame:
             )
         return move
 
-    def _move(self, move: chess.Move):
+    def _move(self, move: chess.Move | str):
         """Handle chess move"""
+        if isinstance(move, str):
+            move = chess.Move.from_uci(move)
         san = self.board.san(move)
         captured_piece = self.board.piece_at(move.to_square)
         self.board.push(move)

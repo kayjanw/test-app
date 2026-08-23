@@ -1,8 +1,10 @@
 import json
+import random
+import time
 from typing import Union
 
 import chess
-from dash import ctx
+from dash import ctx, no_update
 from dash.dependencies import ALL, MATCH, Input, Output, State
 
 from common.components.helper import parse_data, print_callback, return_message
@@ -40,9 +42,10 @@ def register_callbacks_chess(app, print_function):
 
     @app.callback(
         [
-            Output("chess-state", "data"),
+            Output("chess-state", "data", allow_duplicate=True),
+            Output("chess-status", "children", allow_duplicate=True),
+            Output("chess-move", "data", allow_duplicate=True),
             Output("input-chess", "value"),
-            Output("chess-status", "children"),
             Output("chess-difficulty", "value"),
         ],
         Input({"type": "chess-square", "square": ALL}, "n_clicks"),
@@ -79,10 +82,11 @@ def register_callbacks_chess(app, print_function):
         - Upload
 
         Returns:
-            game data, game save format, status of game, updated computer toggle
+            game data, status of game, computer move, game save format, updated computer toggle
         """
         is_random = False
         current_style = state["style"]
+        computer_move = ""
 
         if ctx.triggered_id == "chess-new-game":
             state = None
@@ -102,8 +106,9 @@ def register_callbacks_chess(app, print_function):
                 error_message = return_message["file_not_uploaded_json"]
                 return (
                     {"error": error_message, "style": current_style},
-                    "",
                     error_message,
+                    computer_move,
+                    "",
                     computer_difficulty,
                 )
             try:
@@ -119,8 +124,9 @@ def register_callbacks_chess(app, print_function):
                 error_message = return_message["wrong_format_json"]
                 return (
                     {"error": error_message, "style": current_style},
-                    "",
                     error_message,
+                    computer_move,
+                    "",
                     computer_difficulty,
                 )
         else:
@@ -130,8 +136,8 @@ def register_callbacks_chess(app, print_function):
             chess_game = ChessGame.from_state(
                 state,
                 computer=computer_difficulty,
-                is_random=is_random,
                 style=current_style,
+                is_random=is_random,
             )
 
         if ctx.triggered_id == "chess-undo":
@@ -142,13 +148,40 @@ def register_callbacks_chess(app, print_function):
             chess_game.state["style"] = styles[styles.index(current_style) + 1]
         if isinstance(ctx.triggered_id, dict):
             clicked_square = ctx.triggered_id["square"]
-            chess_game.move(chess_game.selected_square, clicked_square)
+            computer_move = chess_game.move(chess_game.selected_square, clicked_square)
         return (
             chess_game.state,
-            chess_game.convert_to_save_format(),
             chess_game.status,
+            str(computer_move) if computer_move else "",
+            chess_game.convert_to_save_format(),
             chess_game.computer_difficulty,
         )
+
+    @app.callback(
+        [
+            Output("chess-state", "data", allow_duplicate=True),
+            Output("chess-status", "children", allow_duplicate=True),
+            Output("chess-move", "data", allow_duplicate=True),
+        ],
+        Input("chess-move", "data"),
+        State("chess-state", "data"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def handle_computer_move(
+        chess_move,
+        state,
+    ):
+        if chess_move:
+            time.sleep(random.random())
+            chess_game = ChessGame.from_state(
+                state,
+                computer=state["computer"],
+                style=state["style"],
+            )
+            chess_game._move(chess_move)
+            return state, chess_game.status, chess_move
+        return no_update, no_update, no_update
 
     @app.callback(
         Output("chess-container", "children"),

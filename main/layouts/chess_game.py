@@ -216,6 +216,7 @@ def chess_tab(app):
                 storage_type="memory",
                 data=chess_game.state,
             ),
+            dcc.Store(id="chess-move", storage_type="memory", data=""),
             modal_popup(modal_help(), "modal-chess"),
         ]
     )
