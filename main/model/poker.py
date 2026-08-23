@@ -31,6 +31,10 @@ class Card:
     rank: str
 
     @property
+    def rank_strength(self) -> int:
+        return int(RANK_MAP[self.rank])
+
+    @property
     def pokerlib(self) -> tuple[Rank, Suit]:
         return RANK_MAP[self.rank], SUIT_MAP[self.suit]
 
@@ -76,12 +80,15 @@ SUIT_MAP = {
     "d": Suit.DIAMOND,
     "c": Suit.CLUB,
 }
-STRONG_HANDS = {
-    "TWO_PAIR",
-    "THREE_OF_A_KIND",
-    "STRAIGHT",
-    "FLUSH",
-    "FULL_HOUSE",
-    "FOUR_OF_A_KIND",
-    "STRAIGHT_FLUSH",
+
+HAND_STRENGTH = {
+    "HIGHCARD": 15,
+    "ONEPAIR": 35,
+    "TWOPAIR": 55,
+    "THREEOFAKIND": 70,
+    "STRAIGHT": 80,
+    "FLUSH": 85,
+    "FULLHOUSE": 93,
+    "FOUROFAKIND": 98,
+    "STRAIGHTFLUSH": 100,
 }

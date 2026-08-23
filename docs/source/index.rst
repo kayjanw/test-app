@@ -44,6 +44,7 @@ Code Documentation
    components/wnrs
    components/chess-game
    components/wordle
+   components/poker
 
 :doc:`components/change-calculator`
     List of functions for Change Calculator tab
@@ -74,6 +75,9 @@ Code Documentation
 
 :doc:`components/wordle`
     List of functions for Wordle tab
+
+:doc:`components/poker`
+    List of functions for Poker tab
 
 Indices and tables
 ==================
