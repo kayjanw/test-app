@@ -206,5 +206,6 @@ def poker_tab(app):
                 storage_type="memory",
                 data=state,
             ),
+            dcc.Store(id="poker-move", storage_type="memory", data=""),
         ]
     )

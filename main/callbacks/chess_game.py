@@ -180,7 +180,7 @@ def register_callbacks_chess(app, print_function):
                 style=state["style"],
             )
             chess_game._move(chess_move)
-            return state, chess_game.status, chess_move
+            return state, chess_game.status, ""
         return no_update, no_update, no_update
 
     @app.callback(

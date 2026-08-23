@@ -1,3 +1,6 @@
+import random
+import time
+
 from dash import ctx, html
 from dash.dependencies import Input, Output, State
 
@@ -9,23 +12,16 @@ from main.model.poker import STAGES, ButtonColour
 def register_callbacks_poker(app, print_function):
     @app.callback(
         [
-            Output("poker-state", "data"),
-            Output("poker-stage", "children"),
-            Output("poker-pot", "children"),
-            Output("poker-call", "children"),
-            Output("poker-user-cards", "children"),
-            Output("poker-cpu-cards", "children"),
-            Output("poker-board-cards", "children"),
-            Output("poker-output", "children"),
-            Output("poker-user-chips", "children"),
-            Output("poker-cpu-chips", "children"),
-            # # Button looks
-            Output("button-poker-newhandfold", "children"),
-            Output("button-poker-checkcall", "children"),
-            Output("button-poker-newhandfold", "style"),
-            Output("button-poker-checkcall", "style"),
-            Output("button-poker-raise", "style"),
-            Output("poker-raise", "style"),
+            Output("poker-state", "data", allow_duplicate=True),
+            Output("poker-move", "data", allow_duplicate=True),
+            Output("poker-output", "children", allow_duplicate=True),
+            Output("poker-pot", "children", allow_duplicate=True),
+            Output("poker-call", "children", allow_duplicate=True),
+            Output("poker-user-chips", "children", allow_duplicate=True),
+            Output("button-poker-newhandfold", "style", allow_duplicate=True),
+            Output("button-poker-checkcall", "style", allow_duplicate=True),
+            Output("button-poker-raise", "style", allow_duplicate=True),
+            Output("poker-raise", "style", allow_duplicate=True),
         ],
         Input("button-poker-newhandfold", "n_clicks"),
         Input("button-poker-checkcall", "n_clicks"),
@@ -58,7 +54,62 @@ def register_callbacks_poker(app, print_function):
         else:
             poker_game.bet_or_raise(amount)
 
+        poker_move = ""
         if poker_game.player_moved and not poker_game.game_over:
+            poker_move = "move"
+
+        newhandfold_style = checkcall_style = bet_style = raise_style = {
+            "display": "none"
+        }
+        return (
+            poker_game.state,
+            poker_move,
+            [html.P(line) for line in poker_game.result.splitlines()],
+            render_amount(poker_game.pot),
+            render_amount(poker_game.to_call),
+            f"{render_amount(poker_game.chips_user)} ({poker_game.hand_user})",
+            newhandfold_style,
+            checkcall_style,
+            bet_style,
+            raise_style,
+        )
+
+    @app.callback(
+        [
+            Output("poker-state", "data"),
+            Output("poker-move", "data"),
+            Output("poker-output", "children"),
+            Output("poker-stage", "children"),
+            Output("poker-pot", "children"),
+            Output("poker-call", "children"),
+            Output("poker-user-cards", "children"),
+            Output("poker-cpu-cards", "children"),
+            Output("poker-board-cards", "children"),
+            Output("poker-user-chips", "children"),
+            Output("poker-cpu-chips", "children"),
+            # Button looks
+            Output("button-poker-newhandfold", "children"),
+            Output("button-poker-checkcall", "children"),
+            Output("button-poker-newhandfold", "style"),
+            Output("button-poker-checkcall", "style"),
+            Output("button-poker-raise", "style"),
+            Output("poker-raise", "style"),
+        ],
+        Input("poker-move", "data"),
+        [
+            State("poker-state", "data"),
+        ],
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_game_after_computer(
+        poker_move,
+        state,
+    ):
+        poker_game = Poker.from_state(state)
+
+        if poker_game.player_moved and not poker_game.game_over:
+            time.sleep(random.random())
             poker_game.cpu_move()
 
         if (
@@ -82,11 +133,12 @@ def register_callbacks_poker(app, print_function):
 
         return (
             poker_game.state,
+            "",
+            [html.P(line) for line in poker_game.result.splitlines()],
             poker_game.stage,
             render_amount(poker_game.pot),
             render_amount(poker_game.to_call),
             *poker_game.render_cards(),
-            [html.P(line) for line in poker_game.result.splitlines()],
             f"{render_amount(poker_game.chips_user)} ({poker_game.hand_user})",
             render_amount(poker_game.chips_cpu),
             newhandfold_children,
