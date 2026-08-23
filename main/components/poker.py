@@ -21,6 +21,8 @@ class Poker:
         result: str = "",
         player_moved: bool = False,
         game_over: bool = False,
+        aggression: float = None,
+        deception: float = None,
     ):
         self.stage = stage
         self.pot = pot
@@ -30,9 +32,19 @@ class Poker:
         self.card_board = card_board or []
         self.chips_user = chips_user
         self.chips_cpu = chips_cpu
-        self.game_over = game_over
-        self.player_moved = player_moved
         self.result = result
+        self.player_moved = player_moved
+        self.game_over = game_over
+
+        # for CPU optimization
+        self.aggression = aggression
+        self.deception = deception
+        if not aggression:
+            self.set_seed()
+
+    def set_seed(self) -> tuple[float, float]:
+        self.aggression = random.uniform(0.85, 1.15)
+        self.deception = random.random()
 
     @property
     def state(self):
@@ -48,7 +60,21 @@ class Poker:
             result=self.result,
             player_moved=self.player_moved,
             game_over=self.game_over,
+            aggression=self.aggression,
+            deception=self.deception,
         )
+
+    @property
+    def hand_user(self):
+        visible_cards = self.get_visible_card_board()
+        parser = self.get_parser(self.card_user + visible_cards)
+        return parser.handenum.name
+
+    @property
+    def hand_cpu(self):
+        visible_cards = self.get_visible_card_board()
+        parser = self.get_parser(self.card_cpu + visible_cards)
+        return parser.handenum.name
 
     @classmethod
     def from_state(cls, state):
@@ -98,6 +124,7 @@ class Poker:
             return
         deck = DECK.copy()
         random.shuffle(deck)
+
         # Update card
         self.card_user = [deck.pop(), deck.pop()]
         self.card_cpu = [deck.pop(), deck.pop()]
@@ -116,6 +143,9 @@ class Poker:
         self.result = return_message["poker_new_game"].format(blind=BLIND)
         self.player_moved = False
         self.game_over = False
+
+        # Reset seed values each game
+        self.set_seed()
 
     def fold(self):
         """Implement player fold move"""
@@ -173,26 +203,27 @@ class Poker:
         Returns:
             ("fold" | "check" | "call" | "raise", raise_by)
         """
-        aggression = random.uniform(0.85, 1.15)
-        deception = random.random()
         visible_cards = self.get_visible_card_board()
 
         # Pre-flop
         if not visible_cards:
             r1, r2 = (card.rank_strength for card in self.card_cpu)
             strength = evaluate_strength_preflop(r1, r2)
-            # print("preflop", self.card_cpu, visible_cards, strength, deception)
-            return choose_move_preflop(strength, self.to_call, aggression, deception)
+            # print("preflop", self.card_cpu, visible_cards, strength, self.deception)
+            return choose_move_preflop(
+                strength,
+                self.to_call,
+                self.aggression,
+                self.deception,
+            )
         # Post-flop
-        parser = self.get_parser(self.card_cpu + visible_cards)
-        hand_type = parser.handenum.name
-        strength = evaluate_strength_postflop(visible_cards, hand_type)
-        # print("postflop", self.card_cpu, visible_cards, hand_type, strength, deception)
+        strength = evaluate_strength_postflop(visible_cards, self.hand_cpu)
+        # print("postflop", self.card_cpu, visible_cards, hand_type, strength, self.deception)
         return choose_move_postflop(
             strength,
             self.to_call,
-            aggression,
-            deception,
+            self.aggression,
+            self.deception,
         )
 
     def cpu_fold(self):
@@ -370,7 +401,7 @@ def choose_move_preflop(
     if strength >= 20:
         if deception < 0.1:
             return raise_return(to_call, 20)
-        if deception < 0.8:
+        if deception < 0.5:
             return call_return
         return fold_return
 
@@ -410,11 +441,10 @@ def choose_move_postflop(
         return "raise", round_up(max(max_raise, int(multiplier * to_call)))
 
     # Bluff deception probability
-    slow_play = random.random() < 0.25  # for strong hands
+    slow_play = random.random() < 0.5  # for strong hands
     semi_bluff = random.random() < 0.20  # for medium hands
 
-    if to_call == 0:
-
+    if not to_call:
         # Strong hands: raise, occasionally check (slow play)
         if strength >= 60:
             if slow_play:
@@ -454,7 +484,7 @@ def choose_move_postflop(
     if strength >= 30:
         if semi_bluff:
             return raise_return(random.uniform(1.0, 1.5), 20)
-        if deception < 0.9:
+        if deception < 0.5:
             return call_return
         return fold_return
 

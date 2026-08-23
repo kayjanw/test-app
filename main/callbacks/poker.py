@@ -87,7 +87,7 @@ def register_callbacks_poker(app, print_function):
             render_amount(poker_game.to_call),
             *poker_game.render_cards(),
             [html.P(line) for line in poker_game.result.splitlines()],
-            render_amount(poker_game.chips_user),
+            f"{render_amount(poker_game.chips_user)} ({poker_game.hand_user})",
             render_amount(poker_game.chips_cpu),
             newhandfold_children,
             checkcall_children,
