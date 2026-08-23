@@ -70,6 +70,7 @@ class Poker:
         return visible_cards
 
     def render_cards(self) -> tuple[list[dmc.Paper], list[dmc.Paper], list[dmc.Paper]]:
+        """Render cards on board, returns card elements"""
         visible_cards = self.get_visible_card_board()
         return (
             render_card(self.card_user),
@@ -80,11 +81,13 @@ class Poker:
         )
 
     def advance_stage(self, announce: bool = False):
+        """Advance to next stage"""
         self.stage = STAGES[STAGES.index(self.stage) + 1]
         if announce:
             self.result += f"\nMoving to {self.stage}."
 
     def new_game(self) -> str:
+        """Create new game"""
         if not self.chips_user:
             self.result = "You do not have any chips left to play."
             self.game_over = True
@@ -115,6 +118,7 @@ class Poker:
         self.game_over = False
 
     def fold(self):
+        """Implement player fold move"""
         self.chips_cpu += self.pot
         self.pot = 0
         self.to_call = 0
@@ -123,6 +127,7 @@ class Poker:
         self.game_over = True
 
     def check_or_call(self):
+        """Implement player check or call move"""
         if self.to_call:
             self.to_call = min(self.to_call, self.chips_user)
             self.chips_user -= self.to_call
@@ -137,6 +142,7 @@ class Poker:
             self.player_moved = True
 
     def bet_or_raise(self, raise_by: int):
+        """Implement player raise move"""
         if raise_by <= 0:
             self.result = return_message["poker_zero_raise"]
             return
@@ -151,14 +157,14 @@ class Poker:
         self.player_moved = True
 
     @staticmethod
-    def get_parser(cards: list[Card]):
+    def get_parser(cards: list[Card]) -> HandParser:
         """Create and parse a pokerlib HandParser."""
         parser = HandParser([card.pokerlib for card in cards])
         parser.parse()
         return parser
 
     @staticmethod
-    def hand_name(parser):
+    def hand_name(parser) -> str:
         return parser.handenum.name.replace("_", " ").title()
 
     def choose_move(self) -> tuple[str, int]:
@@ -190,6 +196,7 @@ class Poker:
         )
 
     def cpu_fold(self):
+        """Implement CPU fold action"""
         self.chips_user += self.pot
         self.pot = 0
         self.to_call = 0
@@ -197,10 +204,12 @@ class Poker:
         self.game_over = True
 
     def cpu_check(self):
+        """Implement CPU check action"""
         self.result += return_message["poker_check"].format(p1="CPU")
         self.advance_stage()
 
     def cpu_call(self):
+        """Implement CPU call action"""
         self.to_call = min(self.to_call, self.chips_cpu)
         self.chips_cpu -= self.to_call
         self.pot += self.to_call
@@ -211,6 +220,7 @@ class Poker:
         self.advance_stage()
 
     def cpu_raise(self, raise_by):
+        """Implement CPU raise action"""
         if not self.chips_cpu:
             self.cpu_check()
             return
@@ -254,6 +264,7 @@ class Poker:
         return "split", f"Split pot! Both players have a {player_hand}."
 
     def showdown(self):
+        """Evaluate winner and implement move"""
         winner, result = self.evaluate_winner()
         self.result += f"\n{result}"
         if winner == "player":
