@@ -58,6 +58,7 @@ def register_callbacks_chess(app, print_function):
         State("uploadchess-button", "filename"),
         State({"type": "chess-square", "square": ALL}, "id"),
         State("chess-state", "data"),
+        State("chess-move", "data"),
         prevent_initial_call=True,
     )
     @print_callback(print_function)
@@ -72,6 +73,7 @@ def register_callbacks_chess(app, print_function):
         filename: str,
         square_ids: list[dict[str, Union[str, int]]],
         state: dict,
+        chess_move,
     ):
         """Board is always reconstructed from the FEN stored in dcc.Store. There are 5 triggers
 
@@ -84,6 +86,9 @@ def register_callbacks_chess(app, print_function):
         Returns:
             game data, status of game, computer move, game save format, updated computer toggle
         """
+        if chess_move:
+            return no_update, no_update, no_update, no_update, no_update
+
         is_random = False
         current_style = state["style"]
         computer_move = ""
