@@ -4,12 +4,6 @@ from pokerlib.enums import Rank, Suit
 
 
 @dataclass
-class ButtonColour:
-    NEW_HAND = "#2ecc71"
-    FOLD = "#e74c3c"
-
-
-@dataclass
 class CardSuit:
     s = "♠"
     h = "♥"
@@ -53,12 +47,6 @@ class Card:
         return f"{self.rank}{CardSuit.get(self.suit)}"
 
 
-BLIND = 10
-SUITS = ["s", "h", "d", "c"]
-RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-STAGES = ["", "Pre-flop", "Flop", "Turn", "River", "Showdown"]
-DECK = [Card(suit, rank) for rank in RANKS for suit in SUITS]
-
 RANK_MAP = {
     "2": Rank.TWO,
     "3": Rank.THREE,
@@ -79,16 +67,4 @@ SUIT_MAP = {
     "h": Suit.HEART,
     "d": Suit.DIAMOND,
     "c": Suit.CLUB,
-}
-
-HAND_STRENGTH = {
-    "HIGHCARD": 15,
-    "ONEPAIR": 35,
-    "TWOPAIR": 55,
-    "THREEOFAKIND": 70,
-    "STRAIGHT": 80,
-    "FLUSH": 85,
-    "FULLHOUSE": 93,
-    "FOUROFAKIND": 98,
-    "STRAIGHTFLUSH": 100,
 }

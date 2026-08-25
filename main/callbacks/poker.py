@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output, State
 
 from common.components.helper import print_callback
 from main.components.poker import Poker, render_amount
-from main.model.poker import STAGES, ButtonColour
+from main.model.poker.poker import STAGES, ButtonColour
 
 
 def register_callbacks_poker(app, print_function):

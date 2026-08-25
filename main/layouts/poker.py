@@ -3,7 +3,7 @@ from dash import dcc, html
 
 from common.layouts.main import content_header
 from main.components.poker import Poker, render_amount
-from main.model.poker import ButtonColour
+from main.model.poker.poker import ButtonColour
 
 
 def poker_table(state):
