@@ -6,6 +6,7 @@ from pokerlib import HandParser
 from common.components.helper import return_message
 from main.model.poker.card import Card
 from main.model.poker.poker import BLIND, DECK, HAND_STRENGTH, STAGES
+from main.model.poker.profile import Action, Profile
 
 
 class Poker:
@@ -24,6 +25,8 @@ class Poker:
         game_over: bool = False,
         aggression: float = None,
         deception: float = None,
+        profile_user: Profile = None,
+        round_history: list[Action] = None,
     ):
         self.stage = stage
         self.pot = pot
@@ -42,6 +45,10 @@ class Poker:
         self.deception = deception
         if not aggression:
             self.set_seed()
+
+        # For user profile
+        self.profile_user = profile_user or Profile()
+        self.round_history = round_history or []
 
     def set_seed(self) -> tuple[float, float]:
         self.aggression = random.uniform(0.85, 1.15)
@@ -63,6 +70,8 @@ class Poker:
             game_over=self.game_over,
             aggression=self.aggression,
             deception=self.deception,
+            profile_user=self.profile_user.__dict__,
+            round_history=self.round_history,
         )
 
     @property
@@ -82,6 +91,8 @@ class Poker:
         state = state.copy()
         for k in ["card_user", "card_cpu", "card_board"]:
             state[k] = [Card.from_str(card) for card in state[k].split(",") if card]
+        for k in ["profile_user"]:
+            state[k] = Profile(**state[k])
         return cls(**state)
 
     def get_visible_card_board(self) -> list[Card]:
@@ -149,7 +160,18 @@ class Poker:
         self.set_seed()
 
     def fold(self):
-        """Implement player fold move"""
+        """Implement player fold move, update user profile"""
+        # Record user actions
+        self.round_history.append(Action.FOLD)
+        if self.to_call:
+            self.profile_user.record_action(
+                Action.FOLD, [Action.FOLD, Action.CALL, Action.RAISE]
+            )
+        else:
+            self.profile_user.record_action(
+                Action.FOLD, [Action.FOLD, Action.CHECK, Action.RAISE]
+            )
+
         self.chips_cpu += self.pot
         self.pot = 0
         self.to_call = 0
@@ -158,8 +180,14 @@ class Poker:
         self.game_over = True
 
     def check_or_call(self):
-        """Implement player check or call move"""
+        """Implement player check or call move, update user profile"""
         if self.to_call:
+            # Record user actions
+            self.round_history.append(Action.CALL)
+            self.profile_user.record_action(
+                Action.CALL, [Action.FOLD, Action.CALL, Action.RAISE]
+            )
+
             self.to_call = min(self.to_call, self.chips_user)
             self.chips_user -= self.to_call
             self.pot += self.to_call
@@ -169,11 +197,17 @@ class Poker:
             self.to_call = 0
             self.advance_stage(announce=True)
         else:
+            # Record user actions
+            self.round_history.append(Action.CHECK)
+            self.profile_user.record_action(
+                Action.CHECK, [Action.FOLD, Action.CHECK, Action.RAISE]
+            )
+
             self.result = return_message["poker_check"].format(p1="You")
             self.player_moved = True
 
     def bet_or_raise(self, raise_by: int):
-        """Implement player raise move"""
+        """Implement player raise move, update user profile"""
         if raise_by <= 0:
             self.result = return_message["poker_zero_raise"]
             return
@@ -181,6 +215,18 @@ class Poker:
         if total_amount > self.chips_user:
             self.result = return_message["poker_insufficient_raise"]
             return
+
+        # Record user actions
+        self.round_history.append(Action.RAISE)
+        if self.to_call:
+            self.profile_user.record_action(
+                Action.RAISE, [Action.FOLD, Action.CALL, Action.RAISE]
+            )
+        else:
+            self.profile_user.record_action(
+                Action.RAISE, [Action.FOLD, Action.CHECK, Action.RAISE]
+            )
+
         self.chips_user -= total_amount
         self.pot += total_amount
         self.to_call = raise_by
@@ -280,23 +326,27 @@ class Poker:
             self.cpu_raise(cpu_amount)
         else:
             raise ValueError(f"Invalid CPU move {cpu_action=}")
+        print(self.profile_user.__dict__)
 
     def evaluate_winner(self):
         """Return (winner, message) at showdown"""
         player_parser = self.get_parser(self.card_user + self.card_board)
-        ai_parser = self.get_parser(self.card_cpu + self.card_board)
-
+        cpu_parser = self.get_parser(self.card_cpu + self.card_board)
         player_hand = self.hand_name(player_parser)
-        cpu_hand = self.hand_name(ai_parser)
+        cpu_hand = self.hand_name(cpu_parser)
 
-        if player_parser > ai_parser:
+        if player_parser > cpu_parser:
             return "player", f"You win with a {player_hand}! CPU had a {cpu_hand}."
-        if ai_parser > player_parser:
+        if cpu_parser > player_parser:
             return "cpu", f"CPU wins with a {cpu_hand}. You had a {player_hand}."
         return "split", f"Split pot! Both players have a {player_hand}."
 
     def showdown(self):
-        """Evaluate winner and implement move"""
+        """Evaluate winner and implement move, update user profile"""
+        # Record user actions
+        strength = evaluate_strength_postflop(self.card_board, self.hand_cpu)
+        self.profile_user.record_showdown(strength, self.round_history)
+
         winner, result = self.evaluate_winner()
         self.result += f"\n{result}"
         if winner == "player":
@@ -309,6 +359,7 @@ class Poker:
             self.chips_cpu += self.pot - half_pot
         self.pot = 0
         self.game_over = True
+        self.round_history = []
 
 
 def render_card(cards: list[Card], hidden: bool = False) -> list[dmc.Paper]:
