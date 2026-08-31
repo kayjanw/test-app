@@ -4,8 +4,16 @@ import dash_mantine_components as dmc
 from pokerlib import HandParser
 
 from common.components.helper import return_message
+from main.components.poker.strategy_postflop import (
+    choose_move_postflop,
+    evaluate_strength_postflop,
+)
+from main.components.poker.strategy_preflop import (
+    choose_move_preflop,
+    evaluate_strength_preflop,
+)
 from main.model.poker import Action, Card, Profile, Stage
-from main.model.poker.poker import BLIND, DECK, HAND_STRENGTH, STAGES
+from main.model.poker.poker import BLIND, DECK, STAGES
 
 
 class Poker:
@@ -382,176 +390,3 @@ def render_card(cards: list[Card], hidden: bool = False) -> list[dmc.Paper]:
 
 def render_amount(amount: int) -> str:
     return "${:,}".format(amount)
-
-
-check_return = "check", 0
-call_return = "call", 0
-fold_return = "fold", 0
-
-
-def round_up(value: int):
-    if value % 10:
-        return (int(value // 10) + 1) * 10
-    return value
-
-
-def evaluate_strength_preflop(r1: int, r2: int) -> int:
-    """Used during preflop, evaluate strength from 0-100"""
-    pair = r1 == r2
-    high_card = max(r1, r2) >= 9
-    ace = 12 in (r1, r2)
-    connected = abs(r1 - r2) <= 2
-
-    if pair:
-        strength = 55 + r1 * 3
-        if r1 >= 9:
-            strength += 15
-    else:
-        strength = max(r1, r2) * 2
-        if high_card:
-            strength += 10
-        if ace:
-            strength += 10
-        if connected:
-            strength += 8
-    return min(strength, 100)
-
-
-def choose_move_preflop(
-    strength: int, to_call: int, aggression: float, deception: float
-) -> tuple[str, int]:
-    """Choose move for preflop"""
-
-    def raise_return(
-        multiplier: int, max_raise: int = float("-inf")
-    ) -> tuple[str, int]:
-        return "raise", round_up(max(max_raise, int(multiplier * aggression)))
-
-    if not to_call:
-        # Strong hands: raise, occasionally check (slow play)
-        if strength >= 50:
-            if deception < 0.4:
-                return check_return
-            return raise_return(20)
-
-        # Medium hands: check, occasionally raise (steal the pot)
-        if strength >= 20:
-            if deception < 0.4:
-                return raise_return(15)
-            return check_return
-
-        # Weak hands: check, occasionally raise (bluff)
-        if deception < 0.2:
-            return raise_return(15)
-        return check_return
-
-    # Facing a bet; expensive calls should require stronger hands
-    # Very strong hands: raise, occasionally call (trap)
-    if strength >= 50:
-        if deception < 0.25:
-            return call_return
-        return raise_return(to_call, 20)
-
-    # Medium strong hands: call, occasionally raise (semi-bluff/value bet)
-    if strength >= 30:
-        if deception < 0.15:
-            return raise_return(to_call, 15)
-        return call_return
-
-    # Medium hands: call or fold, occasionally raise (semi-bluff/value bet)
-    if strength >= 20:
-        if deception < 0.1:
-            return raise_return(to_call, 20)
-        if deception < 0.5:
-            return call_return
-        return fold_return
-
-    # Weak hands: fold, sometimes call/raise
-    if deception < 0.1:
-        return raise_return(to_call, 15)
-    if deception < 0.3:
-        return call_return
-    return fold_return
-
-
-def evaluate_strength_postflop(visible_cards: list[Card], hand_type: str) -> int:
-    """Used during postflop, evaluate strength from 0-100"""
-    strength = HAND_STRENGTH.get(hand_type, 20)
-
-    # Board texture: A wet board means there are more possible draws / strong hands
-    suits = [card.suit for card in visible_cards]
-    flush_possible = max((suits.count(suit) for suit in set(suits)), default=0) >= 3
-    board_is_wet = flush_possible
-    if board_is_wet:
-        strength -= 5
-    return strength
-
-
-def choose_move_postflop(
-    strength: int,
-    to_call: int,
-    aggression: float,
-    deception: float,
-) -> tuple[str, int]:
-    def raise_random_return(min_raise: int, max_raise: int) -> tuple[str, int]:
-        return "raise", round_up(random.randint(min_raise, max_raise))
-
-    def raise_return(
-        multiplier: float, max_raise: int = float("-inf")
-    ) -> tuple[str, int]:
-        return "raise", round_up(max(max_raise, int(multiplier * to_call)))
-
-    # Bluff deception probability
-    slow_play = random.random() < 0.5  # for strong hands
-    semi_bluff = random.random() < 0.20  # for medium hands
-
-    if not to_call:
-        # Strong hands: raise, occasionally check (slow play)
-        if strength >= 60:
-            if slow_play:
-                return check_return
-            if random.random() < 0.70 * aggression:
-                return raise_random_return(20, 40)
-            return check_return
-
-        # Medium hands: check, occasionally raise (steal the pot)
-        if strength >= 30:
-            if semi_bluff:
-                return raise_random_return(15, 30)
-            if deception < 0.25:
-                return raise_random_return(15, 25)
-            return check_return
-
-        # Weak hands: check, occasionally raise (bluff)
-        if deception < 0.12:
-            return raise_random_return(15, 30)
-        return check_return
-
-    # Facing a bet; expensive calls should require stronger hands
-    # Monster: raise, occasionally call (trap)
-    if strength >= 90:
-        if slow_play or deception < 0.30:
-            return call_return
-        return raise_return(random.uniform(1.0, 1.8), 20)
-
-    # Medium strong hands: raise, occasionally call (semi-bluff/value bet)
-    if strength >= 50:
-        # Sometimes call to disguise strength.
-        if deception < 0.40:
-            return call_return
-        return raise_return(random.uniform(0.8, 1.5), 20)
-
-    # Medium hands: call or fold, occasionally raise (semi-bluff/value bet)
-    if strength >= 30:
-        if semi_bluff:
-            return raise_return(random.uniform(1.0, 1.5), 20)
-        if deception < 0.5:
-            return call_return
-        return fold_return
-
-    # Weak hands: fold, sometimes call/raise
-    if deception < 0.12:
-        return raise_return(random.uniform(1.0, 1.5), 20)
-    if deception < 0.3:
-        return call_return
-    return fold_return
