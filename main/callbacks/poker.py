@@ -87,6 +87,7 @@ def register_callbacks_poker(app, print_function):
             Output("poker-board-cards", "children"),
             Output("poker-user-chips", "children"),
             Output("poker-cpu-chips", "children"),
+            Output("poker-user-profile", "children"),
             # Button looks
             Output("button-poker-newhandfold", "children"),
             Output("button-poker-checkcall", "children"),
@@ -118,6 +119,10 @@ def register_callbacks_poker(app, print_function):
             and not poker_game.game_over
         ):
             poker_game.showdown()
+        user_profile = (
+            poker_game.profile_user.profile_type if poker_game.total_hands >= 10 else ""
+        )
+        # print(poker_game.profile_user.__dict__)
 
         # Button display
         newhandfold_children = "Fold"
@@ -141,6 +146,7 @@ def register_callbacks_poker(app, print_function):
             *poker_game.render_cards(),
             f"{render_amount(poker_game.chips_user)} ({poker_game.hand_user})",
             render_amount(poker_game.chips_cpu),
+            [html.P(line, className="p-tight") for line in user_profile.splitlines()],
             newhandfold_children,
             checkcall_children,
             newhandfold_style,

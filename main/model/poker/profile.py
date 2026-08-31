@@ -1,5 +1,7 @@
 from enum import StrEnum, auto
 
+from main.model.poker.poker import Stage
+
 
 class Action(StrEnum):
     FOLD = auto()
@@ -8,9 +10,42 @@ class Action(StrEnum):
     RAISE = auto()
 
 
+def to_dict(obj):
+    """Recursively converts objects to dictionaries."""
+    if hasattr(obj, "__dict__"):
+        return {key: to_dict(value) for key, value in obj.__dict__.items()}
+    elif isinstance(obj, list):
+        return [to_dict(item) for item in obj]
+    return obj
+
+
+class Hand:
+    def __init__(
+        self,
+        chips_start: int,
+        chips_end: int = 0,
+        actions: dict[Stage, list[Action]] = None,
+        showdown_strength: int = -1,
+    ):
+        self.chips_start = chips_start
+        self.chips_end = chips_end
+        self.actions = actions or {}
+        self.showdown_strength = showdown_strength
+
+    def record_action(self, stage: Stage, action: Action) -> None:
+        if stage not in self.actions:
+            self.actions[stage] = [action]
+        else:
+            self.actions[stage].append(action)
+
+
 class Profile:
     def __init__(
         self,
+        # Complicated profile
+        current_hand: dict = None,
+        hand_history: list[dict] = None,
+        # Simple profile
         opportunities_to_fold: int = 0,
         folds: int = 0,
         opportunities_to_call: int = 0,
@@ -19,8 +54,10 @@ class Profile:
         checks: int = 0,
         opportunities_to_raise: int = 0,
         raises: int = 0,
-        showdown_history: list[tuple[int, str]] = None,
     ):
+        self.current_hand = to_dict(current_hand)
+        self.hand_history = to_dict(hand_history or [])
+
         self.opportunities_to_fold = opportunities_to_fold
         self.folds = folds
         self.opportunities_to_call = opportunities_to_call
@@ -30,9 +67,89 @@ class Profile:
         self.opportunities_to_raise = opportunities_to_raise
         self.raises = raises
 
-        # Showdown hand records to back-calculate range
-        # Stores tuples of (hand_strength_at_showdown, action taken)
-        self.showdown_history = showdown_history or []
+    @property
+    def vpip(self) -> float | None:
+        """Voluntarily put in pot: percentage of hands where user called or made a raise preflop.
+        This statistic determines whether you are a loose or tight player.
+
+        Good players have a wide range of VPIP figures - within the range of 15-27% in a 9 player game.
+        """
+        vpip_hands = len(
+            [
+                hand
+                for hand in self.hand_history
+                if Action.CALL in hand["actions"][Stage.PREFLOP]
+                or Action.RAISE in hand["actions"][Stage.PREFLOP]
+            ]
+        )
+        total_hands = len(self.hand_history)
+        if total_hands:
+            return round(vpip_hands / total_hands, 2)
+
+    @property
+    def pfr(self) -> float | None:
+        """Pre-Flop Raise: The percent of hands user raised preflop (to call another player's raise does not count).
+        This characteristic often divides players into passive/aggressive.
+
+        A good rule of thumb is that this value should be 1/2 of your VPIP figure or more.
+        """
+        pfr_hands = len(
+            [
+                hand
+                for hand in self.hand_history
+                if Action.RAISE in hand["actions"][Stage.PREFLOP]
+            ]
+        )
+        total_hands = len(self.hand_history)
+        if total_hands:
+            return round(pfr_hands / total_hands, 2)
+
+    @property
+    def wts(self) -> float | None:
+        """Went to showdown: The percent of times user went to the showdown after seeing the flop.
+
+        Average figure is 20%, with a range of 17-25%. This statistic helps define tight/loose play after the flop.
+        It is good for determining the effectiveness of a bluff against a player.
+        """
+        hands_seen_flop = len(
+            [hand for hand in self.hand_history if Stage.FLOP in hand["actions"]]
+        )
+        hands_went_showdown = len(
+            [hand for hand in self.hand_history if hand["showdown_strength"] > 0]
+        )
+        if hands_seen_flop:
+            return round(hands_went_showdown / hands_seen_flop, 2)
+
+    @property
+    def wsd(self) -> float | None:
+        """Won showdown: The percent of times user won money at the showdown, out of those times you went to the showdown.
+
+        This number tells you how often users are showing down the best hand. Winning is defined as ending the hand with
+        more chips than the user started with.
+        """
+        showdowns_won = len(
+            [
+                hand
+                for hand in self.hand_history
+                if hand["showdown_strength"] and hand["chips_start"] < hand["chips_end"]
+            ]
+        )
+        hands_went_showdown = len(
+            [hand for hand in self.hand_history if hand["showdown_strength"]]
+        )
+        if hands_went_showdown:
+            return round(showdowns_won / hands_went_showdown, 2)
+
+    @property
+    def showdown_average_strength(self) -> float:
+        """Average hand strength at showdown"""
+        showdown_hands = [
+            hand["showdown_strength"]
+            for hand in self.hand_history
+            if hand["showdown_strength"]
+        ]
+        if len(showdown_hands):
+            return round(sum(showdown_hands) / len(showdown_hands), 2)
 
     @property
     def total_moves(self) -> int:
@@ -58,31 +175,70 @@ class Profile:
         if self.opportunities_to_raise:
             return self.raises / self.opportunities_to_raise
 
-    def record_action(self, action_type: Action, legal_actions: list[Action]):
+    def start_hand(self, chips_user: int):
+        self.current_hand = to_dict(Hand(chips_user))
+
+    def record_action(self, stage: Stage, action: Action, to_call: int):
         """Every round: record action"""
-        if Action.FOLD in legal_actions:
-            self.opportunities_to_fold += 1
-        if Action.CALL in legal_actions:
-            self.opportunities_to_call += 1
-        if Action.CHECK in legal_actions:
-            self.opportunities_to_check += 1
-        if Action.RAISE in legal_actions:
-            self.opportunities_to_raise += 1
+        hand = Hand(**self.current_hand)
+        hand.record_action(stage, action)
+        self.current_hand = to_dict(hand)
 
-        if action_type == Action.FOLD:
+        if action == Action.FOLD:
             self.folds += 1
-        elif action_type == Action.CALL:
+            self.opportunities_to_fold += 1
+            self.opportunities_to_raise += 1
+            if to_call:
+                self.opportunities_to_call += 1
+            else:
+                self.opportunities_to_check += 1
+
+        elif action == Action.CALL:
             self.calls += 1
-        elif action_type == Action.CHECK:
+            self.opportunities_to_fold += 1
+            self.opportunities_to_raise += 1
+            self.opportunities_to_call += 1
+
+        elif action == Action.CHECK:
             self.checks += 1
-        elif action_type == Action.RAISE:
+            self.opportunities_to_fold += 1
+            self.opportunities_to_raise += 1
+            self.opportunities_to_check += 1
+
+        elif action == Action.RAISE:
             self.raises += 1
+            self.opportunities_to_fold += 1
+            self.opportunities_to_raise += 1
+            if to_call:
+                self.opportunities_to_call += 1
+            else:
+                self.opportunities_to_check += 1
 
-    def record_showdown(self, strength: int, actions: list[Action]):
-        """At showdown: back-calculate play style"""
-        self.showdown_history.append((strength, "-".join(actions)))
+    def end_hand(self, chips_user: int, showdown_strength: int = -1):
+        self.current_hand["chips_end"] = chips_user
+        self.current_hand["showdown_strength"] = showdown_strength
+        self.hand_history.append(self.current_hand)
+        self.current_hand = to_dict(None)
 
-    def get_showdown_average_strength(self) -> float:
-        """Average hand strength at showdown"""
-        if self.showdown_history:
-            return sum(h[0] for h in self.showdown_history) / len(self.showdown_history)
+    @property
+    def profile_type(self):
+        vpip = self.vpip
+        pfr = self.pfr
+        profile = ""
+        if vpip is None or pfr is None:
+            return ""
+
+        if 0.22 <= vpip <= 0.27 and 0.18 <= pfr <= 0.23:
+            profile = "Solid regular"
+        elif 0.28 <= vpip <= 0.38 and 0.22 <= pfr <= 0.3:
+            profile = "Aggressive"
+        elif 0.35 <= vpip <= 0.6 and pfr <= 0.12:
+            profile = "Loose-pasive caller"
+        elif vpip <= 0.18 and pfr <= 0.14:
+            profile = "Rock"
+        elif vpip >= 0.45 and pfr >= 0.35:
+            profile = "Maniac"
+
+        res = f"Profile: {profile}\n" if profile else "Profile: "
+        res += f"VPIP: {vpip}, PFR: {pfr}, WTS: {self.wts}, WSD: {self.wsd}"
+        return res

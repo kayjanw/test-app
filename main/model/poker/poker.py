@@ -9,6 +9,16 @@ class ButtonColour:
     FOLD = "#e74c3c"
 
 
+@dataclass
+class Stage:
+    NEWGAME = ""
+    PREFLOP = "Pre-flop"
+    FLOP = "Flop"
+    TURN = "Turn"
+    RIVER = "River"
+    SHOWDOWN = "Showdown"
+
+
 BLIND = 10
 SUITS = ["s", "h", "d", "c"]
 RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
@@ -24,4 +34,11 @@ HAND_STRENGTH = {
     "FOUROFAKIND": 98,
     "STRAIGHTFLUSH": 100,
 }
-STAGES = ["", "Pre-flop", "Flop", "Turn", "River", "Showdown"]
+STAGES = [
+    Stage.NEWGAME,
+    Stage.PREFLOP,
+    Stage.FLOP,
+    Stage.TURN,
+    Stage.RIVER,
+    Stage.SHOWDOWN,
+]

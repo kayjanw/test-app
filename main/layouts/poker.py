@@ -122,7 +122,13 @@ def player_cards(state):
                         style={"display": "none"},
                     ),
                 ],
-                className="custom-div-flex-only",
+                className="custom-div-flex-only custom-div-small-space-below",
+            ),
+            dmc.Text(
+                size="lg",
+                fw=700,
+                mb="xl",
+                id="poker-user-profile",
             ),
         ],
         style={

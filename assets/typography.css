@@ -730,6 +730,11 @@ span p {
     margin: 0;
 }
 
+.p-tight {
+    padding: 0;
+    margin: 0;
+}
+
 .p-normal {
     font-weight: normal;
 }
