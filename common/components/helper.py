@@ -61,6 +61,7 @@ return_message = {
     "poker_fold": "{p1} fold. {p2} take the pot.",
     "poker_check": "{p1} checked. ",
     "poker_call": "{p1} called ${amount}. ",
+    "poker_bet": "{p1} bet ${amount}. ",
     "poker_raise": "{p1} raise by ${amount}. ",
     "poker_zero_raise": "Raise amount must be greater than zero.",
     "poker_insufficient_raise": "Insufficient chips for that raise.",

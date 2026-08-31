@@ -86,6 +86,22 @@ class Poker:
     def total_hands(self):
         return len(self.profile_user.hand_history)
 
+    @property
+    def is_user_bet(self) -> bool:
+        if self.profile_user.current_hand and not len(
+            self.profile_user.current_hand["actions"].get(self.stage, [])
+        ):
+            return True
+        return False
+
+    @property
+    def is_cpu_bet(self) -> bool:
+        if Action.RAISE not in self.profile_user.current_hand["actions"].get(
+            self.stage, []
+        ):
+            return True
+        return False
+
     @classmethod
     def from_state(cls, state):
         state = state.copy()
@@ -205,14 +221,19 @@ class Poker:
             self.result = return_message["poker_insufficient_raise"]
             return
 
-        # Record user actions
-        self.profile_user.record_action(self.stage, Action.RAISE, self.to_call)
-
         self.chips_user -= total_amount
         self.pot += total_amount
         self.to_call = raise_by
-        self.result = return_message["poker_raise"].format(p1="You", amount=raise_by)
+        if self.is_user_bet:
+            self.result = return_message["poker_bet"].format(p1="You", amount=raise_by)
+        else:
+            self.result = return_message["poker_raise"].format(
+                p1="You", amount=raise_by
+            )
         self.player_moved = True
+
+        # Record user actions
+        self.profile_user.record_action(self.stage, Action.RAISE, self.to_call)
 
     @staticmethod
     def get_parser(cards: list[Card]) -> HandParser:
@@ -294,7 +315,12 @@ class Poker:
         self.chips_cpu -= total_amount
         self.pot += total_amount
         self.to_call = raise_by
-        self.result += return_message["poker_raise"].format(p1="CPU", amount=raise_by)
+        if self.is_cpu_bet:
+            self.result += return_message["poker_bet"].format(p1="CPU", amount=raise_by)
+        else:
+            self.result += return_message["poker_raise"].format(
+                p1="CPU", amount=raise_by
+            )
 
     def cpu_move(self):
         """Plan and implement CPU move"""

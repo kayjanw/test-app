@@ -111,7 +111,7 @@ def player_cards(state):
                         "Raise",
                         style={"display": "none"},
                         className="button-outline",
-                        id="button-poker-raise",
+                        id="button-poker-betraise",
                     ),
                     dcc.Input(
                         id="poker-raise",

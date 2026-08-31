@@ -20,12 +20,12 @@ def register_callbacks_poker(app, print_function):
             Output("poker-user-chips", "children", allow_duplicate=True),
             Output("button-poker-newhandfold", "style", allow_duplicate=True),
             Output("button-poker-checkcall", "style", allow_duplicate=True),
-            Output("button-poker-raise", "style", allow_duplicate=True),
+            Output("button-poker-betraise", "style", allow_duplicate=True),
             Output("poker-raise", "style", allow_duplicate=True),
         ],
         Input("button-poker-newhandfold", "n_clicks"),
         Input("button-poker-checkcall", "n_clicks"),
-        Input("button-poker-raise", "n_clicks"),
+        Input("button-poker-betraise", "n_clicks"),
         [
             State("poker-state", "data"),
             State("poker-raise", "value"),
@@ -91,9 +91,10 @@ def register_callbacks_poker(app, print_function):
             # Button looks
             Output("button-poker-newhandfold", "children"),
             Output("button-poker-checkcall", "children"),
+            Output("button-poker-betraise", "children"),
             Output("button-poker-newhandfold", "style"),
             Output("button-poker-checkcall", "style"),
-            Output("button-poker-raise", "style"),
+            Output("button-poker-betraise", "style"),
             Output("poker-raise", "style"),
         ],
         Input("poker-move", "data"),
@@ -129,8 +130,11 @@ def register_callbacks_poker(app, print_function):
         newhandfold_style = {"backgroundColor": ButtonColour.FOLD}
         checkcall_children = "Check"
         checkcall_style = bet_style = raise_style = {"display": "unset"}
+        betraise_children = "Raise"
         if poker_game.to_call:
             checkcall_children = "Call"
+        if poker_game.is_user_bet:
+            betraise_children = "Bet"
         if poker_game.game_over:
             newhandfold_children = "New Hand"
             newhandfold_style = {"backgroundColor": ButtonColour.NEW_HAND}
@@ -149,6 +153,7 @@ def register_callbacks_poker(app, print_function):
             [html.P(line, className="p-tight") for line in user_profile.splitlines()],
             newhandfold_children,
             checkcall_children,
+            betraise_children,
             newhandfold_style,
             checkcall_style,
             bet_style,
