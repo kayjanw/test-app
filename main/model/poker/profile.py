@@ -43,7 +43,7 @@ class Profile:
     @property
     def vpip(self) -> float | None:
         """Voluntarily put in pot: percentage of hands where user called or made a raise preflop.
-        This statistic determines whether you are a loose or tight player.
+        This statistic determines whether the user is a loose or tight player.
 
         Good players have a wide range of VPIP figures - within the range of 15-27% in a 9 player game.
         """
@@ -62,9 +62,9 @@ class Profile:
     @property
     def pfr(self) -> float | None:
         """Pre-Flop Raise: The percent of hands user raised preflop (to call another player's raise does not count).
-        This characteristic often divides players into passive/aggressive.
+        This statistic determines whether the user is a passive or aggressive player.
 
-        A good rule of thumb is that this value should be 1/2 of your VPIP figure or more.
+        A good rule of thumb is that this value should be 1/2 of VPIP figure or more.
         """
         pfr_hands = len(
             [
@@ -95,9 +95,9 @@ class Profile:
 
     @property
     def wsd(self) -> float | None:
-        """Won showdown: The percent of times user won money at the showdown, out of those times you went to the showdown.
+        """Won showdown: The percent of times user won money at the showdown, out of those times user went to the showdown.
 
-        This number tells you how often users are showing down the best hand. Winning is defined as ending the hand with
+        This number shows how often the user is showing down the best hand. Winning is defined as ending the hand with
         more chips than the user started with.
         """
         showdowns_won = len(
@@ -112,6 +112,23 @@ class Profile:
         )
         if hands_went_showdown:
             return round(showdowns_won / hands_went_showdown, 2)
+
+    @property
+    def af(self) -> float | None:
+        """Aggression factor: The percentage of total bets and raises after flop, divided by the number of calls.
+
+        The average factor of aggression for winning players in a 9-player game is 2.5 (range 1.7-3.5)"""
+        actions_after_flop = [
+            action
+            for hand in self.hand_history
+            for stage, actions in hand["actions"].items()
+            if stage in [Stage.FLOP, Stage.TURN, Stage.RIVER]
+            for action in actions
+        ]
+        total_raise = actions_after_flop.count(Action.RAISE)
+        total_call = actions_after_flop.count(Action.CALL)
+        if total_call:
+            return total_raise / total_call
 
     @property
     def showdown_average_strength(self) -> float:
@@ -188,15 +205,16 @@ class Profile:
                 self.opportunities_to_check += 1
 
     def end_hand(self, chips_user: int, showdown_strength: int = -1):
-        self.current_hand["chips_end"] = chips_user
-        self.current_hand["showdown_strength"] = showdown_strength
-        self.hand_history.append(self.current_hand)
+        hand = Hand(**self.current_hand)
+        hand.chips_end = chips_user
+        hand.showdown_strength = showdown_strength
+        self.hand_history.append(to_dict(hand))
         self.current_hand = to_dict(None)
 
     @property
     def profile_type(self):
-        vpip = self.vpip
-        pfr = self.pfr
+        vpip = self.vpip  # measure loose/tight
+        pfr = self.pfr  # measure passive/aggressive
         profile = ""
         if vpip is None or pfr is None:
             return ""
@@ -204,14 +222,24 @@ class Profile:
         if 0.22 <= vpip <= 0.27 and 0.18 <= pfr <= 0.23:
             profile = "Solid regular"
         elif 0.28 <= vpip <= 0.38 and 0.22 <= pfr <= 0.3:
+            # Tight and aggressive
+            # Strategy: Respect their preflop raises
             profile = "Aggressive"
         elif 0.35 <= vpip <= 0.6 and pfr <= 0.12:
-            profile = "Loose-pasive caller"
+            # Loose and passive; the calling station
+            # Strategy: never bluff them, value bet strong hands and size your bets larger
+            profile = "Loose-passive caller"
         elif vpip <= 0.18 and pfr <= 0.14:
+            # Tight and passive, they fold too much
+            # Strategy: steal their blind, fold when they are aggressive
             profile = "Rock"
         elif vpip >= 0.45 and pfr >= 0.35:
+            # Loose and aggressive, frequent bets, raises, and bluffs
+            # Strategy: Let their aggression work against them by trapping with strong hands, avoid bluffing
             profile = "Maniac"
 
         res = f"Profile: {profile}\n" if profile else "Profile: "
-        res += f"VPIP: {vpip}, PFR: {pfr}, WTS: {self.wts}, WSD: {self.wsd}"
+        res += (
+            f"VPIP: {vpip}, PFR: {pfr}, AF: {self.af}, WTS: {self.wts}, WSD: {self.wsd}"
+        )
         return res
