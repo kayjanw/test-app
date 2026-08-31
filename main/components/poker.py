@@ -4,9 +4,8 @@ import dash_mantine_components as dmc
 from pokerlib import HandParser
 
 from common.components.helper import return_message
-from main.model.poker.card import Card
-from main.model.poker.poker import BLIND, DECK, HAND_STRENGTH, STAGES, Stage
-from main.model.poker.profile import Action, Profile
+from main.model.poker import Action, Card, Profile, Stage
+from main.model.poker.poker import BLIND, DECK, HAND_STRENGTH, STAGES
 
 
 class Poker:

@@ -1,22 +1,13 @@
 from dataclasses import dataclass
 
 from main.model.poker.card import Card
+from main.model.poker.stage import Stage
 
 
 @dataclass
 class ButtonColour:
     NEW_HAND = "#2ecc71"
     FOLD = "#e74c3c"
-
-
-@dataclass
-class Stage:
-    NEWGAME = ""
-    PREFLOP = "Pre-flop"
-    FLOP = "Flop"
-    TURN = "Turn"
-    RIVER = "River"
-    SHOWDOWN = "Showdown"
 
 
 BLIND = 10
