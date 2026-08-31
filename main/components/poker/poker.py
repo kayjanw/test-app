@@ -142,7 +142,7 @@ class Poker:
             render_card(visible_cards),
         )
 
-    def advance_stage(self, announce: bool = False):
+    def _advance_stage(self, announce: bool = False):
         """Advance to next stage"""
         self.stage = STAGES[STAGES.index(self.stage) + 1]
         if announce:
@@ -213,7 +213,7 @@ class Poker:
                 p1="You", amount=self.to_call
             )
             self.to_call = 0
-            self.advance_stage(announce=True)
+            self._advance_stage(announce=True)
         else:
             self.profile_user.record_action(self.stage, Action.CHECK, self.to_call)
             self.result = return_message["poker_check"].format(p1="You")
@@ -297,7 +297,7 @@ class Poker:
     def cpu_check(self):
         """Implement CPU check action"""
         self.result += return_message["poker_check"].format(p1="CPU")
-        self.advance_stage()
+        self._advance_stage()
 
     def cpu_call(self):
         """Implement CPU call action"""
@@ -308,7 +308,7 @@ class Poker:
             p1="CPU", amount=self.to_call
         )
         self.to_call = 0
-        self.advance_stage()
+        self._advance_stage()
 
     def cpu_raise(self, raise_by):
         """Implement CPU raise action"""
