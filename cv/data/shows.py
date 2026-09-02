@@ -220,6 +220,7 @@ musicals = [
         "2026-09-02 20:00",
         "Sands Theatre",
         "Door 8, Stalls Center, F-23",
+        Review("Amazing vocals and random dancing", 3),
     ),
     Show(
         "CATS",
