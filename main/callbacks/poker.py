@@ -1,7 +1,7 @@
 import random
 import time
 
-from dash import ctx, html
+from dash import MATCH, ctx, html
 from dash.dependencies import Input, Output, State
 
 from common.components.helper import print_callback
@@ -10,6 +10,31 @@ from main.model.poker.poker import STAGES, ButtonColour
 
 
 def register_callbacks_poker(app, print_function):
+    @app.callback(
+        Output({"type": "modal-poker", "index": MATCH}, "is_open"),
+        [
+            Input({"type": "button-modal-poker", "index": MATCH}, "n_clicks"),
+            Input({"type": "button-close-modal-poker", "index": MATCH}, "n_clicks"),
+        ],
+        State({"type": "modal-poker", "index": MATCH}, "is_open"),
+        prevent_initial_call=True,
+    )
+    @print_callback(print_function)
+    def update_modal_display(trigger_open, trigger_close, is_open: bool) -> bool:
+        """Update modal display
+
+        Args:
+            trigger_open: trigger on button click
+            trigger_close: trigger on button click
+            is_open: current state of open
+
+        Returns:
+            indicator whether modal is open or not
+        """
+        if trigger_open or trigger_close:
+            return not is_open
+        return is_open
+
     @app.callback(
         [
             Output("poker-state", "data", allow_duplicate=True),

@@ -2,6 +2,7 @@ import dash_mantine_components as dmc
 from dash import dcc, html
 
 from common.layouts.main import content_header
+from common.layouts.modal import info_button, modal_popup
 from main.components.poker import Poker, render_amount
 from main.model.poker.poker import ButtonColour
 
@@ -174,9 +175,48 @@ def poker_tab(app):
     poker_game = Poker()
     state = poker_game.state
 
+    def modal_help():
+        return [
+            html.P(
+                "How to Play (1 player)",
+                className="p-short p-bold neucha-font",
+            ),
+            html.P(
+                [
+                    "The game is played on a single device. Select ",
+                    html.Span("New Hand", className="p-short p-bold"),
+                    " to start a new game.",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                "Player Statistics",
+                style={"margin-top": "20px"},
+                className="p-short p-bold neucha-font",
+            ),
+            html.P(
+                [
+                    "After 10 rounds, player statistics will be available.",
+                    html.Br(),
+                    html.Span(
+                        "VPIP (Voluntarily put in pot)",
+                        className="p-short p-bold p-indent",
+                    ),
+                    ": percentage of hands where user called or made a raise preflop",
+                ],
+                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+            ),
+            html.P(
+                html.P("Have fun!", className="rainbow"),
+                style={"margin-top": "20px"},
+                className="custom-div-center p-short p-bold",
+            ),
+            html.Br(),
+        ]
+
     return html.Div(
         [
-            content_header("Poker"),
+            content_header(["Poker", info_button(app, "modal-poker")]),
             html.Div(
                 [
                     dmc.Container(
@@ -213,5 +253,6 @@ def poker_tab(app):
                 data=state,
             ),
             dcc.Store(id="poker-move", storage_type="memory", data=""),
+            modal_popup(modal_help(), "modal-poker"),
         ]
     )
