@@ -1,6 +1,20 @@
+from functools import wraps
+
 from main.model.poker.action import Action
 from main.model.poker.hand import Hand
 from main.model.poker.stage import Stage
+
+
+def round_return(dp: int):
+    def _round_return(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return round(result, dp)
+
+        return wrapper
+
+    return _round_return
 
 
 def to_dict(obj):
@@ -41,6 +55,7 @@ class Profile:
         self.raises = raises
 
     @property
+    @round_return(2)
     def vpip(self) -> float | None:
         """Voluntarily put in pot: percentage of hands where user called or made a raise preflop.
         This statistic determines whether the user is a loose or tight player.
@@ -57,9 +72,10 @@ class Profile:
         )
         total_hands = len(self.hand_history)
         if total_hands:
-            return round(vpip_hands / total_hands, 2)
+            return vpip_hands / total_hands
 
     @property
+    @round_return(2)
     def pfr(self) -> float | None:
         """Pre-Flop Raise: The percent of hands user raised preflop (to call another player's raise does not count).
         This statistic determines whether the user is a passive or aggressive player.
@@ -75,9 +91,10 @@ class Profile:
         )
         total_hands = len(self.hand_history)
         if total_hands:
-            return round(pfr_hands / total_hands, 2)
+            return pfr_hands / total_hands
 
     @property
+    @round_return(2)
     def wts(self) -> float | None:
         """Went to showdown: The percent of times user went to the showdown after seeing the flop.
 
@@ -91,9 +108,10 @@ class Profile:
             [hand for hand in self.hand_history if hand["showdown_strength"] > 0]
         )
         if hands_seen_flop:
-            return round(hands_went_showdown / hands_seen_flop, 2)
+            return hands_went_showdown / hands_seen_flop
 
     @property
+    @round_return(2)
     def wsd(self) -> float | None:
         """Won showdown: The percent of times user won money at the showdown, out of those times user went to the showdown.
 
@@ -111,9 +129,10 @@ class Profile:
             [hand for hand in self.hand_history if hand["showdown_strength"]]
         )
         if hands_went_showdown:
-            return round(showdowns_won / hands_went_showdown, 2)
+            return showdowns_won / hands_went_showdown
 
     @property
+    @round_return(2)
     def af(self) -> float | None:
         """Aggression factor: The percentage of total bets and raises after flop, divided by the number of calls.
 
@@ -131,6 +150,7 @@ class Profile:
             return total_raise / total_call
 
     @property
+    @round_return(2)
     def showdown_average_strength(self) -> float:
         """Average hand strength at showdown"""
         showdown_hands = [
@@ -139,7 +159,7 @@ class Profile:
             if hand["showdown_strength"]
         ]
         if len(showdown_hands):
-            return round(sum(showdown_hands) / len(showdown_hands), 2)
+            return sum(showdown_hands) / len(showdown_hands)
 
     @property
     def total_moves(self) -> int:
