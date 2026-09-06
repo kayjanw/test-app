@@ -4,6 +4,14 @@ from main.model.poker.action import Action
 from main.model.poker.hand import Hand
 from main.model.poker.stage import Stage
 
+PROFILE_DESCRIPTION = {
+    "VPIP (Voluntarily Put In Pot)": "percentage of hands user called or made a raise preflop",
+    "PFR (Pre-Flop Raise)": "percentage of hands user raised preflop",
+    "AF (Aggression Factor)": "total bets and raises divided by the number of calls (after flop)",
+    "WTS (Went To Showdown)": "number of times user went to showdown after seeing flop",
+    "WSD (Won Showdown)": "percentage of showdowns won",
+}
+
 
 def round_return(dp: int):
     def _round_return(func):

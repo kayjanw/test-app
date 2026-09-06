@@ -5,6 +5,7 @@ from common.layouts.main import content_header
 from common.layouts.modal import info_button, modal_popup
 from main.components.poker import Poker, render_amount
 from main.model.poker.poker import ButtonColour
+from main.model.poker.profile import PROFILE_DESCRIPTION
 
 
 def poker_table(state):
@@ -187,7 +188,6 @@ def poker_tab(app):
                     html.Span("New Hand", className="p-short p-bold"),
                     " to start a new game.",
                 ],
-                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
             ),
             html.P(
                 "Player Statistics",
@@ -195,40 +195,19 @@ def poker_tab(app):
                 className="p-short p-bold neucha-font",
             ),
             html.P(
+                "After 10 rounds, player statistics will be available.",
+            ),
+            html.P(
                 [
-                    "After 10 rounds, player statistics will be available.",
-                    html.Br(),
-                    html.Span(
-                        "VPIP (Voluntarily Put In Pot)",
-                        className="p-short p-bold",
-                    ),
-                    ": percentage of hands user called or made a raise preflop",
-                    html.Br(),
-                    html.Span(
-                        "PFR (Pre-Flop Raise)",
-                        className="p-short p-bold",
-                    ),
-                    ": percentage of hands user raised preflop",
-                    html.Br(),
-                    html.Span(
-                        "AF (Aggression Factor)",
-                        className="p-short p-bold",
-                    ),
-                    ": total bets and raises divided by the number of calls (after flop)",
-                    html.Br(),
-                    html.Span(
-                        "WTS (Went To Showdown)",
-                        className="p-short p-bold",
-                    ),
-                    ": number of times user went to showdown after seeing flop",
-                    html.Br(),
-                    html.Span(
-                        "WSD (Won Showdown)",
-                        className="p-short p-bold",
-                    ),
-                    ": percentage of showdowns won",
+                    item
+                    for stat_name, stat_desc in PROFILE_DESCRIPTION.items()
+                    for item in [
+                        html.Span(stat_name, className="p-bold"),
+                        f": {stat_desc}",
+                        html.Br(),
+                    ]
                 ],
-                className="div-with-image div-with-small-image-left div-with-small-image-right small-image",
+                className="p-indent",
             ),
             html.P(
                 html.P("Have fun!", className="rainbow"),
