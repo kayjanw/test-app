@@ -314,6 +314,14 @@ comedy = [
         Review("Hilarious!", 5),
     ),
     Show(
+        "SLOMOSEXUAL",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/09/slowmosexual.jpg",
+        "",
+        "2026-10-15 20:00",
+        "Black Box @ 42 Waterloo Street",
+        "General Admission",
+    ),
+    Show(
         "Kanan Gill: Not This Again",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/26sg_kanangill_2d70c06f284a8d105f3dae213cd04c31.jpg",
         "Atlas Live Touring Co.",
