@@ -102,7 +102,7 @@ theatres = [
         "2026-09-13 17:00",
         "The Blackbird Singapore (Gillman Barracks)",
         "General Admission",
-        Review("Mental health focused", 2.33)
+        Review("Mental health focused", 2.33),
     ),
 ]
 musicals = [
