@@ -4,7 +4,7 @@ use_accordian = True
 
 hrt_details = AccordianRow(
     "Data Production Engineer, Hudson River Trading",
-    "Data Tech | Jan 2026 - Present",
+    "Data Tech, Data Production | Jan 2026 - Present",
     "tabler:briefcase-2",
     {
         "Data Tech": [
@@ -24,7 +24,7 @@ hrt_details = AccordianRow(
 
 squarepoint_details = AccordianRow(
     "Quantative Developer, Squarepoint",
-    "Commodities and Other Mandates | May 2024 - Dec 2025",
+    "Commodities and Other Mandates, Systematic | May 2024 - Dec 2025",
     "tabler:briefcase-2",
     {
         "Technical": [
