@@ -358,6 +358,14 @@ orchestra = [
         "Door 2, Stalls, N-29",
         Review("Entertaining", 3.33),
     ),
+    Show(
+        "Harry Potter and the Philosopher's Stone",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/09/image.jpeg",
+        "Resound Collective Orchestra",
+        "2026-10-09 19:30",
+        "The Star Theatre, The Star Performing Arts Centre",
+        "",
+    ),
 ]
 others = [
     Show(
