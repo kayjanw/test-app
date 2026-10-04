@@ -8,7 +8,8 @@ from cv.model.show import Show
 
 
 def divide_cols(shows: list[Show], n_cols: int):
-    shows_cols = [shows[i::n_cols] for i in range(n_cols)]
+    # Divide show into columns, in reverse order
+    shows_cols = [shows[::-1][i::n_cols] for i in range(n_cols)]
     return dmc.Group(
         [html.Div([show.div for show in shows_col]) for shows_col in shows_cols],
         align="flex-start",
