@@ -6,7 +6,7 @@ use_accordian = True
 
 sutd_details = AccordianRow(
     "Adjunct Lecturer, Singapore University of Technology and Design (SUTD)",
-    "May 2026 - Aug 2026",
+    "Engineering Systems and Design Faculty | May 2026 - Aug 2026",
     "tabler:code",
     {
         "Teaching": [
@@ -24,7 +24,7 @@ sutd_details = AccordianRow(
 
 hei_details = AccordianRow(
     "Instructor, Heicoders Academy",
-    "Jun 2022 - Nov 2025",
+    "Machine Learning | Jun 2022 - Nov 2025",
     "tabler:code",
     {
         "Teaching": [
@@ -59,7 +59,7 @@ writing_details = AccordianRow(
 
 ga_details = AccordianRow(
     "Instructor Associate, General Assembly",
-    "Dec 2023 - Jun 2024",
+    "Software Engineering | Dec 2023 - Jun 2024",
     "tabler:code",
     {
         "Teaching": [
@@ -74,8 +74,8 @@ ga_details = AccordianRow(
 )
 
 nus_details = AccordianRow(
-    "Assistant Lecturer, National University of Singapore (NUS), School of Computing",
-    "Jan 2021 - Oct 2023",
+    "Assistant Lecturer, National University of Singapore (NUS)",
+    "School of Computing | Jan 2021 - Oct 2023",
     "tabler:code",
     {
         "Teaching": [
