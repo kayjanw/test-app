@@ -18,6 +18,7 @@ sutd_details = AccordianRow(
         ],
     },
     "teaching-sutd",
+    True,
 )
 
 
@@ -35,7 +36,6 @@ hei_details = AccordianRow(
         ],
     },
     "teaching-hei",
-    True,
 )
 
 writing_details = AccordianRow(
