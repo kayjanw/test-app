@@ -364,7 +364,8 @@ orchestra = [
         "Resound Collective Orchestra",
         "2026-10-09 19:30",
         "The Star Theatre, The Star Performing Arts Centre",
-        "",
+        "Level 7, Door 7B, Stalls, EG-9",
+        Review("Magical", 3.33),
     ),
 ]
 others = [
