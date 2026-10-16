@@ -3,14 +3,21 @@ from cv.model.accordian_row import AccordianDetails, AccordianRow
 use_accordian = True
 
 hrt_details = AccordianRow(
-    "Data Production Engineer, Hudson River Trading",
-    "Data Tech, Data Production | Jan 2026 - Present",
+    "Data Engineer, Hudson River Trading",
+    [
+        "Data Tech, Research Data Engineering, Mid-freq Accel DE | Oct 2026 - Present",
+        "Data Tech, Data Production | Jan 2026 - Sep 2026",
+    ],
     "tabler:briefcase-2",
     {
         "Data Tech": [
             AccordianDetails(
                 "✔️",
                 "Write tools to classify, onboard, and reconcile data, ensuring high data quality and reliability",
+            ),
+            AccordianDetails(
+                "✔️",
+                "Develop and maintain fully featurized datasets for statistical modeling research",
             ),
             # AccordianDetails(
             #     "🔧",
@@ -19,7 +26,6 @@ hrt_details = AccordianRow(
         ]
     },
     "industry-hrt",
-    True,
 )
 
 squarepoint_details = AccordianRow(

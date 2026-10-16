@@ -20,7 +20,7 @@ class AccordianRow:
     def __init__(
         self,
         title: str,
-        subtitle: str,
+        subtitle: str | list[str],
         icon: str,
         details: Dict[str, List[AccordianDetails]],
         accordian_id: str,
@@ -64,6 +64,25 @@ def accordian(
     Returns:
         Accordian item
     """
+
+    def format_subtitle(subtitle: str | list[str]):
+        if isinstance(subtitle, str):
+            return html.H6(subtitle)
+        subtitles = []
+        for _subtitle in subtitle:
+            prefix, suffix = _subtitle.split("|")
+            subtitles.append(
+                html.H6(
+                    [
+                        html.Span(prefix, className="subtitle-left"),
+                        html.Span("|", className="subtitle-center"),
+                        html.Span(suffix, className="subtitle-right"),
+                    ],
+                    className="subtitle-row",
+                )
+            )
+        return html.Div(subtitles, className="subtitle-container")
+
     return dmc.Accordion(
         chevron=DashIconify(icon="ant-design:down-outlined"),
         chevronPosition="right",
@@ -88,7 +107,7 @@ def accordian(
                                         ],
                                         className="custom-div-flex-only",
                                     ),
-                                    html.H6(detail.subtitle),
+                                    format_subtitle(detail.subtitle),
                                 ]
                             )
                         ],

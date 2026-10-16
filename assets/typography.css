@@ -452,8 +452,37 @@ span.mantine-Accordion-label h6 {
     border-end-end-radius: var(--accordion-radius);
 }
 
+.mantine-Accordion-icon {
+    padding: 0 5px;
+}
+
 span p {
     margin-bottom: 0
+}
+
+.subtitle-container {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: max-content auto max-content;
+}
+
+.subtitle-row {
+  display: contents;
+  margin: 0;
+}
+
+.subtitle-left {
+  text-align: left;
+  padding-right: 4px;
+}
+
+.subtitle-center {
+  text-align: center;
+}
+
+.subtitle-right {
+  text-align: left;
+  padding-left: 4px;
 }
 
 /* Certifications table
