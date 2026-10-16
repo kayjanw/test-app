@@ -223,7 +223,7 @@ bookshelf_self = [
         "Crucial Conversations",
         "Kerry Patterson, Joseph Grenny, Al Switzler, Ron McMillan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-46.png",
-        Review("Not very structured", 4.4),
+        Review("Not very structured", 4.5),
     ),
     Book(
         "Life Coaching: Change Your Life in 7 Days",
@@ -235,7 +235,7 @@ bookshelf_self = [
         "Rules of Thinking",
         "Richard Templar",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-42-30.png",
-        Review("Interesting tips", 3.4),
+        Review("Interesting tips", 3.5),
     ),
     # 2025
     Book(
@@ -260,7 +260,7 @@ bookshelf_self = [
         "How To Break Up With Your Phone",
         "Catherine Price",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-3.jpg",
-        Review("Good tips", 3.4),
+        Review("Good tips", 3.5),
     ),
     # 2026
     Book(
@@ -279,7 +279,7 @@ bookshelf_self = [
         "Poisonous People",
         "Leanne ten Brinke",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.png",
-        Review("Not useful", 2.4),
+        Review("Not useful", 2.5),
     ),
 ]
 bookshelf_leadership = [
@@ -287,7 +287,7 @@ bookshelf_leadership = [
         "The 21 Indispensable Qualities of a Leader",
         "John C. Maxwell",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-41-57-1.png",
-        Review("Informative", 4.4),
+        Review("Informative", 4.5),
     ),
     # 2024
     Book(
@@ -306,7 +306,7 @@ bookshelf_leadership = [
         "Engineering Management for the Rest of Us",
         "Sarah Drasner",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/photo-2025-08-20-22-18-04.jpg",
-        Review("Helpful", 4.4),
+        Review("Helpful", 4.5),
     ),
     # 2025
     Book(
@@ -319,7 +319,7 @@ bookshelf_leadership = [
         "The First 90 Days",
         "Michael D. Watkins",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
-        Review("Not very generic", 3.4),
+        Review("Not very generic", 3.5),
     ),
 ]
 bookshelf_finance = [
@@ -327,7 +327,7 @@ bookshelf_finance = [
         "Getting Started In Technical Analysis",
         "Jack D. Schwager",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/715khkxn-ll.jpg?w=678",
-        Review("A little dry", 3.4),
+        Review("A little dry", 3.5),
     ),
 ]
 bookshelf_technical = [

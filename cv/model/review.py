@@ -28,7 +28,7 @@ class Review:
             return html.Span(self.genre_or_review, **kwargs)
         return div_class(
             [
-                dmc.Rating(fractions=3, value=self.rating, readOnly=True),
+                dmc.Rating(fractions=2, value=self.rating, readOnly=True),
                 html.Span(self.genre_or_review, **kwargs),
             ]
         )
