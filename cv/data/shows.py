@@ -4,12 +4,12 @@ from cv.model.book import Review
 from cv.model.show import Show
 
 rating_system = {
-    5: "Must go",
-    4.5: "Must go, but not as good",
-    4: "Good to go",
-    3.5: "Can go if you want",
-    3: "Do not bother",
-    2: "It is bad",
+    5: "Goated",
+    4.5: "Amazing",
+    4: "Good, recommend",
+    3.5: "OKish",
+    3: "OK",
+    2: "Bad",
 }
 
 
@@ -21,7 +21,7 @@ theatres = [
         "2023-08-15 19:30",
         "Ngee Ann Kongsi Theatre, Funan",
         "Balcony, Section B1 Center, BB-14",
-        Review("Good storytelling, one-woman show", 5),
+        Review("Amazing storytelling, one-woman show", 5),
     ),
     Show(
         "See You, Anniversary",
@@ -48,7 +48,7 @@ theatres = [
         "2026-06-07 17:00",
         "Esplanade Theatre Studio (Level 4)",
         "General Admission",
-        Review("Fun, weird", 2.33),
+        Review("Fun, weird", 2.4),
     ),
     Show(
         "The Trials",
@@ -57,7 +57,7 @@ theatres = [
         "2026-06-20 20:00",
         "Singapore Repertoire Theatre",
         "Cat 1, E-15",
-        Review("Good idea, poor execution", 2.33),
+        Review("Good idea, poor execution", 2.4),
     ),
     Show(
         "Girls Girls Girls",
@@ -66,7 +66,7 @@ theatres = [
         "2026-06-21 13:30",
         "Ngee Ann Kongsi Theatre, Funan",
         "Door 1, PA-22",
-        Review("Just storytelling", 3.33),
+        Review("Just storytelling", 3.4),
     ),
     Show(
         "And Then There Were None",
@@ -102,7 +102,7 @@ theatres = [
         "2026-09-13 17:00",
         "The Blackbird Singapore (Gillman Barracks)",
         "General Admission",
-        Review("Mental health focused", 2.33),
+        Review("Mental health focused", 2.4),
     ),
 ]
 musicals = [
@@ -113,7 +113,7 @@ musicals = [
         "2024-05-04 20:00",  # 2026-05-11 22:00
         "Sands Theatre",
         "-",  # Door 8, Stalls Right, E-(1-2)
-        Review("Good music and lyrics", 4.33),
+        Review("Good music and lyrics", 4.4),
     ),
     Show(
         "Ms Saigon",
@@ -122,7 +122,7 @@ musicals = [
         "2024-08-27 20:00",
         "Sands Theatre",
         "Door 4, Stalls Center, JJ-(29-30)",
-        Review("Little boring", 2.33),
+        Review("Little boring", 2.4),
     ),
     Show(
         "The Book of Mormon",
@@ -131,7 +131,7 @@ musicals = [
         "2024-12-11 19:30",
         "Prince fo Wales Theatre, London",
         "Stalls, L-36",
-        Review("Amazing, funny", 4.33),
+        Review("Amazing, funny", 4.4),
     ),
     Show(
         "Wicked",
@@ -167,7 +167,7 @@ musicals = [
         "2026-03-04 19:00",
         "Walter Kerr Theatre, New York",
         "Orchestra 4, 6 Rear Centre, P-105",
-        Review("Bad casting", 2.33),
+        Review("Bad casting", 2.4),
     ),
     Show(
         "Cabaret",
@@ -176,7 +176,7 @@ musicals = [
         "2026-04-17 19:30",
         "Kit Kat Club at the Playhouse, London",
         "Stalls, J-(13-15)",
-        Review("Unique and amazing, weird plot", 3.33),
+        Review("Unique and amazing, weird plot", 3.4),
     ),
     Show(
         "The Producers",
@@ -194,7 +194,7 @@ musicals = [
         "2026-04-22 19:30",
         "Empress Museum, London",
         "Purple, B-8",
-        Review("Half musical, half circus", 3.33),
+        Review("Half musical, half circus", 3.4),
     ),
     Show(
         "Les Miserables: The Arena Spectacular",
@@ -203,7 +203,7 @@ musicals = [
         "2026-05-06 20:00",
         "Sands Theatre",
         "Door 7, Stalls Center, V-22",
-        Review("Singing without acting", 1.33),
+        Review("Singing without acting", 1.4),
     ),
     Show(
         "Charlie and the Chocolate Factory",
@@ -212,7 +212,7 @@ musicals = [
         "2026-06-04 20:00",
         "Sands Theatre",
         "Door 8, Stalls Center, P-21",
-        Review("Awesome cast", 4),
+        Review("Awesome cast", 3.4),
     ),
     Show(
         "Jesus Christ Superstar",
@@ -284,7 +284,7 @@ comedy = [
         "2026-03-02 20:00",
         "85 East 4th Street",
         "-",
-        Review("Funny", 3.33),
+        Review("Funny", 3.4),
     ),
     Show(
         "Always Be Comedy",
@@ -320,6 +320,7 @@ comedy = [
         "2026-10-15 20:00",
         "Black Box @ 42 Waterloo Street",
         "General Admission",
+        Review("Funny, local references", 3.4),
     ),
     Show(
         "Kanan Gill: Not This Again",
@@ -347,7 +348,7 @@ orchestra = [
         "2025-03-19 20:00",
         "Esplanade Theatre",
         "Door 2, Stalls, R-4",
-        Review("Live movie", 3.33),
+        Review("Live movie", 3.4),
     ),
     Show(
         "Pixar in Concert",
@@ -356,7 +357,7 @@ orchestra = [
         "2026-06-25 19:30",
         "Esplanade Concert Hall",
         "Door 2, Stalls, N-29",
-        Review("Entertaining", 3.33),
+        Review("Entertaining", 3.4),
     ),
     Show(
         "Harry Potter and the Philosopher's Stone",
@@ -365,7 +366,7 @@ orchestra = [
         "2026-10-09 19:30",
         "The Star Theatre, The Star Performing Arts Centre",
         "Level 7, Door 7B, Stalls, EG-9",
-        Review("Magical", 3.33),
+        Review("Magical", 3.4),
     ),
 ]
 others = [
@@ -385,7 +386,7 @@ others = [
         "2023-04-27",
         "Bellagio Las Vegas",
         "",
-        Review("Feast for the eyes", 4.33),
+        Review("Feast for the eyes", 4.4),
     ),
     Show(
         "Baby Queen",
@@ -394,7 +395,7 @@ others = [
         "2023-06-02 20:00",
         "The Projector",
         "",
-        Review("Heartwarming drag show", 3.33),
+        Review("Heartwarming drag show", 3),
     ),
     Show(
         "Cirque du Soleil Kooza",
@@ -412,7 +413,7 @@ others = [
         "2026-07-15 20:00",
         "Esplanade Theatre",
         "Door 2, Stalls, C-18",
-        Review("Elegant and good creepy", 4),
+        Review("Elegant and good creepy", 3.4),
     ),
     Show(
         "The Nutcracker",
