@@ -174,6 +174,7 @@ bookshelf_leisure = [
         "A Drop of Corruption",
         "Robert Jackson Bennett",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/a-drop-of-corruption.jpg",
+        Review("Fantasy Mystery"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
@@ -320,6 +321,12 @@ bookshelf_leadership = [
         "Michael D. Watkins",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-first-90-days.jpg",
         Review("Not very generic", 3.5),
+    ),
+    # 2026
+    Book(
+        "Careless People",
+        "Sarah Wynn-Williams",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_6155.jpeg",
     ),
 ]
 bookshelf_finance = [
