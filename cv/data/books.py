@@ -180,6 +180,7 @@ bookshelf_leisure = [
         "The Man Who Died Seven Times",
         "Yasuhiko Nishizawa",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_6633.jpeg",
+        Review("Time-Loop Fiction"),
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
