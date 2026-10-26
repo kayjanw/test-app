@@ -56,24 +56,6 @@ bookshelf_leisure = [
         Review("Time Travel Fiction"),
     ),
     Book(
-        "Strange Pictures",
-        "Uketsu",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-14-1.png",
-        Review("Mystery", "👑"),
-    ),
-    Book(
-        "Strange Houses",
-        "Uketsu",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-23.png",
-        Review("Mystery"),
-    ),
-    Book(
-        "Hidden Pictures",
-        "Jason Rekulak",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-33-1.png",
-        Review("Mystery"),
-    ),
-    Book(
         "The Boring Book",
         "Shinsuke Yoshitake",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.jpg",
@@ -105,12 +87,6 @@ bookshelf_leisure = [
         Review("Humorous Fiction"),
     ),
     Book(
-        "Strange Buildings",
-        "Uketsu",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2480.jpeg",
-        Review("Mystery"),
-    ),
-    Book(
         "Welcome to the Hyunam-Dong Bookshop",
         "Hwang Bo-Reum",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/02/welcome-to-the-hyunam-dong-bookshop.jpg",
@@ -121,12 +97,6 @@ bookshelf_leisure = [
         "Han Kang",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/vegetarian.jpg",
         Review("Literary Fiction"),
-    ),
-    Book(
-        "How to Solve Your Own Murder",
-        "Kristen Perrin",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/how-to-solve-your-own-murder.jpg?w=678",
-        Review("Mystery", "👍"),
     ),
     Book(
         "A Short Stay in Hell",
@@ -147,18 +117,6 @@ bookshelf_leisure = [
         Review("Interactive Fiction"),
     ),
     Book(
-        "Never Lie",
-        "Freida McFadden",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/never-lie.jpg",
-        Review("Suspense"),
-    ),
-    Book(
-        "Julie Chan is Dead",
-        "Liann Zhang",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/julie-chan-is-dead.jpg",
-        Review("Suspense"),
-    ),
-    Book(
         "There Are Rivers In The Sky",
         "Elif Shafak",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/img_3256.jpeg",
@@ -177,15 +135,66 @@ bookshelf_leisure = [
         Review("Fantasy Mystery"),
     ),
     Book(
+        "Sweet Sweet Revenge Ltd.",
+        "Jonas Jonasson",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
+    ),
+]
+bookshelf_thriller = [
+    # 2025
+    Book(
+        "Strange Pictures",
+        "Uketsu",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-14-1.png",
+        Review("Mystery", "👑"),
+    ),
+    Book(
+        "Strange Houses",
+        "Uketsu",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-23.png",
+        Review("Mystery"),
+    ),
+    Book(
+        "Hidden Pictures",
+        "Jason Rekulak",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-01-20-33-1.png",
+        Review("Mystery"),
+    ),
+    # 2026
+    Book(
+        "Strange Buildings",
+        "Uketsu",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2480.jpeg",
+        Review("Mystery"),
+    ),
+    Book(
+        "How to Solve Your Own Murder",
+        "Kristen Perrin",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/how-to-solve-your-own-murder.jpg?w=678",
+        Review("Mystery", "👍"),
+    ),
+    Book(
+        "Never Lie",
+        "Freida McFadden",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/never-lie.jpg",
+        Review("Suspense"),
+    ),
+    Book(
+        "Julie Chan is Dead",
+        "Liann Zhang",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/julie-chan-is-dead.jpg",
+        Review("Suspense"),
+    ),
+    Book(
         "The Man Who Died Seven Times",
         "Yasuhiko Nishizawa",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_6633.jpeg",
         Review("Time-Loop Fiction"),
     ),
     Book(
-        "Sweet Sweet Revenge Ltd.",
-        "Jonas Jonasson",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/sweet-sweet-revenge.jpg?w=670",
+        "The Ending Writes Itself",
+        "Evelyn Clarke",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_7098.jpeg",
     ),
 ]
 bookshelf_puzzle = [
@@ -399,6 +408,7 @@ bookshelf_technical = [
 
 books_data: List[Tuple[List[Book], str]] = [
     (sorted(bookshelf_leisure), "Leisure"),
+    (sorted(bookshelf_thriller), "Thriller"),
     (sorted(bookshelf_puzzle), "Puzzle"),
     (sorted(bookshelf_self), "Self-Improvement"),
     (sorted(bookshelf_leadership), "Leadership"),
