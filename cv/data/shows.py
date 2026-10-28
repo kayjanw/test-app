@@ -372,6 +372,7 @@ orchestra = [
         "Vivaldi Baroque Ensemble",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_7300.jpeg",
         "-",
+        "2026-10-28 19:00",
         "Chiesa della Pietà, Venezia",
         "General Admission",
         Review("The four seasons!", 4),
