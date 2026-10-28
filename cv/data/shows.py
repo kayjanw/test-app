@@ -368,6 +368,14 @@ orchestra = [
         "Level 7, Door 7B, Stalls, EG-9",
         Review("Magical", 3.5),
     ),
+    Show(
+        "Vivaldi Baroque Ensemble",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_7300.jpeg",
+        "-",
+        "Chiesa della Pietà, Venezia",
+        "General Admission",
+        Review("The four seasons!", 4),
+    ),
 ]
 others = [
     Show(
