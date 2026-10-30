@@ -384,6 +384,7 @@ orchestra = [
         "2026-10-30 20:30",
         "Scuola Grande di San Teodoro - Rialto, Venezia",
         "Cat A",
+        Review("Cool costumes and opera", 4),
     ),
 ]
 others = [
