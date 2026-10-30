@@ -377,6 +377,14 @@ orchestra = [
         "General Admission",
         Review("The four seasons!", 4),
     ),
+    Show(
+        "Vivaldi",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_7603.jpeg",
+        "-",
+        "2026-10-30 20:30",
+        "Scuola Grande di San Teodoro - Rialto, Venezia",
+        "Cat A",
+    ),
 ]
 others = [
     Show(
