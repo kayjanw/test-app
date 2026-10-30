@@ -4,7 +4,7 @@ autodocsumm==0.2.11
 Babel>=2.10
 cryptography==42.0.4
 pockets==0.9.1
-Pygments==2.15.0
+Pygments==2.20.0
 pyOpenSSL==19.1.0
 pyparsing>=3
 PySocks==1.7.1
