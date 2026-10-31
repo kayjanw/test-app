@@ -96,43 +96,31 @@ bookshelf_leisure = [
         "Vegetarian",
         "Han Kang",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/vegetarian.jpg",
-        Review("Literary Fiction"),
+        Review("Literary Fiction"),  # 2026-03-25
     ),
     Book(
         "A Short Stay in Hell",
         "Steven L. Peck",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/a-short-stay-in-hell.jpg",
-        Review("Philosophical Horror", "👑"),
+        Review("Philosophical Horror", "👑"),  # 2026-04-21
     ),
     Book(
         "Small Boat",
         "Vincent Delecroix",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2479.jpeg",
-        Review("Psychological Fiction"),
+        Review("Psychological Fiction"),  # 2026-04-29
     ),
     Book(
         "The Waiter",
         "Kwan Ann Tan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2578.jpeg",
-        Review("Interactive Fiction"),
+        Review("Interactive Fiction"),  # 2026-04-30
     ),
     Book(
         "There Are Rivers In The Sky",
         "Elif Shafak",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/img_3256.jpeg",
-        Review("Historical Fiction", "😘"),
-    ),
-    Book(
-        "The Tainted Cup",
-        "Robert Jackson Bennett",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2026/08/tainted-cup-1.jpg",
-        Review("Fantasy Mystery"),
-    ),
-    Book(
-        "A Drop of Corruption",
-        "Robert Jackson Bennett",
-        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/a-drop-of-corruption.jpg",
-        Review("Fantasy Mystery"),
+        Review("Historical Fiction", "😘"),  # 2026-07-31
     ),
     Book(
         "Sweet Sweet Revenge Ltd.",
@@ -165,31 +153,43 @@ bookshelf_thriller = [
         "Strange Buildings",
         "Uketsu",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/img_2480.jpeg",
-        Review("Mystery"),
+        Review("Mystery"),  # 2026-02-18
     ),
     Book(
         "How to Solve Your Own Murder",
         "Kristen Perrin",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/how-to-solve-your-own-murder.jpg?w=678",
-        Review("Mystery", "👍"),
+        Review("Mystery", "👍"),  # 2026-04-08
     ),
     Book(
         "Never Lie",
         "Freida McFadden",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/never-lie.jpg",
-        Review("Suspense"),
+        Review("Suspense"),  # 2026-05-25
     ),
     Book(
         "Julie Chan is Dead",
         "Liann Zhang",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/julie-chan-is-dead.jpg",
-        Review("Suspense"),
+        Review("Suspense"),  # 2026-06-19
+    ),
+    Book(
+        "The Tainted Cup",
+        "Robert Jackson Bennett",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/08/tainted-cup-1.jpg",
+        Review("Fantasy Mystery"),  # 2026-08-17
+    ),
+    Book(
+        "A Drop of Corruption",
+        "Robert Jackson Bennett",
+        "https://kayjanw.wordpress.com/wp-content/uploads/2026/06/a-drop-of-corruption.jpg",
+        Review("Fantasy Mystery"),  # 2026-10-21
     ),
     Book(
         "The Man Who Died Seven Times",
         "Yasuhiko Nishizawa",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_6633.jpeg",
-        Review("Time-Loop Fiction"),
+        Review("Time-Loop Fiction"),  # 2026-10-25
     ),
     Book(
         "The Ending Writes Itself",
@@ -289,13 +289,13 @@ bookshelf_self = [
         "Having People Over",
         "Chelsea Fagan",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/having-people-over.jpg",
-        Review("Quick read", 4),
+        Review("Quick read", 4),  # 2026-04-10
     ),
     Book(
         "Poisonous People",
         "Leanne ten Brinke",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-1.png",
-        Review("Not useful", 2.5),
+        Review("Not useful", 2.5),  # 2026-05-06
     ),
 ]
 bookshelf_leadership = [
