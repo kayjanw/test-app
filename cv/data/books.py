@@ -78,19 +78,19 @@ bookshelf_leisure = [
         "Foundryside",
         "Robert Jackson Bennett",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/foundryside.jpg",
-        Review("Science Fiction"),
+        Review("Science Fiction"),  # 2026-01-21
     ),
     Book(
         "The Accidental Further Adventures of the Hundred-Year-Old Man",
         "Jonas Jonasson",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/image-2025-08-02-02-02-15.png",
-        Review("Humorous Fiction"),
+        Review("Humorous Fiction"),  # 2026-02-02
     ),
     Book(
         "Welcome to the Hyunam-Dong Bookshop",
         "Hwang Bo-Reum",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/02/welcome-to-the-hyunam-dong-bookshop.jpg",
-        Review("Cozy Fiction"),
+        Review("Cozy Fiction"),  # 2026-03-16
     ),
     Book(
         "Vegetarian",
