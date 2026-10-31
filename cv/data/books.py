@@ -195,6 +195,7 @@ bookshelf_thriller = [
         "The Ending Writes Itself",
         "Evelyn Clarke",
         "https://kayjanw.wordpress.com/wp-content/uploads/2026/10/img_7098.jpeg",
+        Review("Crime"),  # 2026-10-31
     ),
 ]
 bookshelf_puzzle = [
