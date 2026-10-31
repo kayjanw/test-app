@@ -283,7 +283,7 @@ bookshelf_self = [
         "The Sleep Fix",
         "Diane Macedo",
         "https://kayjanw.wordpress.com/wp-content/uploads/2022/11/the-sleep-fix.jpg",
-        Review("Good to know", 4),
+        Review("Good to know", 4),  # 2026-01-08
     ),
     Book(
         "Having People Over",
