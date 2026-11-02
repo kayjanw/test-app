@@ -57,42 +57,42 @@ Enjoyment
 
 hobbies = [
     # Sports
-    Hobby("Badminton", 9, 5.8, "openmoji:badminton", Freq.WEEKLY, Nature.SPORTS),
-    Hobby("Climbing", 6, 5.5, "openmoji:woman-climbing", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Badminton", 9, 5.8, "openmoji/badminton", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Climbing", 6, 5.5, "openmoji/woman-climbing", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
         "Golf",
         5.5,
         2,
-        "streamline-ultimate-color:golf-ball",
+        "streamline-ultimate-color/golf-ball",
         Freq.MONTHLY,
         Nature.SPORTS,
     ),
-    Hobby("Gym", 8.2, 6, "icon-park:dumbbell", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Gym", 8.2, 6, "icon-park/dumbbell", Freq.WEEKLY, Nature.SPORTS),
     Hobby(
         "Pickleball",
         7.3,
         4,
-        "material-symbols:pickleball",
+        "material-symbols/pickleball",
         Freq.ANNUALLY,
         Nature.SPORTS,
     ),
-    Hobby("Skiing", 6.8, 1, "openmoji:skis", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Skiing", 6.8, 1, "openmoji/skis", Freq.ANNUALLY, Nature.SPORTS),
     Hobby(
-        "Swimming", 6.5, 7, "fluent-emoji-flat:goggles", Freq.ANNUALLY, Nature.SPORTS
+        "Swimming", 6.5, 7, "fluent-emoji-flat/goggles", Freq.ANNUALLY, Nature.SPORTS
     ),
-    Hobby("Squash", 6, 2.5, "mdi:squash", Freq.ANNUALLY, Nature.SPORTS),
-    Hobby("Tennis", 7.5, 2, "openmoji:tennis", Freq.WEEKLY, Nature.SPORTS),
+    Hobby("Squash", 6, 2.5, "mdi/squash", Freq.ANNUALLY, Nature.SPORTS),
+    Hobby("Tennis", 7.5, 2, "openmoji/tennis", Freq.WEEKLY, Nature.SPORTS),
     # Leisure
-    Hobby("Crochet", 8, 3.5, "openmoji:yarn", Freq.ANNUALLY, Nature.LEISURE),
-    Hobby("Gaming", 5.5, 6.5, "openmoji:video-game", Freq.RARELY, Nature.LEISURE),
+    Hobby("Crochet", 8, 3.5, "openmoji/yarn", Freq.ANNUALLY, Nature.LEISURE),
+    Hobby("Gaming", 5.5, 6.5, "openmoji/video-game", Freq.RARELY, Nature.LEISURE),
     Hobby(
-        "Keyboard", 8.7, 9, "openmoji:musical-keyboard", Freq.MONTHLY, Nature.LEISURE
+        "Keyboard", 8.7, 9, "openmoji/musical-keyboard", Freq.MONTHLY, Nature.LEISURE
     ),
-    Hobby("Netflix", 4.5, 7, "selfhst:netflix", Freq.MONTHLY, Nature.LEISURE),
+    Hobby("Netflix", 4.5, 7, "selfhst/netflix", Freq.MONTHLY, Nature.LEISURE),
     # Enrichment
-    Hobby("Arduino", 6.7, 3, "devicon:arduino", Freq.RARELY, Nature.ENRICHMENT),
+    Hobby("Arduino", 6.7, 3, "devicon/arduino", Freq.RARELY, Nature.ENRICHMENT),
     Hobby(
-        "Reading", 9.5, 7, "streamline-emojis:open-book", Freq.WEEKLY, Nature.ENRICHMENT
+        "Reading", 9.5, 7, "streamline-emojis/open-book", Freq.WEEKLY, Nature.ENRICHMENT
     ),
-    Hobby("Theatre", 8.5, 7, "mdi:theatre", Freq.MONTHLY, Nature.ENRICHMENT),
+    Hobby("Theatre", 8.5, 7, "mdi/theatre", Freq.MONTHLY, Nature.ENRICHMENT),
 ]
