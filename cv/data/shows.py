@@ -229,7 +229,8 @@ musicals = [
         "-",
         "2026-11-10 20:00",
         "Sands Theatre",
-        "<seat>",
+        "Door 1, Stalls Center, F-25, Jellicle VIP",
+        Review("Acrobatic dance, confusing plot", 3),
     ),
     Show(
         "Moulin Rouge!",
