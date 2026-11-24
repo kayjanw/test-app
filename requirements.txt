@@ -23,7 +23,7 @@ grpcio==1.53.2
 gunicorn==22.0.0
 h5py>=3.16.0
 hmmlearn>=0.3.3
-idna==3.7
+idna==3.15
 itsdangerous>=2.0
 Jinja2>=3.0
 joblib>=1.0.0
