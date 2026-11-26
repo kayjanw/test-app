@@ -440,7 +440,8 @@ others = [
         "State Ballet of Georgia",
         "2026-11-26 19:30",
         "Sands Theatre",
-        "<seat>",
+        "Door 1, Stalls Center, F-25",
+        Review("Magical and graceful", 3.5),
     ),
 ]
 
